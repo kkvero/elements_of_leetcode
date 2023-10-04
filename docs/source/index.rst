@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 
-Elements of Leetcode - Python solutions explained
+ELEMENTS OF LEETCODE - Python solutions explained
 =================================================
 
 These learning materials aim to provide explanations to basic algorithms in 
@@ -14,7 +14,7 @@ Python, including questions on Leetcode and elsewhere.
 
     This project is under development.
 
-Table of Contents
+TABLE OF CONTENTS
 -----------------
 
 .. toctree::

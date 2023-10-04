@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Acknowledgements" href="acknowledgements.html" />
-    <link rel="prev" title="Elements of Leetcode - Python solutions explained" href="index.html" /> 
+    <link rel="next" title="Bit Manipulation Questions Part 1" href="bits_1.html" />
+    <link rel="prev" title="ELEMENTS OF LEETCODE - Python solutions explained" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,12 +52,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#and">&amp;, AND</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#functions-methods-for-numeric-types">Functions, methods for numeric types</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bits_1.html">Part 1</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements and References</a></li>
 </ul>
 
         </div>
@@ -126,11 +128,8 @@ original number.</p>
 <p>a | b, Each bit position in the result is the logical OR of the
 bits in the corresponding position of the operands. 1 if either is 1, otherwise 0.
 E.g.: 1000 | 10 is 1010.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<div class="line-block">
-<div class="line"><strong>Merging numbers</strong></div>
-</div>
+<div class="admonition-merging-numbers admonition">
+<p class="admonition-title">Merging numbers</p>
 <p>It can also be said that OR operator merges two numbers (101 | 101000 = 101101):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span><span class="mi">101</span> <span class="o">|</span>
 <span class="mi">101000</span> <span class="o">=</span>
@@ -159,11 +158,8 @@ with zeros to the left, e.g. 101 &amp; 11 -&gt; 101 &amp; 011).</p>
 <span class="o">--</span><span class="mi">101</span>  <span class="c1"># We end up with a shorter value</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<div class="line-block">
-<div class="line"><strong>Get bits of n to the right of index</strong></div>
-</div>
+<div class="admonition-get-bits-of-n-to-the-right-of-index admonition">
+<p class="admonition-title">Get bits of n to the right of index</p>
 <p>(i is the given index)
 We know how to get bits to the left, just n&lt;&lt;i.
 How to get bits to the right of i?
@@ -178,14 +174,110 @@ n compared with 1s evaluates to n but of size those 1s.</p>
 </div>
 </section>
 </section>
+<section id="functions-methods-for-numeric-types">
+<h2>Functions, methods for numeric types<a class="headerlink" href="#functions-methods-for-numeric-types" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://docs.python.org/3/library/functions.html#abs" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">abs()</span></code></a> , abs(-34.5),
+<a class="reference external" href="https://docs.python.org/3/library/math.html#math.ceil" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.ceil()</span></code></a> , math.ceil(2. 17),
+<a class="reference external" href="https://docs.python.org/3/library/math.html#math.floor" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.floor()</span></code></a> , math.floor(3.14),
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#min" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">min()</span></code></a> , min(x, -4),
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#max" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a> , max(3.14, y),
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#pow" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pow()</span></code></a> , pow(2.71, 3.14) (or 2.71 ** 3.14),
+<a class="reference external" href="https://docs.python.org/3/library/math.html#math.sqrt" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.sqrt()</span></code></a> , math.sqrt(225).</p>
+<div class="line-block">
+<div class="line"><em>About:</em></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">math.ceil(x)</span></code> - smallest number greater than x</div>
+<div class="line">E.g.: <code class="docutils literal notranslate"><span class="pre">math.ceil(2.17)</span></code> -&gt; 3</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">math.floor(x)</span></code> - largest integer not greater than x</div>
+<div class="line">E.g.: <code class="docutils literal notranslate"><span class="pre">math.floor(3.14)</span></code> -&gt; 3</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Interconvert integers and strings</strong></div>
+<div class="line">str(x), int(‘x’), float(‘x’)</div>
+<div class="line">format(), converts a character into binary:</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>   <span class="c1"># char &#39;d&#39;</span>
+<span class="go">&#39;1100100&#39;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Infinity</strong></div>
+<div class="line">float(‘inf’), float(‘-inf’)</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>random module</strong></div>
+<div class="line">random.randrange(28), random.randint(8,1.6), random.random(), random.shuffle(A), random.choice(A)</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>ord()</strong></div>
+<div class="line"><strong>bit_length()</strong></div>
+<div class="line">Each character corresponds to a decimal, which in its turn corresponds to a binary.</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">character</span><span class="p">)</span> <span class="k">for</span> <span class="n">character</span> <span class="ow">in</span> <span class="s2">&quot;€uro&quot;</span><span class="p">]</span>
+<span class="go">[8364, 117, 114, 111]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span>
+<span class="go">6</span>
+<span class="go"># Because:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="go">&#39;0b101010&#39;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>int.bit_count()</strong></div>
+<div class="line"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#int.bit_count" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">int.bit_count()</span></code></a> Return the number of ones.</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">=</span><span class="mi">99</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="go">&#39;0b1100011&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<div class="admonition-ways-to-count-turned-on-bits admonition">
+<p class="admonition-title">Ways to count turned on bits</p>
+<p>E.g. n=33</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
+<span class="go">&#39;0b100001</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>working with a string representation</p></li>
+</ol>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>int method</p></li>
+</ol>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>bit operators:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count1s</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">33</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count1s</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># 2</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Elements of Leetcode - Python solutions explained" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="ELEMENTS OF LEETCODE - Python solutions explained" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bits_1.html" class="btn btn-neutral float-right" title="Bit Manipulation Questions Part 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

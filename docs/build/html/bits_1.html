@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Acknowledgements" href="acknowledgements.html" />
+    <link rel="next" title="Acknowledgements and References" href="acknowledgements.html" />
     <link rel="prev" title="Bit Manipulation Knowledge Base" href="bits_kb.html" /> 
 </head>
 
@@ -47,12 +47,13 @@
 <li class="toctree-l1"><a class="reference internal" href="bits_kb.html">Knowledge base</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#hamming-weight">1. Hamming weight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compute-the-parity-of-a-word">2. Compute the parity of a word</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements and References</a></li>
 </ul>
 
         </div>
@@ -138,6 +139,133 @@
 </div>
 <p>So the loop will work for just as many times as there are 1s.</p>
 </section>
+<section id="compute-the-parity-of-a-word">
+<h2>2. Compute the parity of a word<a class="headerlink" href="#compute-the-parity-of-a-word" title="Link to this heading"></a></h2>
+<p>The parity of a binary word is 1 if the number of 1s in the word is odd;
+otherwise, it is 0. For example, the parity of 1011 is 1, and the parity of
+10001000 is 0.</p>
+<p><strong>Solution 1</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f9</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">w</span><span class="p">:</span>
+        <span class="n">bins</span> <span class="o">+=</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">i</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">bins</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">^=</span> <span class="n">bins</span> <span class="o">&amp;</span> <span class="mi">1</span>
+        <span class="n">bins</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f9</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f9</span><span class="p">(</span><span class="s1">&#39;ha&#39;</span><span class="p">))</span>
+<span class="c1"># OUT</span>
+<span class="c1"># 1101000</span>
+<span class="c1"># 1</span>
+<span class="c1"># 11010001100001</span>
+<span class="c1"># 0</span>
+</pre></div>
+</div>
+<p><strong>Solution 2</strong>
+<em>O(n), n is word size</em></p>
+<ul class="simple">
+<li><p>Tools that we use here</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.python.org/3/library/functions.html#format" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">format()</span></code></a></div>
+<div class="line">Converts a character into binary.</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>   <span class="c1">#char &#39;d&#39;</span>
+<span class="go">&#39;1100100&#39;</span>
+</pre></div>
+</div>
+<p>How to convert string to binary.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">st</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">st</span><span class="p">)</span>
+<span class="go">&#39;1101000 1100101 1101100 1101100 1101111 100000 1110111 1101111 1110010 1101100 1100100&#39;</span>
+</pre></div>
+</div>
+<p>Using <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+<span class="go">&#39;1101000 1100101 1101100 1101100 1101111 100000 1110111 1101111 1110010 1101100 1100100&#39;</span>
+</pre></div>
+</div>
+<p>Note that type of the above object will still be - &lt;class ‘str’&gt;,
+so we won’t be able to feed such a value to a function that expects a binary type.
+BUT. To convert, just use int().</p>
+<p><em>Solution.</em>
+Brute-force, iteratively test the value of each bit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="mi">1</span>
+        <span class="n">x</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">word</span> <span class="o">=</span> <span class="s1">&#39;so&#39;</span>  <span class="c1"># 11100111101111  - 11 1s</span>
+<span class="n">word_bin</span> <span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">word</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">parity</span><span class="p">(</span><span class="n">word_bin</span><span class="p">))</span>  <span class="c1"># outputs 1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Step by step explanation</div>
+<div class="line">1) x=11100111101111 looking at 1 on the right side</div>
+<div class="line">res=0, x=11100111101111, x&amp;1 = 1, (res 0 ^ 1) = 1</div>
+<div class="line">x &gt;&gt;= 1, x= 1110011110111</div>
+<div class="line">2) x=1110011110111 looking at 1 on the right side</div>
+<div class="line">res=1, x=1110011110111, x&amp;1 = 1, (res 1 ^ 1) = 0</div>
+<div class="line">x &gt;&gt;= 1, x= 111001111011</div>
+<div class="line">3) x=111001111011 looking at 1 on the right side</div>
+<div class="line">res=0, x=111001111011, x&amp;1 = 1, (res 0 ^ 1) = 1</div>
+<div class="line">x &gt;&gt;= 1, x= 111001111011</div>
+</div>
+<p>Shorter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">For</span> <span class="n">x</span><span class="o">=</span><span class="mi">11100111101111</span>
+<span class="n">res</span>  <span class="n">encountered</span>
+<span class="mi">1</span><span class="p">)</span> <span class="mi">0</span>    <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span> <span class="n">odd</span>
+<span class="mi">2</span><span class="p">)</span> <span class="mi">1</span>    <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">r</span><span class="o">=</span><span class="mi">0</span> <span class="n">even</span>
+<span class="mi">3</span><span class="p">)</span> <span class="mi">0</span>    <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span> <span class="n">odd</span>
+</pre></div>
+</div>
+<p><strong>Solution 3</strong>, <em>O(k), k is the number of bits set to 1</em></p>
+<div class="line-block">
+<div class="line">We are going to use this trick</div>
+<div class="line">x&amp;(x-1) trick</div>
+<div class="line">==&gt; dropping the rightmost 1 &lt;==</div>
+<div class="line">(“erasing the lowest set bit”)</div>
+<div class="line">x&amp;(x-1) = x with its lowest set bit erased</div>
+<div class="line">Example</div>
+<div class="line">if x=(00101100),then x-1= (00101011),</div>
+<div class="line">so x &amp;(x - 1) = (00101100)&amp;(00101011) = (00101000)</div>
+<div class="line">Again note 00101-1-00 becomes 00101-0-00</div>
+</div>
+<p><em>Actual solution.</em>
+Using the above trick, we end up counting only 1s:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">^=</span> <span class="mi">1</span>
+        <span class="n">x</span> <span class="o">&amp;=</span> <span class="n">x</span><span class="o">-</span><span class="mi">1</span>    <span class="c1">#drops the rightmost 1, loop goes on until we run out of 1s</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p><strong>Solution 3</strong>, <em>O(log n), n is the word size</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span>
+    <span class="n">x</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span>
+    <span class="n">x</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
+    <span class="n">x</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+    <span class="n">x</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+    <span class="n">x</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="mh">0x1</span>
+</pre></div>
+</div>
+<p>Recall we have a 64 bit word.
+The parity of (b63,b62,. .. ,b3,b2, b1, b0) equals the parity of the XOR of
+(b63,b62,… ,b32) and (b31, b30,. .., b0).
+Note that the leading bits are not meaningful, and we
+have to explicitly extract the result from the least-significant bit.</p>
+</section>
 </section>
 
 
@@ -145,7 +273,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="bits_kb.html" class="btn btn-neutral float-left" title="Bit Manipulation Knowledge Base" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements and References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
