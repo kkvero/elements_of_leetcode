@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bit Manipulation Knowledge Base &mdash; Elements of Leetcode 0.1 documentation</title>
+  <title>Knowledge Base &mdash; Elements of Leetcode 0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -46,13 +46,30 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Knowledge base</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#bitwise-operators">Bitwise operators</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#not">~, NOT</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#xor">^, XOR</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#or">|, OR</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#and">&amp;, AND</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#or">|, OR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xor">^, XOR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#not">~, NOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shift">&lt;&lt;, &gt;&gt;, shift</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#functions-methods-for-numeric-types">Functions, methods for numeric types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-tasks">Common tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#count-bits">Count bits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">+, - 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#even-and-odd-numbers">Even and odd numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zero-pad">Zero pad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-binaries-verbatim">Use binaries verbatim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extract-lsbs">Extract LSBs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#merge">Merge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vocabulary">Vocabulary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#msb-lsb">MSB, LSB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sign-bit">Sign bit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#masks">Masks</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bits_1.html">Part 1</a></li>
@@ -76,7 +93,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Bit Manipulation Knowledge Base</li>
+      <li class="breadcrumb-item active">Knowledge Base</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/bits_kb.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,58 +103,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="bit-manipulation-knowledge-base">
-<h1>Bit Manipulation Knowledge Base<a class="headerlink" href="#bit-manipulation-knowledge-base" title="Link to this heading"></a></h1>
+  <section id="knowledge-base">
+<h1>Knowledge Base<a class="headerlink" href="#knowledge-base" title="Link to this heading"></a></h1>
 <p><strong>bit vs byte</strong>
 The smallest unit of information, called an octet or a byte, comprises eight bits
 that can store 256 distinct values.</p>
 <section id="bitwise-operators">
 <h2>Bitwise operators<a class="headerlink" href="#bitwise-operators" title="Link to this heading"></a></h2>
-<section id="not">
-<h3>~, NOT<a class="headerlink" href="#not" title="Link to this heading"></a></h3>
-<p>Unary, Inverts all the bits, ~x.
-0s become 1s and vice versa.
-But, note, in REPL:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">55</span>
-<span class="go">-56</span>
-</pre></div>
-</div>
-<p>NOT operator works properly only when you use it with a mask of 1s the size of the
-original number.</p>
-<div class="line-block">
-<div class="line">To get ~55 = 8</div>
-<div class="line">~110111  (55)</div>
-<div class="line">0001000   (8)</div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">55</span> <span class="o">&amp;</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;111111&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">8</span>
-</pre></div>
-</div>
-</section>
-<section id="xor">
-<h3>^, XOR<a class="headerlink" href="#xor" title="Link to this heading"></a></h3>
-<p>Sets each bit to 1 if only one of two bits is 1, x ^ y</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;0b</span><span class="si">{:04b}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mb">0b1100</span> <span class="o">^</span> <span class="mb">0b1010</span><span class="p">)</span>
-<span class="go">&#39;0b0110&#39;</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">^=</span> <span class="pre">b</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">^</span> <span class="pre">b</span></code></p>
-</section>
-<section id="or">
-<h3>|, OR<a class="headerlink" href="#or" title="Link to this heading"></a></h3>
-<p>a | b, Each bit position in the result is the logical OR of the
-bits in the corresponding position of the operands. 1 if either is 1, otherwise 0.
-E.g.: 1000 | 10 is 1010.</p>
-<div class="admonition-merging-numbers admonition">
-<p class="admonition-title">Merging numbers</p>
-<p>It can also be said that OR operator merges two numbers (101 | 101000 = 101101):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span><span class="mi">101</span> <span class="o">|</span>
-<span class="mi">101000</span> <span class="o">=</span>
-<span class="mi">101101</span>
+<div class="admonition-overview-of-bitwise-operators-in-python admonition">
+<p class="admonition-title">Overview of bitwise operators in Python</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span>       <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>   <span class="n">Bitwise</span> <span class="n">AND</span>
+<span class="o">|</span>       <span class="n">a</span> <span class="o">|</span> <span class="n">b</span>   <span class="n">Bitwise</span> <span class="n">OR</span>
+<span class="o">^</span>       <span class="n">a</span> <span class="o">^</span> <span class="n">b</span>   <span class="n">Bitwise</span> <span class="n">XOR</span> <span class="p">(</span><span class="n">exclusive</span> <span class="n">OR</span><span class="p">)</span>
+<span class="o">~</span>       <span class="o">~</span><span class="n">a</span>      <span class="n">Bitwise</span> <span class="n">NOT</span>
+<span class="o">&lt;&lt;</span>      <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">n</span>  <span class="n">Bitwise</span> <span class="n">left</span> <span class="n">shift</span>
+<span class="o">&gt;&gt;</span>      <span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">n</span>  <span class="n">Bitwise</span> <span class="n">right</span> <span class="n">shift</span>
 </pre></div>
 </div>
 </div>
-</section>
 <section id="and">
 <h3>&amp;, AND<a class="headerlink" href="#and" title="Link to this heading"></a></h3>
 <p>a &amp; b, Each bit position in the result is the logical AND of the bits in the
@@ -173,16 +156,110 @@ n compared with 1s evaluates to n but of size those 1s.</p>
 </div>
 </div>
 </section>
+<section id="or">
+<h3>|, OR<a class="headerlink" href="#or" title="Link to this heading"></a></h3>
+<p>a | b, Each bit position in the result is the logical OR of the
+bits in the corresponding position of the operands. 1 if either is 1, otherwise 0.
+E.g.: 1000 | 10 is 1010.</p>
+<div class="admonition-merging-numbers admonition">
+<p class="admonition-title">Merging numbers</p>
+<p>It can also be said that OR operator merges two numbers (101 | 101000 = 101101):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span><span class="mi">101</span> <span class="o">|</span>
+<span class="mi">101000</span> <span class="o">=</span>
+<span class="mi">101101</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="xor">
+<h3>^, XOR<a class="headerlink" href="#xor" title="Link to this heading"></a></h3>
+<p>Sets each bit to 1 if only one of two bits is 1, x ^ y.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;0b</span><span class="si">{:04b}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mb">0b1100</span> <span class="o">^</span> <span class="mb">0b1010</span><span class="p">)</span>
+<span class="go">&#39;0b0110&#39;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">^=</span> <span class="pre">b</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">^</span> <span class="pre">b</span></code></p>
+</section>
+<section id="not">
+<h3>~, NOT<a class="headerlink" href="#not" title="Link to this heading"></a></h3>
+<p>Unary, Inverts all the bits, ~x.
+0s become 1s and vice versa.
+But, note, in REPL:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">55</span>
+<span class="go">-56</span>
+</pre></div>
+</div>
+<p>NOT operator works properly only when you use it with a mask of 1s the size of the
+original number.</p>
+<div class="line-block">
+<div class="line">To get ~55 = 8</div>
+<div class="line">~110111  (55)</div>
+<div class="line">0001000   (8)</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">55</span> <span class="o">&amp;</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;111111&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+</section>
+<section id="shift">
+<h3>&lt;&lt;, &gt;&gt;, shift<a class="headerlink" href="#shift" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">Arithmetic shift operators.</div>
+</div>
+<ul class="simple">
+<li><p>In visual terms:</p></li>
+</ul>
+<div class="line-block">
+<div class="line">&lt;&lt; - zero fill left shift, add a zero on the right (doubles the value)</div>
+<div class="line">&gt;&gt; - shift right, let the rightmost bits fall off (halves the original value)</div>
+</div>
+<p>It’s like we have a horizontal line/wall on the right side:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">1011010</span><span class="o">|</span>  <span class="n">original</span> <span class="n">number</span>
+<span class="mi">10110100</span><span class="o">|</span>  <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="n">Zeros</span> <span class="n">spur</span> <span class="n">up</span>
+  <span class="mi">101101</span><span class="o">|</span>  <span class="o">&gt;&gt;</span> <span class="mi">1</span>  <span class="n">Everything</span> <span class="n">disappears</span> <span class="n">on</span> <span class="n">the</span> <span class="n">right</span> <span class="n">side</span> <span class="n">of</span> <span class="n">the</span> <span class="n">wall</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<span class="go">&#39;0b1011010&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">90</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;0b10110100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">90</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;0b101101&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">90</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">&#39;0b10110&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>In terms of meaning:</p></li>
+</ul>
+<p>An arithmetic right shift is equivalent to floor division by a power of 2.
+(If it results a fraction, the right shift operator automatically floors the result.)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">30</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+<span class="go">15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="go">&#39;0b11110&#39;</span>
+<span class="go">&#39;0b1111&#39;</span>
+</pre></div>
+</div>
+<p>Shifting a single bit to the left by one place doubles its value.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">20</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+<span class="go">40</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">20</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>
+<span class="go">80   # Moving two places, quadruples</span>
+</pre></div>
+</div>
+<p>I.e. in general: a &lt;&lt; n = a * 2**n</p>
+</section>
 </section>
 <section id="functions-methods-for-numeric-types">
 <h2>Functions, methods for numeric types<a class="headerlink" href="#functions-methods-for-numeric-types" title="Link to this heading"></a></h2>
-<p><a class="reference external" href="https://docs.python.org/3/library/functions.html#abs" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">abs()</span></code></a> , abs(-34.5),
-<a class="reference external" href="https://docs.python.org/3/library/math.html#math.ceil" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.ceil()</span></code></a> , math.ceil(2. 17),
-<a class="reference external" href="https://docs.python.org/3/library/math.html#math.floor" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.floor()</span></code></a> , math.floor(3.14),
-<a class="reference external" href="https://docs.python.org/3/library/functions.html#min" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">min()</span></code></a> , min(x, -4),
-<a class="reference external" href="https://docs.python.org/3/library/functions.html#max" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a> , max(3.14, y),
-<a class="reference external" href="https://docs.python.org/3/library/functions.html#pow" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pow()</span></code></a> , pow(2.71, 3.14) (or 2.71 ** 3.14),
-<a class="reference external" href="https://docs.python.org/3/library/math.html#math.sqrt" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.sqrt()</span></code></a> , math.sqrt(225).</p>
+<p><a class="reference external" href="https://docs.python.org/3/library/functions.html#abs" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">abs()</span></code></a> , abs(-34.5),
+<a class="reference external" href="https://docs.python.org/3/library/math.html#math.ceil" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.ceil()</span></code></a> , math.ceil(2. 17),
+<a class="reference external" href="https://docs.python.org/3/library/math.html#math.floor" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.floor()</span></code></a> , math.floor(3.14),
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#min" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">min()</span></code></a> , min(x, -4),
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#max" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a> , max(3.14, y),
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#pow" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pow()</span></code></a> , pow(2.71, 3.14) (or 2.71 ** 3.14),
+<a class="reference external" href="https://docs.python.org/3/library/math.html#math.sqrt" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">math.sqrt()</span></code></a> , math.sqrt(225).</p>
 <div class="line-block">
 <div class="line"><em>About:</em></div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">math.ceil(x)</span></code> - smallest number greater than x</div>
@@ -192,23 +269,27 @@ n compared with 1s evaluates to n but of size those 1s.</p>
 </div>
 <div class="line-block">
 <div class="line"><strong>Interconvert integers and strings</strong></div>
-<div class="line">str(x), int(‘x’), float(‘x’)</div>
-<div class="line">format(), converts a character into binary:</div>
+<div class="line">str(x), int(‘x’), float(‘x’), ord(), chr()</div>
+<div class="line">format()</div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>   <span class="c1"># char &#39;d&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>   <span class="c1"># convert char &#39;d&#39; into binary</span>
 <span class="go">&#39;1100100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;fdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
+<span class="go">[102, 100, 114]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">chr</span><span class="p">(</span><span class="mi">102</span><span class="p">)</span>
+<span class="go">&#39;f&#39;</span>
 </pre></div>
 </div>
 <div class="line-block">
 <div class="line"><strong>Infinity</strong></div>
-<div class="line">float(‘inf’), float(‘-inf’)</div>
+<div class="line">float(‘inf’), float(‘-inf’), -float(‘inf’), -float(‘infinity’)</div>
 </div>
 <div class="line-block">
 <div class="line"><strong>random module</strong></div>
 <div class="line">random.randrange(28), random.randint(8,1.6), random.random(), random.shuffle(A), random.choice(A)</div>
 </div>
 <div class="line-block">
-<div class="line"><strong>ord()</strong></div>
 <div class="line"><strong>bit_length()</strong></div>
 <div class="line">Each character corresponds to a decimal, which in its turn corresponds to a binary.</div>
 </div>
@@ -223,7 +304,7 @@ n compared with 1s evaluates to n but of size those 1s.</p>
 </div>
 <div class="line-block">
 <div class="line"><strong>int.bit_count()</strong></div>
-<div class="line"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#int.bit_count" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">int.bit_count()</span></code></a> Return the number of ones.</div>
+<div class="line"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#int.bit_count" title="(in Python v3.12)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">int.bit_count()</span></code></a> Return the number of ones.</div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">=</span><span class="mi">99</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -232,29 +313,34 @@ n compared with 1s evaluates to n but of size those 1s.</p>
 <span class="go">4</span>
 </pre></div>
 </div>
-<div class="admonition-ways-to-count-turned-on-bits admonition">
-<p class="admonition-title">Ways to count turned on bits</p>
-<p>E.g. n=33</p>
+</section>
+<section id="common-tasks">
+<h2>Common tasks<a class="headerlink" href="#common-tasks" title="Link to this heading"></a></h2>
+<section id="count-bits">
+<h3>Count bits<a class="headerlink" href="#count-bits" title="Link to this heading"></a></h3>
+<p>Ways to count turned on bits.</p>
+<div class="line-block">
+<div class="line">E.g. n=33</div>
+</div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
 <span class="go">&#39;0b100001</span>
 </pre></div>
 </div>
 <ol class="arabic simple">
-<li><p>working with a string representation</p></li>
+<li><p>Working with a string representation:</p></li>
 </ol>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
 <span class="go">2</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
-<li><p>int method</p></li>
+<li><p>int method:</p></li>
 </ol>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span>
 <span class="go">2</span>
 </pre></div>
 </div>
-<ol class="arabic" start="3">
-<li><p>bit operators:</p>
+<p>3.1 Bit operators, n &amp; 1:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count1s</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
@@ -266,9 +352,158 @@ n compared with 1s evaluates to n but of size those 1s.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">count1s</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># 2</span>
 </pre></div>
 </div>
-</li>
-</ol>
+<p>3.2 Bit operators more efficient, number &amp; (number - 1).
+Takes away one bit with value 1.
+Useful in loops, the loop will work for just as many times as there are 1s.
+E.g.:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">52</span><span class="p">)</span>
+<span class="go">&#39;0b110100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">52</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">52</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">48</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
+<span class="go">&#39;0b110000&#39;</span>
+</pre></div>
 </div>
+</section>
+<section id="id1">
+<h3>+, - 1<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1000</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">111</span>   <span class="c1">#called turning off the rightmost bit operator</span>
+<span class="mi">1000</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1001</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="c1"># 7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>   <span class="c1"># &#39;0b111&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span> <span class="c1"># 9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>   <span class="c1"># &#39;0b1001&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="even-and-odd-numbers">
+<h3>Even and odd numbers<a class="headerlink" href="#even-and-odd-numbers" title="Link to this heading"></a></h3>
+<p>Least-significant bit, determines if the number is even or odd.
+That’s why we can always use n&amp;1 to check if a number is even or odd.
+(n&amp;1 performs AND comparison of 1 AND the LSB of a number.)
+&amp;1 is more efficient than n%2 == 0 check.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">&#39;0b10&#39;</span>
+<span class="go">&#39;0b11&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="c1">#0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="c1">#1</span>
+</pre></div>
+</div>
+<p>In code that checks with &amp;1, we should negate the statement, as 0 means False, but
+here it means Yes, LSB of n is 0, thus n is even:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">def</span> <span class="nf">is_even</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_even</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>  <span class="c1"># True</span>
+</pre></div>
+</div>
+</section>
+<section id="zero-pad">
+<h3>Zero pad<a class="headerlink" href="#zero-pad" title="Link to this heading"></a></h3>
+<p>How to zero pad binaries:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="mi">5</span><span class="si">:</span><span class="s1">06b</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="go">&#39;000101&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="use-binaries-verbatim">
+<h3>Use binaries verbatim<a class="headerlink" href="#use-binaries-verbatim" title="Link to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">age</span> <span class="o">=</span> <span class="mb">0b101010</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mb">0b101010</span>  <span class="c1"># instead of the more explicit int(&#39;0b101010&#39;, 2)</span>
+<span class="go">42</span>
+</pre></div>
+</div>
+<p>But we need int() when binary nums are generated dynamically in code.</p>
+</section>
+<section id="extract-lsbs">
+<h3>Extract LSBs<a class="headerlink" href="#extract-lsbs" title="Link to this heading"></a></h3>
+<p>I.e. extracting the right side of a number. When it is used: it is one of the steps
+when we need to change some bits in the middle of an integer in binary representation.
+The steps would be 1) extract the right side, 2) change LSBs of the remaining left side,
+3) stick the right side back in.</p>
+<p>To Extract the rightmost LSBs we create a mask of 1s:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here i is the index, which at the same time is the len of mask.</span>
+<span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="c1"># e.g. i=2</span>
+<span class="c1"># 100</span>
+<span class="c1"># 100 - 1 -&gt; 11</span>
+</pre></div>
+</div>
+<p>Having got 1s, you compare it with the original number using &amp;.
+You end up with the right part of a number exactly the size of 1s.
+E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span><span class="mi">11</span> <span class="o">&amp;</span>  <span class="c1"># mask</span>
+<span class="mi">10101</span>    <span class="c1"># our original number</span>
+<span class="o">---</span><span class="mi">01</span>    <span class="c1"># extracted LSBs</span>
+</pre></div>
+</div>
+</section>
+<section id="merge">
+<h3>Merge<a class="headerlink" href="#merge" title="Link to this heading"></a></h3>
+<p>Informally speaking, how to stick the right side of a number back in? I.e. merge
+two binary numbers.</p>
+<p>After changing a number in some way (del, flip bit), you will need to stick
+the right side back in. Use OR operator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mask</span> <span class="o">|</span> <span class="n">right</span>
+</pre></div>
+</div>
+<p>We use the fact that when 0s are compared with a number, 0s turn into that number.
+&lt;right&gt; is e.g. the last two digits on the right of the original number.
+&lt;mask&gt; is left side + 0s of len that equals len right. E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original number=1001</span>
+<span class="c1"># right=01</span>
+<span class="c1"># mask= 1000 (which we got via, if deleting at index, mask=n&gt;&gt;i, mask=mask&lt;&lt;i)</span>
+<span class="c1"># Basically mask is a number ending with 0s.</span>
+<span class="c1"># Where 0s were, we place the &#39;right&#39;.</span>
+<span class="mi">1000</span>
+<span class="o">--</span><span class="mi">01</span>
+<span class="mi">1001</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="vocabulary">
+<h2>Vocabulary<a class="headerlink" href="#vocabulary" title="Link to this heading"></a></h2>
+<section id="msb-lsb">
+<h3>MSB, LSB<a class="headerlink" href="#msb-lsb" title="Link to this heading"></a></h3>
+<p>Often the bits in a binary representation of a number are referred to as the MSB or LSB.
+It helps to understand which bits will be effected by an operation.</p>
+<div class="line-block">
+<div class="line">MSB - most significant bit (the leftmost)</div>
+<div class="line">LSB - least significant bit (the rightmost)</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">&#39;0b10&#39; # MSB=1, LSB=0</span>
+</pre></div>
+</div>
+</section>
+<section id="sign-bit">
+<h3>Sign bit<a class="headerlink" href="#sign-bit" title="Link to this heading"></a></h3>
+<p>Signed binary integers are encoded negative numbers.
+If MSB is 1, then the number is negative (normally in programming languages).
+Python has no sign bit.
+Integers in Python can have an infinite number of bits.</p>
+</section>
+<section id="masks">
+<h3>Masks<a class="headerlink" href="#masks" title="Link to this heading"></a></h3>
+<p>Bitmasks allow to isolate particular bits in a binary representation of an integer.
+E.g. get the 2 LSBs of a decimal 42.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1">#&#39;0b101010&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="c1">#100-1=11, why &lt;&lt;, it makes sure the result will be in binary</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="c1"># 3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="c1">#&#39;0b11&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">42</span> <span class="o">&amp;</span> <span class="n">mask</span> <span class="c1"># 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#&#39;0b10&#39; got our 2 LSBs</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">hex()</span></code>
+Hexadecimals are often used to represent masks.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="mb">0b11111111</span>  <span class="c1"># Same as 0xff or 255</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
