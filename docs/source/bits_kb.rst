@@ -83,8 +83,8 @@ But, note, in REPL:
 >>> ~55
 -56
 
-NOT operator works properly only when you use it with a mask of 1s the size of the
-original number.
+NOT operator works properly only when you use it with a mask (see :ref:`mask-label`)
+of 1s the size of the original number.
 
 | To get ~55 = 8 
 | ~110111  (55)
@@ -250,7 +250,7 @@ E.g.:
 
 Even and odd numbers
 ^^^^^^^^^^^^^^^^^^^^
-Least-significant bit, determines if the number is even or odd.
+Least-significant bit (see :ref:`lsb-label`) determines if the number is even or odd.
 That's why we can always use n&1 to check if a number is even or odd.
 (n&1 performs AND comparison of 1 AND the LSB of a number.)
 &1 is more efficient than n%2 == 0 check.
@@ -333,9 +333,11 @@ We use the fact that when 0s are compared with a number, 0s turn into that numbe
 
 Vocabulary
 ----------
+.. _lsb-label:
+
 MSB, LSB
 ^^^^^^^^
-Often the bits in a binary representation of a number are referred to as the MSB or LSB.
+The bits in a binary representation of a number are referred to as the MSB or LSB.
 It helps to understand which bits will be effected by an operation.
 
 | MSB - most significant bit (the leftmost)
@@ -344,12 +346,16 @@ It helps to understand which bits will be effected by an operation.
 >>> bin(2)
 '0b10' # MSB=1, LSB=0
 
+For an example see :ref:`swap-bits-label`.
+
 Sign bit
 ^^^^^^^^
 Signed binary integers are encoded negative numbers.
 If MSB is 1, then the number is negative (normally in programming languages).
 Python has no sign bit.
 Integers in Python can have an infinite number of bits.
+
+.. _mask-label:
 
 Masks
 ^^^^^
@@ -367,20 +373,5 @@ E.g. get the 2 LSBs of a decimal 42.
 Hexadecimals are often used to represent masks.
 
 >>> mask = 0b11111111  # Same as 0xff or 255
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

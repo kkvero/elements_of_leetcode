@@ -189,8 +189,8 @@ But, note, in REPL:</p>
 <span class="go">-56</span>
 </pre></div>
 </div>
-<p>NOT operator works properly only when you use it with a mask of 1s the size of the
-original number.</p>
+<p>NOT operator works properly only when you use it with a mask (see <a class="reference internal" href="#mask-label"><span class="std std-ref">Masks</span></a>)
+of 1s the size of the original number.</p>
 <div class="line-block">
 <div class="line">To get ~55 = 8</div>
 <div class="line">~110111  (55)</div>
@@ -380,7 +380,7 @@ E.g.:</p>
 </section>
 <section id="even-and-odd-numbers">
 <h3>Even and odd numbers<a class="headerlink" href="#even-and-odd-numbers" title="Link to this heading"></a></h3>
-<p>Least-significant bit, determines if the number is even or odd.
+<p>Least-significant bit (see <a class="reference internal" href="#lsb-label"><span class="std std-ref">MSB, LSB</span></a>) determines if the number is even or odd.
 That’s why we can always use n&amp;1 to check if a number is even or odd.
 (n&amp;1 performs AND comparison of 1 AND the LSB of a number.)
 &amp;1 is more efficient than n%2 == 0 check.</p>
@@ -467,8 +467,8 @@ the right side back in. Use OR operator:</p>
 <section id="vocabulary">
 <h2>Vocabulary<a class="headerlink" href="#vocabulary" title="Link to this heading"></a></h2>
 <section id="msb-lsb">
-<h3>MSB, LSB<a class="headerlink" href="#msb-lsb" title="Link to this heading"></a></h3>
-<p>Often the bits in a binary representation of a number are referred to as the MSB or LSB.
+<span id="lsb-label"></span><h3>MSB, LSB<a class="headerlink" href="#msb-lsb" title="Link to this heading"></a></h3>
+<p>The bits in a binary representation of a number are referred to as the MSB or LSB.
 It helps to understand which bits will be effected by an operation.</p>
 <div class="line-block">
 <div class="line">MSB - most significant bit (the leftmost)</div>
@@ -478,6 +478,7 @@ It helps to understand which bits will be effected by an operation.</p>
 <span class="go">&#39;0b10&#39; # MSB=1, LSB=0</span>
 </pre></div>
 </div>
+<p>For an example see <a class="reference internal" href="bits_1.html#swap-bits-label"><span class="std std-ref">3. Swap bits</span></a>.</p>
 </section>
 <section id="sign-bit">
 <h3>Sign bit<a class="headerlink" href="#sign-bit" title="Link to this heading"></a></h3>
@@ -487,7 +488,7 @@ Python has no sign bit.
 Integers in Python can have an infinite number of bits.</p>
 </section>
 <section id="masks">
-<h3>Masks<a class="headerlink" href="#masks" title="Link to this heading"></a></h3>
+<span id="mask-label"></span><h3>Masks<a class="headerlink" href="#masks" title="Link to this heading"></a></h3>
 <p>Bitmasks allow to isolate particular bits in a binary representation of an integer.
 E.g. get the 2 LSBs of a decimal 42.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1">#&#39;0b101010&#39;</span>

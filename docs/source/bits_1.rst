@@ -9,6 +9,7 @@ Count the number of bits that are set to 1 in a positive integer
 
 Solution::
 
+    # Python
     def count_bits(x):
         num_bits = 0
         while x:
@@ -25,6 +26,7 @@ Solution::
 
 Other solutions::
 
+    # Python
     def count_ones_recur(n):
         """Using Brian Kernighan’s Algorithm. (Recursive Approach)"""
         if not n:
@@ -65,6 +67,7 @@ otherwise, it is 0. For example, the parity of 1011 is 1, and the parity of
 
 **Solution 1**::
 
+    # Python
     def f9(w):
         bins = ""
         for i in w:
@@ -168,6 +171,7 @@ Using the above trick, we end up counting only 1s::
 
 **Solution 3**, *O(log n), n is the word size*::
 
+    # Python
     def parity(x):
         x ^= x >> 32
         x ^= x >> 16
@@ -183,10 +187,76 @@ The parity of (b63,b62,. .. ,b3,b2, b1, b0) equals the parity of the XOR of
 Note that the leading bits are not meaningful, and we
 have to explicitly extract the result from the least-significant bit.
 
+.. _swap-bits-label:
 
+3. Swap bits
+------------
+A 64-bit integer can be viewed as an array of 64bits, with the bit at index 0 corresponding to the
+least significant bit (LSB, see :ref:`lsb-label`), and the bit at index 63 corresponding to the most significant bit (MSB).
+Implement code that takes as input a 64-bit integer and swaps the bits at indices i and j. 
 
+*Example*::
 
+    # Visualize
+    # Note, index 0 is on the right.
+    # E.g. bit swapping for an 8-bit integer.
+    # Original:
+    # 0 >1< 0 0 1 0 >0< 1
+    # MSB               LSB (ind 0)
+    # ind 7
+    # Swapped:
+    # 0 >0< 0 0 1 0 >1< 1
 
+**Solution**
+
+The time complexity O(1) independent of the word size::
+
+    # Python
+    def swap_bits(x, i, j):
+        if (x >> i) & 1 != (x >> j) & 1:
+            bit_mask = (1 << i) | (1 << j)   #**1
+            x ^= bit_mask                    #**2
+        return x
+
+    number = 997
+    print(swap_bits(number, 3, 6))  #941
+
+| #**1 mask gives us 1s at concerning indexes, e.g. 100100 (when j=5, i=2)
+| #**2 having such a mask, xoring it with original number, changes bits at indexes we are concerned with. 
+
+Checking:
+
+>>> bin(997)
+'0b1111100101'
+>>> bin(941)
+'0b1110101101'
+
+*Explained*
+
+Because a bit can only have two possible values, 1 or 0. 
+It makes sense to first test if the bits differ. If they do not, the swap wouldn't
+change the integer.
+Again, because only 2 possible values, flipping has the effect of a swap.
+
+| E.g. x=997, i=3, j=6
+| if (x >> i) & 1 != (x >> j) & 1:
+| Use bit shift operator to check values at corresponding indexes.
+| x>>3 is 1111100>>101 looking at 0
+| x>>6 is 1111>>100101 looking at 1
+
+| bit_mask = (1 << i) | (1 << j)
+| 1<<3 is 1000
+| 1<<6 is 1000000
+| 1000 | 1000000 is 1001000 #OR operator applies logical OR to each bit
+| The bit_mask creates a number that has 1s at the indexes in question.
+| Here 1 at index 6 and 3.
+| Then using ^ XOR having 1 in mask changes whatever value at the index in x.
+| If x=1, x^1 changes x to 0. If x=0, x^1, changes x to 1.
+
+| x ^= bit_mask
+| 1111100101 ^  #our x
+| ---1001000    #our mask, 1s at index 3 and 6
+| 1110101101    #flipped bits at index 3 and 6
 
 
 
