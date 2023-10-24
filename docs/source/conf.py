@@ -6,27 +6,28 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Elements of Leetcode'
-copyright = '2023, Veronika Kirichenko'
-author = 'Veronika Kirichenko'
-release = '0.1'
+project = "Elements of Leetcode"
+copyright = "2023, Veronika Kirichenko"
+author = "Veronika Kirichenko"
+release = "0.1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.intersphinx',
+    "sphinx.ext.intersphinx",
+    "sphinxemoji.sphinxemoji",
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
 
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]
 
 # Added
-intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
+intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}

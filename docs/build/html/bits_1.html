@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Acknowledgements and References" href="acknowledgements.html" />
-    <link rel="prev" title="Knowledge Base" href="bits_kb.html" /> 
+    <link rel="prev" title="Knowledge Base Bit Manipulation" href="bits_kb.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,6 +49,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#hamming-weight">1. Hamming weight</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#compute-the-parity-of-a-word">2. Compute the parity of a word</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#swap-bits">3. Swap bits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc190-reverse-bits">4. (LC190) Reverse bits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#find-a-closest-integer-with-the-same-weight">5. Find a closest integer with the same weight</a></li>
 </ul>
 </li>
 </ul>
@@ -341,13 +343,125 @@ Again, because only 2 possible values, flipping has the effect of a swap.</p>
 <div class="line">1110101101    #flipped bits at index 3 and 6</div>
 </div>
 </section>
+<section id="lc190-reverse-bits">
+<h2>4. (LC190) Reverse bits<a class="headerlink" href="#lc190-reverse-bits" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Input: n = 00000010100101000001111010011100</div>
+<div class="line">Output:    964176192 (00111001011110000010100101000000)</div>
+</div>
+<p><strong>Solution 1</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverse_bits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">m</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reverse_bits</span><span class="p">(</span><span class="mi">600</span><span class="p">))</span>   <span class="c1"># returns 105</span>
+</pre></div>
+</div>
+<p>Checking</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
+<span class="go">&#39;0b1001011000&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">105</span><span class="p">)</span>
+<span class="go">&#39;0b1101001&#39;</span>
+</pre></div>
+</div>
+<p><em>Explained</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">(m</span> <span class="pre">&lt;&lt;</span> <span class="pre">1)</span> <span class="pre">+</span> <span class="pre">(n</span> <span class="pre">&amp;</span> <span class="pre">1)</span></code> using bitwise operators, both
+values are in the same format, and you can simply concatenate the result of n&amp;1 to m.
+FYI the result of n&amp;1 is whatever the last bit of n is. E.g. if n ends with 0,
+0&amp;1 returns 0, 1&amp;1 would return 1.</p>
+<p><strong>Solution 2</strong> (When you do not know better.):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseBits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span><span class="o">*</span><span class="p">(</span><span class="mi">32</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="n">s</span>  <span class="c1"># we zero pad</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Solution 3</strong> (My variant):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverse_bits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">L</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">],</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reverse_bits</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span>  <span class="c1">#OUT (&#39;000101&#39;, 5)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+<span class="go">&#39;0b101000&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="find-a-closest-integer-with-the-same-weight">
+<h2>5. Find a closest integer with the same weight<a class="headerlink" href="#find-a-closest-integer-with-the-same-weight" title="Link to this heading"></a></h2>
+<p>The weight of an integer is the number of bits set to 1 in its binary representation.
+E.g. x = 92 which is (1011100), the weight is 4.</p>
+<p>(Write a program which takes as input a nonnegative integer x and returns a number y
+which has the same weight as x and their difference |y-x| is as small as possible.
+Assume x is not 0 or all 1s; integer fits in 64 bits.)</p>
+<p><strong>Solution 1</strong>
+(O(n), n is integer width)</p>
+<p><em>Logic.</em>
+To make sure that x and y differ as little as possible, we have to change LSB (least
+significant bits) of x. I.e. we swap the two rightmost consecutive bits that differ.
+(Since we must preserve the weight, the bit at index i and at i+1 have to be different):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">closest_int_same_bit_count</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">NUM_UNSIGNED_BITS</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_UNSIGNED_BITS</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">!=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>   <span class="c1">#if bit at i and bit at i+1 are not the same</span>
+            <span class="n">x</span> <span class="o">^=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="c1">#Swaps bit i and bit (i+1)</span>
+            <span class="k">return</span> <span class="n">x</span>
+    <span class="c1"># Raise error if all bits of x are 0 or 1</span>
+    <span class="c1"># (we looped through x without finding deffering bits)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;All bits are 0 or 1&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">closest_int_same_bit_count</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>  <span class="c1">#4</span>
+</pre></div>
+</div>
+<p><em>My note.</em> We don’t have to check if the number with swapped bits at i and i+1 is
+the closest to x, because it is, because we swap LSBs. So as soon as we found
+differing bits at i and i+1, we swap and return. So it comes down to just:</p>
+<ol class="arabic simple">
+<li><p>finding differing bits</p></li>
+<li><p>swapping</p></li>
+</ol>
+<p><em>Explained.</em></p>
+<div class="line-block">
+<div class="line">E.g. x = 10101</div>
+<div class="line"># Check if bit at i and bit at i+1 are not the same</div>
+<div class="line">if (x &gt;&gt; i) &amp; 1 != (x &gt;&gt; (i+1)) &amp; 1:</div>
+<div class="line">i=0</div>
+<div class="line">x &gt;&gt; i = 10101, (10101 &amp; 1) = 1  &lt;—we just get the bit at i of x</div>
+<div class="line">x &gt;&gt; i+1 = 1010, (1010 &amp; 1) = 0  &lt;– we get the bit at i+1 of x</div>
+<div class="line">We make the (num &amp; 1) comparison to get rid of the bits on the left.</div>
+</div>
+<div class="line-block">
+<div class="line"># Swap bit i and bit (i+1)</div>
+<div class="line">x ^= (1 &lt;&lt; i) | (1 &lt;&lt; (i+1))</div>
+<div class="line">(1 &lt;&lt; i) | (1 &lt;&lt; (i+1))  -&gt; i=0 -&gt;</div>
+<div class="line">01 |</div>
+<div class="line">10</div>
+<div class="line">11</div>
+<div class="line">x = x^11 -&gt;</div>
+<div class="line">10101 ^</div>
+<div class="line">00011</div>
+<div class="line">10110  # We swapped bits</div>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="bits_kb.html" class="btn btn-neutral float-left" title="Knowledge Base" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bits_kb.html" class="btn btn-neutral float-left" title="Knowledge Base Bit Manipulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements and References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

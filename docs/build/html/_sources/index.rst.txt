@@ -10,9 +10,9 @@ ELEMENTS OF LEETCODE - Python solutions explained
 These learning materials aim to provide explanations to basic algorithms in 
 Python, including questions on Leetcode and elsewhere.
 
-.. note::
-
-    This project is under development.
+While the solutions are widely available through different sources, it is a greater
+challenge to find the logic behind the provided answers. 
+This resource seeks to fill (or diminish) that gap.
 
 TABLE OF CONTENTS
 -----------------

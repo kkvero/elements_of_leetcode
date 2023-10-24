@@ -1,5 +1,5 @@
-Knowledge Base
-==============
+Knowledge Base Bit Manipulation
+===============================
 **bit vs byte**
 The smallest unit of information, called an octet or a byte, comprises eight bits 
 that can store 256 distinct values.

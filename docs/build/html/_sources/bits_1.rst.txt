@@ -258,10 +258,115 @@ Again, because only 2 possible values, flipping has the effect of a swap.
 | ---1001000    #our mask, 1s at index 3 and 6
 | 1110101101    #flipped bits at index 3 and 6
 
+4. (LC190) Reverse bits
+-----------------------
+| Example 1:
+| Input: n = 00000010100101000001111010011100
+| Output:    964176192 (00111001011110000010100101000000)
 
+**Solution 1**::
 
+    def reverse_bits(n):
+        m = 0
+        while n:
+            m = (m << 1) + (n & 1) 
+            n >>= 1
+        return m
 
+    print(reverse_bits(600))   # returns 105
 
+Checking
 
+>>> bin(600)
+'0b1001011000'
+>>> bin(105)
+'0b1101001'
 
+*Explained*
+
+``(m << 1) + (n & 1)`` using bitwise operators, both
+values are in the same format, and you can simply concatenate the result of n&1 to m.
+FYI the result of n&1 is whatever the last bit of n is. E.g. if n ends with 0,
+0&1 returns 0, 1&1 would return 1.
+
+**Solution 2** (When you do not know better.)::
+
+    class Solution:
+        def reverseBits(self, n):
+            s = bin(n)[2:]
+            s = "0"*(32 - len(s)) + s  # we zero pad
+            t = s[::-1]
+            return int(t,2)
+
+**Solution 3** (My variant)::
+
+    def reverse_bits(n):
+        s = bin(n)[2:]
+        L = list(s)
+        for i in range(0, len(s)//2):
+            L[i], L[len(s)-1-i] = L[len(s)-1-i], L[i]
+        s = ''.join(L)
+        return s, int(s, 2)
+
+    print(reverse_bits(40))  #OUT ('000101', 5)
+
+>>> bin(40)
+'0b101000'
+
+5. Find a closest integer with the same weight
+----------------------------------------------
+The weight of an integer is the number of bits set to 1 in its binary representation.
+E.g. x = 92 which is (1011100), the weight is 4.
+
+(Write a program which takes as input a nonnegative integer x and returns a number y 
+which has the same weight as x and their difference \|y-x| is as small as possible.
+Assume x is not 0 or all 1s; integer fits in 64 bits.)
+
+**Solution 1** 
+(O(n), n is integer width)
+
+*Logic.*
+To make sure that x and y differ as little as possible, we have to change LSB (least
+significant bits) of x. I.e. we swap the two rightmost consecutive bits that differ.
+(Since we must preserve the weight, the bit at index i and at i+1 have to be different)::
+
+    def closest_int_same_bit_count(x):
+        NUM_UNSIGNED_BITS = 64
+        for i in range(NUM_UNSIGNED_BITS - 1):
+            if (x >> i) & 1 != (x >> (i+1)) & 1:   #if bit at i and bit at i+1 are not the same
+                x ^= (1 << i) | (1 << (i+1)) #Swaps bit i and bit (i+1)
+                return x
+        # Raise error if all bits of x are 0 or 1 
+        # (we looped through x without finding deffering bits)
+        raise ValueError('All bits are 0 or 1')
+
+    print(closest_int_same_bit_count(8))  #4
+
+*My note.* We don't have to check if the number with swapped bits at i and i+1 is
+the closest to x, because it is, because we swap LSBs. So as soon as we found 
+differing bits at i and i+1, we swap and return. So it comes down to just: 
+
+1. finding differing bits
+2. swapping
+
+*Explained.*
+
+| E.g. x = 10101
+| # Check if bit at i and bit at i+1 are not the same
+| if (x >> i) & 1 != (x >> (i+1)) & 1:
+| i=0
+| x >> i = 10101, (10101 & 1) = 1  <---we just get the bit at i of x
+| x >> i+1 = 1010, (1010 & 1) = 0  <-- we get the bit at i+1 of x
+| We make the (num & 1) comparison to get rid of the bits on the left.
+ 
+| # Swap bit i and bit (i+1)
+| x ^= (1 << i) | (1 << (i+1))  
+| (1 << i) | (1 << (i+1))  -> i=0 -> 
+| 01 | 
+| 10
+| 11
+| x = x^11 -> 
+| 10101 ^
+| 00011
+| 10110  # We swapped bits
 
