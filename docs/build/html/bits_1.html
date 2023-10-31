@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Acknowledgements and References" href="acknowledgements.html" />
+    <link rel="next" title="Bit Manipulation Questions Part 2" href="bits_2.html" />
     <link rel="prev" title="Knowledge Base Bit Manipulation" href="bits_kb.html" /> 
 </head>
 
@@ -45,14 +45,19 @@
               <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="bits_kb.html">Knowledge base</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (1-9)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#hamming-weight">1. Hamming weight</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#compute-the-parity-of-a-word">2. Compute the parity of a word</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#swap-bits">3. Swap bits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc190-reverse-bits">4. (LC190) Reverse bits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#find-a-closest-integer-with-the-same-weight">5. Find a closest integer with the same weight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compute-x-y">6. Compute x**y</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reverse-digits">7. Reverse digits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#check-if-a-decimal-integer-is-a-palindrome">8. Check if a decimal integer is a palindrome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-without-using">9. Add without using +</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bits_2.html">Part 2 (10-18)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
@@ -432,8 +437,8 @@ differing bits at i and i+1, we swap and return. So it comes down to just:</p>
 <li><p>finding differing bits</p></li>
 <li><p>swapping</p></li>
 </ol>
-<p><em>Explained.</em></p>
 <div class="line-block">
+<div class="line"><em>Explained.</em></div>
 <div class="line">E.g. x = 10101</div>
 <div class="line"># Check if bit at i and bit at i+1 are not the same</div>
 <div class="line">if (x &gt;&gt; i) &amp; 1 != (x &gt;&gt; (i+1)) &amp; 1:</div>
@@ -455,6 +460,301 @@ differing bits at i and i+1, we swap and return. So it comes down to just:</p>
 <div class="line">10110  # We swapped bits</div>
 </div>
 </section>
+<section id="compute-x-y">
+<h2>6. Compute x**y<a class="headerlink" href="#compute-x-y" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><em>Logic</em></div>
+<div class="line">The aim is to get more work done with each multiplication,</div>
+<div class="line">i.e. not x**3=x**2 * x,</div>
+<div class="line">but rather each time multiplying by power of 2 of that number.</div>
+<div class="line">Iterated squaring: x, x**2, (x**2)**2 = x**4, (x**4)**2.</div>
+<div class="line">This is when y is the power of 2.</div>
+<div class="line">To find if y is the power of 2, we look at its last bit, 0-&gt;even y, 1-&gt; odd y.</div>
+</div>
+<p>Also recall the property of exponentiation: x**(y0+y1) = x**y0 * x**y1</p>
+<p>Also FYI 0b1010 = 101 + 101 (14 = 7+7).
+I.e. dropping the LSB of a number (when LSB is 0), we get a smaller number,
+twice as small as the original,and hence adding two such numbers gets us the original.
+If the original number ends with 1, e.g. 101, then 101 = 100+1</p>
+<div class="line-block">
+<div class="line">E.g. y=0b1010 (binary repr)</div>
+<div class="line">x**1010 = x**(101 +101) = x**101 * x**101</div>
+<div class="line">Going further, x**101 = x**(100 + 1) = x**100 * x = x**10 * x**10 * x</div>
+<div class="line">Generalizing, if the least significant bit of y is 0, the result is (x**y/2)**2,</div>
+<div class="line">otherwise, it is (x**y/2)**2 * x  ( ===&gt; plus &lt;* x&gt; )</div>
+</div>
+<p>The only change when y is negative is replacing x by 1/x and y by -y.</p>
+<p><strong>Solution</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">power</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>                         <span class="c1">#if y is negative</span>
+        <span class="n">power</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">power</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">x</span>
+    <span class="k">while</span> <span class="n">power</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">power</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>                 <span class="c1"># if LSB of y is 1  (1&amp;1=1, if it were 0&amp;1=0)</span>
+            <span class="n">result</span> <span class="o">*=</span><span class="n">x</span>                <span class="c1"># *x in that case #**NOTE</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">power</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">power</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>  <span class="c1">#**adds power to x, drops bit from y</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#**NOTE</div>
+<div class="line">When we dropped all LSBs from power, we end up with power=1 in the last loop.</div>
+<div class="line">So we will definitely go into result *=x.</div>
+<div class="line">So we will basically multiply the result by the accumulated x.</div>
+</div>
+<div class="line-block">
+<div class="line"><em>Example</em></div>
+<div class="line">x=3, y=9 (3**9 = 19683), bin(9)=1001</div>
+<div class="line">res=1.0, power=y</div>
+<div class="line">1)1001 &amp; 1 = 1, so res*=x =&gt; 1*3=3</div>
+<div class="line">res=3, x=3*3=9, power=100</div>
+<div class="line">2)x=9*9=81, power=10 (res unchanged = 3)</div>
+<div class="line">3)x=81*81=6561, power=1</div>
+<div class="line">4)1&amp;1=1, so res=res*x= 3 * 6561 = 19683</div>
+<div class="line">x gets calculated also = x*x = 6561*6561, but it won’t be used</div>
+<div class="line">power = 0, we return res, which is 19683</div>
+</div>
+<p><em>Time complexity O(n).</em>
+The number of multiplications is at most twice the index of y’s MSB, implying
+an O(n) time complexity.</p>
+</section>
+<section id="reverse-digits">
+<h2>7. Reverse digits<a class="headerlink" href="#reverse-digits" title="Link to this heading"></a></h2>
+<p>Note, reverse not bits, but digits.
+So when give an integer like 456, return the corresponding integer in reverse order,
+like 654.</p>
+<p>The approach when we convert to string and then reverse the string -
+is the brute force approach:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f22</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f22</span><span class="p">(</span><span class="mi">457</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Solution.</strong>
+(O(n), n is the number of digits in the input number.):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">x_remaining</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">x_remaining</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">x_remaining</span> <span class="o">%</span> <span class="mi">10</span>
+        <span class="n">x_remaining</span> <span class="o">//=</span> <span class="mi">10</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">result</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">result</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="mi">5734</span><span class="p">))</span>
+
+<span class="c1"># Remake</span>
+<span class="k">def</span> <span class="nf">reverse_digits2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>     <span class="c1">#get last (i.e. 6)</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="n">new</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="n">res</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span>      <span class="c1">#get remaining (i.e. 45)</span>
+    <span class="k">return</span> <span class="n">new</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reverse_digits2</span><span class="p">(</span><span class="mi">456</span><span class="p">))</span>  <span class="c1"># 654</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><em>Explained</em> (main version)</div>
+<div class="line">Here we avoid having to form a string.</div>
+<div class="line">Key points:</div>
+<div class="line">Here we use methods to extract the least significant digit, not bit, but digit of a decimal. (using %, // by 10)</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">x_remaining</span> <span class="pre">%</span> <span class="pre">10</span></code></div>
+<div class="line">n%10 gives us the last digit of n. E.g. 1132%10=2 (the remainder of division by 10)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">*</span> <span class="pre">10</span></code></div>
+<div class="line">We have to place the last digit from x_remaining to the position of the first digit of result.</div>
+<div class="line">Multiplying by 10 we add a 0.</div>
+<div class="line">E.g. 5734 to 4375</div>
+<div class="line">1)0*10 + 5734%10 = 0 + 4 (put 4 as first digit, result=4)</div>
+<div class="line">x_remaining = 5734 // 10 = 573</div>
+<div class="line">2)4*10=40 + 3=43</div>
+<div class="line">3) 43*10=430 + 7 = 437 etc.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">x_remaining</span> <span class="pre">//=</span> <span class="pre">10</span></code></div>
+<div class="line">n//10 takes away the last digit. E.g. 435//10 = 43</div>
+</div>
+<p>The algorithm takes into account that we may be given a negative number,
+so we work with its abs() value.</p>
+</section>
+<section id="check-if-a-decimal-integer-is-a-palindrome">
+<h2>8. Check if a decimal integer is a palindrome<a class="headerlink" href="#check-if-a-decimal-integer-is-a-palindrome" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><em>Task.</em> Return True or False.</div>
+<div class="line">E.g. these are palindromes: 0,1,7,11,121,333,2147447412</div>
+<div class="line">Not palindromes: -1,12,100,2147483647</div>
+<div class="line">Note, single digit numbers are palindromes, all negative numbers are not palindromes.</div>
+</div>
+<p><em>Brute force</em>
+Convert to string and compare least and most significant digits in its string form,
+working inwards, stopping if there is a mismatch.</p>
+<p><em>Complexity</em>
+-&gt; When converting to string first.
+The time and space complexity are O(n), n is the number of digits in the input
+-&gt; We are going to come up with a solution that has time complexity O(n),
+space complexity O(1).
+Note, we are going to use the same approach as with a string (comparing the
+leftmost and rightmost digits, working inward), but without converting to string.</p>
+<p><em>Alternatively</em>, we could reverse the digits in the number and see if it is unchanged.</p>
+<p><strong>Solution</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">is_palindrome_number</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">num_digits</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">msd_mask</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">num_digits</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_digits</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">//</span> <span class="n">msd_mask</span> <span class="o">!=</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">x</span> <span class="o">%=</span> <span class="n">msd_mask</span> <span class="c1">#Remove the most significant digit of x</span>
+        <span class="n">x</span> <span class="o">//=</span> <span class="mi">10</span>      <span class="c1">#Remove the least significant digit of x</span>
+        <span class="n">msd_mask</span> <span class="o">//=</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">is_palindrome_number</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_palindrome_number</span><span class="p">(</span><span class="mi">22</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_palindrome_number</span><span class="p">(</span><span class="mi">223432</span><span class="p">))</span>
+<span class="c1"># True</span>
+<span class="c1"># True</span>
+<span class="c1"># False</span>
+</pre></div>
+</div>
+<p><em>Logic</em>
+We come up with expressions that extract the least significant digit and the
+most significant digit of the input integer (without converting it).</p>
+<div class="line-block">
+<div class="line">-&gt; E.g. x = 151751</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">0:</span></code></div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">0</span></code></div>
+</div>
+</div>
+<div class="line"># Account for negative input, not palindrome if negative, but if 0, then x is a palindrome.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">num_digits</span> <span class="pre">=</span> <span class="pre">math.floor(math.log10(x))</span> <span class="pre">+</span> <span class="pre">1</span></code></div>
+</div>
+<div class="line">Number of digits in a number x is math.log10(x) + 1</div>
+<div class="line">x = 151751 -&gt; log10(151751)=5.18..+1 = 6.18</div>
+<div class="line">(What is log10, it is our number / 10 that many times. or 10**5.18..)</div>
+<div class="line">math.floor(6.18) = 6 (gives us the lowest whole integer of a float)</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">msd_mask</span> <span class="pre">=</span> <span class="pre">10**(num_digits</span> <span class="pre">-1)</span></code></div>
+</div>
+<div class="line"># Most significant digit mask</div>
+<div class="line">E.g. on first iteration, 10**5=100000</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x</span> <span class="pre">//</span> <span class="pre">msd_mask</span> <span class="pre">!=</span> <span class="pre">x</span> <span class="pre">%</span> <span class="pre">10:</span></code></div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">False</span></code></div>
+</div>
+</div>
+<div class="line"># if most significant != least significant, then not a palindrome</div>
+<div class="line">most significant digit = 151751 // 100000 = 1 (divisible by whole is just once)</div>
+<div class="line">least significant digit = 151751 % 10 = 1 (remainder is 1)</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%=</span> <span class="pre">msd_mask</span> <span class="pre">#Remove</span> <span class="pre">the</span> <span class="pre">most</span> <span class="pre">significant</span> <span class="pre">digit</span> <span class="pre">of</span> <span class="pre">x</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">//=</span> <span class="pre">10</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">#Remove</span> <span class="pre">the</span> <span class="pre">least</span> <span class="pre">significant</span> <span class="pre">digit</span> <span class="pre">of</span> <span class="pre">x</span></code></div>
+</div>
+<div class="line"># This is fabulous</div>
+<div class="line">To remove the most significant digit we use the operator % that we used to find</div>
+<div class="line">the least sign. digit, with the old mask.</div>
+<div class="line">x=151751 % 100000 = 51751  (compare with finding most sign x // msd_mask )</div>
+<div class="line">Remove least sign.</div>
+<div class="line">x=51751 // 10 = 5175   (compare with finding least sign x % 10)</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">msd_mask</span> <span class="pre">//=</span> <span class="pre">100</span></code></div>
+</div>
+<div class="line"># We decrease our mask for msd by 2 places (because we removed 2 digits, most and</div>
+<div class="line">least significant ones).</div>
+<div class="line">100000 // 100 = 1000  (which correctly corresponds to msd_mask = 10**(num_digits -1))</div>
+</div>
+<div class="admonition-the-take-away-how-to-get-the-least-and-most-significant-digit admonition">
+<p class="admonition-title">The take away: how to get the least and most significant digit</p>
+<div class="line-block">
+<div class="line">x = 157</div>
+<div class="line"># Get the last digit (easiest)</div>
+<div class="line">🔷 x % 10 🔷</div>
+<div class="line">(e.g. 157 % 10 = 7)</div>
+<div class="line">(150/10 and remainder 7)</div>
+<div class="line"># Get the first digit</div>
+<div class="line">🔷 x // (10**d) 🔷 (where d is (num_digits - 1))</div>
+<div class="line">x // 100 = 157 // 100 = 1</div>
+<div class="line">(157 divides by 100 completely only 1 time)</div>
+<div class="line"># How you get the num_digits</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">num_digits</span> <span class="pre">=</span> <span class="pre">math.floor(math.log10(x))</span> <span class="pre">+</span> <span class="pre">1</span></code></div>
+</div>
+</div>
+</section>
+<section id="add-without-using">
+<h2>9. Add without using +<a class="headerlink" href="#add-without-using" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Or “add bitwise operator”.</div>
+<div class="line">The following code adds two positive integers without using the ‘+’ operator.</div>
+<div class="line">The code uses bitwise operations to add two numbers.</div>
+<div class="line">Input: 2 3 Output: 5</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_bitwise_operator</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">carry</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span>   <span class="c1">#identify which bits are both 1s</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>       <span class="c1">#which bits are 0 and 1</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">carry</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="c1">#y is now bits to carry towards the MSB</span>
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># Loop 1</div>
+<div class="line">x=0b10</div>
+<div class="line">y=0b11</div>
+<div class="line">carry=0b10</div>
+<div class="line">x=0b01</div>
+<div class="line">y=0b100</div>
+<div class="line">End of loop.</div>
+<div class="line"># Loop 2</div>
+<div class="line">c= x&amp;y = 01&amp;100=000</div>
+<div class="line">x= x^y = 01^100 = 101</div>
+<div class="line">y= c&lt;&lt;1 = 0&lt;&lt;1 = 00</div>
+<div class="line">y is no more, end of while y</div>
+<div class="line">result is return x, which is 101 (5)</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">carry</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">&amp;</span> <span class="pre">y</span></code></div>
+<div class="line">We get carry by using &amp; on the numbers.</div>
+</div>
+<p>When adding, we have to carry 1 bit when both bits are 1. So carry is non zero
+when it has 1s. The &amp; operator will identify if x and y have 1s at the same indexes,
+and thus we have to carry:</p>
+<div class="line-block">
+<div class="line">10 &amp;</div>
+<div class="line">11</div>
+<div class="line">10 # carry</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">^</span> <span class="pre">y</span></code></div>
+<div class="line">Gives us the bits that don’t require the carry. Plainly adds 0+1 (as xor identifies</div>
+<div class="line">exactly those bits).</div>
+<div class="line">10 ^</div>
+<div class="line">11</div>
+<div class="line">01</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">carry</span> <span class="pre">&lt;&lt;</span> <span class="pre">1</span></code></div>
+<div class="line">The purpose of the carry is to move the bit that needs to be carried one position closer to the MSB (i.e. to the left).</div>
+<div class="line">So y now carries that bit, moreover at the necessary position.</div>
+<div class="line">(first loop) c=10, y = 10 &lt;&lt; 1 = 100</div>
+<div class="line">And hence the loop while y will go on while there are bits to carry.</div>
+</div>
+</section>
 </section>
 
 
@@ -462,7 +762,7 @@ differing bits at i and i+1, we swap and return. So it comes down to just:</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="bits_kb.html" class="btn btn-neutral float-left" title="Knowledge Base Bit Manipulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements and References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="bits_2.html" class="btn btn-neutral float-right" title="Bit Manipulation Questions Part 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -21,7 +21,8 @@ TABLE OF CONTENTS
     :caption: Bit Manipulation:
 
     Knowledge base <bits_kb>
-    Part 1 <bits_1>
+    Part 1 (1-9) <bits_1>
+    Part 2 (10-18) <bits_2>
 
 .. toctree::
     :caption: About the Project:
