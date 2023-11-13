@@ -48,6 +48,9 @@
 <li class="toctree-l1"><a class="reference internal" href="bits_1.html">Part 1 (1-9)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2 (10-18)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#binary-gap">10. Binary gap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-set-clear-one-bit">11. Get, set, clear one bit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#count-flips-to-convert">12. Count flips to convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#find-difference">13. Find difference</a></li>
 </ul>
 </li>
 </ul>
@@ -160,6 +163,240 @@ of 1’s have distance 1. The answer is the largest of these two distances, whic
 <div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">N&amp;1</span></code> - i.e. if we encountered 1 (the last value of N is 1).</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">last</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code>, i.e. if we have a chain, the previous index had value 1</div>
 <div class="line"><code class="docutils literal notranslate"><span class="pre">ans</span> <span class="pre">=</span> <span class="pre">max(ans,</span> <span class="pre">index-last)</span></code>, i.e. greedy algorithm, if current size is bigger, we set the ans to that, or leave the old value.</div>
+</div>
+</section>
+<section id="get-set-clear-one-bit">
+<h2>11. Get, set, clear one bit<a class="headerlink" href="#get-set-clear-one-bit" title="Link to this heading"></a></h2>
+<p>Basic functions that get, set, clear one bit at an index.
+(Recall that indexing in binary numbers start from LSB, i.e. on the right.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_bit_2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">value_at_i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value_at_i</span> <span class="o">&gt;&gt;</span> <span class="n">i</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">get_bit_2</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>  <span class="c1">#&#39;0b101101&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">get_bit_2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1">#&#39;0b1010&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">get_bit_2</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1">#&#39;0b1000011&#39;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><em>Explained</em></div>
+<div class="line">n &amp; (1 &lt;&lt; i)</div>
+<div class="line">if n=1011 we want to get bit at i=2, then</div>
+<div class="line">1&lt;&lt;i is 100</div>
+<div class="line">n&amp;(1&lt;&lt;i) is</div>
+<div class="line">1011 &amp;</div>
+<div class="line">0100</div>
+<div class="line">0000</div>
+<div class="line">To get just one bit at index we shift the result &gt;&gt; i</div>
+<div class="line">If result were 0100 we couldn’t return that, we need to shift up to index 1|00</div>
+</div>
+<p>(Also we cannot shift just the original n, then there might be other 1s on
+the left side.)</p>
+<p>My version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="c1">#1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1">#0</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="go">&#39;0b10100&#39;</span>
+</pre></div>
+</div>
+<p>Clear:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">clear_bit</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">num</span> <span class="o">&amp;</span> <span class="n">mask</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">clear_bit</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># 16</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="go">&#39;0b10100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">&#39;0b10000&#39;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">~(1 &lt;&lt; i), flips 0s to 1s. E.g. i=3, ~1000=111</div>
+</div>
+<p>What is not obvious at first sight is that in fact it gives us 1110111.
+With a 0 just where we want it, at the given index. So it preps with 1s on the left too.
+(Otherwise num &amp; mask would give us a shorter number, as is the case with e.g. 10100&amp;11).
+(Not operator works at all here because it is in an expression.
+Recall when used on its own, ~ gives a weird result in Python. But works correctly
+when its result is passed further on in the function.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_bit</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">bit</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">num</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">bit</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We proceed by first clearing the bit in question, using exactly the algorithm in
+clear_bit. Then apply OR bit &lt;&lt; i. This would set the bit, which we turned to 0
+to whatever the bit is.</p>
+<p><em>My version (new)</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_bit</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">|</span> <span class="n">mask</span>
+    <span class="k">return</span> <span class="n">n</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">set_bit</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="c1">#22</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="go">&#39;0b10100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
+<span class="go">&#39;0b10110&#39;</span>
+</pre></div>
+</div>
+<p><em>My version (old).</em>
+(Extract right side, extract left side and change its last bit, merge left and right)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_bit</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="n">mask</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">|</span> <span class="n">v</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="o">|</span> <span class="n">right</span>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># 0b10110</span>
+
+<span class="c1"># The same shorter</span>
+<span class="k">def</span> <span class="nf">clear2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">right</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">clear2</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">&#39;0b1100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="go">&#39;0b1000&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="count-flips-to-convert">
+<h2>12. Count flips to convert<a class="headerlink" href="#count-flips-to-convert" title="Link to this heading"></a></h2>
+<p>Write a function to determine the number of bits you would need to flip to convert
+integer A to integer B. For example: Input: 29 (or: 11101), 15 (or: 01111) Output: 2</p>
+<p><strong>Solution</strong> (alternative)
+(More built-ins.):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">flips_to_convert</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="n">flips</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">^</span> <span class="n">n2</span>
+    <span class="k">return</span> <span class="n">flips</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span>
+    <span class="c1"># OR</span>
+    <span class="c1"># return bin(flips).count(&quot;1&quot;)</span>
+</pre></div>
+</div>
+<p><strong>Solution</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_flips_to_convert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span>
+    <span class="c1"># count number of ones in diff</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">diff</span><span class="p">:</span>
+        <span class="n">diff</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">diff</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#1</div>
+<div class="line">a^b (a=11101, b=01111)</div>
+<div class="line">11101^  #xor turns 1and1 to 0, 0and1 to 1</div>
+<div class="line">01111</div>
+<div class="line">10010</div>
+<div class="line">#2</div>
+<div class="line">num - 1</div>
+<div class="line">E.g. 0b10100 - 1 = 0b10011  (Or more obvious example, 0b1000 - 1 = 111)</div>
+<div class="line">And when doing &amp; on the new num and the previous:</div>
+<div class="line">10100 &amp;</div>
+<div class="line">10011</div>
+<div class="line">10000 # it takes away the 1s on the right side</div>
+<div class="line">(Another -1 and then &amp; with 10000, will take away the remaining 1 in 10000).</div>
+</div>
+<p>So the loop will work for just as many times as there are 1s.</p>
+</section>
+<section id="find-difference">
+<h2>13. Find difference<a class="headerlink" href="#find-difference" title="Link to this heading"></a></h2>
+<p><em>Task.</em> Given two strings s and t which consist of only lowercase letters.
+String t is generated by random shuffling string s and then add one more letter
+at a random position. Find the letter that was added in t.
+For example: Input: s = “abcd” t = “abecd” Output: ‘e’</p>
+<p><em>Hint.</em> We use the characteristic equation of XOR.
+A xor B xor C = A xor C xor B If A == C, then A xor C = 0 and then, B xor 0 = B. [<a class="reference internal" href="acknowledgements.html#ref-label"><span class="std std-ref">4</span></a>]
+Meaning, if we add the characters of the two strings in question, xor of the same
+characters will be 0. And 0 xor with the only unique character results that character
+(char ^ char = 0, 0 ^ char = char).</p>
+<p><strong>Solution 1</strong> Bitwise operator</p>
+<p><em>Logic.</em>
+This uses the same principle as for the problem: you have an array where each element
+appears twice, one element appears twice.
+Concatenate s + t and you will get a string where each letter appears twice, except one.
+We use the fact that XOR of the same characters is 0 -&gt; x^x=0
+So XORing all paired characters will give 0, and 0 ^ unique_char = unique_char.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_difference</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">^</span> <span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">chr</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+
+<span class="n">s1</span><span class="o">=</span><span class="s1">&#39;dfgt&#39;</span>
+<span class="n">s2</span><span class="o">=</span><span class="s1">&#39;rfdtg&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">find_difference</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Solution 2</strong> collections + dict</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">findTheDifference</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">cnt_s</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">cnt_t</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cnt_t</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cnt_s</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">cnt_t</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="n">cnt_s</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>V2</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">f11</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">((</span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;sjnd&#39;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="s1">&#39;sjfdn&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f11</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>  <span class="c1"># f</span>
+</pre></div>
+</div>
+<p><em>Explained</em> (my conclusions).
+We cannot subtract dictionaries. That’s a fact.
+But it looks like we can when dealing with objects of Counter.
+Counter returns the dictionary format. But not exactly, if we print intermediary
+results:</p>
+<div class="line-block">
+<div class="line">print(collections.Counter(s))</div>
+<div class="line">Counter({‘s’: 1, ‘j’: 1, ‘n’: 1, ‘d’: 1})   #a dict inside some Counter()</div>
+<div class="line">print((collections.Counter(t) - collections.Counter(s)))</div>
+<div class="line">Counter({‘f’: 1})   #Then we can subtract</div>
+</div>
+<p><strong>Solution 3</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">findTheDifference2</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>My version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_dif</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">chr</span><span class="p">(</span><span class="n">ord_sum</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">ord_sum</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">ord_sum</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">w</span><span class="p">])</span>
+
+<span class="n">s</span><span class="o">=</span><span class="s1">&#39;fghs&#39;</span>
+<span class="n">t</span><span class="o">=</span><span class="s1">&#39;ghsff&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">find_dif</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>  <span class="c1"># &#39;f&#39;</span>
+</pre></div>
 </div>
 </section>
 </section>
