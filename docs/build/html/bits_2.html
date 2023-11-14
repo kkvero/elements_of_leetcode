@@ -51,6 +51,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#get-set-clear-one-bit">11. Get, set, clear one bit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#count-flips-to-convert">12. Count flips to convert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#find-difference">13. Find difference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#find-missing-number">14. Find missing number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flip-bit-longest-sequence">15. Flip bit longest sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alternating-bits">16. Alternating bits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#insert-bit">17. Insert bit</a></li>
 </ul>
 </li>
 </ul>
@@ -397,6 +401,293 @@ results:</p>
 <span class="n">t</span><span class="o">=</span><span class="s1">&#39;ghsff&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">find_dif</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>  <span class="c1"># &#39;f&#39;</span>
 </pre></div>
+</div>
+</section>
+<section id="find-missing-number">
+<h2>14. Find missing number<a class="headerlink" href="#find-missing-number" title="Link to this heading"></a></h2>
+<p>Returns the missing number from a sequence of unique integers in range [0..n]
+in O(n) time and space. The difference between consecutive integers cannot be
+more than 1.
+If the sequence is already complete, the next integer in the sequence will be returned.
+<em>My note, the sequence has to start with 0.</em></p>
+<p><strong>Solution 1</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f3</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+
+<span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f3</span><span class="p">(</span><span class="n">nums2</span><span class="p">))</span> <span class="c1">#5</span>
+</pre></div>
+</div>
+<p><strong>Solution 2</strong> (fancy (but it is O(n)))</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_missing_number</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">missing</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+        <span class="n">missing</span> <span class="o">^=</span> <span class="n">num</span>
+        <span class="n">missing</span> <span class="o">^=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">missing</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="c1"># print(find_missing_number(nums)) # 2</span>
+</pre></div>
+</div>
+<p><em>Explained</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">^=</span> <span class="pre">num</span></code> At this step we always end up with missing=0</p>
+<p><code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">^=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">1</span></code>
+0 + i+1, makes sure that we start with missing=the next expected number.
+Because current index + 1 = next expected value.
+Because with the given constraints our array is of format [0,1,2,3],
+where index=value.</p>
+<p><code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">^</span> <span class="pre">next_number</span> <span class="pre">=</span> <span class="pre">next_number</span></code>  0 coming from the previous step.</p>
+<div class="line-block">
+<div class="line">When we encounter the wrong_number, we get, as per the two steps of our algorithm:</div>
+<div class="line">1) missing ^= num -&gt;   expected ^ wrong = difference</div>
+<div class="line">2) missing ^= i + 1 -&gt; difference ^ wrong = expected</div>
+</div>
+</section>
+<section id="flip-bit-longest-sequence">
+<h2>15. Flip bit longest sequence<a class="headerlink" href="#flip-bit-longest-sequence" title="Link to this heading"></a></h2>
+<p>You have an integer and you can flip exactly one bit from a 0 to 1.
+Write code to find the length of the longest sequence of 1s such a flip would create.
+For example: Input: 1775 ( or: 11011101111) Output: 8</p>
+<p><strong>Solution</strong></p>
+<div class="line-block">
+<div class="line">Note:</div>
+<div class="line">1)We test if it is a gap, i.e. after 0 there will be 1, by testing &amp; with 2, which is 10 in binary.</div>
+</div>
+<p>2)In this algorithm we don’t actually flip the 0 of the gap.
+In that case we store the previous value of current (prev_len = cur_len).
+Then we compare max with prev+cur</p>
+<p>3)We don’t add the gap itself in the process of counting 1s, we do it only in
+return max_len + 1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">flip_bit_longest_seq</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">curr_len</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">prev_len</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">max_len</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">num</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># last digit is 1</span>
+            <span class="n">curr_len</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">elif</span> <span class="n">num</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># last digit is 0</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">&amp;</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># second to last digit is 0, i.e. the next to the left,(bin(2)=10)</span>
+                <span class="n">prev_len</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prev_len</span> <span class="o">=</span> <span class="n">curr_len</span>
+            <span class="n">curr_len</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">prev_len</span> <span class="o">+</span> <span class="n">curr_len</span><span class="p">)</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">num</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>  <span class="c1"># right shift num</span>
+
+    <span class="k">return</span> <span class="n">max_len</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p><strong>V2</strong> (the same, shorter)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">prev</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">maxl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">cur</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">maxl</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxl</span><span class="p">,</span> <span class="n">cur</span> <span class="o">+</span> <span class="n">prev</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">maxl</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="alternating-bits">
+<h2>16. Alternating bits<a class="headerlink" href="#alternating-bits" title="Link to this heading"></a></h2>
+<p>Given a positive integer, check whether it has alternating bits: namely, if two
+adjacent bits will always have different values.
+(For example: Input: 5 Output: True because the binary representation of 5 is: 101.
+Input: 7 Output: False because the binary representation of 7 is: 111.)</p>
+<p><strong>Solutions of my choice</strong></p>
+<p><strong>My solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f4</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">bit</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">bit</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p><strong>Solution 2</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hasAlternatingBits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">bin_n</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">bin_n</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">bin_n</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bin_n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Idea:</div>
+<div class="line">To check if 0 always next/before 1 (1 always next/before 0)</div>
+<div class="line">Return Value from all()</div>
+<div class="line">The all() function returns:</div>
+<div class="line">True - If all elements in an iterable are true</div>
+<div class="line">False - If any element in an iterable is false</div>
+</div>
+<div class="line-block">
+<div class="line">Time Complexity O(n)</div>
+<div class="line">github</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hasAlternatingBits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :type n: int</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mb">0b1010101010101010101010101010101010101010101010101010101010101010</span>
+    <span class="c1"># or b = &#39;0b&#39; + &#39;10&#39;*16</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p><strong>Less so solutions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">has_alternating_bits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">fb</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sb</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">fb</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">:</span>              <span class="c1">#if there is a second bit</span>
+            <span class="n">sb</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">fb</span> <span class="o">^</span> <span class="n">sb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>    <span class="c1">#1^1=0, 1^0=1, 0^0=0. So 0 if sb and fb are the same</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">has_alternating_bits</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">has_alternating_bits</span><span class="p">(</span><span class="mi">111</span><span class="p">))</span>
+<span class="c1"># True</span>
+<span class="c1"># False</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">&#39;0b1010&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="go">&#39;0b1101111&#39;</span>
+</pre></div>
+</div>
+<p><strong>Solution</strong> Time Complexity - O(1)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">has_alternative_bit_fast</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">mask1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;aaaaaaaa&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>  <span class="c1"># for bits ending with zero (...1010)</span>
+    <span class="n">mask2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;55555555&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>  <span class="c1"># for bits ending with one  (...0101)</span>
+    <span class="k">return</span> <span class="n">mask1</span> <span class="o">==</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">^</span> <span class="n">mask1</span><span class="p">))</span> <span class="ow">or</span> <span class="n">mask2</span> <span class="o">==</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">^</span> <span class="n">mask2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Note, could use b=’0b’+(‘10’*32), or ‘01’*32…but then it is only a string..
+could convert it to int with int(‘0b0101’, 2)</p>
+<div class="line-block">
+<div class="line">E.g. if n=101</div>
+<div class="line">–101^</div>
+<div class="line">10101</div>
+<div class="line">10000  0 or 0 and leading nums of mask if n is a smaller number.</div>
+<div class="line">Basicaly, n should be equal to mask, then n^mask = 0, and mask=n.</div>
+<div class="line">We don’t just say n=mask, to allow for testing for numbers with less digits then mask.</div>
+</div>
+</section>
+<section id="insert-bit">
+<h2>17. Insert bit<a class="headerlink" href="#insert-bit" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">insert_one_bit(num,</span> <span class="pre">bit,</span> <span class="pre">i)</span></code>: insert exact one bit at specific position</p>
+<div class="line-block">
+<div class="line">For example:</div>
+<div class="line">Input: num = 10101 (21) insert_one_bit(num, 1, 2): 101101 (45) insert_one_bit(num, 0 ,2): 101001 (41)</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">insert_mult_bits(num,</span> <span class="pre">bits,</span> <span class="pre">len,</span> <span class="pre">i)</span></code>: insert multiple bits with len at specific position
+My note, multiple bits are given as a single number. E.g. we provide 7, when we
+want to insert 111.</p>
+<div class="line-block">
+<div class="line">For example:</div>
+<div class="line">Input: num = 101 (5) insert_mult_bits(num, 7, 3, 1): 101111 (47)</div>
+</div>
+<p><strong>My version</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_bit</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">bit</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">num</span> <span class="o">&amp;</span> <span class="n">mask</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="p">((</span><span class="n">num</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">bit</span>  <span class="c1">#**</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">ls</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">|</span> <span class="n">rs</span>
+    <span class="k">return</span> <span class="n">num</span>
+</pre></div>
+</div>
+<p>#**cut off right side, add room for new bit, merge left side with new bit
+print(insert_bit(21, 1, 2))  # 45, 0b101100</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_bit</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">_len</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">num</span> <span class="o">&amp;</span> <span class="n">mask</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="p">((</span><span class="n">num</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">_len</span><span class="p">)</span> <span class="o">|</span> <span class="n">bits</span>  <span class="c1"># &lt;-the only line that differs</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">ls</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">|</span> <span class="n">rs</span>
+    <span class="k">return</span> <span class="n">num</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">insert_bit</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># 177, &#39;0b10110001&#39;</span>
+</pre></div>
+</div>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_one_bit</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">bit</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">num</span> <span class="o">&gt;&gt;</span> <span class="n">i</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">bit</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">num</span>
+    <span class="k">return</span> <span class="n">right</span> <span class="o">|</span> <span class="n">mask</span>
+
+<span class="k">def</span> <span class="nf">insert_mult_bits</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">num</span> <span class="o">&gt;&gt;</span> <span class="n">i</span>
+    <span class="c1"># the only line that changes, shift by not 1 but len of bits, | bits not bit</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="nb">len</span><span class="p">)</span> <span class="o">|</span> <span class="n">bits</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">num</span>
+    <span class="k">return</span> <span class="n">right</span> <span class="o">|</span> <span class="n">mask</span>
+
+<span class="c1"># Annotated</span>
+<span class="k">def</span> <span class="nf">insert_one_bit</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">bit</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">num</span> <span class="o">&gt;&gt;</span> <span class="n">i</span>
+    <span class="c1"># Make space for extra space and set it to bit</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">bit</span>
+    <span class="c1"># Make space for bits on the right of i (adding 0s)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+    <span class="c1"># Bring back the bits that were on the right side of i</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">num</span>
+    <span class="k">return</span> <span class="n">right</span> <span class="o">|</span> <span class="n">mask</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Algorithm: num=10101, bit=1, i=3</div>
+<div class="line">mask = num &gt;&gt; i</div>
+<div class="line">mask=10101&gt;&gt;3 = 10</div>
+<div class="line">-Create a mask that is the part of our number to the left of index i.</div>
+<div class="line">(bits from i to the most significant bit)</div>
+</div>
+<div class="line-block">
+<div class="line">mask = (mask &lt;&lt; 1) | bit</div>
+<div class="line">mask=10&lt;&lt;1 = 100, 100|1 = 101</div>
+<div class="line">-add an extra 0 bit on the right, i.e. we create new space for the new bit</div>
+<div class="line">Turn that 0 bit into the value of bit to insert =&gt; (mask &lt;&lt; 1) | bit</div>
+</div>
+<div class="line-block">
+<div class="line">mask = mask &lt;&lt; i</div>
+<div class="line">mask=101&lt;&lt;3 = 101000</div>
+<div class="line">-Make the number again the original size (with inserted bit included).</div>
+<div class="line">I.e. 0s where the right side should be.</div>
+</div>
+<div class="line-block">
+<div class="line">right = ((1 &lt;&lt; i) - 1) &amp; num</div>
+<div class="line">(1&lt;&lt;3) - 1 = 1000 - 1 = 111</div>
+<div class="line">This will be the mask to get only the part on the right side of i of the original number.</div>
+<div class="line">111 &amp; num = 111 &amp; 10101 = 101</div>
+<div class="line">AND with all 1s just returns whatever is in the number it is compared with, BUT</div>
+<div class="line">also the length of 1s.</div>
+</div>
+<div class="line-block">
+<div class="line">return right | mask</div>
+<div class="line">- OR operator merges two numbers</div>
+<div class="line">000101 |</div>
+<div class="line">101000 =</div>
+<div class="line">101101</div>
 </div>
 </section>
 </section>

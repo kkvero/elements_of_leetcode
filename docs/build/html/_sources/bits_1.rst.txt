@@ -506,6 +506,26 @@ leftmost and rightmost digits, working inward), but without converting to string
 
 *Alternatively*, we could reverse the digits in the number and see if it is unchanged.
 
+**Solution** (*Real Python* version [:ref:`3 <ref-label>`])
+::
+
+    def is_palindrome(num):
+        # Skip single-digit inputs
+        if num // 10 == 0:
+            return False
+        temp = num
+        reversed_num = 0
+
+        while temp != 0:
+            reversed_num = (reversed_num * 10) + (temp % 10)
+            temp = temp // 10
+
+        if num == reversed_num:
+            return True
+        else:
+            return False
+
+
 **Solution**::
 
     import math

@@ -315,3 +315,288 @@ My version::
     s='fghs'
     t='ghsff'
     print(find_dif(s,t))  # 'f'
+
+14. Find missing number
+-----------------------
+Returns the missing number from a sequence of unique integers in range [0..n] 
+in O(n) time and space. The difference between consecutive integers cannot be 
+more than 1. 
+If the sequence is already complete, the next integer in the sequence will be returned.
+*My note, the sequence has to start with 0.*
+
+**Solution 1** ::
+
+    def f3(nums):
+        return sum(range(len(nums)+1)) - sum(nums)
+
+    nums2 = [0,1,2,3,4,6,7]
+    print(f3(nums2)) #5
+
+**Solution 2** (fancy (but it is O(n))) ::
+
+    def find_missing_number(nums):
+        missing = 0
+        for i, num in enumerate(nums):
+            missing ^= num
+            missing ^= i + 1
+        return missing
+
+    nums = [0,1,3,4]
+    # print(find_missing_number(nums)) # 2
+
+*Explained*
+
+``missing ^= num`` At this step we always end up with missing=0
+
+``missing ^= i + 1``
+0 + i+1, makes sure that we start with missing=the next expected number.
+Because current index + 1 = next expected value.
+Because with the given constraints our array is of format [0,1,2,3],
+where index=value.
+
+``0 ^ next_number = next_number``  0 coming from the previous step.
+
+| When we encounter the wrong_number, we get, as per the two steps of our algorithm:
+| 1) missing ^= num ->   expected ^ wrong = difference
+| 2) missing ^= i + 1 -> difference ^ wrong = expected
+
+15. Flip bit longest sequence
+-----------------------------
+You have an integer and you can flip exactly one bit from a 0 to 1. 
+Write code to find the length of the longest sequence of 1s such a flip would create. 
+For example: Input: 1775 ( or: 11011101111) Output: 8
+
+**Solution**
+
+| Note:
+| 1)We test if it is a gap, i.e. after 0 there will be 1, by testing & with 2, which is 10 in binary.
+
+2)In this algorithm we don't actually flip the 0 of the gap.
+In that case we store the previous value of current (prev_len = cur_len).
+Then we compare max with prev+cur
+
+3)We don't add the gap itself in the process of counting 1s, we do it only in
+return max_len + 1
+::
+
+    def flip_bit_longest_seq(num):
+        curr_len = 0
+        prev_len = 0
+        max_len = 0
+        while num:
+            if num & 1 == 1:  # last digit is 1
+                curr_len += 1
+
+            elif num & 1 == 0:  # last digit is 0
+                if num & 2 == 0:  # second to last digit is 0, i.e. the next to the left,(bin(2)=10)
+                    prev_len = 0
+                else:
+                    prev_len = curr_len
+                curr_len = 0
+
+            max_len = max(max_len, prev_len + curr_len)
+            num = num >> 1  # right shift num
+
+        return max_len + 1
+
+**V2** (the same, shorter) ::
+
+    def f2(n):
+        prev, cur, maxl = 0,0,0
+        while n:
+            if n & 1:
+                cur += 1
+            else:
+                if not (n >> 1) & 1:
+                    prev = 0
+                else:
+                    prev = cur
+                cur = 0
+            maxl = max(maxl, cur + prev)
+            n >>= 1
+        return maxl + 1
+
+16. Alternating bits
+--------------------
+Given a positive integer, check whether it has alternating bits: namely, if two 
+adjacent bits will always have different values.
+(For example: Input: 5 Output: True because the binary representation of 5 is: 101.
+Input: 7 Output: False because the binary representation of 7 is: 111.)
+
+**Solutions of my choice**
+
+**My solution** ::
+
+    def f4(n):
+        while n:
+            bit = n & 1
+            if (n >> 1) & 1 == bit:
+                return False
+            n >>= 1
+        return True
+
+**Solution 2** ::
+
+    def hasAlternatingBits(self, n):
+        bin_n = bin(n)[2:]
+        return all(bin_n[i] != bin_n[i+1] for i in range(len(bin_n) - 1))
+
+| Idea:
+| To check if 0 always next/before 1 (1 always next/before 0)
+| Return Value from all()
+| The all() function returns:
+| True - If all elements in an iterable are true
+| False - If any element in an iterable is false
+
+| Time Complexity O(n)
+| github
+
+::
+
+    def hasAlternatingBits(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        b = 0b1010101010101010101010101010101010101010101010101010101010101010
+        # or b = '0b' + '10'*16
+        while b > 0:
+            if b == n:
+                return True
+            b = b >> 1
+        return False
+
+**Less so solutions** ::
+
+    def has_alternating_bits(n):
+        fb = 0
+        sb = 0
+        while n:
+            fb = n & 1
+            if n >> 1:              #if there is a second bit
+                sb = (n >> 1) & 1
+                if fb ^ sb == 0:    #1^1=0, 1^0=1, 0^0=0. So 0 if sb and fb are the same
+                    return False
+            else:
+                return True
+            n = n >> 1
+        return True
+
+    print(has_alternating_bits(10))
+    print(has_alternating_bits(111))
+    # True
+    # False
+
+>>> bin(10)
+'0b1010'
+>>> bin(111)
+'0b1101111'
+
+**Solution** Time Complexity - O(1) ::
+
+    def has_alternative_bit_fast(n):
+        mask1 = int('aaaaaaaa', 16)  # for bits ending with zero (...1010)
+        mask2 = int('55555555', 16)  # for bits ending with one  (...0101)
+        return mask1 == (n + (n ^ mask1)) or mask2 == (n + (n ^ mask2))
+
+Note, could use b='0b'+('10'\*32), or '01'\*32...but then it is only a string..
+could convert it to int with int('0b0101', 2)
+
+| E.g. if n=101
+| --101^
+| 10101
+| 10000  0 or 0 and leading nums of mask if n is a smaller number.
+| Basicaly, n should be equal to mask, then n^mask = 0, and mask=n.
+| We don't just say n=mask, to allow for testing for numbers with less digits then mask.
+
+17. Insert bit
+---------------
+``insert_one_bit(num, bit, i)``: insert exact one bit at specific position 
+
+| For example:
+| Input: num = 10101 (21) insert_one_bit(num, 1, 2): 101101 (45) insert_one_bit(num, 0 ,2): 101001 (41) 
+
+``insert_mult_bits(num, bits, len, i)``: insert multiple bits with len at specific position
+My note, multiple bits are given as a single number. E.g. we provide 7, when we
+want to insert 111.
+
+| For example:
+| Input: num = 101 (5) insert_mult_bits(num, 7, 3, 1): 101111 (47) 
+
+**My version** ::
+
+    def insert_bit(num, bit, i):
+        mask = (1 << i) - 1
+        rs = num & mask
+        ls = ((num >> i) << 1) | bit  #** 
+        num = (ls << i) | rs
+        return num
+
+#**cut off right side, add room for new bit, merge left side with new bit
+print(insert_bit(21, 1, 2))  # 45, 0b101100 ::
+
+    def insert_bit(num, bits, _len, i):
+        mask = (1 << i) - 1
+        rs = num & mask
+        ls = ((num >> i) << _len) | bits  # <-the only line that differs
+        num = (ls << i) | rs
+        return num
+
+    print(insert_bit(21, 4, 3, 2))  # 177, '0b10110001'
+
+**Solution** ::
+
+    def insert_one_bit(num, bit, i):
+        mask = num >> i
+        mask = (mask << 1) | bit
+        mask = mask << i
+        right = ((1 << i) - 1) & num
+        return right | mask
+
+    def insert_mult_bits(num, bits, len, i):
+        mask = num >> i
+        # the only line that changes, shift by not 1 but len of bits, | bits not bit 
+        mask = (mask << len) | bits   
+        mask = mask << i
+        right = ((1 << i) - 1) & num
+        return right | mask
+
+    # Annotated
+    def insert_one_bit(num, bit, i):
+        mask = num >> i
+        # Make space for extra space and set it to bit
+        mask = (mask << 1) | bit
+        # Make space for bits on the right of i (adding 0s)
+        mask = mask << i
+        # Bring back the bits that were on the right side of i
+        right = ((1 << i) - 1) & num
+        return right | mask
+
+| Algorithm: num=10101, bit=1, i=3
+| mask = num >> i
+| mask=10101>>3 = 10
+| -Create a mask that is the part of our number to the left of index i.
+| (bits from i to the most significant bit)
+ 
+| mask = (mask << 1) | bit
+| mask=10<<1 = 100, 100|1 = 101 
+| -add an extra 0 bit on the right, i.e. we create new space for the new bit
+| Turn that 0 bit into the value of bit to insert => (mask << 1) | bit
+ 
+| mask = mask << i
+| mask=101<<3 = 101000
+| -Make the number again the original size (with inserted bit included). 
+| I.e. 0s where the right side should be.
+ 
+| right = ((1 << i) - 1) & num
+| (1<<3) - 1 = 1000 - 1 = 111
+| This will be the mask to get only the part on the right side of i of the original number.
+| 111 & num = 111 & 10101 = 101
+| AND with all 1s just returns whatever is in the number it is compared with, BUT
+| also the length of 1s.
+ 
+| return right | mask
+| - OR operator merges two numbers
+| 000101 | 
+| 101000 = 
+| 101101

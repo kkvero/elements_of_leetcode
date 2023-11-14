@@ -596,6 +596,24 @@ space complexity O(1).
 Note, we are going to use the same approach as with a string (comparing the
 leftmost and rightmost digits, working inward), but without converting to string.</p>
 <p><em>Alternatively</em>, we could reverse the digits in the number and see if it is unchanged.</p>
+<p><strong>Solution</strong> (<em>Real Python</em> version [<a class="reference internal" href="acknowledgements.html#ref-label"><span class="std std-ref">3</span></a>])</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="c1"># Skip single-digit inputs</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">//</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">num</span>
+    <span class="n">reversed_num</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="n">temp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">reversed_num</span> <span class="o">=</span> <span class="p">(</span><span class="n">reversed_num</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">temp</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">//</span> <span class="mi">10</span>
+
+    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">reversed_num</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
 <p><strong>Solution</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="k">def</span> <span class="nf">is_palindrome_number</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
