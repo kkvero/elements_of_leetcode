@@ -20,9 +20,10 @@ TABLE OF CONTENTS
 .. toctree::
     :caption: Bit Manipulation:
 
-    Knowledge base <bits_kb>
-    Part 1 (1-9) <bits_1>
-    Part 2 (10-18) <bits_2>
+    Knowledge base <bits/bits_kb>
+    Part 1 (1-9) <bits/bits_1>
+    Part 2 (10-19) <bits/bits_2>
+    Part 3 (20-29) <bits/bits_3>
 
 .. toctree::
     :caption: About the Project:

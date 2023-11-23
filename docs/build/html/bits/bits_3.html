@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bit Manipulation Questions Part 3 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Acknowledgements and References" href="../acknowledgements.html" />
+    <link rel="prev" title="Bit Manipulation Questions Part 2" href="bits_2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 3 (20-29)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reverse-bits">20. Reverse bits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-number">21. Single number</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Bit Manipulation Questions Part 3</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/bits/bits_3.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bit-manipulation-questions-part-3">
+<h1>Bit Manipulation Questions Part 3<a class="headerlink" href="#bit-manipulation-questions-part-3" title="Link to this heading"></a></h1>
+<section id="reverse-bits">
+<h2>20. Reverse bits<a class="headerlink" href="#reverse-bits" title="Link to this heading"></a></h2>
+<p>Reverse bits of a given 32 bits unsigned integer.
+For example, given input 43261596 (represented in binary as
+00000010100101000001111010011100), return 964176192 (represented in binary as
+00111001011110000010100101000000).</p>
+<p><strong>Bit manipulation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverse_bits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">32</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">m</span>
+
+<span class="c1"># or while n:  then remove i+=1</span>
+<span class="k">def</span> <span class="nf">reverse_bits2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">m</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reverse_bits2</span><span class="p">(</span><span class="mi">678</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">With m we start building a new number from scratch.</div>
+<div class="line">m&lt;&lt;1 adding a 0 on the right (First iteration, m=0, 0&lt;&lt;1=0)</div>
+<div class="line">n&amp;1 we get the rightmost digit of the original number (e.g. 1011 &amp; 1 = 1)</div>
+<div class="line">m&lt;&lt;1 + n&amp;1 Add 0 or 1 to m (n&amp;1 will result in either 1 or 0)</div>
+<div class="line">(Reminder e.g. 10 + 1 = 11, 10 + 0 = 10)</div>
+</div>
+<div class="line-block">
+<div class="line">n&gt;&gt;1</div>
+<div class="line">we remove the last right digit, so we deal with the next right digit of the original number.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverseBits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span>
+        <span class="n">res</span> <span class="o">|=</span> <span class="p">((</span><span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p><strong>String manipulation.</strong>
+The fuss of padding a given number with 0s.
+If we want bin(3) in python, it returns “11” and not “000…11”.
+Then if we reverse it i.e., reverse of “11” is “11” but expected answer
+is “110000… “(reverse of 000…11).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseBits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span><span class="o">*</span><span class="p">(</span><span class="mi">32</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="n">s</span>  <span class="c1">#to pad with 0s</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>            <span class="c1">#to return in binary format</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Alternatively to bin(n)[2:] =&gt; bin(n).replace(“0b”, “”)</div>
+<div class="line">Also could add a test =&gt; if (len(s) != 32):</div>
+</div>
+<p><strong>Another string manipulation.</strong>
+Pad with spaces, replace spaces with 0.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseBits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%32s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">n</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># using [:1:-1] instead of [:2] and [::-1]</span>
+<span class="k">def</span> <span class="nf">reverseBits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :type n: int</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)[:</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="p">(</span><span class="mi">32</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="single-number">
+<h2>21. Single number<a class="headerlink" href="#single-number" title="Link to this heading"></a></h2>
+<p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+<p>(Note, This also works for finding a number occurring odd number of times,
+where all the other numbers appear even number of times.
+Note: Your algorithm should have a linear runtime complexity. Could you implement
+it without using extra memory?)</p>
+<p><strong>BIT XOR</strong>
+(Without using extra memory.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_single</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">^=</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">if all numbers appear twice, returns 0</div>
+<div class="line">Recall the following two properties of XOR:</div>
+<div class="line">It returns zero if we take XOR of two same numbers.</div>
+<div class="line">It returns the same number if we XOR with zero.</div>
+<div class="line">x ^ 0 = x</div>
+<div class="line">x ^ x = 0</div>
+<div class="line">So we can XOR all the numbers in the input;</div>
+<div class="line">duplicate numbers will zero out each other and we will be left with the single number.</div>
+</div>
+<p><em>Note.</em>
+It relies on the fact that the duplicate numbers appear exactly twice (or other
+even number), not three times e.g.</p>
+<p><strong>Python stdlib</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">num_count</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">num_count</span> <span class="k">if</span> <span class="n">num_count</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Reminder of how collections.Counter(L) works:
+&gt;&gt;&gt; import collections
+&gt;&gt;&gt; L = [2,4,5,2]
+&gt;&gt;&gt; collections.Counter(L)
+Counter({2: 2, 4: 1, 5: 1})</p>
+<p><strong>using set()</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>loop, extra array (remove, append)</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">no_repeat_array</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">no_repeat_array</span><span class="p">:</span>
+            <span class="n">no_repeat_array</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">no_repeat_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">no_repeat_array</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bits_2.html" class="btn btn-neutral float-left" title="Bit Manipulation Questions Part 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements and References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

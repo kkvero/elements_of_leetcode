@@ -5,21 +5,21 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bit Manipulation Questions Part 2 &mdash; Elements of Leetcode 0.1 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
+    <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=2709fde1"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Acknowledgements and References" href="acknowledgements.html" />
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bit Manipulation Questions Part 3" href="bits_3.html" />
     <link rel="prev" title="Bit Manipulation Questions Part 1" href="bits_1.html" /> 
 </head>
 
@@ -31,11 +31,11 @@
 
           
           
-          <a href="index.html" class="icon icon-home">
+          <a href="../index.html" class="icon icon-home">
             Elements of Leetcode
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -46,7 +46,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="bits_kb.html">Knowledge base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bits_1.html">Part 1 (1-9)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2 (10-18)</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2 (10-19)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#binary-gap">10. Binary gap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-set-clear-one-bit">11. Get, set, clear one bit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#count-flips-to-convert">12. Count flips to convert</a></li>
@@ -55,12 +55,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#flip-bit-longest-sequence">15. Flip bit longest sequence</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#alternating-bits">16. Alternating bits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#insert-bit">17. Insert bit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-231-power-of-two">18. (LC 231) Power of two</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#remove-bit">19. Remove bit</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bits_3.html">Part 3 (20-29)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements and References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
 </ul>
 
         </div>
@@ -69,17 +72,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Elements of Leetcode</a>
+          <a href="../index.html">Elements of Leetcode</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Bit Manipulation Questions Part 2</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/bits_2.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/bits/bits_2.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -329,7 +332,7 @@ String t is generated by random shuffling string s and then add one more letter
 at a random position. Find the letter that was added in t.
 For example: Input: s = “abcd” t = “abecd” Output: ‘e’</p>
 <p><em>Hint.</em> We use the characteristic equation of XOR.
-A xor B xor C = A xor C xor B If A == C, then A xor C = 0 and then, B xor 0 = B. [<a class="reference internal" href="acknowledgements.html#ref-label"><span class="std std-ref">4</span></a>]
+A xor B xor C = A xor C xor B If A == C, then A xor C = 0 and then, B xor 0 = B. [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">4</span></a>]
 Meaning, if we add the characters of the two strings in question, xor of the same
 characters will be 0. And 0 xor with the only unique character results that character
 (char ^ char = 0, 0 ^ char = char).</p>
@@ -690,6 +693,92 @@ print(insert_bit(21, 1, 2))  # 45, 0b101100</p>
 <div class="line">101101</div>
 </div>
 </section>
+<section id="lc-231-power-of-two">
+<h2>18. (LC 231) Power of two<a class="headerlink" href="#lc-231-power-of-two" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Given an integer, write a function to determine if it is a power of two.</div>
+<div class="line">(A power of two is a number of the form 2**n=x.</div>
+<div class="line">Find if x is 2**n.)</div>
+</div>
+<div class="line-block">
+<div class="line"><em>Logic</em></div>
+<div class="line">1 0b1   #2**0</div>
+<div class="line">2 0b10</div>
+<div class="line">4 0b100</div>
+<div class="line">8 0b1000</div>
+<div class="line">16 0b10000  #2**4</div>
+</div>
+<div class="line-block">
+<div class="line">If all 2**n numbers are of the form 100..0, then x-1=11..1</div>
+<div class="line">Then x &amp; (x-1) = 100..0 &amp; 11..1 = 0</div>
+</div>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_power_of_two</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Alternatively</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">isPowerOfTwo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="remove-bit">
+<h2>19. Remove bit<a class="headerlink" href="#remove-bit" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Remove_bit(num, i): remove a bit at specific position.</div>
+<div class="line">For example: Input: num = 10101 (21) remove_bit(num, 2): output = 1001</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># My v</span>
+<span class="k">def</span> <span class="nf">remove_bit</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1">#prep right side</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>         <span class="c1">#cut off right side including index to remove</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">|</span> <span class="n">rs</span>        <span class="c1">#add 0s to left side, merge with right</span>
+    <span class="k">return</span> <span class="n">n</span>
+
+<span class="c1"># My v2</span>
+<span class="k">def</span> <span class="nf">remove_bit</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="n">mask</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">ls</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">|</span> <span class="n">rs</span>
+    <span class="k">return</span> <span class="n">n</span>
+
+<span class="c1"># v1</span>
+<span class="k">def</span> <span class="nf">remove_bit</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">num</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">num</span>
+    <span class="k">return</span> <span class="n">mask</span> <span class="o">|</span> <span class="n">right</span>
+</pre></div>
+</div>
+<p><strong>v1 explained</strong></p>
+<div class="line-block">
+<div class="line">E.g. n=10101, i=2</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">mask</span> <span class="pre">=</span> <span class="pre">num</span> <span class="pre">&gt;&gt;</span> <span class="pre">(i</span> <span class="pre">+</span> <span class="pre">1)</span></code></div>
+<div class="line"># 10 dropping 2+1, =&gt; 10  =&gt; Cut off the right</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">mask</span> <span class="pre">=</span> <span class="pre">mask</span> <span class="pre">&lt;&lt;</span> <span class="pre">i</span></code></div>
+<div class="line"># adding i=2 0s  =&gt; 1000 =&gt; Fill in the right side with 0s</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">right</span> <span class="pre">=</span> <span class="pre">((1</span> <span class="pre">&lt;&lt;</span> <span class="pre">i)</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">&amp;</span> <span class="pre">num</span></code></div>
+<div class="line"># 100 - 1 we get 11 =&gt; Prep mask to extract the right side (i.e. 1s len of i,</div>
+<div class="line">i.e. len of the right side)</div>
+<div class="line">11 &amp; n  =&gt; Extract the right side</div>
+<div class="line">00011 &amp;</div>
+<div class="line">10101</div>
+<div class="line">00001</div>
+<div class="line">(n compared with 11 evaluates to n but of size those 1s)</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">mask</span> <span class="pre">\|</span> <span class="pre">right</span></code></div>
+<div class="line">1000 |  =&gt; OR merges “N leftside + 0s” with the original right side</div>
+<div class="line">0001</div>
+<div class="line">1001</div>
+</div>
+</section>
 </section>
 
 
@@ -697,7 +786,7 @@ print(insert_bit(21, 1, 2))  # 45, 0b101100</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="bits_1.html" class="btn btn-neutral float-left" title="Bit Manipulation Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements and References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="bits_3.html" class="btn btn-neutral float-right" title="Bit Manipulation Questions Part 3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

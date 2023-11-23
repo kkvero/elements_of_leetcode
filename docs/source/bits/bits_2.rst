@@ -600,3 +600,97 @@ print(insert_bit(21, 1, 2))  # 45, 0b101100 ::
 | 000101 | 
 | 101000 = 
 | 101101
+
+18. (LC 231) Power of two
+-------------------------
+| Given an integer, write a function to determine if it is a power of two.
+| (A power of two is a number of the form 2**n=x. 
+| Find if x is 2**n.)
+
+| *Logic*
+| 1 0b1   #2**0
+| 2 0b10
+| 4 0b100
+| 8 0b1000
+| 16 0b10000  #2**4
+
+| If all 2**n numbers are of the form 100..0, then x-1=11..1
+| Then x & (x-1) = 100..0 & 11..1 = 0
+
+**Solution** ::
+
+    def is_power_of_two(n):
+        return n > 0 and not n & (n-1)
+
+    # Alternatively
+    class Solution(object):
+        def isPowerOfTwo(self, n):
+            if n == 0:
+                return False
+            return n & (n - 1) == 0
+
+19. Remove bit
+--------------
+| Remove_bit(num, i): remove a bit at specific position. 
+| For example: Input: num = 10101 (21) remove_bit(num, 2): output = 1001 
+
+::
+
+    # My v
+    def remove_bit(n, i):
+        rs = n & ((1 << i) - 1)  #prep right side
+        n = n >> (i + 1)         #cut off right side including index to remove
+        n = (n << i) | rs        #add 0s to left side, merge with right
+        return n
+
+    # My v2
+    def remove_bit(n, i):
+        mask = (1 << i) - 1
+        rs = n & mask
+        ls = n >> (i + 1)
+        n = (ls << i) | rs
+        return n
+
+    # v1
+    def remove_bit(num, i):
+        mask = num >> (i + 1)      
+        mask = mask << i
+        right = ((1 << i) - 1) & num
+        return mask | right
+
+**v1 explained**
+
+| E.g. n=10101, i=2
+| ``mask = num >> (i + 1)``
+| # 10 dropping 2+1, => 10  => Cut off the right
+| ``mask = mask << i``
+| # adding i=2 0s  => 1000 => Fill in the right side with 0s
+ 
+| ``right = ((1 << i) - 1) & num``
+| # 100 - 1 we get 11 => Prep mask to extract the right side (i.e. 1s len of i,
+| i.e. len of the right side)
+| 11 & n  => Extract the right side
+| 00011 &
+| 10101
+| 00001
+| (n compared with 11 evaluates to n but of size those 1s)
+ 
+| ``return mask \| right``
+| 1000 \|  => OR merges "N leftside + 0s" with the original right side
+| 0001
+| 1001
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

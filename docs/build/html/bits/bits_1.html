@@ -5,20 +5,20 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bit Manipulation Questions Part 1 &mdash; Elements of Leetcode 0.1 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
+    <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=2709fde1"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Bit Manipulation Questions Part 2" href="bits_2.html" />
     <link rel="prev" title="Knowledge Base Bit Manipulation" href="bits_kb.html" /> 
 </head>
@@ -31,11 +31,11 @@
 
           
           
-          <a href="index.html" class="icon icon-home">
+          <a href="../index.html" class="icon icon-home">
             Elements of Leetcode
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -57,11 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#add-without-using">9. Add without using +</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="bits_2.html">Part 2 (10-18)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bits_3.html">Part 3 (20-29)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements and References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
 </ul>
 
         </div>
@@ -70,17 +71,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Elements of Leetcode</a>
+          <a href="../index.html">Elements of Leetcode</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Bit Manipulation Questions Part 1</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/bits_1.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/bits/bits_1.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -213,7 +214,7 @@ otherwise, it is 0. For example, the parity of 1011 is 1, and the parity of
 <li><p>Tools that we use here</p></li>
 </ul>
 <div class="line-block">
-<div class="line"><a class="reference external" href="https://docs.python.org/3/library/functions.html#format" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">format()</span></code></a></div>
+<div class="line"><code class="xref py py-func docutils literal notranslate"><span class="pre">format()</span></code></div>
 <div class="line">Converts a character into binary.</div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>   <span class="c1">#char &#39;d&#39;</span>
@@ -226,7 +227,7 @@ otherwise, it is 0. For example, the parity of 1011 is 1, and the parity of
 <span class="go">&#39;1101000 1100101 1101100 1101100 1101111 100000 1110111 1101111 1110010 1101100 1100100&#39;</span>
 </pre></div>
 </div>
-<p>Using <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></p>
+<p>Using <code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
 <span class="go">&#39;1101000 1100101 1101100 1101100 1101111 100000 1110111 1101111 1110010 1101100 1100100&#39;</span>
 </pre></div>
@@ -640,7 +641,7 @@ space complexity O(1).
 Note, we are going to use the same approach as with a string (comparing the
 leftmost and rightmost digits, working inward), but without converting to string.</p>
 <p><em>Alternatively</em>, we could reverse the digits in the number and see if it is unchanged.</p>
-<p><strong>Solution</strong> (<em>Real Python</em> version [<a class="reference internal" href="acknowledgements.html#ref-label"><span class="std std-ref">3</span></a>])</p>
+<p><strong>Solution</strong> (<em>Real Python</em> version [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">3</span></a>])</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="c1"># Skip single-digit inputs</span>
     <span class="k">if</span> <span class="n">num</span> <span class="o">//</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
