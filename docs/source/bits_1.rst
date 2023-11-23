@@ -27,6 +27,13 @@ Solution::
 Other solutions::
 
     # Python
+    def count_set_bits(n):
+        """Use the built in."""
+        return n.bit_count()
+
+    def hammingWeight(n):
+        return bin(n).count('1')
+
     def count_ones_recur(n):
         """Using Brian Kernighan’s Algorithm. (Recursive Approach)"""
         if not n:
@@ -40,9 +47,6 @@ Other solutions::
             n &= (n-1)
             count += 1
         return count
-
-    def hammingWeight(n):
-        return bin(n).count('1')
 
 * Explained
 
@@ -64,6 +68,33 @@ So the loop will work for just as many times as there are 1s.
 The parity of a binary word is 1 if the number of 1s in the word is odd; 
 otherwise, it is 0. For example, the parity of 1011 is 1, and the parity of 
 10001000 is 0. 
+
+**My V2** (Simplified, if we are given just one word.)
+::
+
+    def parity(s):
+        a = [ord(c) for c in s]
+        cnt = [n.bit_count() for n in a]
+        total = sum(cnt)
+        return total & 1
+
+    print(parity("dune")) # 1
+
+    # With print statements
+    def parity(s):
+        a = [ord(c) for c in s]
+        print(a)
+        cnt = [n.bit_count() for n in a]
+        print(cnt)
+        total = sum(cnt)
+        print(total)
+        return total & 1
+
+    print(parity("dune"))
+    #[100, 117, 110, 101]
+    #[3, 5, 5, 4]
+    #17
+    #1
 
 **Solution 1**::
 
@@ -169,7 +200,7 @@ Using the above trick, we end up counting only 1s::
             x &= x-1    #drops the rightmost 1, loop goes on until we run out of 1s
         return result
 
-**Solution 3**, *O(log n), n is the word size*::
+**Solution 4**, *O(log n), n is the word size*::
 
     # Python
     def parity(x):
@@ -321,6 +352,20 @@ E.g. x = 92 which is (1011100), the weight is 4.
 (Write a program which takes as input a nonnegative integer x and returns a number y 
 which has the same weight as x and their difference \|y-x| is as small as possible.
 Assume x is not 0 or all 1s; integer fits in 64 bits.)
+
+**V2** ::
+
+    def same_weight(x):
+        for i in range(x.bit_length()):
+            if ((x >> i) & 1) != ((x >> (i + 1)) & 1): #if bit at i and bit at i+1 are not the same
+                left = x & ((1 << i) - 1)
+                right = x >> i
+                right_flipped = right ^ ((1 << 2) - 1)  #flipping 2 last bits of right
+                merged = (right_flipped << i) ^ left    #prep end with 0s and XOR merge with left
+                break
+        return merged
+
+    print(same_weight(92)) # 90
 
 **Solution 1** 
 (O(n), n is integer width)

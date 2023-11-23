@@ -113,6 +113,13 @@
 </div>
 <p>Other solutions:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python</span>
+<span class="k">def</span> <span class="nf">count_set_bits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use the built in.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">n</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">hammingWeight</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+
 <span class="k">def</span> <span class="nf">count_ones_recur</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Using Brian Kernighan’s Algorithm. (Recursive Approach)&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="p">:</span>
@@ -126,9 +133,6 @@
         <span class="n">n</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">count</span>
-
-<span class="k">def</span> <span class="nf">hammingWeight</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -154,6 +158,32 @@
 <p>The parity of a binary word is 1 if the number of 1s in the word is odd;
 otherwise, it is 0. For example, the parity of 1011 is 1, and the parity of
 10001000 is 0.</p>
+<p><strong>My V2</strong> (Simplified, if we are given just one word.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parity</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parity</span><span class="p">(</span><span class="s2">&quot;dune&quot;</span><span class="p">))</span> <span class="c1"># 1</span>
+
+<span class="c1"># With print statements</span>
+<span class="k">def</span> <span class="nf">parity</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total</span> <span class="o">&amp;</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">parity</span><span class="p">(</span><span class="s2">&quot;dune&quot;</span><span class="p">))</span>
+<span class="c1">#[100, 117, 110, 101]</span>
+<span class="c1">#[3, 5, 5, 4]</span>
+<span class="c1">#17</span>
+<span class="c1">#1</span>
+</pre></div>
+</div>
 <p><strong>Solution 1</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python</span>
 <span class="k">def</span> <span class="nf">f9</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
@@ -260,7 +290,7 @@ Using the above trick, we end up counting only 1s:</p>
     <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 </div>
-<p><strong>Solution 3</strong>, <em>O(log n), n is the word size</em>:</p>
+<p><strong>Solution 4</strong>, <em>O(log n), n is the word size</em>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python</span>
 <span class="k">def</span> <span class="nf">parity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">^=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span>
@@ -411,6 +441,20 @@ E.g. x = 92 which is (1011100), the weight is 4.</p>
 <p>(Write a program which takes as input a nonnegative integer x and returns a number y
 which has the same weight as x and their difference |y-x| is as small as possible.
 Assume x is not 0 or all 1s; integer fits in 64 bits.)</p>
+<p><strong>V2</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">same_weight</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">):</span> <span class="c1">#if bit at i and bit at i+1 are not the same</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">i</span>
+            <span class="n">right_flipped</span> <span class="o">=</span> <span class="n">right</span> <span class="o">^</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1">#flipping 2 last bits of right</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="p">(</span><span class="n">right_flipped</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">^</span> <span class="n">left</span>    <span class="c1">#prep end with 0s and XOR merge with left</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">merged</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">same_weight</span><span class="p">(</span><span class="mi">92</span><span class="p">))</span> <span class="c1"># 90</span>
+</pre></div>
+</div>
 <p><strong>Solution 1</strong>
 (O(n), n is integer width)</p>
 <p><em>Logic.</em>
