@@ -50,6 +50,14 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 3 (20-29)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#reverse-bits">20. Reverse bits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#single-number">21. Single number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-number2">22. Single number2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-number3">23. Single number3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-401-binary-watch">24. (LC 401) Binary Watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bitwise-and-of-numbers-range">25. Bitwise AND of-numbers-range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-461-hamming-distance">26. (LC 461) Hamming distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-477-total-hamming-distance">27. (LC 477) Total Hamming Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maximum-product-of-word-lengths">28. Maximum-product-of-word-lengths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-421-maximum-xor-of-two-numbers-in-an-array">29. (LC 421) Maximum XOR of Two Numbers in an Array</a></li>
 </ul>
 </li>
 </ul>
@@ -223,6 +231,472 @@ Counter({2: 2, 4: 1, 5: 1})</p>
             <span class="n">no_repeat_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">no_repeat_array</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 </pre></div>
+</div>
+</section>
+<section id="single-number2">
+<h2>22. Single number2<a class="headerlink" href="#single-number2" title="Link to this heading"></a></h2>
+<p>Given an array of integers, every element appears three times except for one,
+which appears exactly once. Find that single one.</p>
+<div class="line-block">
+<div class="line">Example:</div>
+<div class="line">Input: [2,2,3,2]</div>
+<div class="line">Output: 3</div>
+</div>
+<p>(Note: Your algorithm should have a linear runtime complexity.
+Could you implement it without using extra memory?)</p>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+    <span class="c1"># for [a,a,b,a] array</span>
+    <span class="c1"># 3*(a+b) - (a+a+b+a) = 2b</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">((</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">)))</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>  <span class="c1">#generator doesn&#39;t use space</span>
+
+<span class="c1"># The same, but more elaboration</span>
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">s_set</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">*</span> <span class="mi">3</span>
+    <span class="n">s_a</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">s_set</span> <span class="o">-</span> <span class="n">s_a</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1"># Python stdlib (but uses memory)</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">num_count</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">num_count</span> <span class="k">if</span> <span class="n">num_count</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="single-number3">
+<h2>23. Single number3<a class="headerlink" href="#single-number3" title="Link to this heading"></a></h2>
+<p>Given an array of numbers nums, in which exactly two
+elements appear only once and all the other elements
+appear exactly twice. Find the two elements that appear only once.</p>
+<div class="line-block">
+<div class="line">For example:</div>
+<div class="line">Given nums = [1, 2, 1, 3, 2, 5], return [3, 5].</div>
+<div class="line">Note:</div>
+<div class="line">The order of the result is not important. So in the above example, [5, 3] is also correct.</div>
+</div>
+<div class="line-block">
+<div class="line">Your algorithm should run in linear runtime complexity.</div>
+<div class="line">Could you implement it using only constant space complexity?</div>
+<div class="line">Time: O(n) Space: O(1)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stdlib</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">num_count</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">num_count</span> <span class="k">if</span> <span class="n">num_count</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-401-binary-watch">
+<h2>24. (LC 401) Binary Watch<a class="headerlink" href="#lc-401-binary-watch" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><em>Description</em></div>
+<div class="line">A binary watch has 4 LEDs on the top which represent the hours (0-11), and the 6 LEDs on the bottom represent the minutes (0-59).</div>
+<div class="line"># A binary watch looks like this:</div>
+<div class="line">8 4 2 1</div>
+<div class="line">32 16 8 4 2 1</div>
+<div class="line">E.g. to show the time 3:25 the lighted numbers would be</div>
+<div class="line">2 1</div>
+<div class="line">16 8 1</div>
+</div>
+<div class="line-block">
+<div class="line"><em>Task</em></div>
+<div class="line">Given a non-negative integer n which represents the number of LEDs that are currently on, return all possible times the watch could represent.</div>
+<div class="line">Example:</div>
+<div class="line">Input: n = 1</div>
+<div class="line">Return: [“1:00”, “2:00”, “4:00”, “8:00”, “0:01”, “0:02”, “0:04”, “0:08”, “0:16”, “0:32”]</div>
+</div>
+<p><em>Note.</em>
+The hour must not contain a leading zero, for example “01:00” is not valid, it should be “1:00”.
+The minute must be consist of two digits and may contain a leading zero,
+for example “10:2” is not valid, it should be “10:02”.</p>
+<p><em>Hint:</em> each of the numbers on the watch (1,2,4,8,16,32) has one bit 1 in binary:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">&#39;0b1000&#39;</span>
+<span class="go">&#39;0b10000&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># IDEA : GREEDY</span>
+<span class="k">def</span> <span class="nf">readBinaryWatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :type num: int</span>
+<span class="sd">    :rtype: List[str]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="o">+</span> <span class="nb">bin</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">num</span><span class="p">:</span>
+                <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">:</span><span class="si">%02d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1"># The same but using list comprehension</span>
+<span class="k">def</span> <span class="nf">readBinaryWatch</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">:</span><span class="si">%02d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">num</span><span class="p">]</span>
+</pre></div>
+</div>
+<p># format</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">=</span><span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;</span><span class="si">%02d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">m</span>
+<span class="go">&#39;04&#39;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># count 1s</div>
+<div class="line">We make use of the fact that the given number = the number of lighted numbers = num of 1s.</div>
+<div class="line">And (bin(h) + bin(m)).count(‘1’) == num</div>
+<div class="line">E.g. time 2:12</div>
+<div class="line">h=2 (1 lamp), m=12 (composed from 8 and 4, i.e. 2 lamsp) =&gt; 3 lamps overall</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">&#39;0b100b1100&#39; # 3 1s</span>
+</pre></div>
+</div>
+</section>
+<section id="bitwise-and-of-numbers-range">
+<h2>25. Bitwise AND of-numbers-range<a class="headerlink" href="#bitwise-and-of-numbers-range" title="Link to this heading"></a></h2>
+<p>Given a range [m, n] where 0 &lt;= m &lt;= n &lt;= 2147483647,
+return the bitwise AND of all numbers in this range, inclusive.</p>
+<p>For example, given the range [5, 7], you should return 4.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1</span>
+<span class="k">def</span> <span class="nf">f8</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">&amp;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">n</span>
+
+<span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f8</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">7</span><span class="o">&amp;</span><span class="mi">6</span><span class="o">&amp;</span><span class="mi">5</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p># Note, the following won’t work.
+It will be an infinite loop.
+You have to be changing n, the bigger number. &amp; diminishes n.
+Changing m, makes m smaller, it will never be greater than n, i.e. infinite loop.
+Going 5,6,7. m=5&amp;6=4, m=4&amp;7=4, m=4&amp;8=0 etc.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f9</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">&amp;=</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">m</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution my v</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">ans</span> <span class="o">^</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="c1">#4</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-461-hamming-distance">
+<h2>26. (LC 461) Hamming distance<a class="headerlink" href="#lc-461-hamming-distance" title="Link to this heading"></a></h2>
+<p><em>(Easy)</em>
+The Hamming distance between two integers is the number of positions at which
+the corresponding bits are different.
+Given two integers x and y, return the Hamming distance between them.</p>
+<div class="line-block">
+<div class="line">Example</div>
+<div class="line">Input: x = 1, y = 4</div>
+<div class="line">Output: 2</div>
+<div class="line">Explanation:</div>
+<div class="line">1   (0 0 0 1)</div>
+<div class="line">4   (0 1 0 0)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1 (Bitwise operator)</span>
+<span class="k">def</span> <span class="nf">hammingDistance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span> <span class="o">^</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It uses the properties of Xor operator. Recall, that xor evaluates to 1 if
+the two compared numbers are 0 and 1 (1^1, 0^0 evaluate to 0)</p>
+<div class="line-block">
+<div class="line">0001 ^</div>
+<div class="line">0100</div>
+<div class="line">0101</div>
+</div>
+<p>So the resulting number evaluates to 1 only if the two compared numbers are different.
+Then we simply count 1s with .count(‘1’)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My solutions</span>
+<span class="c1"># 1</span>
+<span class="k">def</span> <span class="nf">f31</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f31</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1">#2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f31</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1">#2</span>
+
+<span class="c1"># 2</span>
+<span class="k">def</span> <span class="nf">f32</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">z</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">z</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">z</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f32</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1">#2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f32</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1">#2</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-477-total-hamming-distance">
+<h2>27. (LC 477) Total Hamming Distance<a class="headerlink" href="#lc-477-total-hamming-distance" title="Link to this heading"></a></h2>
+<p><em>(Medium)</em>
+The Hamming distance between two integers is the number of positions at which
+the corresponding bits are different.
+Given an integer array nums, return the sum of Hamming distances between all the
+pairs of the integers in nums.</p>
+<p>Example 1:
+Input: nums = [4,14,2]
+Output: 6
+Explanation: In binary representation, the 4 is 0100, 14 is 1110, and 2 is 0010 (just
+showing the four bits relevant in this case).
+The answer will be:
+HammingDistance(4, 14) + HammingDistance(4, 2) + HammingDistance(14, 2) = 2 + 2 + 2 = 6.</p>
+<p>Example 2:
+Input: nums = [4,14,4]
+Output: 4</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="k">def</span> <span class="nf">hammingDistance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span> <span class="o">^</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">total_hd</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="n">dis</span> <span class="o">=</span> <span class="n">hammingDistance</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">dis</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">total_hd</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>   <span class="c1">#6</span>
+
+<span class="c1"># My solution 2</span>
+<span class="c1"># (Use library to make pairs and built in method to count 1s.)</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">def</span> <span class="nf">total_ham_dist3</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">td</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># total distance</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+        <span class="n">n1</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n2</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">td</span> <span class="o">+=</span> <span class="p">(</span><span class="n">n1</span> <span class="o">^</span> <span class="n">n2</span><span class="p">)</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">td</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">total_ham_dist3</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+
+<span class="c1"># My solution 1</span>
+<span class="c1"># (Uses XOR and &amp; to count hamming distance. But as for putting whatever way of</span>
+<span class="c1"># counting into a separate function - yes it is better.)</span>
+<span class="k">def</span> <span class="nf">f34</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">ham_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+            <span class="n">ham</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">ij</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">^</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">ij</span><span class="p">:</span>
+                <span class="n">ij</span> <span class="o">=</span> <span class="n">ij</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ij</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">ham</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">ham_sum</span> <span class="o">+=</span> <span class="n">ham</span>
+    <span class="k">return</span> <span class="n">ham_sum</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f34</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>   <span class="c1">#6</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f34</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span>  <span class="c1">#4</span>
+</pre></div>
+</div>
+</section>
+<section id="maximum-product-of-word-lengths">
+<h2>28. Maximum-product-of-word-lengths<a class="headerlink" href="#maximum-product-of-word-lengths" title="Link to this heading"></a></h2>
+<p>Given a string array words, find the maximum value of
+length(word[i]) * length(word[j]) where the two words
+do not share common letters. You may assume that each
+word will contain only lower case letters. If no such
+two words exist, return 0.</p>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Given [“abcw”, “baz”, “foo”, “bar”, “xtfn”, “abcdef”]</div>
+<div class="line">Return 16</div>
+<div class="line">The two words can be “abcw”, “xtfn”.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="c1"># Using set() and itertools std lib</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">def</span> <span class="nf">common</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">product_score</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">common</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">)</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">w1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">w2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">maxProduct</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">product_score</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">)</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># Explained</div>
+<div class="line">1) &amp; set operator - identifies intersect, items in both a and b.</div>
+<div class="line">2) <code class="docutils literal notranslate"><span class="pre">itertools.combinations(iterable,</span> <span class="pre">r)</span></code></div>
+<div class="line">Return r length subsequences of elements from the input iterable.</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">[(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Remake</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;no common letters&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">w1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">w2</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">max_prod</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+
+<span class="c1">### No magic at all</span>
+<span class="k">def</span> <span class="nf">unique</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">w1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">w2</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">max_len</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">combos</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">lens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">combos</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">unique</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">lens</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;abcw&quot;</span><span class="p">,</span> <span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;xtfn&quot;</span><span class="p">,</span> <span class="s2">&quot;abcdef&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">max_len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>  <span class="c1">#16</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-421-maximum-xor-of-two-numbers-in-an-array">
+<h2>29. (LC 421) Maximum XOR of Two Numbers in an Array<a class="headerlink" href="#lc-421-maximum-xor-of-two-numbers-in-an-array" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><em>(Medium), O(32n).</em></div>
+<div class="line">Given an integer array nums, return the maximum result of nums[i] XOR nums[j].</div>
+<div class="line">Example 1:</div>
+<div class="line">Input: nums = [3,10,5,25,2,8]</div>
+<div class="line">Output: 28</div>
+<div class="line">Explanation: The maximum result is 5 XOR 25 = 28.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+<span class="k">def</span> <span class="nf">findMaximumXOR</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">mask</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>               <span class="c1">#alternatively mask |= 1&lt;&lt;i</span>
+        <span class="n">prefixSet</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span> <span class="o">&amp;</span> <span class="n">mask</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">}</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">ans</span> <span class="o">|</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+        <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">prefixSet</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">temp</span> <span class="o">^</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">prefixSet</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">temp</span>
+                <span class="k">break</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">findMaximumXOR</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>  <span class="c1">#28 (25^5)</span>
+</pre></div>
+</div>
+<p><em>Explained.</em></p>
+<p>-We are basing our solution on the fact that the max xor is 1111..
+Now, how many 1s to take, we could take the len of max number, or just some
+max possible, i.e. 32.</p>
+<div class="line-block">
+<div class="line">-But we rather start looking at the most significant bit on the left.</div>
+<div class="line">100000..</div>
+<div class="line">110000..</div>
+<div class="line">-Also consider, max ^ num1 = num2</div>
+<div class="line">Knowing max and num1, we make a lookup in the list for num2.</div>
+</div>
+<div class="line-block">
+<div class="line">1)</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(32)[::-1]:</span></code></div>
+</div>
+<div class="line">I.e. we start with biggest i=32</div>
+</div>
+<div class="line-block">
+<div class="line">2)</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">mask</span> <span class="pre">+=</span> <span class="pre">1</span> <span class="pre">&lt;&lt;</span> <span class="pre">i</span></code></div>
+</div>
+<div class="line">We look at the most significant bit</div>
+<div class="line">On iterations our mask is 10000.., 110000, 1110000</div>
+<div class="line">100000..</div>
+</div>
+<div class="line-block">
+<div class="line">100000..+ (we could also use | OR operator to the same effect)</div>
+<div class="line">x10000..</div>
+<div class="line">110000..</div>
+</div>
+<div class="line-block">
+<div class="line">3)</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">prefixSet</span> <span class="pre">=</span> <span class="pre">{n</span> <span class="pre">&amp;</span> <span class="pre">mask</span> <span class="pre">for</span> <span class="pre">n</span> <span class="pre">in</span> <span class="pre">nums}</span></code></div>
+</div>
+<div class="line">n &amp; mask extracts MSBs of our numbers.</div>
+<div class="line">E.g. for nums 5, 25 (101, 11001), set at one point will be (100, 11000)</div>
+<div class="line">11100&amp;101=100 (mask &amp; n)</div>
+<div class="line">Before 1s in mask reach the number with longest length, set will be -&gt; all 0s.</div>
+<div class="line">When there are enough ones that they touch the first MSB of our numbers, a set with MSB of our numbers will start to appear.</div>
+</div>
+<div class="line-block">
+<div class="line">4)</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">=</span> <span class="pre">ans</span> <span class="pre">|</span> <span class="pre">1</span> <span class="pre">&lt;&lt;</span> <span class="pre">i</span></code></div>
+</div>
+<div class="line">With temp we build the biggest XOR starting from the MSB.</div>
+<div class="line">len of temp will be equal to index, when we first start to touch MSBs of our nums.</div>
+<div class="line">Our example 5, 25 (101, 11001). So first temp is going to be 10000.</div>
+</div>
+<p>(Why, because before that tepm = 100000.., is a large number, we are not going to find
+temp ^ prefix in prefixes, so we loop fruitlessly until we start finding for
+shorter numbers, smaller i-s, like i= 4, for num 25 (10000) first MSB revealed).</p>
+<div class="line-block">
+<div class="line">From i=4, mask reveals (5,25), (101, 11001) prefixes = {0, 10000}</div>
+<div class="line">temp = ans | 1&lt;&lt;i, which is 0| 10000 = 10000</div>
+<div class="line">Our condition was if temp ^ prefix in prefixes</div>
+<div class="line">So we have 10000 ^ 10000 = 0</div>
+<div class="line">0 is in prefixes</div>
+<div class="line">(before i=4, we had 100000 ^ 000 (no MSB revealed yet)= 100000 which is not in prefixes)</div>
+<div class="line">ans = 10000</div>
+<div class="line">we break out of the inner loop</div>
+</div>
+<div class="line-block">
+<div class="line">Continues main loop, i=3</div>
+<div class="line">prefixes = {0, 11000}</div>
+<div class="line">temp= 10000 | 1000 = 11000</div>
+<div class="line">11000 ^ 11000 = 0 which is in prefixes</div>
+<div class="line">ans = 11000</div>
+<div class="line">break from inner</div>
+</div>
+<div class="line-block">
+<div class="line">i=2</div>
+<div class="line">prefixes = {100, 11000}  #mask&amp;n = 111100 &amp; 101 = 100 (reveals MSB of 5)</div>
+<div class="line">temp = ans|i&lt;&lt;2 = 11000 | 100 = 11100</div>
+<div class="line">temp^prefix = 11100^100=11000 #now temp pairs with 5, result is MSBs of 25</div>
+<div class="line">ans = 11100</div>
+<div class="line">After that we don’t find anything else, so the ans=11100 sticks</div>
+<div class="line">And indeed 5^25 = 11100</div>
 </div>
 </section>
 </section>
