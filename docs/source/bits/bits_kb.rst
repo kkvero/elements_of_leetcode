@@ -374,4 +374,16 @@ Hexadecimals are often used to represent masks.
 
 >>> mask = 0b11111111  # Same as 0xff or 255
 
+- Mask for preventing overflow for big integers (i.e. >32 integers) or negative numbers.
 
+>>> bin(0xFFFFFFFF)  #or small Fs, its the same
+'0b11111111111111111111111111111111'
+>>> len(bin(0xFFFFFFFF))
+34  #so 32 after trimming 0b
+
+In solutions with other languages you might not see mask being used.
+Mask is necessary in Python.
+(In Python unlike other languages the range of bits for representing a value is 
+not 32, its much much larger than that. This is great when dealing with non 
+negative integers, however this becomes a big issue when dealing with negative 
+numbers ( two's compliment))

@@ -24,6 +24,12 @@ TABLE OF CONTENTS
     Part 1 (1-9) <bits/bits_1>
     Part 2 (10-19) <bits/bits_2>
     Part 3 (20-29) <bits/bits_3>
+    Part 4 (30-36) <bits/bits_4>
+
+.. toctree::
+    :caption: Math:
+
+    Knowledge base <math/math_kb>
 
 .. toctree::
     :caption: About the Project:
