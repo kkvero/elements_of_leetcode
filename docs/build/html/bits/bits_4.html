@@ -50,6 +50,10 @@
 <li class="toctree-l1"><a class="reference internal" href="bits_3.html">Part 3 (20-29)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 4 (30-36)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lc-462-minimum-moves-to-equal-array-elements-ii">30. (LC 462) Minimum Moves to Equal Array Elements II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-1573-number-of-ways-to-split-a-string">31. (LC 1573) Number of Ways to Split a String</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-342-power-of-four">32. (LC 342) Power of Four</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-762-prime-number-of-set-bits-in-binary-representation">33. (LC 762) Prime Number of Set Bits in Binary Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-645-set-mismatch">34. (LC 645) Set Mismatch</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-371-sum-of-two-integers">35. (LC 371) Sum of Two Integers</a></li>
 </ul>
 </li>
@@ -114,6 +118,351 @@ by 1 or decrementing a selected element by 1.</p>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
         <span class="n">moves</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">moves</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-1573-number-of-ways-to-split-a-string">
+<h2>31. (LC 1573) Number of Ways to Split a String<a class="headerlink" href="#lc-1573-number-of-ways-to-split-a-string" title="Link to this heading"></a></h2>
+<p>Given a binary string s, you can split s into 3 non-empty strings s1, s2, and s3
+where s1 + s2 + s3 = s.
+Return the number of ways s can be split such that the number of ones is the same
+in s1, s2, and s3. Since the answer may be too large, return it modulo 10^9 + 7.</p>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Input: s = “10101”</div>
+<div class="line">Output: 4</div>
+<div class="line">Explanation: There are four ways to split s in 3 parts where each part contain the same number of letters ‘1’.</div>
+<div class="line">“1|010|1”</div>
+<div class="line">“1|01|01”</div>
+<div class="line">“10|10|1”</div>
+<div class="line">“10|1|01”</div>
+</div>
+<div class="line-block">
+<div class="line">Example 2:</div>
+<div class="line">Input: s = “1001”</div>
+<div class="line">Output: 0</div>
+</div>
+<div class="line-block">
+<div class="line">Example 3:</div>
+<div class="line">Input: s = “0000”</div>
+<div class="line">Output: 3</div>
+<div class="line">Explanation: There are three ways to split s in 3 parts.</div>
+<div class="line">“0|0|00”</div>
+<div class="line">“0|00|0”</div>
+<div class="line">“00|0|0”</div>
+</div>
+<div class="line-block">
+<div class="line">Constraints:</div>
+<div class="line-block">
+<div class="line">3 &lt;= s.length &lt;= 105</div>
+<div class="line">s[i] is either ‘0’ or ‘1’.</div>
+</div>
+</div>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">numWays</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="o">+</span><span class="mi">7</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cnt</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span> <span class="o">%</span> <span class="n">mod</span>
+    <span class="k">if</span> <span class="n">cnt</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">ones</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ones</span><span class="p">[</span><span class="n">cnt</span><span class="o">//</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ones</span><span class="p">[</span><span class="n">cnt</span><span class="o">//</span><span class="mi">3</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">ones</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">cnt</span><span class="o">//</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span> <span class="n">ones</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">cnt</span><span class="o">//</span><span class="mi">3</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">%</span> <span class="n">mod</span>
+
+    <span class="c1"># possible rewrite for the last part (n_ones - is number of ones in each cut,</span>
+    <span class="c1"># indices - indices where we have 1s)</span>
+    <span class="n">n_ones</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ones</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">n_ones</span><span class="p">]</span> <span class="o">-</span> <span class="n">indices</span><span class="p">[</span><span class="n">n_ones</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span>
+        <span class="n">indices</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_ones</span><span class="p">]</span> <span class="o">-</span> <span class="n">indices</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_ones</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Explanations of the basic math.</strong></p>
+<ol class="arabic simple">
+<li><p>How to count the number of possible ways to cut a string.</p></li>
+</ol>
+<div class="line-block">
+<div class="line">s = “100100010100110”</div>
+<div class="line">num_of_ones = 6</div>
+<div class="line">For a valid way to split,each part must have 2 ones.</div>
+<div class="line">Number of ones encountered so far at each index:</div>
+<div class="line">ones = [1,1,1,2,2,2,2,3,3,4,4,4,5,6,6]</div>
+<div class="line">We can make the first cut at indices from 3-6 (the first part should end there).</div>
+<div class="line">So,we have 4 ways to choose for the end index of the 1st cut.</div>
+<div class="line">Similarly,for the 2nd part,it may end at any index from 9-11 and still be a valid cut i.e. 3 ways.</div>
+<div class="line">Multiplying these,we get 4*3 = 12 ways.</div>
+</div>
+<div class="line-block">
+<div class="line"><em>But we use a different algorithm in the solution.</em></div>
+<div class="line">s = “100100010100110”</div>
+<div class="line">cnt = s.count(‘1’)  #cnt=6</div>
+<div class="line"># Record at what indices we encounter ‘1’.</div>
+<div class="line">ones = [0,3,7,9,12,13]  #x=1 at these indexes (x is value at index i)</div>
+</div>
+<div class="line-block">
+<div class="line">Breaking down this:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">(ones[cnt//3]</span> <span class="pre">-</span> <span class="pre">ones[cnt//3-1])</span> <span class="pre">*</span> <span class="pre">(ones[2*cnt//3]-</span> <span class="pre">ones[2*cnt//3-1])</span> <span class="pre">%</span> <span class="pre">mod</span></code></div>
+<div class="line">1) (ones[cnt//3] - ones[cnt//3-1])</div>
+<div class="line">cnt//3  #cnt=6, so 6//3 = 2</div>
+<div class="line">ones[2] - ones[1] #values are ones at these indices</div>
+<div class="line">7 - 3 = 4  #4 places where we could cut the first part</div>
+<div class="line">(literally, we could cut anywhere between indices 3 and 7: at 3,4,5,6=4 places)</div>
+<div class="line"># In other words:</div>
+<div class="line">(ones[cnt//3] - ones[cnt//3-1])</div>
+<div class="line">is (end of first cut - start of first cut)</div>
+<div class="line">2) (ones[2*cnt//3]- ones[2*cnt//3-1])</div>
+<div class="line">Times 2, because for the second cut at the indices we should have double the number</div>
+<div class="line">of 1s.</div>
+<div class="line">ones[2*2] - ones[2*2-1]</div>
+<div class="line">12 - 9 = 3</div>
+<div class="line">Overall ways = 4 * 3 (corresponds to the explanation of the basic math)</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Ways to cut a string with only 0s</p></li>
+</ol>
+<div class="line-block">
+<div class="line">s = ‘000000’</div>
+<div class="line">total no. of positions available for cut1: (n-1)</div>
+<div class="line">total no. of positions available for cut2: (n-2), since one position is taken by cut1.</div>
+</div>
+<div class="line-block">
+<div class="line">hence total no. of ways to place two cuts: (n-1)*(n-2)</div>
+</div>
+<div class="line-block">
+<div class="line">But it includes duplicate cases, as cut1 at position 1 and cut2 at position 2</div>
+<div class="line">will be the same as cut1 at position 2 and cut2 at position 1.</div>
+<div class="line">Both will give the same substrings of s. (‘0|0|0000’)</div>
+<div class="line">So, total num of ways to cut a string in 3 parts is: (n-1)*(n-2)/2</div>
+</div>
+</section>
+<section id="lc-342-power-of-four">
+<h2>32. (LC 342) Power of Four<a class="headerlink" href="#lc-342-power-of-four" title="Link to this heading"></a></h2>
+<p>(easy)
+Given an integer n, return true if it is a power of four. Otherwise, return false.
+An integer n is a power of four, if there exists an integer x such that n == 4**x.</p>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Input: n = 16</div>
+<div class="line">Output: true</div>
+<div class="line">Example 2:</div>
+<div class="line">Input: n = 5</div>
+<div class="line">Output: false</div>
+<div class="line">Example 3:</div>
+<div class="line">Input: n = 1</div>
+<div class="line">Output: true</div>
+<div class="line"># Time:  O(1)</div>
+<div class="line"># Space: O(1)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (recursion)</span>
+<span class="k">def</span> <span class="nf">isPowerOfFour</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">isPowerOfFour</span><span class="p">(</span><span class="n">num</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="c1">### Solution 2 (BIT MANIPULATION)</span>
+<span class="k">def</span> <span class="nf">isPowerOfFour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">num</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">num</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">(num</span> <span class="pre">&amp;</span> <span class="pre">0x55555555)</span> <span class="pre">!=</span> <span class="pre">0</span></code></p></li>
+</ol>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mh">0x55555555</span><span class="p">)</span>
+<span class="go">&#39;0b1010101010101010101010101010101&#39;</span>
+</pre></div>
+</div>
+<p>If we look at examples of numbers that are powers of 4:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">4</span><span class="o">**</span><span class="mi">2</span>
+<span class="go">16</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">4</span><span class="o">**</span><span class="mi">3</span>
+<span class="go">64</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">&#39;0b100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">&#39;0b10000&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<span class="go">&#39;0b1000000&#39;</span>
+</pre></div>
+</div>
+<p>We see that such numbers always have an even number of zeros, and 1 is at an odd
+position.
+Hence when &amp; compared with a mask ..1010101, the 1 in 10000 should align with a 1
+in the mask.</p>
+<div class="line-block">
+<div class="line">E.g.</div>
+<div class="line">10000 &amp;</div>
+<div class="line">10101</div>
+<div class="line">10000</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><code class="docutils literal notranslate"><span class="pre">(num</span> <span class="pre">&amp;</span> <span class="pre">(num</span> <span class="pre">-</span> <span class="pre">1))</span></code></p></li>
+</ol>
+<p>Again, because a num power of 4 is of format a 1 and all zeros like 10000,
+10000 &amp; 10000-1 = 0, 10000 &amp; 1111 = 0</p>
+</section>
+<section id="lc-762-prime-number-of-set-bits-in-binary-representation">
+<h2>33. (LC 762) Prime Number of Set Bits in Binary Representation<a class="headerlink" href="#lc-762-prime-number-of-set-bits-in-binary-representation" title="Link to this heading"></a></h2>
+<p>(Easy)
+Given two integers left and right, return the count of numbers in the inclusive
+range [left, right] having a prime number of set bits in their binary representation.</p>
+<p>Recall that the number of set bits an integer has is the number of 1’s present when written in binary.
+For example, 21 written in binary is 10101, which has 3 set bits.</p>
+<div class="line-block">
+<div class="line">#Example 1:</div>
+<div class="line">Input: left = 6, right = 10</div>
+<div class="line">Output: 4</div>
+<div class="line">Explanation:</div>
+<div class="line">6  -&gt; 110 (2 set bits, 2 is prime)</div>
+<div class="line">7  -&gt; 111 (3 set bits, 3 is prime)</div>
+<div class="line">8  -&gt; 1000 (1 set bit, 1 is not prime)</div>
+<div class="line">9  -&gt; 1001 (2 set bits, 2 is prime)</div>
+<div class="line">10 -&gt; 1010 (2 set bits, 2 is prime)</div>
+<div class="line">4 numbers have a prime number of set bits.</div>
+</div>
+<div class="line-block">
+<div class="line">#Example 2:</div>
+<div class="line">Input: left = 10, right = 15</div>
+<div class="line">Output: 5</div>
+<div class="line">Explanation:</div>
+<div class="line">10 -&gt; 1010 (2 set bits, 2 is prime)</div>
+<div class="line">11 -&gt; 1011 (3 set bits, 3 is prime)</div>
+<div class="line">12 -&gt; 1100 (2 set bits, 2 is prime)</div>
+<div class="line">13 -&gt; 1101 (3 set bits, 3 is prime)</div>
+<div class="line">14 -&gt; 1110 (3 set bits, 3 is prime)</div>
+<div class="line">15 -&gt; 1111 (4 set bits, 4 is not prime)</div>
+<div class="line">5 numbers have a prime number of set bits.</div>
+</div>
+<p>Also recall that 1 is not a prime, 2 is the smallest prime.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (sort of my version)</span>
+<span class="c1"># (In this version we count the number of set bits in the main function.</span>
+<span class="c1"># In the helper function we identify if that number is prime.)</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">n</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">count_set_bits</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+    <span class="n">primes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))]</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">primes</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">count_set_bits</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1">#4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_set_bits</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span> <span class="c1">#5</span>
+
+<span class="c1">### Solution 2</span>
+<span class="c1"># (In this version the helper function both counts the set bits using bit operators.</span>
+<span class="c1"># The main function only makes a list of valid results, calling the helper function.)</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">f17</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;number of set bits is a prime number&#39;&#39;&#39;</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># Verify f17</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f17</span><span class="p">(</span><span class="mi">300</span><span class="p">))</span>  <span class="c1">#&#39;0b100101100&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f17</span><span class="p">(</span><span class="mi">21</span><span class="p">))</span>  <span class="c1">#&#39;0b10101&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f17</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>  <span class="c1">#&#39;0b110&#39;</span>
+<span class="c1"># OUT</span>
+<span class="c1"># False</span>
+<span class="c1"># True</span>
+<span class="c1"># True</span>
+
+<span class="k">def</span> <span class="nf">f18</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;For numbers in range x, y: how many nums have prime number of set bits&#39;&#39;&#39;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">f17</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f18</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="c1"># OUT</span>
+<span class="c1"># [6, 7, 9, 10]</span>
+<span class="c1"># 4</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-645-set-mismatch">
+<h2>34. (LC 645) Set Mismatch<a class="headerlink" href="#lc-645-set-mismatch" title="Link to this heading"></a></h2>
+<p>(Easy)
+You have a set of integers &lt;s&gt;, which originally contains all the numbers from 1 to n.
+Unfortunately, due to some error, one of the numbers in s got duplicated to
+another number in the set, which results in
+&lt;repetition of one number&gt; and &lt;loss of another&gt; number.</p>
+<p>You are given an integer array &lt;nums&gt; representing the data status of this set after the error.
+Find the number that occurs twice and the number that is missing and return them in the form of an array.</p>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Input: nums = [1,2,2,4]</div>
+<div class="line">Output: [2,3]</div>
+</div>
+<div class="line-block">
+<div class="line">Example 2:</div>
+<div class="line">Input: nums = [1,1]</div>
+<div class="line">Output: [1,2]</div>
+</div>
+<div class="line-block">
+<div class="line">Constraints:</div>
+<div class="line-block">
+<div class="line">2 &lt;= nums.length &lt;= 104</div>
+<div class="line">1 &lt;= nums[i] &lt;= 104</div>
+</div>
+</div>
+<p><em>Solutions seem to assume that the given range definitely starts with 1.
+And the missing number comes right after the duplicate.</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># using set, sum</span>
+<span class="c1">### Solution 1</span>
+<span class="k">def</span> <span class="nf">findErrorNums</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">)),</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">))]</span>
+
+<span class="c1"># OR</span>
+<span class="k">def</span> <span class="nf">find_dup_mis</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">dup</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">mis</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">dup</span><span class="p">,</span> <span class="n">mis</span><span class="p">]</span>
+
+<span class="c1"># Breaking it down</span>
+<span class="k">def</span> <span class="nf">find_error</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">dup</span> <span class="o">=</span> <span class="n">sum1</span> <span class="o">-</span> <span class="n">sum2</span>
+    <span class="n">sum3</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">missing</span> <span class="o">=</span> <span class="n">sum3</span> <span class="o">-</span> <span class="n">sum2</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">dup</span><span class="p">,</span> <span class="n">missing</span><span class="p">]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">find_error</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>  <span class="c1">#[4, 5]</span>
+
+<span class="c1"># using bit manipulation</span>
+<span class="k">def</span> <span class="nf">find_dup_mis2</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="c1"># finding mis (make list = our a + full list = [1,1,2,2,&gt;3&lt;,4,4])</span>
+    <span class="n">mis</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">mis</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
+        <span class="n">mis</span> <span class="o">^=</span> <span class="n">n</span>
+    <span class="c1"># finding dup (use num^num=0)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dup</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">dup</span><span class="p">,</span> <span class="n">mis</span><span class="p">]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">find_dup_mis2</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="c1">#[2, 3]</span>
 </pre></div>
 </div>
 </section>

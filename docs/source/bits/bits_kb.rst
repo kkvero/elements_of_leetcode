@@ -387,3 +387,8 @@ Mask is necessary in Python.
 not 32, its much much larger than that. This is great when dealing with non 
 negative integers, however this becomes a big issue when dealing with negative 
 numbers ( two's compliment))
+
+- Other useful masks
+
+>>> bin(0x55555555)
+'0b1010101010101010101010101010101'

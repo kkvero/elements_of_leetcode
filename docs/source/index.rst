@@ -27,6 +27,12 @@ TABLE OF CONTENTS
     Part 4 (30-36) <bits/bits_4>
 
 .. toctree::
+    :caption: Array:
+
+    Knowledge base <array/array_kb>
+    Part 1 (1-9) <array/array_1>
+
+.. toctree::
     :caption: Math:
 
     Knowledge base <math/math_kb>
