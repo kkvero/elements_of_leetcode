@@ -306,6 +306,16 @@ Again, because only 2 possible values, flipping has the effect of a swap.
 
     print(reverse_bits(600))   # returns 105
 
+    # V2
+    def rev_bits2(n):
+        m = 0
+        while n:
+            bit = n & 1
+            m <<= 1
+            m |= bit
+            n >>= 1
+        return m
+
 Checking
 
 >>> bin(600)
@@ -328,6 +338,13 @@ FYI the result of n&1 is whatever the last bit of n is. E.g. if n ends with 0,
             s = "0"*(32 - len(s)) + s  # we zero pad
             t = s[::-1]
             return int(t,2)
+
+    # Simplified, my v
+    def rev_bits(n):
+        s = str(bin(n))[2:]
+        return "0b" + (s[::-1])
+
+    print(rev_bits(96)) # '0b0000011' 
 
 **Solution 3** (My variant)::
 

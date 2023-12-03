@@ -409,7 +409,165 @@ For using mask here see :ref:`mask-label`.
 | - AND (a & b) correctly returns the carry, but we just have to move it one position to the left, hence << 1
 | So we continue until there is no carry (carry = 0, and b = carry = 0)
 
+36. (LC 393) UTF-8 Validation
+------------------------------
+(Medium)
+`Task <https://leetcode.com/problems/utf-8-validation/>`_
 
+Put simply, given a list of integers like [197,130,1], return True if its
+binary form, here 11000101 10000010 00000001 matches one of the patterns
+given in the table in the task.
+In this example it matches (pattern 2 + pattern 1), i.e. True, a valid utf8.
+::
 
+    ### V my
+    def valid_utf(a):
+        bins = [bin(n)[2:].zfill(8) for n in a]
+        flag = 0
+        for c in bins[0]:
+            if c == "0":
+                break
+            flag += 1
+        flag -= 1
+        for n in bins[1:]:
+            if n[:2] == "10":
+                flag -= 1
+            else:
+                break
+        return flag <= 0
 
+    data = [197, 130, 1]
+    data2 = [235, 140, 4]
+    print(valid_utf(data))   # True
+    print(valid_utf(data2))  # False
 
+| *Explained:*
+|    ``flag -= 1``
+
+Because the format is::
+
+    # Visualization
+    1 0
+    2 11   10
+    3 111  10 10
+    4 1111 10 10 10
+    # E.g. flag=2 (11), but only one set of 10.
+
+::
+
+    ### Solution
+    def validUtf8(data):
+        """
+        :type data: List[int]
+        :rtype: bool
+        """
+        cnt = 0
+        for d in data:
+            if cnt == 0:
+                if (d >> 5) == 0b110:
+                    cnt = 1
+                elif (d >> 4) == 0b1110:
+                    cnt = 2
+                elif (d >> 3) == 0b11110:
+                    cnt = 3
+                elif (d >> 7):
+                    return False
+            else:
+                if (d >> 6) != 0b10:
+                    return False
+                cnt -= 1
+        return cnt == 0
+
+    data1 = [197, 130, 1]
+    data2 = [235, 140, 1]
+    print(validUtf8(data1))
+    print(validUtf8(data2))
+    # True
+    # False
+
+*Explained*::
+
+    # This in mind:
+                1          |   0xxxxxxx
+                2          |   110xxxxx 10xxxxxx
+                3          |   1110xxxx 10xxxxxx 10xxxxxx
+                4          |   11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+
+The algorithm relies on the fact that the first character in data sets the pattern.
+E.g. if it has that many 1s, then we know that it can match one and only one of the
+utf patterns, so we iterate throught the remaining patterns knowing how many 
+characters with format 10xxxx we must encounter to make it a valid utf8.
+::
+
+    #1
+
+                if (d >> 5) == 0b110:
+                    cnt = 1
+                elif (d >> 4) == 0b1110:
+                    cnt = 2
+
+    # Think of the count as the number of more characters the pattern should have.
+    # E.g. having encountered 0b110, there should be one more item of format 10xxxxx,
+    # so count=1 
+                2          |   110xxxxx 10xxxxxx
+
+    #2
+            if cnt == 0:..
+            else:
+                if (d >> 6) != 0b10:
+                    return False
+                cnt -= 1
+    # If count is not 0, then we must have the next character of format 0b10.
+    # If the next character in data is not 0b10, then the pattern does not match one 
+    # of the utf8 variants. If it is 0b10, we subtract -1.
+
+    # If count = 0, then the pattern is complete.
+
+    #3
+                elif (d >> 7):
+                    return False
+    # If the count is 0 and we encounter anything other than 0xxx, return False.
+    # I.e. it's ok to encounter 0xxxx after a closed pattern.
+
+::
+
+    ### My version with strings
+    # (I was worried about making sure we deal with 8 bits only.
+    # But there is really no need. Alg with >> will return False if not 8 bits.)
+
+    def f37(a):
+        pattern = 0
+        for i in a:
+            i = (bin(i)[2:]).zfill(8)
+            print(i)
+            if pattern == 0:
+                if i[:5] == '11110':
+                    pattern = 3
+                elif i[:4] == '1110':
+                    pattern = 2
+                elif i[:3] == '110':
+                    pattern = 1
+                elif i[0] == '0':
+                    pattern = 0
+                else:
+                    return False
+            elif pattern > 0:
+                if i[:2] == '10':
+                    pattern -= 1
+                else:
+                    return False
+        return pattern == 0
+
+    data = [197,130,1]
+    print(f37(data))
+    data2 = [235,140,4]
+    print(f37(data2))
+    # OUT
+    # 11000101
+    # 10000010
+    # 00000001
+    # True
+    # 11101011
+    # 10001100
+    # 00000100
+    # False
