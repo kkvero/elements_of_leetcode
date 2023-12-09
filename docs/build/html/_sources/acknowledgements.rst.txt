@@ -13,3 +13,4 @@ Acknowledgements and References
 7. `Leetcode Solutions doocs <https://github.com/doocs/leetcode/tree/main/solution>`_.
 8. `Top 100 LeetCode Questions <https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-100-LeetCode-Questions-to-Save-Your-Time-OaM1orEU>`_.
 9. `Leetcode Patterns <https://seanprashad.com/leetcode-patterns/>`_.
+10. `Neetcode coding practice <https://neetcode.io>`_.
