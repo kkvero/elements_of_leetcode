@@ -30,7 +30,8 @@ TABLE OF CONTENTS
     :caption: Array:
 
     Knowledge base <array/array_kb>
-    Part 1 (1-9) <array/array_1>
+    Part 1 (37-45) <array/array_1>
+    Part 2 (46-55) <array/array_2>
 
 .. toctree::
     :caption: Math:

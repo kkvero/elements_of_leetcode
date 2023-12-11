@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="array_1.html" />
+    <link rel="next" title="Array Questions Part 1" href="array_1.html" />
     <link rel="prev" title="Bit Manipulation Questions Part 4" href="../bits/bits_4.html" /> 
 </head>
 
@@ -54,9 +54,19 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Knowledge base</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#data-types-data-structures">Data types, data structures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#array">Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#array-data-structure">Array data structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tips-for-arrays">Tips for Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#array-types-in-python">Array types in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instantiating-a-list">Instantiating a list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-operations">Basic operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#array-methods">Array methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extend">extend()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#slicing">Slicing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#an-integer-overflow">An integer overflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arbitrary-precision-arithmetic">Arbitrary-Precision arithmetic</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="array_1.html">Part 1 (1-9)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -113,24 +123,107 @@ Mapping data type: dict
 Boolean type: bool
 Set data types: set, frozenset</p>
 </section>
-<section id="array">
-<h2>Array<a class="headerlink" href="#array" title="Link to this heading"></a></h2>
+<section id="array-data-structure">
+<h2>Array data structure<a class="headerlink" href="#array-data-structure" title="Link to this heading"></a></h2>
 <p>The simplest data structure, which is a contiguous block of memory.</p>
 <ul class="simple">
 <li><p>Time complexities of working with arrays</p></li>
 </ul>
 <p>Retrieving and updating A[i] takes O(1) time.
 To delete the element at index i from an array of length n is O(n - i) time compl.</p>
-<ul class="simple">
-<li><p>Tips for Arrays</p></li>
-</ul>
+</section>
+<section id="tips-for-arrays">
+<h2>Tips for Arrays<a class="headerlink" href="#tips-for-arrays" title="Link to this heading"></a></h2>
 <p>▪️ Array problems often have simple brute-force solutions that use O(n) space,
 but there are subtler solutions that &lt;use the array itself&gt; to &lt;reduce space&gt;
 complexity to O(1).</p>
 <p>▪️ Filling an array from the front is slow, so see if it’s possible to
-&lt;write values from the back&gt;.</p>
+&lt;write values from the back&gt; [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>].</p>
 <p>▪️ Instead of deleting an entry (which requires moving all entries to its left),
 consider &lt;overwriting&gt; it.</p>
+</section>
+<section id="array-types-in-python">
+<h2>Array types in Python<a class="headerlink" href="#array-types-in-python" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">list type, and tuple type (like list but immutable).</div>
+<div class="line">The key property of a list is that it is dynamically-resized.</div>
+</div>
+</section>
+<section id="instantiating-a-list">
+<h2>Instantiating a list<a class="headerlink" href="#instantiating-a-list" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">[1]</span> <span class="pre">+</span> <span class="pre">[0]</span> <span class="pre">*</span> <span class="pre">10</span>&#160;&#160;&#160; <span class="pre">#</span> <span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">list(range(100))</span></code></div>
+<div class="line">List comprehension.</div>
+</div>
+</section>
+<section id="basic-operations">
+<h2>Basic operations<a class="headerlink" href="#basic-operations" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">len(A),</span> <span class="pre">A.append(x),</span> <span class="pre">A.remove(x),</span> <span class="pre">A.insert(i,</span> <span class="pre">x)</span></code> where i is index</div>
+<div class="line"># check if value is present (O(n))</div>
+<div class="line">a in A</div>
+<div class="line"># difference between</div>
+<div class="line">B = A, B = list(A)</div>
+<div class="line"># deep and shallow copy</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">copy.copy(A)</span></code> and <code class="docutils literal notranslate"><span class="pre">copy.deepcopy(A)</span></code></div>
+</div>
+</section>
+<section id="array-methods">
+<h2>Array methods<a class="headerlink" href="#array-methods" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">min(A), max(A)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">A.reverse()</span></code> (in-place), <code class="docutils literal notranslate"><span class="pre">reversed(A)</span></code> (returns an iterator)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">A.sort()</span></code> (in-place), <code class="docutils literal notranslate"><span class="pre">sorted(A)</span></code> (returns a copy)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">del</span> <span class="pre">A[i]</span></code>, <code class="docutils literal notranslate"><span class="pre">del</span> <span class="pre">A[i:j]</span></code></div>
+<div class="line"># binary search for sorted lists</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">bisect.bisect(A,</span> <span class="pre">6)</span></code>, <code class="docutils literal notranslate"><span class="pre">bisect.bisect_left(A,</span> <span class="pre">6)</span></code>, <code class="docutils literal notranslate"><span class="pre">bisect.bisect_right(A,</span> <span class="pre">6)</span></code></div>
+</div>
+</section>
+<section id="extend">
+<h2>extend()<a class="headerlink" href="#extend" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">s.extend(t)</span></code> appends t to s (items in t to the end of list s)</div>
+<div class="line">s[:0] = t  prepends (adds items in t to the beginning of s)</div>
+<div class="line">s = [1, 2]</div>
+<div class="line">t = [3, 4]</div>
+<div class="line">s.extend(t)</div>
+<div class="line">print(s) #[1, 2, 3, 4]</div>
+</div>
+</section>
+<section id="slicing">
+<h2>Slicing<a class="headerlink" href="#slicing" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">A[i:j:k]</div>
+<div class="line"># last three items [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line">A[-3:], or some items from the end A[-3:-1]</div>
+<div class="line"># step</div>
+<div class="line">A[1:5:2] from 1 to 5, every 2nd item</div>
+<div class="line">A[5:1:-2] the same in reverse order (from item 5 to 1, every 2nd but counting from the end)</div>
+<div class="line">B = A[:] shallow copy of A into B</div>
+<div class="line"># rotate a list (like for the Caesar’s cipher we rotate the alphabet to make a mask)</div>
+<div class="line">A[k:] + A[:k]</div>
+</div>
+<p># Exclude an item</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>   <span class="c1">#e.g. to exclude item with i=1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+<span class="go">[1, 3, 4]</span>
+</pre></div>
+</div>
+</section>
+<section id="an-integer-overflow">
+<h2>An integer overflow<a class="headerlink" href="#an-integer-overflow" title="Link to this heading"></a></h2>
+<p>Occurs when an arithmetic operation attempts to create a numeric value that is
+outside of the range that can be represented with a given number of digits
+(either higher than the maximum or lower than the minimum representable value).</p>
+<p>Because of a possibility of integer overflow, we might sometimes use an array
+to represent an integer (i.e. [1,2,3,4] instead of 1234) when doing arithmetic.</p>
+</section>
+<section id="arbitrary-precision-arithmetic">
+<h2>Arbitrary-Precision arithmetic<a class="headerlink" href="#arbitrary-precision-arithmetic" title="Link to this heading"></a></h2>
+<p>Also known as “bignum” or simply “long arithmetic” is a set of data structures
+and algorithms which allows to process much greater numbers than can be fit in
+standard data types.</p>
 </section>
 </section>
 
@@ -139,7 +232,7 @@ consider &lt;overwriting&gt; it.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../bits/bits_4.html" class="btn btn-neutral float-left" title="Bit Manipulation Questions Part 4" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="array_1.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="array_1.html" class="btn btn-neutral float-right" title="Array Questions Part 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

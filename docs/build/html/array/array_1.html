@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="next" title="Array Questions Part 2" href="array_2.html" />
     <link rel="prev" title="Knowledge Base Array" href="array_kb.html" /> 
 </head>
 
@@ -53,7 +53,19 @@
 <p class="caption" role="heading"><span class="caption-text">Array:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="array_kb.html">Knowledge base</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (1-9)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (37-45)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#flatten-a-nested-list">37. Flatten a nested list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reorder-evens-first">38. Reorder, evens first</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-75-dutch-national-flag">39. (LC 75) Dutch national flag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-66-increment-an-arbitrary-precision-integer">40. (LC 66) Increment an arbitrary-precision integer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multiply-two-arbitrary-precision-integers">41. Multiply two arbitrary-precision integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-55-advancing-through-an-array">42. (LC 55) Advancing through an array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-26-delete-duplicates-from-a-sorted-array">43. (LC 26) Delete duplicates from a sorted array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-121-buy-and-sell-a-stock-once">44. (LC 121) Buy and sell a stock once</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-123-buy-and-sell-a-stock-twice">45. (LC 123)  Buy and sell a stock twice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="array_2.html">Part 2 (46-55)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -90,6 +102,717 @@
              
   <section id="array-questions-part-1">
 <h1>Array Questions Part 1<a class="headerlink" href="#array-questions-part-1" title="Link to this heading"></a></h1>
+<section id="flatten-a-nested-list">
+<h2>37. Flatten a nested list<a class="headerlink" href="#flatten-a-nested-list" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">(convert 2D list to 1D)</div>
+<div class="line">Using list comprehension with multiple levels of looping.</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">vec</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">elem</span><span class="p">]</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># My version 2</span>
+<span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">L</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="c1"># My version 1</span>
+<span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">))]</span>
+</pre></div>
+</div>
+</section>
+<section id="reorder-evens-first">
+<h2>38. Reorder, evens first<a class="headerlink" href="#reorder-evens-first" title="Link to this heading"></a></h2>
+<p>Your input is an array of integers, and you have to reorder its entries so that
+the even entries appear first.
+You are required not to allocate extra memory. i.e. space O(1).</p>
+<p><strong>Solution</strong></p>
+<p>When working with arrays, take advantage of the fact that you can operate efficiently
+on both ends.</p>
+<p>[Even, Unclassified, Odd]</p>
+<p>For this problem, we can partition the array into three subarrays: Even, Unclassified,
+and Odd, appearing in that order. Initially Even and Odd are empty, and Unclassified is the entire
+array. We iterate through Unclassified, moving its elements to the boundaries of the Even and Odd
+subarrays via swaps, thereby expanding Even and Odd, and shrinking Unclassified.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">even_odd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">next_even</span><span class="p">,</span> <span class="n">next_odd</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1">#starting indices for Even, Odd parts</span>
+    <span class="k">while</span> <span class="n">next_even</span> <span class="o">&lt;</span> <span class="n">next_odd</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">next_even</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">next_even</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">next_even</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">next_odd</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">next_odd</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">next_even</span><span class="p">]</span>
+            <span class="n">next_odd</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-75-dutch-national-flag">
+<h2>39. (LC 75) Dutch national flag<a class="headerlink" href="#lc-75-dutch-national-flag" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://leetcode.com/problems/sort-colors/">75. Sort Colors</a></div>
+<div class="line">Medium</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution my version</span>
+<span class="k">def</span> <span class="nf">sort_flag</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">:</span>           <span class="c1">#**</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">p</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+            <span class="n">b</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="c1">#** had to make p &lt;= b for array [1, 1, 0, 0, 2, 0] otherwise returns [0, 0, 1, 1, 0, 2]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sort_flag</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="c1">#[0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># Explained</div>
+<div class="line">p - is the moving pivot</div>
+<div class="line">r - red pivot, b - black pivot.</div>
+<div class="line">Note that this is not much different than sorting array in two halves.</div>
+<div class="line">When we meet red (0), we swap it with r pivot (leftmost pivot), move +1 r and p.</div>
+<div class="line">When we meet black (2), swap p with b, p+1, b-1.</div>
+<div class="line">The trick here is when we meet white (1), &gt;we leave it there&lt;, just p+1.</div>
+<div class="line">It’s also OK when we have [0,1,1,0..]: a[p=3]=0 we swap as usual [0,&gt;1&lt;,1,&gt;0&lt;..]</div>
+<div class="line">and get [0,0,1,1..] (i.e. 1s in te middle are preserved.)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution V2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">sortColors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">),</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Dutch national flag</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line">==&gt; Practicing working with &lt;subarrays&gt;</div>
+</div>
+<p>The quicksort algorithm uses partitioning and recursion.
+The first partition, given a pivot reorders the array in such a way that elements
+less than pivot appear first, then elements less than pivot.
+Quicksort has large run times when arrays have many duplicates.</p>
+<p>The dutch flag partitioning is supposed to make this more effective by ordering
+in this way: elements less than pivot, elements equal to pivot, elem greater than pivot.</p>
+<p>So you see, 3 parts, like in a three-colors flag, like a Dutch flag.</p>
+<div class="line-block">
+<div class="line">–not completely sorted</div>
+<div class="line">Note, that such a partitioning does not order the array completely!</div>
+<div class="line">The point is to achieve this state: [elems &lt; pivot, elems=pivot, elems&gt;pivot] in O(n).</div>
+<div class="line"># So given::</div>
+</div>
+<blockquote>
+<div><p>A = [1,0,3,2,1,2]
+dutch_flag_partition(2, A)  #pivot = 3
+print(A)</p>
+<p>A2 = [1,0,3,2,1,2,5,1]
+dutch_flag_partition(3, A2) #pivot = 2
+print(A2)</p>
+<p>A3 = [1,0,3,2,1,2]
+dutch_flag_partition(0, A3) #pivot = 1
+print(A3)</p>
+<p># Results valid partitions:
+[1, 0, 2, 1, 2, 3]        #pivot = 3
+[1, 0, 1, 1, 2, 2, 5, 3]  #pivot = 2 #is everything less than pivot on the left?-&gt;Yes
+[0, 1, 1, 2, 2, 3]</p>
+</div></blockquote>
+<p><strong>Task</strong></p>
+<p>Write a program that takes an array A and an index i, and rearranges the elems
+such that: [first come elems &lt; pivot, followed by elems=pivot, and last go elems&gt;pivot]</p>
+<p>So it is the partition step in quicksort.</p>
+<div class="line-block">
+<div class="line"><strong>Solution</strong></div>
+<div class="line">Time O(n), space O(1)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pi - pivot index</span>
+<span class="c1"># s, e, l = smaller, equal, larger</span>
+<span class="k">def</span> <span class="nf">dutch_flag_partition</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+    <span class="n">pivot</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">pi</span><span class="p">]</span>
+    <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">:</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+            <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">e</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">A</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">==</span> <span class="n">pivot</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># A[e] &gt; pivot</span>
+            <span class="n">l</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">e</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">We maintain 4 subarrays:</div>
+<div class="line"># bottom group: A[:smallerJ.</div>
+<div class="line"># middle gtoup: A[smaller:equal].</div>
+<div class="line"># unclassified group: A[equal: larger] .</div>
+<div class="line"># top group: A[larger:] .</div>
+<div class="line-block">
+<div class="line">while e &lt; l:</div>
+</div>
+<div class="line"># Keep iterating as long as there is an unclassified element</div>
+<div class="line-block">
+<div class="line">if A[e] &lt; pivot:</div>
+</div>
+<div class="line"># A[equal] is the inconing unclassjfied element</div>
+</div>
+</section>
+<section id="lc-66-increment-an-arbitrary-precision-integer">
+<h2>40. (LC 66) Increment an arbitrary-precision integer<a class="headerlink" href="#lc-66-increment-an-arbitrary-precision-integer" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://leetcode.com/problems/plus-one/">66. Plus One</a></div>
+<div class="line">Easy</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">plusOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">digits</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">digits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">digits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%=</span> <span class="mi">10</span>
+            <span class="k">if</span> <span class="n">digits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">digits</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">digits</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Increment an arbitrary-precision integer [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</p></li>
+</ul>
+<p>Your program takes as input an array of digitsinteger that represents (it encodes)
+a nonnegative decimal integer D. Your program updates the array to represent the
+integer D+1.
+Example: Input [1,2,9] Output [1,3,0]</p>
+<ul class="simple">
+<li><p>Brute-force solution</p></li>
+</ul>
+<p>Convert array to the corresponding integer (i.e. 129). Add 1 (129+1=130), convert
+back to an array of digits.
+((However when implemented in a language that has finite-precision arithmetic
+(imposes a limit on the range of values an integer type can take), this approach will
+fail on inputs that encode integers outside of that range.))</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### my version 2</span>
+<span class="k">def</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span>
+    <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))):</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">carry</span>
+        <span class="n">carry</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">//</span> <span class="mi">10</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">plus_one</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">plus_one</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span>
+<span class="c1"># [1, 3, 0]</span>
+<span class="c1"># [1, 0, 0, 0]</span>
+
+<span class="c1">### my version 1</span>
+<span class="k">def</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">))):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">break</span>
+    <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 2</strong></div>
+<div class="line">O(n), n is the length of A.</div>
+<div class="line">Operate directly on the array.</div>
+<div class="line">Grade school, add starting from the end (least significant digit), and propagate carries.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">))):</span>
+        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="c1"># There is a carry-out, we need one more digit.</span>
+        <span class="c1"># Update first item in A to 1, and append a 0 at the end</span>
+        <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span>
+
+<span class="n">A22</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">plus_one</span><span class="p">(</span><span class="n">A22</span><span class="p">))</span>  <span class="c1">#[1, 3, 0]</span>
+</pre></div>
+</div>
+</section>
+<section id="multiply-two-arbitrary-precision-integers">
+<h2>41. Multiply two arbitrary-precision integers<a class="headerlink" href="#multiply-two-arbitrary-precision-integers" title="Link to this heading"></a></h2>
+<p>Certain applications require arbitrary precision arithmetic.
+(Arbitrary precision arithmetic - algorithms which allow to process much greater
+numbers than can be fit in standard data types)</p>
+<p>One way to achieve this is to use arrays to represent integers.
+E.g. [3,4,5,4,6], [-7,5,3,2] (Note negative integers too.)</p>
+<p>Write a program that takes two arrays representing integers, and returns an
+integer (in form of array) representing their product.</p>
+<div class="line-block">
+<div class="line"><em>Logic</em> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line">Hint: Use arrays to simulate the grade-school multiplication algorithm.</div>
+<div class="line">The possibility of overflow precludes us from converting to the integer type.</div>
+</div>
+<p>Using grade school multiplication logic, we multiply the first number by each
+digit of the second, and then adding all the resulting terms.</p>
+<p>From a space perspective, it is better to incrementally add the terms rather than
+compute all of them individually and then add them up.</p>
+<p><strong>Solution</strong>
+O(nm).
+(There are m partial products, each with at most n + 1 digits. We perform O(1) operations on each
+digit in each partial product, so the time complexity is O(nm).)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="p">(</span><span class="n">num1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">num2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>     <span class="c1">#**1</span>
+    <span class="n">num1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">num1</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">num2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">num2</span><span class="p">))</span>              <span class="c1">#**2</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num1</span><span class="p">))):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num2</span><span class="p">))):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">num1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">num2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>       <span class="c1">#**3</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">10</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">%=</span> <span class="mi">10</span>
+    <span class="c1"># Remove the leading zeros.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>      <span class="c1">#**4</span>
+                        <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)):]</span> <span class="ow">or</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sign</span> <span class="o">*</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">multiply</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">))</span>  <span class="c1"># [-4, 2, 0, 0]</span>
+</pre></div>
+</div>
+<p>#**1 If one of the comparisons evaluate to True, i.e. 1, then their xor is 1,
+then we apply if (i.e. -1), else 1.</p>
+<p>#**2 The number of digits required for the product is at most n + m for n and m
+digit operands, so we use an array of size n + m for lhe result.
+(Note, ‘at most’ that size, so we might end up with a leading 0, i.e. [0, x, y, z])</p>
+<p>#**3 We loop through indexes in reversed order.
+NOTE, its array indexing, so the indexes are [0,1,2,3,etc]</p>
+<div class="line-block">
+<div class="line">E.g. if our two numbers are [5,6], [7,5],</div>
+<div class="line">first loop, i=1, j=1 (reversed(range(len(2))) is 1)</div>
+<div class="line">result = [0,0,0,0]</div>
+<div class="line">result[i + j + 1] += num1[i] * num2[j]      # res[1+1+1] += 6*5=30 ([0,0,0,30])</div>
+<div class="line">result[i + j] += result[i + j + 1] // 10</div>
+<div class="line"># res[1+1] += res[1+1+1] //10 which is 3, this is the carry-in, [0,0,3,30]</div>
+<div class="line">result[i + j + 1] %= 10</div>
+<div class="line">#res[1+1+1] = res[1+1+1] % 10 which is 0, remainder [0,0,3,0]</div>
+</div>
+<p>#**4</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                      <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)):]</span> <span class="ow">or</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">1)With next manual iterator through a generator we get:</div>
+<div class="line">the first index which value is not 0.</div>
+<div class="line">2)We also include the default of len(result).</div>
+<div class="line">next syntax - next(iterator, default)</div>
+<div class="line">default is the value that will be returned if the iterator is exhausted,</div>
+<div class="line">this is for the case when all values in result are 0,</div>
+<div class="line">e.g. [0,0,0,0] len(result)=4, result[4:] = []</div>
+<div class="line">Otherwise iterator will throw an error.</div>
+</div>
+<div class="line-block">
+<div class="line">-&gt; When testing:</div>
+<div class="line">without len(result): - he does only one __next__ call</div>
+<div class="line">with len(result): extracts all</div>
+</div>
+</section>
+<section id="lc-55-advancing-through-an-array">
+<h2>42. (LC 55) Advancing through an array<a class="headerlink" href="#lc-55-advancing-through-an-array" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://leetcode.com/problems/jump-game/">55. Jump Game</a></div>
+<div class="line">Medium</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution to Leetcode</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">canJump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">mx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">mx</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">mx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">mx</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p># Back to Advancing through an array task [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</p>
+<p>Write a program which takes an array of n nonnegative integers, where A[i] denotes the maximum you can
+advance from index i in one move, and returns whether it is possible to reach the end of the array.</p>
+<div class="line-block">
+<div class="line">You begin at the first position (A[0]) and need to get to the last position.</div>
+<div class="line">E.g. A = [1,3,1,0,2,0,1]</div>
+<div class="line">Starting at i=0, A[0]=1, we make 1 step reaching A[1], A[1]=3 we reach A[4]=2</div>
+<div class="line">going 2 steps we reach the end of the array.</div>
+<div class="line">E.g. A = [3,3,1,0,2,0,1] here we would not move past i=3 which is A[3]=0</div>
+</div>
+<p>MY NOTE: You initially start at index 0, but you can try to start from other index,
+UNLESS value at that index is 0. So in [3,2,1,0,4] we try to start at i=0,1,2,3
+but not past i=3 with value 0.</p>
+<div class="line-block">
+<div class="line"><strong>Solution</strong></div>
+<div class="line">time O(n), space O(1) (three integer variables)</div>
+</div>
+<div class="line-block">
+<div class="line">Note,</div>
+<div class="line">Because the journey through the array does not have to start from i=0,</div>
+<div class="line">we have to iterate through all entries.</div>
+</div>
+<div class="line-block">
+<div class="line"># A[i] + i</div>
+<div class="line">A[i] - is how far this index will get us (A[3] will get us 3 steps)</div>
+<div class="line">i - is where we are</div>
+<div class="line">So it is fair to say that (A[i] + i) is the furthest we can get from index i.</div>
+<div class="line">(i - where we are, A[i] - where we’re going to, so A[i] + i is total distance</div>
+<div class="line">from A[0].)</div>
+</div>
+<div class="line-block">
+<div class="line"># ans = max(ans, A[i]+i)</div>
+<div class="line">We get the ‘furthest we got so far’</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">can_reach_end</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; ans - furthest_reach_so_far, last_i - last_index&quot;&quot;&quot;</span>
+    <span class="n">ans</span><span class="p">,</span> <span class="n">last_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">ans</span> <span class="ow">and</span> <span class="n">ans</span> <span class="o">&lt;</span> <span class="n">last_i</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span> <span class="o">&gt;=</span> <span class="n">last_i</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">can_reach_end</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">can_reach_end</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span>
+<span class="kc">False</span>
+<span class="kc">True</span>
+
+<span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">C</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">C</span><span class="p">))</span>
+<span class="kc">True</span>
+<span class="kc">False</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-26-delete-duplicates-from-a-sorted-array">
+<h2>43. (LC 26) Delete duplicates from a sorted array<a class="headerlink" href="#lc-26-delete-duplicates-from-a-sorted-array" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">26. Remove Duplicates from Sorted Array</a></div>
+<div class="line">Easy</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution to Leetcode</strong></div>
+<div class="line">(Here we are not making the array of the form [_,_,_,0,0,0],</div>
+<div class="line">just [2, 3, 5, 7, 11, 13, 11, 11, 13]</div>
+<div class="line">and return num of valid numbers 6.)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">k</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Back to task for “Delete duplicates from a sorted array”</p></li>
+</ul>
+<p>Write a program which takes as input a sorted array and updates it so that all
+duplicates have been removed and the remaining elements have been shifted left
+to fill the emptied indices. Return the number of valid elements.</p>
+<p>E.g. for array [2,3,5,5,7,11,11,11,13] after deletion array is [2,3,5,6,11,13,0,0,0]
+There are 6 valid entries after deletion.</p>
+<div class="line-block">
+<div class="line">Note.</div>
+<div class="line">-There are libraries in languages that perform this operation.</div>
+<div class="line">(My note, set())</div>
+<div class="line">We are not going to use them.</div>
+<div class="line">-There is an O(n) time and O(1) space solution.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### (Nevertheless here is my version using set.)</span>
+<span class="k">def</span> <span class="nf">del_dups</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">no_dups</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">no_dups</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_dups</span><span class="p">))</span>
+
+<span class="c1"># OUT: [2, 3, 5, 7, 11, 13, 0, 0, 0]</span>
+</pre></div>
+</div>
+<p>Two other solutions with complexities that don’t meet our goal:</p>
+<p>1) O(n) time and space would be:
+Using a hash table, recording elements that do not appear multiple times in array,
+new values are also written to a list. List is then copied back into A.</p>
+<p>2) Brute force, space O(1) but O(n**2) time in worst case.
+Iterate through A, testing if A[i] equals A[i + 1], and, if so, shift all elements
+at and after i + 2 to the left by one. When all entries are equal,the number of
+shifts is (n-1)+(n-2)+…+2+1.,i.e. O(n**2)</p>
+<p><em>Logic</em>.
+To achieve the complexities we aim at, the key is to reduce the amount of shifting.
+We will move one element, rather than an entire subarray, when we meet a duplicate.</p>
+<div class="line-block">
+<div class="line">When A = [2,5,5,5,7]</div>
+<div class="line">After the first shift A = [2,5,7,5,7]</div>
+<div class="line">We write the non-dup to the index where there was a duplicate.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution, O(n) time and O(1) space</span>
+<span class="c1"># Returns the number of valid entries after deletion.</span>
+<span class="k">def</span> <span class="nf">delete_duplicates</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">A</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">write_index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">write_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">write_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">write_index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">write_index</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">delete_duplicates</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>  <span class="c1">#6</span>
+
+<span class="c1">### My version</span>
+<span class="k">def</span> <span class="nf">remove_dups</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">wi</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># write index</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">wi</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">wi</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">wi</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">wi</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">wi</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">wi</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>  <span class="c1"># starting from wi, i.e. non-dups, fill with 0s</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">wi</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">wi</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">remove_dups</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">remove_dups</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span>
+<span class="c1"># OUT</span>
+<span class="c1"># [2, 3, 5, 7, 11, 13, 0, 0, 0]</span>
+<span class="c1"># 6</span>
+<span class="c1"># [1, 6, 7, 8, 9, 0, 0]</span>
+<span class="c1"># 5</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Main version explained</strong></div>
+<div class="line">Here we have 2 sets of indexes.</div>
+</div>
+<p>i that always moves forward, and write_index that lags behind because it moves
+only when there are no duplicates, it stops incrementing when there are dups.</p>
+<p>Note we return this write_index at the end.
+write_index is the index where our unique numbers finish and where we would have
+been writing if the list were to go on.
+Since indexes start at 0, it’s ok to return the index of an already invalid array item.
+indexes [0,1,2,3] -&gt;returning 3, for array of len 3 [0,1,2] of valid items.</p>
+<div class="line-block">
+<div class="line">The loop walk through.</div>
+<div class="line">A = [2,5,5,5,7]  #wi=write_index</div>
+<div class="line">1) wi=1, i=1 [2,5,5,5,7]</div>
+<div class="line">2) wi=2, i=2 [2,5,5,5,7]</div>
+<div class="line">3) wi=2, i=3 [2,5,5,5,7]  #we stop incrementing wi, but we don’t yet write at wi.</div>
+<div class="line">We start writing at wi when items are non dups again.</div>
+<div class="line">4) wi=2, i=4 [2,5,7,5,7]  #we write at wi, and we increment wi, i reached len(A)</div>
+<div class="line">wi=3    #we return wi which is the len of the valid array with non dup values</div>
+</div>
+</section>
+<section id="lc-121-buy-and-sell-a-stock-once">
+<h2>44. (LC 121) Buy and sell a stock once<a class="headerlink" href="#lc-121-buy-and-sell-a-stock-once" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">121. Best Time to Buy and Sell Stock</a></div>
+<div class="line">Easy</div>
+</div>
+<p>Write a program that takes an array denoting the daily stock price, and returns the maximum profit
+that could be made by buying and then selling one share of that stock. There is no need to buy if
+no profit is possible.</p>
+<p><em>Logic</em>.
+E.g. consider a sequence of stock prices [310, 315, 275, 295, 260, 270, 290, 230, 255, 250].
+(Here buy at 260, sell at 290, max profit is 30.) Note that we cannot just buy at lowest
+price and sell at highest.</p>
+<p>The maximum profit that can be made by selling on each specific day is
+the difference of the current price and the minimum seen so far.</p>
+<div class="line-block">
+<div class="line"><em>Algorithm</em></div>
+<div class="line">0)So we keep track of the minimum_price and of the maximum profit.</div>
+<div class="line">1)We check what profit we could make if we sell today (i.e. price_today - minimum_price)</div>
+<div class="line">2)See if that profit is gratest, by greadily comparing it with the previous max_profit</div>
+<div class="line">3)Finally we check if the price_today can be our new minimum_price.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">buy_and_sell_stock_once</span><span class="p">(</span><span class="n">prices</span><span class="p">):</span>
+    <span class="n">min_price</span><span class="p">,</span> <span class="n">max_profit</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+        <span class="n">max_profit_today</span> <span class="o">=</span> <span class="n">price</span> <span class="o">-</span> <span class="n">min_price</span>
+        <span class="n">max_profit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_profit</span><span class="p">,</span> <span class="n">max_profit_today</span><span class="p">)</span>
+        <span class="n">min_price</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_price</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">max_profit</span>
+
+<span class="n">stock</span> <span class="o">=</span> <span class="p">[</span><span class="mi">310</span><span class="p">,</span> <span class="mi">315</span><span class="p">,</span> <span class="mi">275</span><span class="p">,</span> <span class="mi">295</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">270</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">250</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">buy_and_sell_stock_once</span><span class="p">(</span><span class="n">stock</span><span class="p">))</span>  <span class="c1">#30</span>
+
+<span class="c1"># OR</span>
+<span class="k">def</span> <span class="nf">max_profit</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">price_min</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">profit</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="n">profit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">profit</span><span class="p">,</span> <span class="n">price</span> <span class="o">-</span> <span class="n">price_min</span><span class="p">)</span>
+        <span class="n">price_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">price_min</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">profit</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-123-buy-and-sell-a-stock-twice">
+<h2>45. (LC 123)  Buy and sell a stock twice<a class="headerlink" href="#lc-123-buy-and-sell-a-stock-twice" title="Link to this heading"></a></h2>
+<p>Write a program that computes the maximum profit that can be made by buying and selling a share
+at most twice. The second buy must be made on another date after the first sale.</p>
+<p>We will use O(n) twice, ending up with O(n**2)</p>
+<p><a class="reference external" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/">123. Best Time to Buy and Sell Stock III</a></p>
+<div class="line-block">
+<div class="line"><strong>Logic</strong></div>
+<div class="line">A = [12,11,13,9,12,8,14,13,15]</div>
+<div class="line">1# We record the best solution (highest profit) for A[0,j] (just as we did with</div>
+<div class="line">buying and selling once).</div>
+<div class="line">F = [0,0,2,2,3,3,6,6,7]</div>
+<div class="line">(calculating profit: 12-12=0, 12-11=0, 13-11=2 etc )</div>
+<div class="line">We look at the current price and the minimum price so far.</div>
+<div class="line">2# Then we do a reverse iteration, compute highest profit for a single buy and sell</div>
+<div class="line">for A[j, n-1] (j between 1 and (len A - 1), inclusive).</div>
+<div class="line">We then look at the current price and the highest price so far.</div>
+<div class="line">S = [7,7,7,7,7,7,2,2,0]</div>
+<div class="line">(15-15=0, 13-15=2, 13-14=1 but we stick with the previous highest which is 2, 8-15=7)</div>
+</div>
+<p>I suppose: with iteration forward we try to find the &lt;earliest&gt; highest profit.
+With reverse iteration we find the &lt;latest&gt; biggest profit. Because the problem
+states that the second buy-sell can happen only &lt;after&gt; the first sell.</p>
+<p>3# At last we combine the results for possible profits from the forward and reverse
+iterations.
+But again, because the condition is that “the second buy must happen on another
+date after the first sell”, we combine S[i] with F[i-1]
+(current day profit + previous day profit).</p>
+<p>F = [0,0,2,2,3,3,6,6,7]
+S = [7,7,7,7,7,7,2,2,0]</p>
+<p>M = S[i] + F[i-1], NOTE where F[-1] is taken to be 0. So we sort of then have
+F = [0,0,0,2, etc]</p>
+<p>M = [7,7,7,9,9,10,5,8,6]
+(7+0=7, 7+0=7, 7+0=7, 7+2=9 etc)
+We just look for the max in this list, i.e. 10.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="k">def</span> <span class="nf">buy_and_sell_stock_twice</span><span class="p">(</span><span class="n">prices</span><span class="p">):</span>
+    <span class="n">max_profit</span><span class="p">,</span> <span class="n">min_price</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="c1"># Because we want to make an actual list of profits, initiate</span>
+    <span class="n">first_profits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+    <span class="c1"># Forward phase, for each day max profit if we sell on that day.</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">price</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">prices</span><span class="p">):</span>
+        <span class="n">min_price</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_price</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+        <span class="n">max_profit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_profit</span><span class="p">,</span> <span class="n">price</span> <span class="o">-</span> <span class="n">min_price</span><span class="p">)</span>
+        <span class="n">first_profits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_profit</span>
+
+    <span class="c1"># Backward phase. For each day calc max profit if we sell on that day</span>
+    <span class="n">max_price</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">price</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">prices</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">1</span><span class="p">))):</span>
+        <span class="n">max_price</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_price</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+        <span class="c1"># We combined 2nd and 3rd steps (didn&#39;t make a list of profits in reverse)</span>
+        <span class="n">max_profit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="n">max_profit</span><span class="p">,</span>
+            <span class="n">max_price</span> <span class="o">-</span> <span class="n">price</span> <span class="o">+</span> <span class="n">first_profits</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">max_profit</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">buy_and_sell_stock_twice</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="c1"># 10</span>
+
+<span class="c1">### Solution 2 (github 2nd source)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f3</span><span class="p">,</span> <span class="n">f4</span> <span class="o">=</span> <span class="o">-</span><span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">f1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="o">-</span><span class="n">price</span><span class="p">)</span>
+            <span class="n">f2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="n">f1</span> <span class="o">+</span> <span class="n">price</span><span class="p">)</span>
+            <span class="n">f3</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">f3</span><span class="p">,</span> <span class="n">f2</span> <span class="o">-</span> <span class="n">price</span><span class="p">)</span>
+            <span class="n">f4</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">f4</span><span class="p">,</span> <span class="n">f3</span> <span class="o">+</span> <span class="n">price</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f4</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>enumerate(iterable, start=0)</p></li>
+</ul>
+<p>What do we achieve with reversed(list(enumerate(A[1:], 1)))
+For the reverse iteration we will not be calculating profit for the first day,
+so we take A[1:].
+Also we want to start our index count at 1, not at 0.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">A</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">1</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="c1"># 8 15</span>
+<span class="c1"># 7 13</span>
+<span class="c1"># 6 14</span>
+<span class="c1"># 5 8</span>
+<span class="c1"># 4 12</span>
+<span class="c1"># 3 9</span>
+<span class="c1"># 2 13</span>
+<span class="c1"># 1 11</span>
+<span class="c1"># 0 12</span>
+
+<span class="c1"># 8 15</span>
+<span class="c1"># 7 13</span>
+<span class="c1"># 6 14</span>
+<span class="c1"># 5 8</span>
+<span class="c1"># 4 12</span>
+<span class="c1"># 3 9</span>
+<span class="c1"># 2 13</span>
+<span class="c1"># 1 11</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -97,7 +820,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="array_kb.html" class="btn btn-neutral float-left" title="Knowledge Base Array" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="array_2.html" class="btn btn-neutral float-right" title="Array Questions Part 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

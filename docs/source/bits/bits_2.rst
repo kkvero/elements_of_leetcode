@@ -617,17 +617,27 @@ print(insert_bit(21, 1, 2))  # 45, 0b101100 ::
 | If all 2**n numbers are of the form 100..0, then x-1=11..1
 | Then x & (x-1) = 100..0 & 11..1 = 0
 
-**Solution** ::
+::
 
+    # Solution 1
     def is_power_of_two(n):
         return n > 0 and not n & (n-1)
 
-    # Alternatively
+    # Solution 2
     class Solution(object):
         def isPowerOfTwo(self, n):
             if n == 0:
                 return False
             return n & (n - 1) == 0
+
+    # My V
+    def power(n):
+        while n:
+            if n == 1:
+                return True
+            if n & 1:       #if last bit is not 0
+                return False
+            n >>= 1
 
 19. Remove bit
 --------------

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Array Questions Part 2 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Array Questions Part 1" href="array_1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2 (46-55)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-280-computing-an-alternation">46. (LC 280)  Computing an alternation</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Array Questions Part 2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/array/array_2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="array-questions-part-2">
+<h1>Array Questions Part 2<a class="headerlink" href="#array-questions-part-2" title="Link to this heading"></a></h1>
+<section id="lc-280-computing-an-alternation">
+<h2>46. (LC 280)  Computing an alternation<a class="headerlink" href="#lc-280-computing-an-alternation" title="Link to this heading"></a></h2>
+<p>LC 280. Wiggle Sort</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution to Leetcode</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">wiggleSort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do not return anything, modify nums in-place instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Task</em> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>].
+Write a program that takes an array A of n numbers, and rearranges A’s elements to get a new array
+B having the property that B[0] &lt;= B[1] &gt;= B[2] &lt;= B[3] &gt;= B[4] &lt; B[5] &gt;=….</p>
+<div class="line-block">
+<div class="line">(I.e. There is an interleaving:</div>
+<div class="line">n less than neighbors, n greater than neighbors, n less than neighbors etc)</div>
+<div class="line">Example.</div>
+<div class="line">A = [2,1,5,7,8]</div>
+<div class="line">B = [1,5,2,8,7] #5 greater than adjacents, 2 smaller, 8 greater</div>
+</div>
+<div class="line-block">
+<div class="line"># Key to solution</div>
+<div class="line">Alternate sorting in direct and reverse order (based on whether index is odd ot even).</div>
+</div>
+<div class="line-block">
+<div class="line"># The straightforward solutions, O(N log N)</div>
+<div class="line">1) to sort A and interleave the bottom and top halves of the sorted array.</div>
+<div class="line">2) sort A and then swap the elements at the pairs (A[1],A[2]),(A[3],A[4]),….</div>
+<div class="line">Both these approaches have the same time complexity as sorting, namely O(n log n).</div>
+</div>
+<p>3) But it is not necessary to sort A to achieve the desired configuration -
+you could simply rearrange the elements around the median, and then perform the
+interleaving.
+Median finding can be performed in time O(n), which is the overall time complexity of this approach.</p>
+<p><em>Logic</em>, O (N).
+You may notice that the desired ordering is very local, and it is not necessary
+to find the median. Iterating through the array and swapping A[i] and A[i + 1]
+when i is even and A[i] &gt; A[i+1] or i is odd and A[i] &lt; A[i + 1] achieves the desired configuration.</p>
+<div class="line-block">
+<div class="line">This approach has the same time complexity as the median finding (O(N)), but it is [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]:</div>
+<div class="line">- easier to implement,</div>
+<div class="line">- never needs to store more than two elements in memory or read a previous element.</div>
+<div class="line">- illustrates algorithm design by iterative refinement of a brute-force solution.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="k">def</span> <span class="nf">rearrange</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="n">i</span><span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">### Solution my V (less magic)</span>
+<span class="k">def</span> <span class="nf">alternation</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>   <span class="c1"># [2, 1, 7, 5, 8]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alternation</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">rearrange</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1"># [1, 5, 2, 8, 7]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong> (main version)</div>
+<div class="line"><em>Main aspects</em></div>
+<div class="line">1)A[i:i+2] - is a slice of 2 numbers in A</div>
+<div class="line">A = [2,1,5,7,8] =&gt; 2,1; 1,5; 5,7 etc</div>
+<div class="line">2)sorted(A[i:i+2]) - is sorting this slice of 2 numbers</div>
+<div class="line">3)reverse=i% 2 - sets reverse to True or False</div>
+</div>
+<p>(when i is even, the remainder = 0, setting reverse to False. When i is odd,
+any value of the remainder will set reverse to True)</p>
+<div class="line-block">
+<div class="line">The main principle - we make sure when</div>
+<div class="line">i=even A[i] &gt; A[i+1] (sorted)</div>
+<div class="line">i=odd, A[i] &lt; A[i+1] (reverse sorted)</div>
+<div class="line">Hence achieve the interleaving.</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="array_1.html" class="btn btn-neutral float-left" title="Array Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
