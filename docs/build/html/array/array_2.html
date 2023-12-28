@@ -56,6 +56,10 @@
 <li class="toctree-l1"><a class="reference internal" href="array_1.html">Part 1 (37-45)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2 (46-55)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lc-280-computing-an-alternation">46. (LC 280)  Computing an alternation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-204-enumerate-all-primes-to-n">47. (LC 204) Enumerate all primes to n</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#permute-the-elements-of-an-array">48. Permute the elements of an array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-31-compute-the-next-permutation">49. (LC 31) Compute the next permutation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sample-offline-data">50. Sample offline data</a></li>
 </ul>
 </li>
 </ul>
@@ -182,6 +186,272 @@ any value of the remainder will set reverse to True)</p>
 <div class="line">i=odd, A[i] &lt; A[i+1] (reverse sorted)</div>
 <div class="line">Hence achieve the interleaving.</div>
 </div>
+</section>
+<section id="lc-204-enumerate-all-primes-to-n">
+<h2>47. (LC 204) Enumerate all primes to n<a class="headerlink" href="#lc-204-enumerate-all-primes-to-n" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">204. Count Primes</div>
+<div class="line">(Medium)</div>
+<div class="line">Here the task is to return a list of the primes [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>].</div>
+</div>
+<p>A natural number is called a prime if it is bigger than 1 and has no divisors
+other than 1 and itself.
+Write a program that takes an integer argument and returns all the primes
+between 1 and that integer.
+For example, if the input is 18, you should return &lt;2,3,5,7,11,13,17&gt;.</p>
+<div class="line-block">
+<div class="line"><strong>Square root approach</strong></div>
+<div class="line">An improved brute force is to iterate through all numbers and do ‘trial division’,</div>
+<div class="line">dividing each integer from 2 to the square root of i+1.</div>
+</div>
+<p>For the rule is - since if i has a divisor other than 1 and itself, it must also
+have a divisor that is no greater than its square root.</p>
+<div class="line-block">
+<div class="line"><em>Complexity</em></div>
+<div class="line">Each test has time O(sqroot n),</div>
+<div class="line">the entire computation time is O(n * sqroot n), i.e. O (n ** 3/2)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1">#Don&#39;t forget +1</span>
+        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">primes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">primes</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="c1">#[2, 3, 5, 7]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Sieving approach</strong></div>
+<div class="line"><em>Complexity</em></div>
+<div class="line">O(n log log n)</div>
+<div class="line">Sieving is superior to trial-division.</div>
+</div>
+<div class="line-block">
+<div class="line"><em>Basic Logic</em></div>
+<div class="line">We exclude the multiples of primes. (Because multiples of primes cannot be primes themselves.)</div>
+</div>
+<p>When a number is identified as prime, we sieve it, i.e. remove all its multiples
+from future consideration.
+We use a Boolean array to encode the candidates. E.g. [F,F,T,T,T,T]. We can set
+the first two to false because 0 and 1 are not primes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution (sieving)</span>
+<span class="c1"># Given n, return all primes up to and including n.</span>
+<span class="k">def</span> <span class="nf">generate_primes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">primes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># is_prime[p] represents if p is prime or not. Initially, set each to</span>
+    <span class="c1"># true, expecting 0 and 1. Then use sieving to eliminate nonprimes.</span>
+    <span class="n">is_prime</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_prime</span><span class="p">[</span><span class="n">p</span><span class="p">]:</span>        <span class="c1">#enter only if value at index p is True</span>
+            <span class="n">primes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>   <span class="c1">#append num 2</span>
+            <span class="c1"># Sieve p&#39;s multiples.</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>  <span class="c1">#use step, range 3rd param</span>
+                <span class="n">is_prime</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">primes</span>
+
+<span class="c1"># no comments</span>
+<span class="k">def</span> <span class="nf">generate_primes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">primes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">is_prime</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_prime</span><span class="p">[</span><span class="n">p</span><span class="p">]:</span>
+            <span class="n">primes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+                <span class="n">is_prime</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">primes</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">generate_primes</span><span class="p">(</span><span class="mi">11</span><span class="p">))</span>  <span class="c1">#[2, 3, 5, 7, 11]</span>
+</pre></div>
+</div>
+</section>
+<section id="permute-the-elements-of-an-array">
+<h2>48. Permute the elements of an array<a class="headerlink" href="#permute-the-elements-of-an-array" title="Link to this heading"></a></h2>
+<p>A permutation is a rearrangement of members of a sequence into a new sequence.
+A permutation can be specified by an array P, where P[i] represents the location
+of the element.</p>
+<div class="line-block">
+<div class="line">E.g. A = [‘a’,’b’,’c’,’d’]</div>
+<div class="line">perm = [2,0,1,3]</div>
+<div class="line">This maps:</div>
+<div class="line">a,b,c,d</div>
+<div class="line">2,0,1,3 (map ‘a’ to i=2)</div>
+<div class="line">b,c,a,d</div>
+</div>
+<div class="line-block">
+<div class="line"><em>Task</em></div>
+<div class="line">Given an array A of n elements and a permutation P, apply P to A.</div>
+</div>
+<div class="line-block">
+<div class="line">Hint: Any permutation can be viewed as a set of cyclic permutations.</div>
+<div class="line">For an element in a cycle, how would you identify if it has been permuted?</div>
+</div>
+<div class="line-block">
+<div class="line"><em>time and space O(n)</em></div>
+<div class="line">When using an additional array to write the resulting array.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2</span>
+<span class="k">def</span> <span class="nf">perm</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">tuple</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+                <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">perm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>  <span class="c1">#[&#39;b&#39;, &#39;c&#39;, &#39;a&#39;, &#39;d&#39;]</span>
+
+<span class="c1">### My version, using dict to mark permuted elements</span>
+<span class="k">def</span> <span class="nf">permute</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">index</span><span class="p">]]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">index</span><span class="p">]],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">]</span>
+<span class="n">perm</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">permute</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">perm</span><span class="p">))</span> <span class="c1">#[&#39;b&#39;, &#39;c&#39;, &#39;a&#39;, &#39;d&#39;]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><em>O(n) time, O(1) space</em></div>
+<div class="line">We don’t use an additional array, we change A in place.</div>
+</div>
+<p>Independent cyclic permutations: We keep going forward from i to P[i] till we get
+back to i.
+After we are done with that cycle, we need to find another cycle that has not yet
+been applied. It can be done by storing a Boolean for each array element.
+But another way (that will give us O(n1) space) is to use the sign bit
+in the entries in the permutation-array. Specifically, we subtract n from P[i] after applying it. This
+means that if an entry in P[i] is negative, we have performed the corresponding move.</p>
+<div class="line-block">
+<div class="line"><strong>Solution</strong></div>
+<div class="line">Key: subtract len of p from p[i] to mark permuted items.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">apply_permutation</span><span class="p">(</span><span class="n">perm</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+        <span class="nb">next</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="c1"># Check if perm[i] is nonnegative (i.e. check if the element at index i</span>
+        <span class="c1"># has not been moved</span>
+        <span class="k">while</span> <span class="n">perm</span><span class="p">[</span><span class="nb">next</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="nb">next</span><span class="p">]]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="nb">next</span><span class="p">]],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">perm</span><span class="p">[</span><span class="nb">next</span><span class="p">]</span>
+            <span class="c1"># Subtracts len(perm) from an entry in perm to make it negative,</span>
+            <span class="c1"># which indicates the corresponding move has been performed.</span>
+            <span class="n">perm</span><span class="p">[</span><span class="nb">next</span><span class="p">]</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="n">temp</span>
+    <span class="c1"># Restore perm.</span>
+    <span class="n">perm</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">perm</span><span class="p">]</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]</span>
+<span class="n">perm</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">apply_permutation</span><span class="p">(</span><span class="n">perm</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>  <span class="c1">#[&#39;b&#39;, &#39;c&#39;, &#39;a&#39;, &#39;d&#39;]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># In the loop</div>
+<div class="line">1)</div>
+<div class="line">i=0</div>
+<div class="line">next=0</div>
+<div class="line">A = [c,b,a,d]</div>
+<div class="line">perm = [-2,0,1,3]</div>
+<div class="line">next = 2</div>
+<div class="line">2)</div>
+<div class="line">i=0 still</div>
+<div class="line">next=2</div>
+<div class="line">A = [b,c,a,d]</div>
+<div class="line">perm = [-2,0,-3,3]</div>
+<div class="line">next=1</div>
+</div>
+<p>(Though we already got our aimed at permuted array, we will go on for some time
+with the loop. Then return to the main i loop, but that will finish quickly as
+our values in perm get negative, and while loop works only for positives.)</p>
+</section>
+<section id="lc-31-compute-the-next-permutation">
+<h2>49. (LC 31) Compute the next permutation<a class="headerlink" href="#lc-31-compute-the-next-permutation" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">31. <a class="reference external" href="https://leetcode.com/problems/next-permutation/">Next Permutation</a></div>
+<div class="line">Medium</div>
+</div>
+<p>(dictionary ordering)</p>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.python.org/3/library/itertools.html#itertools.permutations" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">itertools.permutations()</span></code></a></div>
+<div class="line">itertools.permutations(iterable, r=None)</div>
+<div class="line">Return successive r length permutations of elements in the iterable.</div>
+</div>
+<p>If r is not specified or is None, then r defaults to the length of the iterable
+and all possible full-length permutations are generated.</p>
+<p>If the input iterable is sorted, the output tuples will be produced in sorted order.</p>
+<p>Elements are treated as unique based on their position, not on their value.
+So if the input elements are unique, there will be no repeated values within a permutation.</p>
+<p>Roughly it means:
+# permutations(‘ABCD’, 2) –&gt; AB AC AD BA BC BD CA CB CD DA DB DC
+# permutations(range(3)) –&gt; 012 021 102 120 201 210</p>
+<p>Exactly it means:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="s1">&#39;ABCD&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">&lt;itertools.permutations object at 0x7fa8b147a1b0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="go">[(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;C&#39;), (&#39;A&#39;, &#39;D&#39;), (&#39;B&#39;, &#39;A&#39;), (&#39;B&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;D&#39;), (&#39;C&#39;, &#39;A&#39;),</span>
+<span class="go">(&#39;C&#39;, &#39;B&#39;), (&#39;C&#39;, &#39;D&#39;), (&#39;D&#39;, &#39;A&#39;), (&#39;D&#39;, &#39;B&#39;), (&#39;D&#39;, &#39;C&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="s1">&#39;ABCD&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
+<span class="go">(&#39;A&#39;, &#39;B&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
+<span class="go">(&#39;A&#39;, &#39;C&#39;)</span>
+</pre></div>
+</div>
+</section>
+<section id="sample-offline-data">
+<h2>50. Sample offline data<a class="headerlink" href="#sample-offline-data" title="Link to this heading"></a></h2>
+<p>Implement an algorithm that takes as input an array of elements and returns
+a subset of the given size of the array elements. All subsets should be equally
+likely. Return the result in input array itself.</p>
+<p># Practical applications -
+To select a random subset of customers to test a new UI (see if it increases
+the visit duration) before rolling out the change.</p>
+<div class="line-block">
+<div class="line"># Implementation</div>
+<div class="line">A = [3,7,5,11], k=3 where k is the size of a new array, i.e. the limit.</div>
+<div class="line">We use the random number generator to pick a random integer in the interval [0, len(A)-1].</div>
+<div class="line">It is going to be a random index in our original array.</div>
+<div class="line">E.g. randint(0,3) returns 2. It means we now swap A[0] with A[2].</div>
+<div class="line">(Note, 3 is not k, it is len(A)-1 -&gt; 4-1. Also 2 is the index in A.)</div>
+<div class="line">Now A = [5,7,3,11]</div>
+<div class="line">Then we do randint(1,3). Etc.</div>
+<div class="line">(Left bound moves +1 towards the len of A. We make k number of such random picks.)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">random_sampling</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>   <span class="c1">#k is size of the new array</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="c1"># Generate a random index in [i, len(A) - 1].</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">A</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+<span class="c1"># OR</span>
+    <span class="c1"># index = random.randrange(i, len(a))</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random_sampling</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span> <span class="c1">#example output [7, 11, 5]</span>
+</pre></div>
+</div>
+<p># My note -
+Since we use the stdlib module random anyway,
+why not use the dedicated .sample(list, sample_size)
+<code class="docutils literal notranslate"><span class="pre">print(random.sample(A,</span> <span class="pre">3))</span> <span class="pre">#[5,</span> <span class="pre">3,</span> <span class="pre">11]</span></code></p>
 </section>
 </section>
 
