@@ -60,6 +60,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#permute-the-elements-of-an-array">48. Permute the elements of an array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-31-compute-the-next-permutation">49. (LC 31) Compute the next permutation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sample-offline-data">50. Sample offline data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sample-online-data">51. Sample online data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-384-compute-a-random-permutation">52. (LC 384) Compute a random permutation</a></li>
 </ul>
 </li>
 </ul>
@@ -452,6 +454,200 @@ the visit duration) before rolling out the change.</p>
 Since we use the stdlib module random anyway,
 why not use the dedicated .sample(list, sample_size)
 <code class="docutils literal notranslate"><span class="pre">print(random.sample(A,</span> <span class="pre">3))</span> <span class="pre">#[5,</span> <span class="pre">3,</span> <span class="pre">11]</span></code></p>
+</section>
+<section id="sample-online-data">
+<h2>51. Sample online data<a class="headerlink" href="#sample-online-data" title="Link to this heading"></a></h2>
+<p>(In practice it can be to provide a uniform sample of packets for a network session.)</p>
+<p><em>Task</em> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>] -
+Given input A size n, write a program that reads input A maintaining a uniform random
+subset of size k.</p>
+<div class="line-block">
+<div class="line"># Brute force</div>
+<div class="line">Read all packets</div>
+<div class="line">[…], […], […], […]</div>
+<div class="line">choose randomly using solution 5.12</div>
+<div class="line">k=2</div>
+<div class="line">[..1.], […], […2], […]</div>
+<div class="line">Space O(n), time O(nk)</div>
+</div>
+<div class="line-block">
+<div class="line"># Space O(k), time proportional to the number of elements in the stream.</div>
+<div class="line">Example.</div>
+<div class="line">k=2, packets p,q,r,t,u,v</div>
+<div class="line">For our first subset we just take the first two packets {p, q}.</div>
+<div class="line">Selecting the next packet.</div>
+<div class="line">1)r will be selected with probability k/(n+1), here 2/3 (where n starts at 0).</div>
+<div class="line">Suppose it is not selected.</div>
+<div class="line">2) t suppose it is selected (probability 2/4)</div>
+<div class="line">Then we replace one of the previously chosen packets with t.</div>
+<div class="line">E.g. we end up with {p,t}.</div>
+<div class="line">3) etc.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V0 my</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">random_subset1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+<span class="c1">### V2 my</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">random_subset2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">ri</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>  <span class="c1">#generate random index</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">ri</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">ri</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+<span class="c1">### V1 My version (don&#39;t know if we can use it here)</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">random_subset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">swap_i</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">swap_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">swap_i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random_subset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1">#2 runs, OUT:[1, 3, 2], [4, 2, 5]</span>
+</pre></div>
+</div>
+<div class="admonition-itertools-islice-iterable-stop admonition">
+<p class="admonition-title">itertools.islice(iterable, stop)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="s1">&#39;ABCD&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">&lt;itertools.islice object at 0x7fa8b0b5c540&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">[&#39;A&#39;, &#39;B&#39;]</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span><span class="o">,</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">online_random_sample</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">sampling_results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
+    <span class="n">num_seen_so_far</span> <span class="o">=</span> <span class="n">k</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">num_seen_so_far</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">idx_to_replace</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">num_seen_so_far</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx_to_replace</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">sampling_results</span><span class="p">[</span><span class="n">idx_to_replace</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">sampling_results</span>
+
+<span class="n">it</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s1">&#39;pqrtuv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">online_random_sample</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="c1"># 3 calls produce random results: [&#39;v&#39;, &#39;q&#39;], [&#39;v&#39;, &#39;p&#39;], [&#39;p&#39;, &#39;q&#39;]</span>
+
+<span class="c1"># With comments</span>
+<span class="k">def</span> <span class="nf">online_random_sample</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="c1"># Gets us first result [p, q] (slice input data[0:2])</span>
+    <span class="n">sampling_results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
+
+    <span class="c1"># Start sampling starting at index 2, before that is our initial sample</span>
+    <span class="n">num_seen_so_far</span> <span class="o">=</span> <span class="n">k</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">num_seen_so_far</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1">#2+1=3</span>
+        <span class="c1"># In the first loop, choose random index out of 0,1,2.</span>
+        <span class="c1"># As range() randrange() stops before the given number.</span>
+        <span class="n">idx_to_replace</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">num_seen_so_far</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx_to_replace</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>                     <span class="c1">#**</span>
+            <span class="n">sampling_results</span><span class="p">[</span><span class="n">idx_to_replace</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">sampling_results</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#** This is tricky</div>
+<div class="line">if idx_to_replace &lt; k:</div>
+<div class="line">In the first loop index can be 0,1,2. Our k=2</div>
+<div class="line">If index=2, it means we do not choose element, i.e. here ‘r’.</div>
+<div class="line">If index is 0 or 1, we replace the so far [p,q] at index 0 or 1,</div>
+<div class="line">e.g. if index 0, we will have [r,q]</div>
+</div>
+</section>
+<section id="lc-384-compute-a-random-permutation">
+<h2>52. (LC 384) Compute a random permutation<a class="headerlink" href="#lc-384-compute-a-random-permutation" title="Link to this heading"></a></h2>
+<p>384. <a class="reference external" href="https://leetcode.com/problems/shuffle-an-array/">Shuffle an Array</a> -
+Medium</p>
+<p>Design an algorithm that creates uniformly random permutations of {0, 1,…,n - 1}.</p>
+<p><strong>Notes</strong>:
+Generating random permutations with equal probability is not as straightforward
+as it seems.
+Iterating and swapping each element with another randomly does not generate all
+permutations with equal probability.
+E.g. when there are n=3 elements. The number of permutations is 3! = 6.
+Ways to choose elements to swap is 3**3 = 27.
+Since 27 is not divisible by 6, some permutations correspond to more ways than others.</p>
+<div class="line-block">
+<div class="line"><strong>Key points</strong>:</div>
+<div class="line">-Store the result in original array A that we make out of list(range(n))</div>
+<div class="line">-Our algorithm should make sure that we don’t pick an element that has already been picked, i.e. pick only from the remaining.</div>
+<div class="line">E.g. n=4, thus A = [0,1,2,3].</div>
+</div>
+<p>1)First random number is chosen between index 0 and index 3. We get e.g. index to
+update with=1, we swap current index 0 with index 1. Get A=[1,0,2,3].</p>
+<p>2)Next choose from indices 1-3, e.g. random choice gives us index 3, swap i=1 with
+index=3. A=[1,3,0,2] etc.</p>
+<p>We iterate through A and swap current index with a randomly generated index from
+only the remaining indices.
+This reminds of the function we used earlier. We are going to use it as a helper
+function for the current solution.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">random_sampling</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>   <span class="c1">#k is size of the new array</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1">#r is random index</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">A</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">compute_random_permutation</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">permutation</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">random_sampling</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">permutation</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">permutation</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">compute_random_permutation</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># OUT</span>
+<span class="c1"># [2, 3, 0, 4, 1]</span>
+<span class="c1"># [0, 3, 2, 4, 1]</span>
+
+<span class="c1">### V1 my</span>
+<span class="c1"># The main point - choose a random index from len of array.</span>
+<span class="c1"># Swap current index with random index.</span>
+<span class="c1"># Diminish indices to randomly choose from by 1 (or len - current index)</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">random_permut</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">le</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">le</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">le</span><span class="p">)</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">random_permut</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># [1, 0, 2, 3, 5, 4], run2 [2, 5, 3, 1, 4, 0]</span>
+
+<span class="c1">### V2 my</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">shuffle_array2</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ri</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">ri</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">ri</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="c1">### FYI. Python stdlib tools</span>
+<span class="c1">#1</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">shuffle_array</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>#2</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
+<span class="go">(0, 1, 2, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
+<span class="go">(0, 1, 3, 2)</span>
+</pre></div>
+</div>
 </section>
 </section>
 

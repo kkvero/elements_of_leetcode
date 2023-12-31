@@ -353,9 +353,199 @@ Since we use the stdlib module random anyway,
 why not use the dedicated .sample(list, sample_size)
 ``print(random.sample(A, 3)) #[5, 3, 11]``
 
+51. Sample online data
+-------------------------
+(In practice it can be to provide a uniform sample of packets for a network session.)
 
+*Task* [:ref:`2 <ref-label>`] -
+Given input A size n, write a program that reads input A maintaining a uniform random
+subset of size k.
 
+| # Brute force
+| Read all packets
+| [...], [...], [...], [...]   
+| choose randomly using solution 5.12 
+| k=2
+| [..1.], [...], [...2], [...]   
+| Space O(n), time O(nk)
+ 
+| # Space O(k), time proportional to the number of elements in the stream.
+| Example. 
+| k=2, packets p,q,r,t,u,v
+| For our first subset we just take the first two packets {p, q}.
+| Selecting the next packet.
+| 1)r will be selected with probability k/(n+1), here 2/3 (where n starts at 0).
+| Suppose it is not selected.
+| 2) t suppose it is selected (probability 2/4)
+| Then we replace one of the previously chosen packets with t.
+| E.g. we end up with {p,t}.
+| 3) etc.
 
+::
+
+    ### V0 my
+    import random
+    def random_subset1(a, k):
+        random.shuffle(a)
+        return a[:k]
+
+    ### V2 my
+    import random
+    def random_subset2(a, k):
+        for i in range(k):
+            ri = random.randrange(i, len(a))  #generate random index
+            a[i], a[ri] = a[ri], a[i]
+        return a[:k]
+
+    ### V1 My version (don't know if we can use it here)
+    import random
+    def random_subset(a, k):
+        for i in range(k):
+            swap_i = random.choice(range(i, len(a)))
+            a[i], a[swap_i] = a[swap_i], a[i]
+        return a[:k]
+
+    a = [1, 2, 4, 5, 3]
+    print(random_subset(a, 3))  #2 runs, OUT:[1, 3, 2], [4, 2, 5]
+
+.. admonition:: itertools.islice(iterable, stop)
+
+    >>> a = itertools.islice('ABCD', 2)
+    >>> a
+    <itertools.islice object at 0x7fa8b0b5c540>
+    >>> list(a)
+    ['A', 'B']
+
+**Solution** ::
+
+    import itertools, random
+    def online_random_sample(it, k):
+        sampling_results = list(itertools.islice(it, k))
+        num_seen_so_far = k
+        for x in it:
+            num_seen_so_far += 1
+            idx_to_replace = random.randrange(num_seen_so_far)
+            if idx_to_replace < k:
+                sampling_results[idx_to_replace] = x
+        return sampling_results
+
+    it = list('pqrtuv')
+    print(online_random_sample(it, 2))
+    # 3 calls produce random results: ['v', 'q'], ['v', 'p'], ['p', 'q']
+
+    # With comments
+    def online_random_sample(it, k):
+        # Gets us first result [p, q] (slice input data[0:2])
+        sampling_results = list(itertools.islice(it, k))
+
+        # Start sampling starting at index 2, before that is our initial sample
+        num_seen_so_far = k
+        for x in it:
+            num_seen_so_far += 1  #2+1=3
+            # In the first loop, choose random index out of 0,1,2.
+            # As range() randrange() stops before the given number.
+            idx_to_replace = random.randrange(num_seen_so_far)
+            if idx_to_replace < k:                     #**
+                sampling_results[idx_to_replace] = x
+        return sampling_results
+
+| #** This is tricky
+| if idx_to_replace < k:
+| In the first loop index can be 0,1,2. Our k=2
+| If index=2, it means we do not choose element, i.e. here 'r'.
+| If index is 0 or 1, we replace the so far [p,q] at index 0 or 1,
+| e.g. if index 0, we will have [r,q]
+
+52. (LC 384) Compute a random permutation
+------------------------------------------
+384. `Shuffle an Array <https://leetcode.com/problems/shuffle-an-array/>`_ - 
+Medium
+
+Design an algorithm that creates uniformly random permutations of {0, 1,...,n - 1}.
+
+**Notes**:
+Generating random permutations with equal probability is not as straightforward 
+as it seems.
+Iterating and swapping each element with another randomly does not generate all 
+permutations with equal probability.
+E.g. when there are n=3 elements. The number of permutations is 3! = 6.
+Ways to choose elements to swap is 3**3 = 27.
+Since 27 is not divisible by 6, some permutations correspond to more ways than others.
+
+| **Key points**:
+| -Store the result in original array A that we make out of list(range(n))
+| -Our algorithm should make sure that we don't pick an element that has already been picked, i.e. pick only from the remaining.
+| E.g. n=4, thus A = [0,1,2,3].
+
+1)First random number is chosen between index 0 and index 3. We get e.g. index to 
+update with=1, we swap current index 0 with index 1. Get A=[1,0,2,3].
+
+2)Next choose from indices 1-3, e.g. random choice gives us index 3, swap i=1 with
+index=3. A=[1,3,0,2] etc.
+
+We iterate through A and swap current index with a randomly generated index from
+only the remaining indices.
+This reminds of the function we used earlier. We are going to use it as a helper 
+function for the current solution. ::
+
+    ### Solution
+    import random
+    def random_sampling(k, A):   #k is size of the new array
+        for i in range(k):
+            r = random.randint(i, len(A) - 1)  #r is random index 
+            A[i], A[r] = A[r], A[i]
+        return A[:k]
+
+    def compute_random_permutation(n):
+        permutation = list(range(n))
+        random_sampling(n, permutation)
+        return permutation
+
+    print(compute_random_permutation(5))
+
+    # OUT
+    # [2, 3, 0, 4, 1]
+    # [0, 3, 2, 4, 1]
+
+    ### V1 my
+    # The main point - choose a random index from len of array. 
+    # Swap current index with random index.
+    # Diminish indices to randomly choose from by 1 (or len - current index)
+
+    import random
+    def random_permut(n):
+        a = list(range(n + 1))
+        le = len(a) - 1
+        for i in range(le):
+            index = random.randint(i, le)
+            a[i], a[index] = a[index], a[i]
+        return a
+
+    print(random_permut(5))  # [1, 0, 2, 3, 5, 4], run2 [2, 5, 3, 1, 4, 0]
+
+    ### V2 my
+    import random
+    def shuffle_array2(a):
+        for i in range(len(a) - 1):
+            ri = random.randrange(i, len(a))
+            a[i], a[ri] = a[ri], a[i]
+        return a
+
+    ### FYI. Python stdlib tools
+    #1
+    import random
+    def shuffle_array(a):
+        random.shuffle(a)
+        return a
+
+#2
+
+>>> import itertools
+>>> it = itertools.permutations(range(0,4))
+>>> it.__next__()
+(0, 1, 2, 3)
+>>> it.__next__()
+(0, 1, 3, 2)
 
 
 
