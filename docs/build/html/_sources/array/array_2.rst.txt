@@ -547,9 +547,334 @@ function for the current solution. ::
 >>> it.__next__()
 (0, 1, 3, 2)
 
+53. Generate nonuniform random numbers
+---------------------------------------
+| [:ref:`2 <ref-label>`]
+| # In essence
+| We are given probabilities of occurrence of some numbers.
+| Create a nonuniform random number generator.
+| (Before we randomly generated numbers that could occur with equal probability.
+| Well here each number can occur with a different probability.
+| E.g. 7 with P=0.5, 9 with P=0.2 etc.)
 
+# Practical application -
+Load test for a server. You have the inter-arrival time of requests to the server 
+over a period of one year. You have a histogram of the distribution of the arrival
+times of requests. In the load test you would like to simulate data arriving at the 
+same time as the distribution observed historically.
 
+| # Example
+| You are given n numbers and probabilities p0,p1,...,Pn-1, which sum up to 1.
+| E.g. we have:
+| values = [3,5,7,11] # i.e. 3 packets arrived etc. I suppose
+| probabilities = [9/18, 6/18, 2/18, 1/18]
+| (Then in 1000 000 calls to your program, 3 should appear about 500 000 times, 5 - 333 333 times.)
 
+| # Python stdlib tools we will use here
+| 1) itertools.accumulate([1,2,3,4,5]) --> 1 3 6 10 15
+| 2) >>> random.random()
+| 0.5787888523695183 # generates a random number between 0 and 1
+| 3) bisect.bisect(A, x), returns an insertion point
+| >>> bisect.bisect([1,3,6], 4)
+| 2  #4 would be at index 2
 
+# Solution logic
 
+1) with itertools.accumulate(probabilities) we make a list that accumulates
+probabilities -> P0, P0+P1, P0+P1+P2 etc.
+The interval between two such accumulated values will correspond to the probability 
+of each element (intervals like this (0.0, 0.5), (0.5, 0.833) etc., our
+accumulated list [0.0, 0.5, 0.833 ..]
 
+2) We use random.random() to generate a value between 0 and 1.
+E.g. 0.6 is generated.
+
+3) We use bisect.bisect() to find the index where that value would be in our
+accumulated list. 0.6 in [0.0, 0.5, 0.833 ..] would be at index 2, after 0.5,
+so we would return values[2] which is ([3,5,7,11]) 7. 
+
+The take away - we choose randomly from <probabilities of the numbers>.
+
+That way we generate one of the n numbers according to the specified probabilities.
+(Meaning if the probability of a number ([3,5,7,11]) is high, then the chances
+that the randomly generated value (between 0,1) will fall in that range are higher.) ::
+
+    print(bisect.bisect([0.0, 0.5, 0.83, 0.9, 1.0 ], 0.4))  #1
+    print(bisect.bisect([0.0, 0.5, 0.83, 0.9, 1.0 ], 0.5))  #2
+
+::
+
+    ### Solution
+    import itertools, bisect, random
+    def nonuniform_random_number_generation(values, probabilities):
+        prefix_sum_of_probabilities = list(itertools.accumulate(probabilities))
+        interval_idx = bisect.bisect(prefix_sum_of_probabilities, random.random())
+        return values[interval_idx]
+
+    # my rewrite
+    def non_uniform_random_num(a, p):
+        probabilities = list(itertools.accumulate(p))
+        r = random.random()
+        index = bisect.bisect_left(probabilities, r)
+        return a[index]
+
+    a = [2, 4, 6, 7]
+    p = [0.3, 0.2, 0.4, 0.1]
+    print(non_uniform_random_num(a, p))
+
+| # My note (off by 1 topic)
+| for accumulated sum of probabilities, e.g. [0.5, 0.6, 0.8, 1.0], 
+| it seems we will never get the last value in array a, because random will not generate
+| num above 1.0, but its OK. Last value is at index 3, random()= e.g. 0.9
+| gives bisect_left() index 3. So we will get the last num.
+
+::
+
+    # Let's see what's going on. Adding print calls.
+    def nonuniform_random_number_generation(values, probabilities):
+        prefix_sum_of_probabilities = list(itertools.accumulate(probabilities))
+        print(prefix_sum_of_probabilities)
+        interval_idx = bisect.bisect(prefix_sum_of_probabilities, random.random())
+        print(interval_idx)
+        return values[interval_idx]
+
+    values = [3,5,7,11] 
+    probabilities = [9/18, 6/18, 2/18, 1/18]
+    print(nonuniform_random_number_generation(values, probabilities))
+    # OUT
+    # [0.5, 0.8333333333333333, 0.9444444444444444, 1.0]  #yeah, starts from non-zero
+    # 1 #index
+    # 5
+
+Time O(n) which is time to create the array of intervals.
+Space O(n).
+
+54. (LC 36) Valid Sudoku
+-------------------------
+`36. Valid Sudoku <https://leetcode.com/problems/valid-sudoku/>`_ (Medium)
+
+**Version 1.** If you are given a solved, completely filled, Sudoku.
+
+# Logic.
+We check that no row, column, or 3x3 2D subarray contains duplicates. ::
+
+    ### Solution
+    import itertools
+
+    def sudoku_ok(line):
+        return (len(line) == 9 and sum(line) == sum(set(line)))
+
+    def check_sudoku(grid):
+        bad_rows = [row for row in grid if not sudoku_ok(row)]
+        grid = list(zip(*grid))
+        bad_cols = [col for col in grid if not sudoku_ok(col)]
+        squares = []
+        for i in range(0, 9, 3):
+            for j in range(0, 9, 3):
+            square = list(itertools.chain(row[j:j+3] for row in grid[i:i+3]))
+            square = [n for i in square for n in i]
+            squares.append(square)
+        bad_squares = [square for square in squares if not sudoku_ok(square)]
+        return not (bad_rows or bad_cols or bad_squares)
+
+    sudoku = [[5,3,4,6,7,8,9,1,2],
+            [6,7,2,1,9,5,3,4,8],
+            [1,9,8,3,4,2,5,6,7],
+            [8,5,9,7,6,1,4,2,3],
+            [4,2,6,8,5,3,7,9,1], 
+            [7,1,3,9,2,4,8,5,6],
+            [9,6,1,5,3,7,2,8,4],
+            [2,8,7,4,1,9,6,3,5],
+            [3,4,5,2,8,6,1,7,8]  # <-- not valid sudoku, two 8s
+            ]
+
+    board = [[7, 9, 2, 1, 5, 4, 3, 8, 6], 
+                [6, 4, 3, 8, 2, 7, 1, 5, 9],
+                [8, 5, 1, 3, 9, 6, 7, 2, 4],
+                [2, 6, 5, 9, 7, 3, 8, 4, 1],
+                [4, 8, 9, 5, 6, 1, 2, 7, 3],
+                [3, 1, 7, 4, 8, 2, 9, 6, 5],
+                [1, 3, 6, 7, 4, 8, 5, 9, 2],
+                [9, 7, 4, 2, 1, 5, 6, 3, 8],
+                [5, 2, 8, 6, 3, 9, 4, 1, 7]]
+
+    print(check_sudoku(sudoku)) #False
+    print(check_sudoku(board))  #True
+
+| # *Explained.*
+| ``grid = list(zip(*grid))``
+| Matrix transpose. To make columns. E.g.:
+
+>>> Z = list(zip((1, 2, 3), (10, 20, 30), (5,7,6)))
+>>> Z
+[(1, 10, 5), (2, 20, 7), (3, 30, 6)]
+
+::
+
+    for i in range(0, 9, 3):
+        for j in range(0, 9, 3):
+
+| Making 3x3 sub-grids.
+| Iterate indices with step 3, i.e. 0,3,6. For both rows and columns.
+
+| square = list(itertools.chain(row[j:j+3] for row in grid[i:i+3]))
+| square = [n for i in square for n in i]
+| chain('ABC', 'DEF') --> A B C D E F
+| It really produces tuples [(1,3,5), (5,3,8), (5,9,7)].
+| So with the second line we flatten into a list.
+| [n for i in square for n in i] - i.e. for tuple in square, for number in tuple, 
+| i.e. for each number in tuple in square.
+
+**Version 2.** Check for validity a partially filled board (0 value for blank entries).
+[:ref:`10 <ref-label>`]
+
+# *Explained.*
+First of all - do not over complicate.
+
+All that the task asks is to check that each row, column and 3x3 cube is valid,
+i.e. all values in each of these are numbers 1-9 without duplicates.
+So for a row=[1,2,3,4,5,6,'.','.',9] - all we need to check is if all the VISIBLE
+filled in values satisfy the rules. NOT if the blank spaces can "potentially" cause 
+duplicates (when rows, columns, cubes meet).
+So you evaluate the board as of its state "right now".
+
+- How we will identify the 3x3 cubes
+
+| We will give each cube an index. The coordinates would then be: 
+|  0 1 2
+| 0
+| 1
+| 2
+| Leftmost cube is at [0, 0], last most is at [2,2].
+| How do we get these indices, we take the index of a cell, and //3.
+| E.g. cell at [8, 8] is in [8//3, 8//3], i.e. in cube [2,2].
+
+- Big O
+
+O(9**2) both time and space, because we iterate through each col, row and also store
+the values in hash sets.
+
+::
+
+    ### Solution
+    class Solution:
+        def isValidSudoku(self, board: List[List[str]]) -> bool:
+            cols = collections.defaultdict(set)
+            rows = collections.defaultdict(set)
+            squares = collections.defaultdict(set)  # key is a tuple= (r /3, c /3)
+
+            for r in range(9):
+                for c in range(9):
+                    if board[r][c] == ".":
+                        continue
+                    if (
+                        board[r][c] in rows[r]
+                        or board[r][c] in cols[c]
+                        or board[r][c] in squares[(r // 3, c // 3)]
+                    ):
+                        return False
+                    cols[c].add(board[r][c])
+                    rows[r].add(board[r][c])
+                    squares[(r // 3, c // 3)].add(board[r][c])
+
+            return True
+
+- collections.defaultdict(set)
+
+We will use hash sets.
+So the lines like this of our code:
+``cols[c].add(board[r][c])`` Will do stuff like this:
+
+>>> D = collections.defaultdict(set)
+>>> D[5].add(30)
+>>> D
+defaultdict(<class 'set'>, {5: {30}})
+>>> D[5].add(31)
+>>> D
+defaultdict(<class 'set'>, {5: {30, 31}})  #Yes, sets have {}
+
+- ``squares[(r // 3, c // 3)].add(board[r][c])``
+
+What this means is that the key for the 'squares' hash set is a tuple.
+So it does this:
+
+>>> D[(1,1)].add(8)
+>>> D
+defaultdict(<class 'set'>, {5: {30, 31}, (1, 1): {8}})  <=== adds (1, 1): {8}
+
+55. (LC 118) Compute rows in Pascal's triangle
+------------------------------------------------
+`118. Pascal's Triangle <https://leetcode.com/problems/pascals-triangle/>`_ (Easy)
+
+Example of the first 5 rows in Pascal's triangle::
+
+    # Visualization
+    #       [1]
+    #      [1, 1]
+    #     [1, 2, 1]
+    #   [1, 3, 3, 1]
+    # [1, 4, 6, 4, 1]
+
+Each row has one more entry than the previous one.
+Each entry is the sum of adjacent numbers above.
+
+Write a program which takes as input a nonnegative integer n and returns the first 
+n rows of Pascal's triangle.
+Hint: Write the given fact as an equation. ::
+
+    ### Solution
+    Space and time O(n**2)
+
+    def generate_pascal_triangle(n):
+        result = [[1] * (i+1) for i in range(n)]
+        for i in range(n):
+            for j in range(1, i):
+                result[i][j] = result[i-1][j-1] + result[i-1][j]
+        return result
+
+    print(generate_pascal_triangle(5))
+
+    ### Less magic version, V1
+    def pascal_triangle(n):
+        pt = []
+        for k in range(1, n + 1):
+            pt.append([1] * k)
+        for i in range(2, n):
+            for j in range(1, i):  # i because 3 items in 3rd row, 4 items in 4th row etc
+                pt[i][j] = pt[i - 1][j - 1] + pt[i - 1][j]
+                # Don't be tempted to do [j+1] !!
+                # item above j to the right is not j+1, it is j, because 1 less item above
+        return pt[n - 1]  #here just returning the row n
+
+    ### V2
+    def pasca(n):
+        tri = []
+        for i in range(n):
+            row = [1] * (i + 1)
+            for j in range(1, i):
+                row[j] = tri[i - 1][j - 1] + tri[i - 1][j]
+            tri.append(row)
+        return tri
+
+### Explained (the magic version)
+``result = [[1] * (i+1) for i in range(n)]``
+Initializes triangle:
+[[1], [1, 1], [1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1, 1]]
+
+::
+
+        for i in range(n):
+            for j in range(1, i):
+
+| i is row, j is item in row.
+| Notably, when i=0, i=1, for j in range(1,0), (1,1)
+| the loop won't even go anywhere. 
+| So we will start assignments to the result when row=i=2, j=1,
+| so we are looking at 2 in [1,2,1].
+
+|             ``result[i][j] = result[i-1][j-1] + result[i-1][j]``
+| Sets the entry at row i, index j to the sum of the two entries above.
+| 1,1
+| 1,2,1 
+| result[i-1][j-1] + result[i-1][j]
+| row above, index j-1 (+) row above, index j

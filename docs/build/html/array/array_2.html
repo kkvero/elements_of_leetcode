@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="next" title="Array Questions Part 3" href="array_3.html" />
     <link rel="prev" title="Array Questions Part 1" href="array_1.html" /> 
 </head>
 
@@ -62,8 +62,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#sample-offline-data">50. Sample offline data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sample-online-data">51. Sample online data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-384-compute-a-random-permutation">52. (LC 384) Compute a random permutation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-nonuniform-random-numbers">53. Generate nonuniform random numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-36-valid-sudoku">54. (LC 36) Valid Sudoku</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-118-compute-rows-in-pascal-s-triangle">55. (LC 118) Compute rows in Pascal’s triangle</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="array_3.html">Part 3 (56-65)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -649,6 +653,339 @@ function for the current solution.</p>
 </pre></div>
 </div>
 </section>
+<section id="generate-nonuniform-random-numbers">
+<h2>53. Generate nonuniform random numbers<a class="headerlink" href="#generate-nonuniform-random-numbers" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">[<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line"># In essence</div>
+<div class="line">We are given probabilities of occurrence of some numbers.</div>
+<div class="line">Create a nonuniform random number generator.</div>
+<div class="line">(Before we randomly generated numbers that could occur with equal probability.</div>
+<div class="line">Well here each number can occur with a different probability.</div>
+<div class="line">E.g. 7 with P=0.5, 9 with P=0.2 etc.)</div>
+</div>
+<p># Practical application -
+Load test for a server. You have the inter-arrival time of requests to the server
+over a period of one year. You have a histogram of the distribution of the arrival
+times of requests. In the load test you would like to simulate data arriving at the
+same time as the distribution observed historically.</p>
+<div class="line-block">
+<div class="line"># Example</div>
+<div class="line">You are given n numbers and probabilities p0,p1,…,Pn-1, which sum up to 1.</div>
+<div class="line">E.g. we have:</div>
+<div class="line">values = [3,5,7,11] # i.e. 3 packets arrived etc. I suppose</div>
+<div class="line">probabilities = [9/18, 6/18, 2/18, 1/18]</div>
+<div class="line">(Then in 1000 000 calls to your program, 3 should appear about 500 000 times, 5 - 333 333 times.)</div>
+</div>
+<div class="line-block">
+<div class="line"># Python stdlib tools we will use here</div>
+<div class="line">1) itertools.accumulate([1,2,3,4,5]) –&gt; 1 3 6 10 15</div>
+<div class="line">2) &gt;&gt;&gt; random.random()</div>
+<div class="line">0.5787888523695183 # generates a random number between 0 and 1</div>
+<div class="line">3) bisect.bisect(A, x), returns an insertion point</div>
+<div class="line">&gt;&gt;&gt; bisect.bisect([1,3,6], 4)</div>
+<div class="line">2  #4 would be at index 2</div>
+</div>
+<p># Solution logic</p>
+<p>1) with itertools.accumulate(probabilities) we make a list that accumulates
+probabilities -&gt; P0, P0+P1, P0+P1+P2 etc.
+The interval between two such accumulated values will correspond to the probability
+of each element (intervals like this (0.0, 0.5), (0.5, 0.833) etc., our
+accumulated list [0.0, 0.5, 0.833 ..]</p>
+<p>2) We use random.random() to generate a value between 0 and 1.
+E.g. 0.6 is generated.</p>
+<p>3) We use bisect.bisect() to find the index where that value would be in our
+accumulated list. 0.6 in [0.0, 0.5, 0.833 ..] would be at index 2, after 0.5,
+so we would return values[2] which is ([3,5,7,11]) 7.</p>
+<p>The take away - we choose randomly from &lt;probabilities of the numbers&gt;.</p>
+<p>That way we generate one of the n numbers according to the specified probabilities.
+(Meaning if the probability of a number ([3,5,7,11]) is high, then the chances
+that the randomly generated value (between 0,1) will fall in that range are higher.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.83</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span> <span class="p">],</span> <span class="mf">0.4</span><span class="p">))</span>  <span class="c1">#1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.83</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span> <span class="p">],</span> <span class="mf">0.5</span><span class="p">))</span>  <span class="c1">#2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="kn">import</span> <span class="nn">itertools</span><span class="o">,</span> <span class="nn">bisect</span><span class="o">,</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">nonuniform_random_number_generation</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">):</span>
+    <span class="n">prefix_sum_of_probabilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">probabilities</span><span class="p">))</span>
+    <span class="n">interval_idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="n">prefix_sum_of_probabilities</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">values</span><span class="p">[</span><span class="n">interval_idx</span><span class="p">]</span>
+
+<span class="c1"># my rewrite</span>
+<span class="k">def</span> <span class="nf">non_uniform_random_num</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">probabilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect_left</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">non_uniform_random_num</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># My note (off by 1 topic)</div>
+<div class="line">for accumulated sum of probabilities, e.g. [0.5, 0.6, 0.8, 1.0],</div>
+<div class="line">it seems we will never get the last value in array a, because random will not generate</div>
+<div class="line">num above 1.0, but its OK. Last value is at index 3, random()= e.g. 0.9</div>
+<div class="line">gives bisect_left() index 3. So we will get the last num.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s see what&#39;s going on. Adding print calls.</span>
+<span class="k">def</span> <span class="nf">nonuniform_random_number_generation</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">):</span>
+    <span class="n">prefix_sum_of_probabilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">probabilities</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">prefix_sum_of_probabilities</span><span class="p">)</span>
+    <span class="n">interval_idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect</span><span class="p">(</span><span class="n">prefix_sum_of_probabilities</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">interval_idx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">values</span><span class="p">[</span><span class="n">interval_idx</span><span class="p">]</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">]</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="o">/</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="o">/</span><span class="mi">18</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">18</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">18</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nonuniform_random_number_generation</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">))</span>
+<span class="c1"># OUT</span>
+<span class="c1"># [0.5, 0.8333333333333333, 0.9444444444444444, 1.0]  #yeah, starts from non-zero</span>
+<span class="c1"># 1 #index</span>
+<span class="c1"># 5</span>
+</pre></div>
+</div>
+<p>Time O(n) which is time to create the array of intervals.
+Space O(n).</p>
+</section>
+<section id="lc-36-valid-sudoku">
+<h2>54. (LC 36) Valid Sudoku<a class="headerlink" href="#lc-36-valid-sudoku" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/valid-sudoku/">36. Valid Sudoku</a> (Medium)</p>
+<p><strong>Version 1.</strong> If you are given a solved, completely filled, Sudoku.</p>
+<p># Logic.
+We check that no row, column, or 3x3 2D subarray contains duplicates.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="k">def</span> <span class="nf">sudoku_ok</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span> <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">line</span><span class="p">)))</span>
+
+<span class="k">def</span> <span class="nf">check_sudoku</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="n">bad_rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">sudoku_ok</span><span class="p">(</span><span class="n">row</span><span class="p">)]</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">grid</span><span class="p">))</span>
+    <span class="n">bad_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">grid</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">sudoku_ok</span><span class="p">(</span><span class="n">col</span><span class="p">)]</span>
+    <span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="n">square</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]))</span>
+        <span class="n">square</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">square</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">squares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+    <span class="n">bad_squares</span> <span class="o">=</span> <span class="p">[</span><span class="n">square</span> <span class="k">for</span> <span class="n">square</span> <span class="ow">in</span> <span class="n">squares</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">sudoku_ok</span><span class="p">(</span><span class="n">square</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">bad_rows</span> <span class="ow">or</span> <span class="n">bad_cols</span> <span class="ow">or</span> <span class="n">bad_squares</span><span class="p">)</span>
+
+<span class="n">sudoku</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>  <span class="c1"># &lt;-- not valid sudoku, two 8s</span>
+        <span class="p">]</span>
+
+<span class="n">board</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">check_sudoku</span><span class="p">(</span><span class="n">sudoku</span><span class="p">))</span> <span class="c1">#False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">check_sudoku</span><span class="p">(</span><span class="n">board</span><span class="p">))</span>  <span class="c1">#True</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># <em>Explained.</em></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">grid</span> <span class="pre">=</span> <span class="pre">list(zip(*grid))</span></code></div>
+<div class="line">Matrix transpose. To make columns. E.g.:</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span>
+<span class="go">[(1, 10, 5), (2, 20, 7), (3, 30, 6)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Making 3x3 sub-grids.</div>
+<div class="line">Iterate indices with step 3, i.e. 0,3,6. For both rows and columns.</div>
+</div>
+<div class="line-block">
+<div class="line">square = list(itertools.chain(row[j:j+3] for row in grid[i:i+3]))</div>
+<div class="line">square = [n for i in square for n in i]</div>
+<div class="line">chain(‘ABC’, ‘DEF’) –&gt; A B C D E F</div>
+<div class="line">It really produces tuples [(1,3,5), (5,3,8), (5,9,7)].</div>
+<div class="line">So with the second line we flatten into a list.</div>
+<div class="line">[n for i in square for n in i] - i.e. for tuple in square, for number in tuple,</div>
+<div class="line">i.e. for each number in tuple in square.</div>
+</div>
+<p><strong>Version 2.</strong> Check for validity a partially filled board (0 value for blank entries).
+[<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<p># <em>Explained.</em>
+First of all - do not over complicate.</p>
+<p>All that the task asks is to check that each row, column and 3x3 cube is valid,
+i.e. all values in each of these are numbers 1-9 without duplicates.
+So for a row=[1,2,3,4,5,6,’.’,’.’,9] - all we need to check is if all the VISIBLE
+filled in values satisfy the rules. NOT if the blank spaces can “potentially” cause
+duplicates (when rows, columns, cubes meet).
+So you evaluate the board as of its state “right now”.</p>
+<ul class="simple">
+<li><p>How we will identify the 3x3 cubes</p></li>
+</ul>
+<div class="line-block">
+<div class="line">We will give each cube an index. The coordinates would then be:</div>
+<div class="line-block">
+<div class="line">0 1 2</div>
+</div>
+<div class="line">0</div>
+<div class="line">1</div>
+<div class="line">2</div>
+<div class="line">Leftmost cube is at [0, 0], last most is at [2,2].</div>
+<div class="line">How do we get these indices, we take the index of a cell, and //3.</div>
+<div class="line">E.g. cell at [8, 8] is in [8//3, 8//3], i.e. in cube [2,2].</div>
+</div>
+<ul class="simple">
+<li><p>Big O</p></li>
+</ul>
+<p>O(9**2) both time and space, because we iterate through each col, row and also store
+the values in hash sets.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isValidSudoku</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+        <span class="n">squares</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>  <span class="c1"># key is a tuple= (r /3, c /3)</span>
+
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">board</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+                    <span class="ow">or</span> <span class="n">board</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                    <span class="ow">or</span> <span class="n">board</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="ow">in</span> <span class="n">squares</span><span class="p">[(</span><span class="n">r</span> <span class="o">//</span> <span class="mi">3</span><span class="p">,</span> <span class="n">c</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)]</span>
+                <span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="n">cols</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">])</span>
+                <span class="n">rows</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">])</span>
+                <span class="n">squares</span><span class="p">[(</span><span class="n">r</span> <span class="o">//</span> <span class="mi">3</span><span class="p">,</span> <span class="n">c</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>collections.defaultdict(set)</p></li>
+</ul>
+<p>We will use hash sets.
+So the lines like this of our code:
+<code class="docutils literal notranslate"><span class="pre">cols[c].add(board[r][c])</span></code> Will do stuff like this:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span>
+<span class="go">defaultdict(&lt;class &#39;set&#39;&gt;, {5: {30}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span>
+<span class="go">defaultdict(&lt;class &#39;set&#39;&gt;, {5: {30, 31}})  #Yes, sets have {}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">squares[(r</span> <span class="pre">//</span> <span class="pre">3,</span> <span class="pre">c</span> <span class="pre">//</span> <span class="pre">3)].add(board[r][c])</span></code></p></li>
+</ul>
+<p>What this means is that the key for the ‘squares’ hash set is a tuple.
+So it does this:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span>
+<span class="go">defaultdict(&lt;class &#39;set&#39;&gt;, {5: {30, 31}, (1, 1): {8}})  &lt;=== adds (1, 1): {8}</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-118-compute-rows-in-pascal-s-triangle">
+<h2>55. (LC 118) Compute rows in Pascal’s triangle<a class="headerlink" href="#lc-118-compute-rows-in-pascal-s-triangle" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/pascals-triangle/">118. Pascal’s Triangle</a> (Easy)</p>
+<p>Example of the first 5 rows in Pascal’s triangle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualization</span>
+<span class="c1">#       [1]</span>
+<span class="c1">#      [1, 1]</span>
+<span class="c1">#     [1, 2, 1]</span>
+<span class="c1">#   [1, 3, 3, 1]</span>
+<span class="c1"># [1, 4, 6, 4, 1]</span>
+</pre></div>
+</div>
+<p>Each row has one more entry than the previous one.
+Each entry is the sum of adjacent numbers above.</p>
+<p>Write a program which takes as input a nonnegative integer n and returns the first
+n rows of Pascal’s triangle.
+Hint: Write the given fact as an equation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="n">Space</span> <span class="ow">and</span> <span class="n">time</span> <span class="n">O</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">generate_pascal_triangle</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">generate_pascal_triangle</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1">### Less magic version, V1</span>
+<span class="k">def</span> <span class="nf">pascal_triangle</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pt</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>  <span class="c1"># i because 3 items in 3rd row, 4 items in 4th row etc</span>
+            <span class="n">pt</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">pt</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="c1"># Don&#39;t be tempted to do [j+1] !!</span>
+            <span class="c1"># item above j to the right is not j+1, it is j, because 1 less item above</span>
+    <span class="k">return</span> <span class="n">pt</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1">#here just returning the row n</span>
+
+<span class="c1">### V2</span>
+<span class="k">def</span> <span class="nf">pasca</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">tri</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="n">row</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tri</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">tri</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">tri</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tri</span>
+</pre></div>
+</div>
+<p>### Explained (the magic version)
+<code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">[[1]</span> <span class="pre">*</span> <span class="pre">(i+1)</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(n)]</span></code>
+Initializes triangle:
+[[1], [1, 1], [1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1, 1]]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">i is row, j is item in row.</div>
+<div class="line">Notably, when i=0, i=1, for j in range(1,0), (1,1)</div>
+<div class="line">the loop won’t even go anywhere.</div>
+<div class="line">So we will start assignments to the result when row=i=2, j=1,</div>
+<div class="line">so we are looking at 2 in [1,2,1].</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">result[i][j]</span> <span class="pre">=</span> <span class="pre">result[i-1][j-1]</span> <span class="pre">+</span> <span class="pre">result[i-1][j]</span></code></div>
+</div>
+<div class="line">Sets the entry at row i, index j to the sum of the two entries above.</div>
+<div class="line">1,1</div>
+<div class="line">1,2,1</div>
+<div class="line">result[i-1][j-1] + result[i-1][j]</div>
+<div class="line">row above, index j-1 (+) row above, index j</div>
+</div>
+</section>
 </section>
 
 
@@ -656,7 +993,7 @@ function for the current solution.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="array_1.html" class="btn btn-neutral float-left" title="Array Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="array_3.html" class="btn btn-neutral float-right" title="Array Questions Part 3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
