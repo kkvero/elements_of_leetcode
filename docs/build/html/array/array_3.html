@@ -55,7 +55,13 @@
 <li class="toctree-l1"><a class="reference internal" href="array_kb.html">Knowledge base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="array_1.html">Part 1 (37-45)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="array_2.html">Part 2 (46-55)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 3 (56-65)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 3 (56-65)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-1-two-sum">56. (LC 1) Two Sum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-15-3sum">57. (LC 15) 3Sum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-16-3sum-closest">58. (LC 16) 3Sum Closest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-989-add-to-array-form-of-integer">59. (LC 989) Add to Array-Form of Integer</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -92,6 +98,339 @@
              
   <section id="array-questions-part-3">
 <h1>Array Questions Part 3<a class="headerlink" href="#array-questions-part-3" title="Link to this heading"></a></h1>
+<section id="lc-1-two-sum">
+<h2>56. (LC 1) Two Sum<a class="headerlink" href="#lc-1-two-sum" title="Link to this heading"></a></h2>
+<p><em>(Easy)</em>
+Given an array of integers nums and an integer target, return indices of the two
+numbers such that they add up to target.
+(You may assume that each input would have exactly one solution, and you may not use the same element twice.)</p>
+<div class="line-block">
+<div class="line"># Example 1:</div>
+<div class="line">Input: nums = [2,7,11,15], target = 9</div>
+<div class="line">Output: [0,1]</div>
+<div class="line">Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V my</span>
+<span class="k">def</span> <span class="nf">two_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="o">-</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">n</span><span class="p">]</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">two_sum</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span> <span class="c1"># (1, 0)</span>
+
+<span class="c1">### Solution 1</span>
+<span class="k">def</span> <span class="nf">two_sum</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dic</span><span class="p">[</span><span class="n">num</span><span class="p">],</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dic</span><span class="p">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-15-3sum">
+<h2>57. (LC 15) 3Sum<a class="headerlink" href="#lc-15-3sum" title="Link to this heading"></a></h2>
+<p><em>(Medium)</em>
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]]
+such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.</p>
+<p>Notice that the solution set must not contain duplicate triplets,
+although the input may contain duplicates.</p>
+<div class="line-block">
+<div class="line"># Examples:</div>
+<div class="line">Input: nums = [-1,0,1,2,-1,-4]</div>
+<div class="line">Output: [[-1,-1,2],[-1,0,1]]</div>
+<div class="line">Explanation:</div>
+<div class="line">nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.</div>
+<div class="line">nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.</div>
+<div class="line">nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.</div>
+<div class="line">The distinct triplets are [-1,0,1] and [-1,-1,2].</div>
+<div class="line"># Input: nums = [0,1,1]</div>
+<div class="line">Output: []</div>
+<div class="line"># Input: nums = [0,0,0]</div>
+<div class="line">Output: [[0,0,0]]</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="c1"># Account for edge cases, sort, use 2sum internally</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">threeSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="c1"># edge cases</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">nums</span><span class="p">]</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">nums</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="c1"># 2 sum</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]):</span>
+                <span class="c1"># cur + x + y = 0</span>
+                <span class="c1"># -&gt; y = -x - cur</span>
+                <span class="k">if</span> <span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="n">cur</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                    <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span><span class="n">cur</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="o">-</span><span class="n">cur</span><span class="p">]</span>
+                    <span class="n">tmp</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">tmp</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+                        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">threeSum</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>    <span class="c1"># [[-1, 0, 1], [-1, -1, 2]]</span>
+
+<span class="c1">### My V</span>
+<span class="c1"># (Brute force, use Python std lib.)</span>
+
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="k">def</span> <span class="nf">sums_to_zero</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="c1"># Out of all combinations with size 3, choose those that sum to 0.</span>
+    <span class="n">combos</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Choose only unique combinations</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combos</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ans</span><span class="p">:</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sums_to_zero</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>  <span class="c1">#[[-1, 0, 1], [-1, -1, 2]]</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-16-3sum-closest">
+<h2>58. (LC 16) 3Sum Closest<a class="headerlink" href="#lc-16-3sum-closest" title="Link to this heading"></a></h2>
+<p><em>(Medium)</em>
+Given an integer array nums of length n and an integer target, find three integers
+in nums such that the sum is closest to target.
+Return the sum of the three integers.
+(You may assume that each input would have exactly one solution.)</p>
+<div class="line-block">
+<div class="line"># Example 1:</div>
+<div class="line">Input: nums = [-1,2,1,-4], target = 1</div>
+<div class="line">Output: 2</div>
+<div class="line">Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># My V (Stdlib)</span>
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">it</span>
+
+<span class="k">def</span> <span class="nf">sum_closest</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">combos</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">sums</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combos</span><span class="p">]</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">sums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dif</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">ans</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sums</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">dif</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">target</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sum_closest</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span>  <span class="c1"># 2</span>
+</pre></div>
+</div>
+<p>Solutions Time:  O(n^2):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### 1</span>
+<span class="k">def</span> <span class="nf">threeSumClosest</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="c1"># sum of 3 numbers</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">:</span>
+            <span class="n">_sum</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">_sum</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">res</span> <span class="o">-</span> <span class="n">target</span><span class="p">):</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">_sum</span>
+            <span class="k">if</span> <span class="n">_sum</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">_sum</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">target</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1">### 2 (pretty much the same, more compact)</span>
+<span class="k">def</span> <span class="nf">threeSumClosest</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="n">num</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">mindiff</span> <span class="o">=</span> <span class="mi">100000</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)):</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="nb">sum</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span><span class="p">[</span><span class="n">right</span><span class="p">]</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">sum</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">diff</span> <span class="o">&lt;</span> <span class="n">mindiff</span><span class="p">:</span>
+                <span class="n">mindiff</span> <span class="o">=</span> <span class="n">diff</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="nb">sum</span>
+            <span class="k">if</span> <span class="nb">sum</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">sum</span>
+            <span class="k">elif</span> <span class="nb">sum</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-989-add-to-array-form-of-integer">
+<h2>59. (LC 989) Add to Array-Form of Integer<a class="headerlink" href="#lc-989-add-to-array-form-of-integer" title="Link to this heading"></a></h2>
+<p><em>(Easy)</em>
+The array-form of an integer num is an array representing its digits in left to right order.
+For example, for num = 1321, the array form is [1,3,2,1].
+Given num, the array-form of an integer, and an integer k, return the array-form of the integer num + k.</p>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Input: num = [1,2,0,0], k = 34</div>
+<div class="line">Output: [1,2,3,4]</div>
+<div class="line">Explanation: 1200 + 34 = 1234</div>
+</div>
+<div class="line-block">
+<div class="line">Example 2:</div>
+<div class="line">Input: num = [2,7,4], k = 181</div>
+<div class="line">Output: [4,5,5]</div>
+<div class="line">Explanation: 274 + 181 = 455</div>
+</div>
+<div class="line-block">
+<div class="line">Example 3:</div>
+<div class="line">Input: num = [2,1,5], k = 806</div>
+<div class="line">Output: [1,0,2,1]</div>
+<div class="line">Explanation: 215 + 806 = 1021</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My v</span>
+<span class="k">def</span> <span class="nf">add_to_array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>   <span class="c1">#4+(181%10)=4+1=5</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">//</span> <span class="mi">10</span>   <span class="c1">#7+5//10, i.e. +carry</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span>         <span class="c1">#if there was carry on a[i], chop it off</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span>              <span class="c1">#chop of right digit from 181, leaving 18</span>
+    <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="n">num</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">181</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">add_to_array</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>  <span class="c1">#[4, 5, 5]</span>
+
+<span class="c1">### Solution 1</span>
+<span class="c1"># (operation on array)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">addToArrayForm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">num</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="n">k</span>
+        <span class="k">return</span>  <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">answer</span><span class="p">)))</span>  <span class="c1">#why not list(str(answer))</span>
+
+<span class="c1"># Using list comprehension</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">addToArrayForm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">A</span><span class="p">))</span><span class="o">+</span><span class="n">K</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">divmod(a,b)</span></code></div>
+<div class="line">Given two numbers (a=what you want to divide, b=divide by )</div>
+<div class="line">Gives as result (quotient, remainder)</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">divmod</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">(5, 1)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">addToArrayForm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">carry</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">k</span> <span class="ow">or</span> <span class="n">carry</span><span class="p">:</span>
+            <span class="n">carry</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">k</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">carry</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">carry</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">k</span> <span class="o">//=</span> <span class="mi">10</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line">E.g., Input: num = [1,2,0,0], k = 34</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">i, carry = len(num) - 1, 0</div>
+</div>
+<div class="line"># We start at the LSB, i.e. last index i of array ‘num’.</div>
+<div class="line">Here at first iteration i=4</div>
+<div class="line">Set carry to 0.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">while i &gt;= 0 or k or carry:</div>
+</div>
+<div class="line"># Because we need to carry on if k &gt; number in array.</div>
+<div class="line">1)No worries, we won’t do i=-1 lookups in array nums. carry=0 if i &lt; 0.</div>
+<div class="line">2)Strangely we set carry to be the result of normal sum of num[i] + k%10.</div>
+<div class="line">FYI k%10 is the LSB of k, here 34%10=4</div>
+<div class="line">First loop, i=3, carry = num[3] + 4 = 4</div>
+<div class="line">We set this right in the next step.</div>
+<div class="line">3)</div>
+<div class="line-block">
+<div class="line">carry, v = divmod(carry, 10)</div>
+</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">divmod</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">(0, 4)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Now carry is 0, v=4</div>
+<div class="line">FYI, if instead of 4, we had 18, then we get our carry=1 with:</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">divmod</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">(1, 8)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">4)</div>
+<div class="line-block">
+<div class="line">ans.append(v)</div>
+</div>
+<div class="line">5)</div>
+<div class="line-block">
+<div class="line">k //= 10</div>
+<div class="line">i -= 1</div>
+</div>
+<div class="line">Remove k’s LSB (34//10 = 3)</div>
+<div class="line">Move to the next index.</div>
+<div class="line">Next we will be adding 3 to num[3-1].</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 3</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">addToArrayForm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">))):</span>
+    <span class="n">k</span><span class="p">,</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">k</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span>
+    <span class="n">k</span> <span class="o">//=</span> <span class="mi">10</span>
+
+    <span class="k">return</span> <span class="n">num</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
