@@ -66,6 +66,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_3.html">Part 3 (56-65)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -448,6 +449,28 @@ NOTE, its array indexing, so the indexes are [0,1,2,3,etc]</p>
 <div class="line">-&gt; When testing:</div>
 <div class="line">without len(result): - he does only one __next__ call</div>
 <div class="line">with len(result): extracts all</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My simplified V</span>
+<span class="c1"># (Not accounting for sign, without removing leading zeros)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">loop</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">loop</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">prod</span> <span class="o">=</span> <span class="n">a2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">prod</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">prod</span>
+            <span class="n">carry</span> <span class="o">=</span> <span class="n">prod</span> <span class="o">//</span> <span class="mi">10</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">carry</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">prod</span> <span class="o">%</span> <span class="mi">10</span>  <span class="c1"># not +=</span>
+            <span class="n">index</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">n1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">n2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">))</span> <span class="c1">#[2, 6, 0, 2, 0, 0, 4, 7, 2]</span>
+</pre></div>
 </div>
 </section>
 <section id="lc-55-advancing-through-an-array">

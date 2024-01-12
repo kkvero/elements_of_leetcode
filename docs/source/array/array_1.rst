@@ -353,6 +353,29 @@ NOTE, its array indexing, so the indexes are [0,1,2,3,etc]
 | without len(result): - he does only one __next__ call
 | with len(result): extracts all
 
+::
+
+    ### My simplified V
+    # (Not accounting for sign, without removing leading zeros)
+    def f(a1, a2):
+        ans = [0] * (len(a1) + len(a2))
+        loop = len(ans)
+        for i in range(len(a2) - 1, -1, -1):
+            loop -= 1
+            index = loop
+            for j in range(len(a1) - 1, -1, -1):
+                prod = a2[i] * a1[j]
+                prod = ans[index] + prod
+                carry = prod // 10
+                ans[index - 1] += carry
+                ans[index] = prod % 10  # not +=
+                index -= 1
+        return ans
+
+    n1 = [3, 4, 5, 4, 6]
+    n2 = [7, 5, 3, 2]
+    print(f(n1, n2)) #[2, 6, 0, 2, 0, 0, 4, 7, 2]
+
 42. (LC 55) Advancing through an array
 ---------------------------------------
 | `55. Jump Game <https://leetcode.com/problems/jump-game/>`_
