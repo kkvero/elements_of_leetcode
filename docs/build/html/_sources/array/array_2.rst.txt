@@ -276,40 +276,116 @@ our values in perm get negative, and while loop works only for positives.)
 
 49. (LC 31) Compute the next permutation
 -------------------------------------------
-| 31. `Next Permutation <https://leetcode.com/problems/next-permutation/>`_
-| Medium
+31. `Next Permutation <https://leetcode.com/problems/next-permutation/>`_ (Medium)
 
-(dictionary ordering)
+| **Background**
+| **How to calculate the number of permutations**
+| P(n,k)=n!/(n-k)!
+| Where n is the number of values you have, k is the size of sample.
+| If n=3, k=3, P(3,3)=3!/(3-3)!=3!/0!=3!
+| FYI 0!=1 (0 is still a number, and there is only 1 way to arrange it).
+ 
+| **What is the next permutation**
+| e.g. You are given nums=[1,2,3]
+| Use a decision tree (note that when having a choice, we choose the smallest num 
+| (for a lexicographical permutation)):
 
+::
+
+    # Illustration
+    #   1      2       3
+    #  2 3    1 3    1  2
+    # 3   2  3   1  2    1
+
+| **Find the next perm of a given array**
+| **Solution** [:ref:`7 <ref-label>`]
+
+::
+
+    from typing import List
+    def nextPermutation(nums: List[int]) -> None:
+        n = len(nums)
+        # Could add an edge case
+        if n <= 2:
+            return nums[::-1]
+        i = next((i for i in range(n - 2, -1, -1) if nums[i] < nums[i + 1]), -1)
+        # if ~i:
+        if i != -1:
+            j = next((j for j in range(n - 1, i, -1) if nums[j] > nums[i]))
+            nums[i], nums[j] = nums[j], nums[i]
+        nums[i + 1 :] = nums[i + 1 :][::-1]
+
+| **Short example**
+| nums=[3,2,1]
+| i=-1
+| then no loop for j, just reverse nums
+| nums=[1,2,3]
+
+| **Logic** [:ref:`11, 10 <ref-label>`]
+| **In words:**
+| E.g. nums=[0,1,3,10,9,4,2,0]
+
+**1** Look for ASCENDING pattern.
+Find the position of an element before the pattern changes from ascending to descending,
+but in reverse, starting your search from index -2.
+In nums the pattern changes at i=2, value=3.
+
+**2** E.g. if nums=[3,2,1] then i=-1, then nums are in perfect descending order, we go to step 3 right away.
+if i!=-1, that is if the pattern starts somewhere 'in the middle' of the list,
+we do one more step.
+Look for a number greater than num at i, to the right of i, find the first such num.
+In [0,1,3,10,9,4,2,0], i=3, the first greater num at j is 4.
+To find j=4, we iterate (from end, till i, in reverse) -> (range(len-1, i=2, -1))
+Swap values at i and j -> swap 3 and 4.
+[0,1,4,10,9,3,2,0]
+
+**3** Reverse numbers between i and end of array (not including i itself):
+[0,1,4,0,2,3,9,10]
+
+| **In code:**
+| E.g. nums=[0,1,3,10,9,4,2,0]
+| Find where pattern changes.
+|     ``i = next((i for i in range(n - 2, -1, -1) if nums[i] < nums[i + 1]), -1)``
+| ``in range(n - 2, -1, -1)`` -> from len-2, till 0-1 to include 0, step backwards -1
+| ``next((iterator), -1)`` -> -1 is the default.
+ 
+|     ``if ~i:`` OR ``if i!=-1:``
+| ~-1 is 0, if 0==False, we don't enter the loop (i.e. if i is anything but -1 we do one more loop for j).
+
+>>> i=-1
+>>> ~i
+0
+>>> ~i == True
+False
+>>> ~i == False
+True
+
+| **Solution using std lib**
+| (Yes it will not 'turn around' correctly when given the last combo in list, but closer to what we might use in reality.)
 | :py:func:`itertools.permutations()`
 | itertools.permutations(iterable, r=None)
 | Return successive r length permutations of elements in the iterable.
 
-If r is not specified or is None, then r defaults to the length of the iterable 
-and all possible full-length permutations are generated.
- 
-If the input iterable is sorted, the output tuples will be produced in sorted order.
+::
 
-Elements are treated as unique based on their position, not on their value. 
-So if the input elements are unique, there will be no repeated values within a permutation.
+    import itertools as it
+    def next_perm(a):
+        p = it.permutations(a, len(a))
+        next(p)  # just gives current array
+        return list(next(p))  # next call gives next permutation
 
-Roughly it means:
-# permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
-# permutations(range(3)) --> 012 021 102 120 201 210
+    nums = [1, 2, 3]  # expect [1,3,2]
+    print(next_perm(nums)) #[1, 3, 2]
+    nums = [3, 2, 1]  # expect [1,2,3]
+    print(next_perm(nums))  # [3, 1, 2] #**
 
-Exactly it means:
+>>> n2=permutations([1,2,3],3)
+>>> list(n2)
+[(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)]
 
->>> import itertools
->>> itertools.permutations('ABCD', 2)
-<itertools.permutations object at 0x7fa8b147a1b0>
->>> list(_)
-[('A', 'B'), ('A', 'C'), ('A', 'D'), ('B', 'A'), ('B', 'C'), ('B', 'D'), ('C', 'A'), 
-('C', 'B'), ('C', 'D'), ('D', 'A'), ('D', 'B'), ('D', 'C')]
->>> it = itertools.permutations('ABCD', 2)
->>> it.__next__()
-('A', 'B')
->>> it.__next__()
-('A', 'C')
+>>> p=permutations([3,2,1],3)
+>>> list(p)
+[(3, 2, 1), (3, 1, 2), (2, 3, 1), (2, 1, 3), (1, 3, 2), (1, 2, 3)]
 
 50. Sample offline data
 -------------------------

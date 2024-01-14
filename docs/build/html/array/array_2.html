@@ -386,36 +386,125 @@ our values in perm get negative, and while loop works only for positives.)</p>
 </section>
 <section id="lc-31-compute-the-next-permutation">
 <h2>49. (LC 31) Compute the next permutation<a class="headerlink" href="#lc-31-compute-the-next-permutation" title="Link to this heading"></a></h2>
+<ol class="arabic simple" start="31">
+<li><p><a class="reference external" href="https://leetcode.com/problems/next-permutation/">Next Permutation</a> (Medium)</p></li>
+</ol>
 <div class="line-block">
-<div class="line">31. <a class="reference external" href="https://leetcode.com/problems/next-permutation/">Next Permutation</a></div>
-<div class="line">Medium</div>
+<div class="line"><strong>Background</strong></div>
+<div class="line"><strong>How to calculate the number of permutations</strong></div>
+<div class="line">P(n,k)=n!/(n-k)!</div>
+<div class="line">Where n is the number of values you have, k is the size of sample.</div>
+<div class="line">If n=3, k=3, P(3,3)=3!/(3-3)!=3!/0!=3!</div>
+<div class="line">FYI 0!=1 (0 is still a number, and there is only 1 way to arrange it).</div>
 </div>
-<p>(dictionary ordering)</p>
 <div class="line-block">
+<div class="line"><strong>What is the next permutation</strong></div>
+<div class="line">e.g. You are given nums=[1,2,3]</div>
+<div class="line">Use a decision tree (note that when having a choice, we choose the smallest num</div>
+<div class="line">(for a lexicographical permutation)):</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Illustration</span>
+<span class="c1">#   1      2       3</span>
+<span class="c1">#  2 3    1 3    1  2</span>
+<span class="c1"># 3   2  3   1  2    1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Find the next perm of a given array</strong></div>
+<div class="line"><strong>Solution</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">7</span></a>]</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="k">def</span> <span class="nf">nextPermutation</span><span class="p">(</span><span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="c1"># Could add an edge case</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">nums</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># if ~i:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Short example</strong></div>
+<div class="line">nums=[3,2,1]</div>
+<div class="line">i=-1</div>
+<div class="line">then no loop for j, just reverse nums</div>
+<div class="line">nums=[1,2,3]</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Logic</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">11, 10</span></a>]</div>
+<div class="line"><strong>In words:</strong></div>
+<div class="line">E.g. nums=[0,1,3,10,9,4,2,0]</div>
+</div>
+<p><strong>1</strong> Look for ASCENDING pattern.
+Find the position of an element before the pattern changes from ascending to descending,
+but in reverse, starting your search from index -2.
+In nums the pattern changes at i=2, value=3.</p>
+<p><strong>2</strong> E.g. if nums=[3,2,1] then i=-1, then nums are in perfect descending order, we go to step 3 right away.
+if i!=-1, that is if the pattern starts somewhere ‘in the middle’ of the list,
+we do one more step.
+Look for a number greater than num at i, to the right of i, find the first such num.
+In [0,1,3,10,9,4,2,0], i=3, the first greater num at j is 4.
+To find j=4, we iterate (from end, till i, in reverse) -&gt; (range(len-1, i=2, -1))
+Swap values at i and j -&gt; swap 3 and 4.
+[0,1,4,10,9,3,2,0]</p>
+<p><strong>3</strong> Reverse numbers between i and end of array (not including i itself):
+[0,1,4,0,2,3,9,10]</p>
+<div class="line-block">
+<div class="line"><strong>In code:</strong></div>
+<div class="line">E.g. nums=[0,1,3,10,9,4,2,0]</div>
+<div class="line">Find where pattern changes.</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">next((i</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(n</span> <span class="pre">-</span> <span class="pre">2,</span> <span class="pre">-1,</span> <span class="pre">-1)</span> <span class="pre">if</span> <span class="pre">nums[i]</span> <span class="pre">&lt;</span> <span class="pre">nums[i</span> <span class="pre">+</span> <span class="pre">1]),</span> <span class="pre">-1)</span></code></div>
+</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">range(n</span> <span class="pre">-</span> <span class="pre">2,</span> <span class="pre">-1,</span> <span class="pre">-1)</span></code> -&gt; from len-2, till 0-1 to include 0, step backwards -1</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">next((iterator),</span> <span class="pre">-1)</span></code> -&gt; -1 is the default.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">~i:</span></code> OR <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">i!=-1:</span></code></div>
+</div>
+<div class="line">~-1 is 0, if 0==False, we don’t enter the loop (i.e. if i is anything but -1 we do one more loop for j).</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="o">=-</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="n">i</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="n">i</span> <span class="o">==</span> <span class="kc">True</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="n">i</span> <span class="o">==</span> <span class="kc">False</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution using std lib</strong></div>
+<div class="line">(Yes it will not ‘turn around’ correctly when given the last combo in list, but closer to what we might use in reality.)</div>
 <div class="line"><a class="reference external" href="https://docs.python.org/3/library/itertools.html#itertools.permutations" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">itertools.permutations()</span></code></a></div>
 <div class="line">itertools.permutations(iterable, r=None)</div>
 <div class="line">Return successive r length permutations of elements in the iterable.</div>
 </div>
-<p>If r is not specified or is None, then r defaults to the length of the iterable
-and all possible full-length permutations are generated.</p>
-<p>If the input iterable is sorted, the output tuples will be produced in sorted order.</p>
-<p>Elements are treated as unique based on their position, not on their value.
-So if the input elements are unique, there will be no repeated values within a permutation.</p>
-<p>Roughly it means:
-# permutations(‘ABCD’, 2) –&gt; AB AC AD BA BC BD CA CB CD DA DB DC
-# permutations(range(3)) –&gt; 012 021 102 120 201 210</p>
-<p>Exactly it means:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="s1">&#39;ABCD&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">&lt;itertools.permutations object at 0x7fa8b147a1b0&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
-<span class="go">[(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;C&#39;), (&#39;A&#39;, &#39;D&#39;), (&#39;B&#39;, &#39;A&#39;), (&#39;B&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;D&#39;), (&#39;C&#39;, &#39;A&#39;),</span>
-<span class="go">(&#39;C&#39;, &#39;B&#39;), (&#39;C&#39;, &#39;D&#39;), (&#39;D&#39;, &#39;A&#39;), (&#39;D&#39;, &#39;B&#39;), (&#39;D&#39;, &#39;C&#39;)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="s1">&#39;ABCD&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
-<span class="go">(&#39;A&#39;, &#39;B&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
-<span class="go">(&#39;A&#39;, &#39;C&#39;)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">it</span>
+<span class="k">def</span> <span class="nf">next_perm</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="nb">next</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># just gives current array</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>  <span class="c1"># next call gives next permutation</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># expect [1,3,2]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">next_perm</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="c1">#[1, 3, 2]</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># expect [1,2,3]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">next_perm</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>  <span class="c1"># [3, 1, 2] #**</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n2</span><span class="o">=</span><span class="n">permutations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">n2</span><span class="p">)</span>
+<span class="go">[(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">=</span><span class="n">permutations</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="go">[(3, 2, 1), (3, 1, 2), (2, 3, 1), (2, 1, 3), (1, 3, 2), (1, 2, 3)]</span>
 </pre></div>
 </div>
 </section>

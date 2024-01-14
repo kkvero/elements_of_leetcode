@@ -14,3 +14,4 @@ Acknowledgements and References
 8. `Top 100 LeetCode Questions <https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-100-LeetCode-Questions-to-Save-Your-Time-OaM1orEU>`_.
 9. `Leetcode Patterns <https://seanprashad.com/leetcode-patterns/>`_.
 10. `Neetcode coding practice <https://neetcode.io>`_.
+11. `Sai Anish Malla YouTube Channel <https://www.youtube.com/@saianishmalla2646>`_.
