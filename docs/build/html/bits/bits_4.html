@@ -62,7 +62,9 @@
 <p class="caption" role="heading"><span class="caption-text">Array:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -341,9 +343,31 @@ For example, 21 written in binary is 10101, which has 3 set bits.</p>
 <div class="line">5 numbers have a prime number of set bits.</div>
 </div>
 <p>Also recall that 1 is not a prime, 2 is the smallest prime.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (sort of my version)</span>
-<span class="c1"># (In this version we count the number of set bits in the main function.</span>
-<span class="c1"># In the helper function we identify if that number is prime.)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V3</span>
+<span class="sd">&#39;&#39;&#39;One function for one task.&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">prime_num_of_bits</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">count_bits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">.</span><span class="n">bit_count</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">bits</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">bits</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">bits</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">bits</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">bits</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">bits</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">count_bits</span><span class="p">(</span><span class="n">x</span><span class="p">))]</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">prime_num_of_bits</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>  <span class="c1"># 5</span>
+
+<span class="c1">### Solution 1</span>
+<span class="sd">&#39;&#39;&#39;In this version we count the number of set bits in the main function.</span>
+<span class="sd">In the helper function we identify if that number is prime.&#39;&#39;&#39;</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
@@ -363,8 +387,8 @@ For example, 21 written in binary is 10101, which has 3 set bits.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">count_set_bits</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span> <span class="c1">#5</span>
 
 <span class="c1">### Solution 2</span>
-<span class="c1"># (In this version the helper function both counts the set bits using bit operators.</span>
-<span class="c1"># The main function only makes a list of valid results, calling the helper function.)</span>
+<span class="sd">&#39;&#39;&#39;In this version the helper function both counts the set bits using bit operators.</span>
+<span class="sd">The main function only makes a list of valid results, calling the helper function.&#39;&#39;&#39;</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="k">def</span> <span class="nf">f17</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;number of set bits is a prime number&#39;&#39;&#39;</span>

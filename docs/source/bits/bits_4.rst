@@ -229,9 +229,31 @@ For example, 21 written in binary is 10101, which has 3 set bits.
 
 Also recall that 1 is not a prime, 2 is the smallest prime. ::
 
-    ### Solution 1 (sort of my version)
-    # (In this version we count the number of set bits in the main function.
-    # In the helper function we identify if that number is prime.)
+    ### V3
+    '''One function for one task.'''
+    import math
+    def prime_num_of_bits(l, r):
+        def count_bits(n):
+            return n.bit_count()
+
+        def is_prime(bits):
+            if bits == 1 or bits == 0:
+                return False
+            if bits == 2:
+                return True
+            for i in range(2, int(math.sqrt(bits)) + 1):
+                if bits % i == 0:
+                    return False
+            return True
+
+        ans = [x for x in range(l, r + 1) if is_prime(count_bits(x))]
+        return len(ans)
+
+    print(prime_num_of_bits(10, 15))  # 5
+
+    ### Solution 1
+    '''In this version we count the number of set bits in the main function.
+    In the helper function we identify if that number is prime.'''
     import math
     def is_prime(n):
         if n==1:
@@ -251,8 +273,8 @@ Also recall that 1 is not a prime, 2 is the smallest prime. ::
     print(count_set_bits(10, 15)) #5
 
     ### Solution 2
-    # (In this version the helper function both counts the set bits using bit operators.
-    # The main function only makes a list of valid results, calling the helper function.)
+    '''In this version the helper function both counts the set bits using bit operators.
+    The main function only makes a list of valid results, calling the helper function.'''
     import math
     def f17(x):
         '''number of set bits is a prime number'''
