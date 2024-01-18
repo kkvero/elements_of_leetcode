@@ -236,6 +236,18 @@ E.g.:
 >>> bin(48)
 '0b110000'
 
+::
+
+    def cnt_bits(n):
+        cnt = 0
+        while n:
+            n = n & (n - 1)
+            cnt += 1
+        return cnt
+
+    print(cnt_bits(0b011101)) #4
+    print(cnt_bits(0b01100001)) #3
+
 +, - 1
 ^^^^^^
 ::

@@ -77,6 +77,13 @@
 <li class="toctree-l1"><a class="reference internal" href="bits_3.html">Part 3 (20-29)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bits_4.html">Part 4 (30-36)</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
@@ -369,6 +376,17 @@ E.g.:</p>
 <span class="go">48</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
 <span class="go">&#39;0b110000&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cnt_bits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">cnt</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cnt_bits</span><span class="p">(</span><span class="mb">0b011101</span><span class="p">))</span> <span class="c1">#4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cnt_bits</span><span class="p">(</span><span class="mb">0b01100001</span><span class="p">))</span> <span class="c1">#3</span>
 </pre></div>
 </div>
 </section>
