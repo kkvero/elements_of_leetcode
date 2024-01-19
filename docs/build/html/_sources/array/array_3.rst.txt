@@ -315,10 +315,166 @@ Given num, the array-form of an integer, and an integer k, return the array-form
 
         return num
 
+60. (LC 419) Battleships in a Board
+-------------------------------------
+`419. Battleships in a Board <https://leetcode.com/problems/battleships-in-a-board/>`_
+::
 
+    class Solution(object):
+        def countBattleships(self, board):
+            """
+            :type board: List[List[str]]
+            :rtype: int
+            """
+            h = len(board)
+            w = len(board[0]) if h else 0
 
+            ans = 0
+            for x in range(h):
+                for y in range(w):
+                    if board[x][y] == 'X':
+                        if x > 0 and board[x - 1][y] == 'X':  #if there is a ship above
+                            continue
+                        if y > 0 and board[x][y - 1] == 'X':  #if there is a sip to the left
+                            continue
+                        ans += 1
+            return ans
 
+| Note, 
+| h (height) is x (first index in matrix)
 
+61. (LC 121) Best Time to Buy and Sell Stock
+------------------------------------------------
+`121. Best Time to Buy and Sell Stock <https://leetcode.com/problems/best-time-to-buy-and-sell-stock>`_
+*(Easy)*
+
+In short: buy and sell once, return max profit.
+
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+You want to maximize your profit by choosing a single day to buy one stock and 
+choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. 
+If you cannot achieve any profit, return 0.
+
+Example 1:
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+
+Example 2:
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+
+::
+
+    ### My V
+    def buy_sell(a):
+        max_pofit, min_price = 0, a[0]
+        for p in a:
+            min_price = min(min_price, p)
+            max_pofit = max(max_pofit, p - min_price)
+        return max_pofit
+
+    ### Solution 1
+    class Solution(object):
+        def maxProfit(self, prices):
+            if len(prices) == 0:
+                return 0
+            ### NOTE : we define 1st minPrice as prices[0]
+            minPrice = prices[0]
+            maxProfit = 0
+            ### NOTE : we only loop prices ONCE
+            for p in prices:
+                # only if p < minPrice, we get minPrice
+                if p < minPrice:
+                    minPrice = p
+                ### NOTE : only if p - minPrice > maxProfit, we get maxProfit
+                elif p - minPrice > maxProfit:
+                    maxProfit = p - minPrice
+            return maxProfit
+
+    ### Other Solutions
+    class Solution:
+        def maxProfit(self, prices: List[int]) -> int:
+            ans, mi = 0, inf
+            for v in prices:
+                ans = max(ans, v - mi)
+                mi = min(mi, v)
+            return ans
+
+    class Solution(object):
+        # @param prices, a list of integers
+        # @return an integer
+        def maxProfit(self, prices):
+            max_profit, min_price = 0, float("inf")
+            for price in prices:
+                min_price = min(min_price, price)
+                max_profit = max(max_profit, price - min_price)
+            return max_profit
+
+62 (LC 309) Best Time to Buy and Sell Stock with Cooldown
+------------------------------------------------------------
+`309. Best Time to Buy and Sell Stock with Cooldown 
+<https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/>`_
+*(Medium)*
+::
+
+    # 1
+    class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        sell = 0
+        hold = -math.inf
+        prev = 0
+
+        for price in prices:
+        cache = sell
+        sell = max(sell, hold + price)
+        hold = max(hold, prev - price)
+        prev = cache
+
+        return sell
+
+    # 2
+    class Solution:
+        def maxProfit(self, prices: List[int]) -> int:
+            f, f0, f1 = 0, 0, -prices[0]
+            for x in prices[1:]:
+                f, f0, f1 = f0, max(f0, f1 + x), max(f1, f - x)
+            return f0
+
+# 3 Dynamic programming, O(n) [:ref:`10 <ref-label>`]::
+
+    from typing import List
+
+    def maxProfit(prices: List[int]) -> int:
+        # State: Buying or Selling?
+        # If Buy -> i + 1
+        # If Sell -> i + 2   # +2 because +cooldown day
+
+        dp = {}  # key=(i, buying) val=max_profit, dp implements cashing
+
+        def dfs(i, buying):
+            if i >= len(prices):
+                return 0
+            if (i, buying) in dp:
+                return dp[(i, buying)]
+
+            cooldown = dfs(i + 1, buying)
+            if buying:
+                buy = dfs(i + 1, not buying) - prices[i]
+                dp[(i, buying)] = max(buy, cooldown)
+            else:
+                sell = dfs(i + 2, not buying) + prices[i]
+                dp[(i, buying)] = max(sell, cooldown)
+            return dp[(i, buying)]
+
+        return dfs(0, True)
+
+    prices = [1, 2, 3, 0, 2]
+    print(maxProfit(prices))
 
 
 

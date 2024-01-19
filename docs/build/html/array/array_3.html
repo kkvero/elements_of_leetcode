@@ -60,6 +60,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-15-3sum">57. (LC 15) 3Sum</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-16-3sum-closest">58. (LC 16) 3Sum Closest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-989-add-to-array-form-of-integer">59. (LC 989) Add to Array-Form of Integer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-419-battleships-in-a-board">60. (LC 419) Battleships in a Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-121-best-time-to-buy-and-sell-stock">61. (LC 121) Best Time to Buy and Sell Stock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-309-best-time-to-buy-and-sell-stock-with-cooldown">62 (LC 309) Best Time to Buy and Sell Stock with Cooldown</a></li>
 </ul>
 </li>
 </ul>
@@ -428,6 +431,161 @@ Given num, the array-form of an integer, and an integer k, return the array-form
     <span class="n">k</span> <span class="o">//=</span> <span class="mi">10</span>
 
     <span class="k">return</span> <span class="n">num</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-419-battleships-in-a-board">
+<h2>60. (LC 419) Battleships in a Board<a class="headerlink" href="#lc-419-battleships-in-a-board" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/battleships-in-a-board/">419. Battleships in a Board</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">countBattleships</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type board: List[List[str]]</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">h</span> <span class="k">else</span> <span class="mi">0</span>
+
+        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">board</span><span class="p">[</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span>  <span class="c1">#if there is a ship above</span>
+                        <span class="k">continue</span>
+                    <span class="k">if</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">board</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span>  <span class="c1">#if there is a sip to the left</span>
+                        <span class="k">continue</span>
+                    <span class="n">ans</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Note,</div>
+<div class="line">h (height) is x (first index in matrix)</div>
+</div>
+</section>
+<section id="lc-121-best-time-to-buy-and-sell-stock">
+<h2>61. (LC 121) Best Time to Buy and Sell Stock<a class="headerlink" href="#lc-121-best-time-to-buy-and-sell-stock" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock">121. Best Time to Buy and Sell Stock</a>
+<em>(Easy)</em></p>
+<p>In short: buy and sell once, return max profit.</p>
+<p>You are given an array prices where prices[i] is the price of a given stock on the ith day.
+You want to maximize your profit by choosing a single day to buy one stock and
+choosing a different day in the future to sell that stock.</p>
+<p>Return the maximum profit you can achieve from this transaction.
+If you cannot achieve any profit, return 0.</p>
+<p>Example 1:
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.</p>
+<p>Example 2:
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">buy_sell</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">max_pofit</span><span class="p">,</span> <span class="n">min_price</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="n">min_price</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_price</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">max_pofit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_pofit</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="n">min_price</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">max_pofit</span>
+
+<span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1">### NOTE : we define 1st minPrice as prices[0]</span>
+        <span class="n">minPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">maxProfit</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1">### NOTE : we only loop prices ONCE</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="c1"># only if p &lt; minPrice, we get minPrice</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">minPrice</span><span class="p">:</span>
+                <span class="n">minPrice</span> <span class="o">=</span> <span class="n">p</span>
+            <span class="c1">### NOTE : only if p - minPrice &gt; maxProfit, we get maxProfit</span>
+            <span class="k">elif</span> <span class="n">p</span> <span class="o">-</span> <span class="n">minPrice</span> <span class="o">&gt;</span> <span class="n">maxProfit</span><span class="p">:</span>
+                <span class="n">maxProfit</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="n">minPrice</span>
+        <span class="k">return</span> <span class="n">maxProfit</span>
+
+<span class="c1">### Other Solutions</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">ans</span><span class="p">,</span> <span class="n">mi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">inf</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">v</span> <span class="o">-</span> <span class="n">mi</span><span class="p">)</span>
+            <span class="n">mi</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">mi</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1"># @param prices, a list of integers</span>
+    <span class="c1"># @return an integer</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">):</span>
+        <span class="n">max_profit</span><span class="p">,</span> <span class="n">min_price</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">min_price</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_price</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+            <span class="n">max_profit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_profit</span><span class="p">,</span> <span class="n">price</span> <span class="o">-</span> <span class="n">min_price</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_profit</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-309-best-time-to-buy-and-sell-stock-with-cooldown">
+<h2>62 (LC 309) Best Time to Buy and Sell Stock with Cooldown<a class="headerlink" href="#lc-309-best-time-to-buy-and-sell-stock-with-cooldown" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/">309. Best Time to Buy and Sell Stock with Cooldown</a>
+<em>(Medium)</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">sell</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">hold</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">sell</span>
+    <span class="n">sell</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sell</span><span class="p">,</span> <span class="n">hold</span> <span class="o">+</span> <span class="n">price</span><span class="p">)</span>
+    <span class="n">hold</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">hold</span><span class="p">,</span> <span class="n">prev</span> <span class="o">-</span> <span class="n">price</span><span class="p">)</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">cache</span>
+
+    <span class="k">return</span> <span class="n">sell</span>
+
+<span class="c1"># 2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">f1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">f</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">f0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span> <span class="n">f1</span> <span class="o">+</span> <span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f0</span>
+</pre></div>
+</div>
+<p># 3 Dynamic programming, O(n) [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="c1"># State: Buying or Selling?</span>
+    <span class="c1"># If Buy -&gt; i + 1</span>
+    <span class="c1"># If Sell -&gt; i + 2   # +2 because +cooldown day</span>
+
+    <span class="n">dp</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># key=(i, buying) val=max_profit, dp implements cashing</span>
+
+    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">buying</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">buying</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dp</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">buying</span><span class="p">)]</span>
+
+        <span class="n">cooldown</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">buying</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">buying</span><span class="p">:</span>
+            <span class="n">buy</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">not</span> <span class="n">buying</span><span class="p">)</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">dp</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">buying</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">buy</span><span class="p">,</span> <span class="n">cooldown</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sell</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="ow">not</span> <span class="n">buying</span><span class="p">)</span> <span class="o">+</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">dp</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">buying</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sell</span><span class="p">,</span> <span class="n">cooldown</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dp</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">buying</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">dfs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">maxProfit</span><span class="p">(</span><span class="n">prices</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>
