@@ -896,7 +896,14 @@ Each entry is the sum of adjacent numbers above.
 
 Write a program which takes as input a nonnegative integer n and returns the first 
 n rows of Pascal's triangle.
-Hint: Write the given fact as an equation. ::
+Hint: Write the given fact as an equation. 
+
+| Key points:
+| -Initiate the triangle with all 1s
+| [[1], [1, 1], [1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1, 1]]
+| -2 loops (in range(2,n), in range(1,i))
+
+::
 
     ### Solution
     Space and time O(n**2)
@@ -954,3 +961,19 @@ Initializes triangle:
 | 1,2,1 
 | result[i-1][j-1] + result[i-1][j]
 | row above, index j-1 (+) row above, index j
+
+::
+
+    ### My V3
+    def pasca(n):
+        ans = [[1], [1, 1]]
+        for i in range(2, n):
+            ans.append([0] * (i + 1))
+            for j in range(0, i + 1):
+                if j == 0 or j == i:
+                    ans[i][j] = 1
+                else:
+                    ans[i][j] = ans[i - 1][j - 1] + ans[i - 1][j]
+        return ans
+
+    print(pasca(5)) #[[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]
