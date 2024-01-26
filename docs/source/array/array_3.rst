@@ -415,7 +415,7 @@ Explanation: In this case, no transactions are done and the max profit = 0.
                 max_profit = max(max_profit, price - min_price)
             return max_profit
 
-62 (LC 309) Best Time to Buy and Sell Stock with Cooldown
+62. (LC 309) Best Time to Buy and Sell Stock with Cooldown
 ------------------------------------------------------------
 `309. Best Time to Buy and Sell Stock with Cooldown 
 <https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/>`_
@@ -476,9 +476,208 @@ Explanation: In this case, no transactions are done and the max profit = 0.
     prices = [1, 2, 3, 0, 2]
     print(maxProfit(prices))
 
+63. (LC 122) Best Time to Buy and Sell Stock II
+-------------------------------------------------
+`122. Best Time to Buy and Sell Stock II
+<https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/>`_
+*(Medium)*
 
+**Solution 1** [:ref:`2 <ref-label>`] ::
 
+    ### Solution 1
+    from typing import List
+    import itertools
+    def maxProfit(prices: List[int]) -> int:
+        return sum(max(0, b - a) for a, b in itertools.pairwise(prices))
 
+    prices = [7,1,5,3,6,4]
+    print(maxProfit(prices)) # 7
 
+| # tools
+| ``itertools.pairwise(iterable)``
+| Roughly equivalent to:
+| pairwise('ABCDEFG') --> AB BC CD DE EF FG
 
+**Solution 2** [:ref:`10 <ref-label>`] ::
+
+    ### Solution 2
+    class Solution:
+        def maxProfit(self, prices: List[int]) -> int:
+            max_profit = 0
+            for i in range(1, len(prices)):
+                if prices[i] > prices[i-1]:
+                    max_profit += prices[i] - prices[i-1]
+            return max_profit
+
+64. (LC 1014) Best Sightseeing Pair
+-------------------------------------
+`1014. Best Sightseeing Pair <https://leetcode.com/problems/best-sightseeing-pair/>`_
+*(Medium)*
+
+| # In short
+| Given an array, return the highest 
+| values[i] + values[j] + i - j
+ 
+| # Keys
+| i - j is the distance between the sightseeing spots.
+
+::
+
+    ### Solution 1
+    class Solution:
+        def maxScoreSightseeingPair(self, A: List[int]) -> int:
+            n = len(A)
+            pre = A[0] + 0
+            res = 0
+            for i in range(1, n):
+                res = max(res, pre + A[i] - i)
+                pre = max(pre, A[i] + i)
+            return res
+
+    # The same (breaking down the steps)
+    from typing import List
+    def f(A: List[int]) -> int:
+        n = len(A)
+        pre = A[0] + 0
+        res = 0
+        for i in range(1, n):
+            cur_res = pre + A[i] - i
+            res = max(res, cur_res)
+            possible_pre = A[i] + i
+            pre = max(pre, possible_pre)
+        return res 
+
+| # Explained solution 1       
+| ``res = max(res, pre + A[i] - i)``
+| Final response, check if we found a greater 
+| (previous spot + current spot - distance between them)
+ 
+| # - i, + i confusion
+| it might seem unfair that in 
+| ``res = max(res, pre + A[i] - i)``
+| We each time subtract the full index, not the net distance (i - j).
+| But actually it is because in the second line:
+| ``pre = max(pre, A[i] + i)``
+| A[i] + i
+| + i means the value at i will carry with it its distance.
+| So if our new previous = value + 3 (it is at index 3).
+| Then the next time we calculate response, e.g. at i=4, 
+| max(res, value+3 - 4)
+| We see that if they are only 1 place apart, we end up subtracting only that 1, not 4.
+| ==>previous CARRIES its distance with its value.
+
+| E.g. A = [2,4,10]
+| pre=A[0]=2, res=0
+| i=1
+| res=max(0, 2+4-1), res=5
+| pre=max(2, 4+1), pre=5
+| i=2
+| res=max(5, 5+10-2), res=13 (so really 5+10-2=4+10-1)
+| pre=max(5, 10+2), pre=12  ==>10 carries the weight of where it is at, i.e. index 2
+
+65. (LC 605) Can Place Flowers
+---------------------------------
+| *(Easy)*
+| You have a long flowerbed in which some of the plots are planted, and some are not. 
+| However, flowers cannot be planted in adjacent plots.
+
+Given an integer array flowerbed containing 0's and 1's, where 0 means empty and 1 means not empty, 
+and an integer n, return true if n new flowers can be planted in the flowerbed without 
+violating the no-adjacent-flowers rule and false otherwise.
+
+| Example 1:
+| Input: flowerbed = [1,0,0,0,1], n = 1
+| Output: true
+ 
+| Example 2:
+| Input: flowerbed = [1,0,0,0,1], n = 2
+| Output: false
+
+::
+
+    ### My V
+    def can_plant(a, n):
+        a = [0] + a + [0]
+        cnt = 0
+        for i in range(1, len(a) - 1):
+            if not a[i] & 1:
+                if a[i - 1] == 0 and a[i + 1] == 0:
+                    cnt += 1
+                    a[i] = 1
+        return cnt >= n
+
+    flowerbed = [1, 0, 0, 0, 1]
+    print(can_plant(flowerbed, 1))  # True
+    print(can_plant(flowerbed, 2))  # False
+
+    ### Solution 1
+    class Solution:
+        def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+            flowerbed = [0] + flowerbed + [0]
+            for i in range(1, len(flowerbed) - 1):
+                if sum(flowerbed[i - 1 : i + 2]) == 0:
+                    flowerbed[i] = 1
+                    n -= 1
+            return n <= 0
+
+| ### Explained
+| (See explanation for solution 2 in addition.)
+| #Here we check if values at [i=1, i=2, i=3] all add up to 0, none is set to 1 in one go.
+| #We also account for the fact that we may have A = [0,0,1,0,1], 
+| so we may plant at i=0.
+| Because we do:
+|     flowerbed = [0] + flowerbed + [0]
+| We start the loop for i in range(1..), but we actually start at original i=0, 
+| which is now i=1, because we prepended with\appended to array 0s.
+
+::
+
+    ### Solution 2
+    class Solution(object):
+        def canPlaceFlowers(self, flowerbed, n):
+            """
+            :type flowerbed: List[int]
+            :type n: int
+            :rtype: bool
+            """
+            for i, num in enumerate(flowerbed):
+                if num == 1: continue
+                if i > 0 and flowerbed[i - 1] == 1: continue
+                if i < len(flowerbed) - 1 and flowerbed[i + 1] == 1: continue
+                flowerbed[i] = 1
+                n -= 1
+            return n <= 0
+
+| ### Explained
+| 1) If num at i is 1, continue
+| 2) Check adjacent values to the left and right of the current i, see if they are 1,
+| then we cannot plant.
+ 
+| if i > 0 and flowerbed[i - 1] == 1: continue
+| # If it is not the first element (at i=0), check that element to the left (i-1)
+| is not 1. Else continue the loop.
+ 
+| if i < len(flowerbed) - 1 and flowerbed[i + 1] == 1: continue
+| # If we are looking not at the last element of the array (len(A)-1),
+| (then it has no elements to the right)
+| then check if element to the right (at i+1) is 1. 
+
+:: 
+
+    ### Solution 3
+    class Solution(object):
+        def canPlaceFlowers(self, flowerbed, n):
+            """
+            :type flowerbed: List[int]
+            :type n: int
+            :rtype: bool
+            """
+            flowerbed = [0] + flowerbed + [0]
+            N = len(flowerbed)
+            res = 0
+            for i in range(1, N - 1):
+                if flowerbed[i - 1] == flowerbed[i] == flowerbed[i + 1] == 0:
+                    res += 1
+                    flowerbed[i] = 1
+            return res >= n
 

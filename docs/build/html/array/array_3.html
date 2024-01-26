@@ -62,7 +62,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-989-add-to-array-form-of-integer">59. (LC 989) Add to Array-Form of Integer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-419-battleships-in-a-board">60. (LC 419) Battleships in a Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-121-best-time-to-buy-and-sell-stock">61. (LC 121) Best Time to Buy and Sell Stock</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lc-309-best-time-to-buy-and-sell-stock-with-cooldown">62 (LC 309) Best Time to Buy and Sell Stock with Cooldown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-309-best-time-to-buy-and-sell-stock-with-cooldown">62. (LC 309) Best Time to Buy and Sell Stock with Cooldown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-122-best-time-to-buy-and-sell-stock-ii">63. (LC 122) Best Time to Buy and Sell Stock II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-1014-best-sightseeing-pair">64. (LC 1014) Best Sightseeing Pair</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-605-can-place-flowers">65. (LC 605) Can Place Flowers</a></li>
 </ul>
 </li>
 </ul>
@@ -530,7 +533,7 @@ Explanation: In this case, no transactions are done and the max profit = 0.</p>
 </div>
 </section>
 <section id="lc-309-best-time-to-buy-and-sell-stock-with-cooldown">
-<h2>62 (LC 309) Best Time to Buy and Sell Stock with Cooldown<a class="headerlink" href="#lc-309-best-time-to-buy-and-sell-stock-with-cooldown" title="Link to this heading"></a></h2>
+<h2>62. (LC 309) Best Time to Buy and Sell Stock with Cooldown<a class="headerlink" href="#lc-309-best-time-to-buy-and-sell-stock-with-cooldown" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/">309. Best Time to Buy and Sell Stock with Cooldown</a>
 <em>(Medium)</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1</span>
@@ -586,6 +589,221 @@ Explanation: In this case, no transactions are done and the max profit = 0.</p>
 
 <span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">maxProfit</span><span class="p">(</span><span class="n">prices</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-122-best-time-to-buy-and-sell-stock-ii">
+<h2>63. (LC 122) Best Time to Buy and Sell Stock II<a class="headerlink" href="#lc-122-best-time-to-buy-and-sell-stock-ii" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">122. Best Time to Buy and Sell Stock II</a>
+<em>(Medium)</em></p>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">pairwise</span><span class="p">(</span><span class="n">prices</span><span class="p">))</span>
+
+<span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">maxProfit</span><span class="p">(</span><span class="n">prices</span><span class="p">))</span> <span class="c1"># 7</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># tools</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">itertools.pairwise(iterable)</span></code></div>
+<div class="line">Roughly equivalent to:</div>
+<div class="line">pairwise(‘ABCDEFG’) –&gt; AB BC CD DE EF FG</div>
+</div>
+<p><strong>Solution 2</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">max_profit</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">max_profit</span> <span class="o">+=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">max_profit</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-1014-best-sightseeing-pair">
+<h2>64. (LC 1014) Best Sightseeing Pair<a class="headerlink" href="#lc-1014-best-sightseeing-pair" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/best-sightseeing-pair/">1014. Best Sightseeing Pair</a>
+<em>(Medium)</em></p>
+<div class="line-block">
+<div class="line"># In short</div>
+<div class="line">Given an array, return the highest</div>
+<div class="line">values[i] + values[j] + i - j</div>
+</div>
+<div class="line-block">
+<div class="line"># Keys</div>
+<div class="line">i - j is the distance between the sightseeing spots.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxScoreSightseeingPair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">0</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">pre</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">pre</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1"># The same (breaking down the steps)</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">pre</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">0</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">cur_res</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">i</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">cur_res</span><span class="p">)</span>
+        <span class="n">possible_pre</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">possible_pre</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># Explained solution 1</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">res</span> <span class="pre">=</span> <span class="pre">max(res,</span> <span class="pre">pre</span> <span class="pre">+</span> <span class="pre">A[i]</span> <span class="pre">-</span> <span class="pre">i)</span></code></div>
+<div class="line">Final response, check if we found a greater</div>
+<div class="line">(previous spot + current spot - distance between them)</div>
+</div>
+<div class="line-block">
+<div class="line"># - i, + i confusion</div>
+<div class="line">it might seem unfair that in</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">res</span> <span class="pre">=</span> <span class="pre">max(res,</span> <span class="pre">pre</span> <span class="pre">+</span> <span class="pre">A[i]</span> <span class="pre">-</span> <span class="pre">i)</span></code></div>
+<div class="line">We each time subtract the full index, not the net distance (i - j).</div>
+<div class="line">But actually it is because in the second line:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">pre</span> <span class="pre">=</span> <span class="pre">max(pre,</span> <span class="pre">A[i]</span> <span class="pre">+</span> <span class="pre">i)</span></code></div>
+<div class="line">A[i] + i</div>
+<div class="line">+ i means the value at i will carry with it its distance.</div>
+<div class="line">So if our new previous = value + 3 (it is at index 3).</div>
+<div class="line">Then the next time we calculate response, e.g. at i=4,</div>
+<div class="line">max(res, value+3 - 4)</div>
+<div class="line">We see that if they are only 1 place apart, we end up subtracting only that 1, not 4.</div>
+<div class="line">==&gt;previous CARRIES its distance with its value.</div>
+</div>
+<div class="line-block">
+<div class="line">E.g. A = [2,4,10]</div>
+<div class="line">pre=A[0]=2, res=0</div>
+<div class="line">i=1</div>
+<div class="line">res=max(0, 2+4-1), res=5</div>
+<div class="line">pre=max(2, 4+1), pre=5</div>
+<div class="line">i=2</div>
+<div class="line">res=max(5, 5+10-2), res=13 (so really 5+10-2=4+10-1)</div>
+<div class="line">pre=max(5, 10+2), pre=12  ==&gt;10 carries the weight of where it is at, i.e. index 2</div>
+</div>
+</section>
+<section id="lc-605-can-place-flowers">
+<h2>65. (LC 605) Can Place Flowers<a class="headerlink" href="#lc-605-can-place-flowers" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><em>(Easy)</em></div>
+<div class="line">You have a long flowerbed in which some of the plots are planted, and some are not.</div>
+<div class="line">However, flowers cannot be planted in adjacent plots.</div>
+</div>
+<p>Given an integer array flowerbed containing 0’s and 1’s, where 0 means empty and 1 means not empty,
+and an integer n, return true if n new flowers can be planted in the flowerbed without
+violating the no-adjacent-flowers rule and false otherwise.</p>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Input: flowerbed = [1,0,0,0,1], n = 1</div>
+<div class="line">Output: true</div>
+</div>
+<div class="line-block">
+<div class="line">Example 2:</div>
+<div class="line">Input: flowerbed = [1,0,0,0,1], n = 2</div>
+<div class="line">Output: false</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">can_plant</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="n">n</span>
+
+<span class="n">flowerbed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">can_plant</span><span class="p">(</span><span class="n">flowerbed</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">can_plant</span><span class="p">(</span><span class="n">flowerbed</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># False</span>
+
+<span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">canPlaceFlowers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flowerbed</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">flowerbed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">flowerbed</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">flowerbed</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">### Explained</div>
+<div class="line">(See explanation for solution 2 in addition.)</div>
+<div class="line">#Here we check if values at [i=1, i=2, i=3] all add up to 0, none is set to 1 in one go.</div>
+<div class="line">#We also account for the fact that we may have A = [0,0,1,0,1],</div>
+<div class="line">so we may plant at i=0.</div>
+<div class="line">Because we do:</div>
+<div class="line-block">
+<div class="line">flowerbed = [0] + flowerbed + [0]</div>
+</div>
+<div class="line">We start the loop for i in range(1..), but we actually start at original i=0,</div>
+<div class="line">which is now i=1, because we prepended withappended to array 0s.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">canPlaceFlowers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flowerbed</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type flowerbed: List[int]</span>
+<span class="sd">        :type n: int</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">flowerbed</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">flowerbed</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">### Explained</div>
+<div class="line">1) If num at i is 1, continue</div>
+<div class="line">2) Check adjacent values to the left and right of the current i, see if they are 1,</div>
+<div class="line">then we cannot plant.</div>
+</div>
+<div class="line-block">
+<div class="line">if i &gt; 0 and flowerbed[i - 1] == 1: continue</div>
+<div class="line"># If it is not the first element (at i=0), check that element to the left (i-1)</div>
+<div class="line">is not 1. Else continue the loop.</div>
+</div>
+<div class="line-block">
+<div class="line">if i &lt; len(flowerbed) - 1 and flowerbed[i + 1] == 1: continue</div>
+<div class="line"># If we are looking not at the last element of the array (len(A)-1),</div>
+<div class="line">(then it has no elements to the right)</div>
+<div class="line">then check if element to the right (at i+1) is 1.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 3</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">canPlaceFlowers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flowerbed</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type flowerbed: List[int]</span>
+<span class="sd">        :type n: int</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flowerbed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">flowerbed</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">flowerbed</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">flowerbed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span> <span class="o">&gt;=</span> <span class="n">n</span>
 </pre></div>
 </div>
 </section>
