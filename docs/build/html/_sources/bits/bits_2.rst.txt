@@ -332,7 +332,32 @@ If the sequence is already complete, the next integer in the sequence will be re
     nums2 = [0,1,2,3,4,6,7]
     print(f3(nums2)) #5
 
-**Solution 2** (fancy (but it is O(n))) ::
+# My Versions::
+
+    # Using sum
+    def f(a):
+        sum1 = sum(a)
+        sum_full = sum(range(a[0], a[-1] + 1))
+        res = sum_full - sum1
+        if res > 0:
+            return res
+        return a[-1] + 1
+
+    # if next num is not current+1
+    def f(a):
+        for i in range(len(a) - 1):
+            if a[i + 1] != a[i] + 1:
+                return a[i] + 1
+        return a[-1] + 1
+
+    # use the fact that index=value
+    def f(a):
+        for i, n in enumerate(a):
+            if i != n:
+                return i
+        return a[-1] + 1
+
+**Solution 2** (fancy (but it is O(n)) and it is bit manipulation) ::
 
     def find_missing_number(nums):
         missing = 0
