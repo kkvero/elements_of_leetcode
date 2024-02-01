@@ -19,6 +19,27 @@ Array Questions Part 1
     def flatten(a):
         return [n[i] for n in a for i in range(len(n))]
 
+>>> L1=[[1,2],[4,5]]
+>>> L2=[x for y in L1 for x in y]
+>>> L2
+[1, 2, 4, 5]
+
+| **Key:**
+| Don't read it in one go: x for y...
+| Rather:
+| part1) ``x`` - what we to be returned
+| part2) how to calculate it - ``for y in L1 for x in y``
+
+**Stdlib**
+
+>>> import itertools
+>>> L3=itertools.chain(*L1)
+>>> list(L3)
+[1, 2, 4, 5]
+>>> L4=itertools.chain.from_iterable(L1)
+>>> list(L4)
+[1, 2, 4, 5]
+
 38. Reorder, evens first
 --------------------------
 Your input is an array of integers, and you have to reorder its entries so that 

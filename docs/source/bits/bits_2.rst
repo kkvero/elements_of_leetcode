@@ -332,7 +332,7 @@ If the sequence is already complete, the next integer in the sequence will be re
     nums2 = [0,1,2,3,4,6,7]
     print(f3(nums2)) #5
 
-# My Versions::
+My Versions::
 
     # Using sum
     def f(a):
