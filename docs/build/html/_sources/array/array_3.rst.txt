@@ -38,30 +38,88 @@ numbers such that they add up to target.
 
 57. (LC 15) 3Sum
 -------------------
+15. `3Sum <https://leetcode.com/problems/3sum/description/>`_
 *(Medium)*
-Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] 
-such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
 
-Notice that the solution set must not contain duplicate triplets,
-although the input may contain duplicates.
+**Solution 2 (Sorting + pointers)**
+Internally uses Two Sum II - Input Array Is Sorted.
 
-| # Examples:
-| Input: nums = [-1,0,1,2,-1,-4]
-| Output: [[-1,-1,2],[-1,0,1]]
-| Explanation: 
-| nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
-| nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
-| nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0. 
-| The distinct triplets are [-1,0,1] and [-1,-1,2].
-| # Input: nums = [0,1,1]
-| Output: []
-| # Input: nums = [0,0,0]
-| Output: [[0,0,0]]
+Here we are not given a sorted input. We sort before proceeding to the algorithm.
+(LC Topics hints that we should use sorting + two pointers.)
+
+| Complexity: 
+| Time: O(n log n) + O(n^2) = O(n^2)
+| (sorting + we still use nested loops)
+| Space: O(1) or O(n) depending on the implementation of sorting (language internals).
+ 
+| Keys:
+| [-1,0,1,2,-1,-4] sort ->
+| [-4,-1,-1,0,1,2] use pointers ->
+| [-4,-1,-1,0,1,2] 
+| cur  L        R
 
 ::
 
-    ### Solution 
-    # Account for edge cases, sort, use 2sum internally
+    class Solution:
+        def threeSum(self, nums: List[int]) -> List[List[int]]:
+            res = []
+            nums.sort()
+
+            for i, a in enumerate(nums):
+                # Skip positive integers
+                if a > 0:                        #0
+                    break
+                if i > 0 and a == nums[i - 1]:   #1
+                    continue
+                l, r = i + 1, len(nums) - 1   #2
+                while l < r:
+                    threeSum = a + nums[l] + nums[r]
+                    if threeSum > 0:
+                        r -= 1
+                    elif threeSum < 0:
+                        l += 1
+                    else:
+                        res.append([a, nums[l], nums[r]])
+                        l += 1
+                        r -= 1
+                        while nums[l] == nums[l - 1] and l < r:  #3
+                            l += 1
+            return res
+
+#0 If current number (a) is positive, then all the following nums are positive 
+as well (sorted array), and we won't sum them to 0.
+
+| #1 To avoid duplicates
+| if it is the same number as prev, e.g. [-2,-2,0,3..], we don't use it.
+| I.e. we don't use it as the <first number> again for triplets like [-2,0,2], [-2,0,2].
+| (We can use it as a second like [-2,-2,4].)
+
+| #2 3 nums = Our current value and two pointers
+| [-4,-1,-1,0,1,2] 
+|   a  L        R
+ 
+| #3 To avoid duplicates
+| Again if we have 
+| [-1,-1,-1,0,3..]
+| a   L
+| If we move L+=1, it will move to the same value, so we move L till it is a different value, 
+| or L meets R.  
+
+| **Solution 1 (Nested loops)**
+| Uses Two Sum internally.
+| So time will be the same as for Solution 2 (sorting+nested loops).
+| Space will definitely be O(n). (While in Solution 2 space can be O(1).)
+ 
+| Account for edge cases, sort, use 2sum internally.
+| 2sum:
+| -Main loop for each item in a, num1.
+| -Yes each time in the main loop make a new hash for all items except current.
+| -Yes, there is another nested loop for num2 (in a[i+1:])
+| -you are looking for num3 = -(num1+num2)
+| -If found triplet, account for permutations of the same (sort, check if not in ans).
+| -else add to hash num (of the 2nd loop)
+
+::
 
     class Solution(object):
         def threeSum(self, nums):
@@ -94,8 +152,8 @@ although the input may contain duplicates.
     nums = [-1,0,1,2,-1,-4]
     print(threeSum(nums))    # [[-1, 0, 1], [-1, -1, 2]]
 
-    ### My V
-    # (Brute force, use Python std lib.)
+My V
+(Brute force, use Python std lib.) ::
 
     from itertools import combinations
     def sums_to_zero(a):

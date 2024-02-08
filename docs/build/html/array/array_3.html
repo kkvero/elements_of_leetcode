@@ -142,29 +142,92 @@ numbers such that they add up to target.
 </section>
 <section id="lc-15-3sum">
 <h2>57. (LC 15) 3Sum<a class="headerlink" href="#lc-15-3sum" title="Link to this heading"></a></h2>
-<p><em>(Medium)</em>
-Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]]
-such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.</p>
-<p>Notice that the solution set must not contain duplicate triplets,
-although the input may contain duplicates.</p>
+<p>15. <a class="reference external" href="https://leetcode.com/problems/3sum/description/">3Sum</a>
+<em>(Medium)</em></p>
+<p><strong>Solution 2 (Sorting + pointers)</strong>
+Internally uses Two Sum II - Input Array Is Sorted.</p>
+<p>Here we are not given a sorted input. We sort before proceeding to the algorithm.
+(LC Topics hints that we should use sorting + two pointers.)</p>
 <div class="line-block">
-<div class="line"># Examples:</div>
-<div class="line">Input: nums = [-1,0,1,2,-1,-4]</div>
-<div class="line">Output: [[-1,-1,2],[-1,0,1]]</div>
-<div class="line">Explanation:</div>
-<div class="line">nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.</div>
-<div class="line">nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.</div>
-<div class="line">nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.</div>
-<div class="line">The distinct triplets are [-1,0,1] and [-1,-1,2].</div>
-<div class="line"># Input: nums = [0,1,1]</div>
-<div class="line">Output: []</div>
-<div class="line"># Input: nums = [0,0,0]</div>
-<div class="line">Output: [[0,0,0]]</div>
+<div class="line">Complexity:</div>
+<div class="line">Time: O(n log n) + O(n^2) = O(n^2)</div>
+<div class="line">(sorting + we still use nested loops)</div>
+<div class="line">Space: O(1) or O(n) depending on the implementation of sorting (language internals).</div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
-<span class="c1"># Account for edge cases, sort, use 2sum internally</span>
+<div class="line-block">
+<div class="line">Keys:</div>
+<div class="line">[-1,0,1,2,-1,-4] sort -&gt;</div>
+<div class="line">[-4,-1,-1,0,1,2] use pointers -&gt;</div>
+<div class="line">[-4,-1,-1,0,1,2]</div>
+<div class="line">cur  L        R</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">threeSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
-<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="c1"># Skip positive integers</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>                        <span class="c1">#0</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>   <span class="c1">#1</span>
+                <span class="k">continue</span>
+            <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>   <span class="c1">#2</span>
+            <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+                <span class="n">threeSum</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">threeSum</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">threeSum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]])</span>
+                    <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="k">while</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>  <span class="c1">#3</span>
+                        <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p>#0 If current number (a) is positive, then all the following nums are positive
+as well (sorted array), and we won’t sum them to 0.</p>
+<div class="line-block">
+<div class="line">#1 To avoid duplicates</div>
+<div class="line">if it is the same number as prev, e.g. [-2,-2,0,3..], we don’t use it.</div>
+<div class="line">I.e. we don’t use it as the &lt;first number&gt; again for triplets like [-2,0,2], [-2,0,2].</div>
+<div class="line">(We can use it as a second like [-2,-2,4].)</div>
+</div>
+<div class="line-block">
+<div class="line">#2 3 nums = Our current value and two pointers</div>
+<div class="line">[-4,-1,-1,0,1,2]</div>
+<div class="line-block">
+<div class="line">a  L        R</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line">#3 To avoid duplicates</div>
+<div class="line">Again if we have</div>
+<div class="line">[-1,-1,-1,0,3..]</div>
+<div class="line">a   L</div>
+<div class="line">If we move L+=1, it will move to the same value, so we move L till it is a different value,</div>
+<div class="line">or L meets R.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 1 (Nested loops)</strong></div>
+<div class="line">Uses Two Sum internally.</div>
+<div class="line">So time will be the same as for Solution 2 (sorting+nested loops).</div>
+<div class="line">Space will definitely be O(n). (While in Solution 2 space can be O(1).)</div>
+</div>
+<div class="line-block">
+<div class="line">Account for edge cases, sort, use 2sum internally.</div>
+<div class="line">2sum:</div>
+<div class="line">-Main loop for each item in a, num1.</div>
+<div class="line">-Yes each time in the main loop make a new hash for all items except current.</div>
+<div class="line">-Yes, there is another nested loop for num2 (in a[i+1:])</div>
+<div class="line">-you are looking for num3 = -(num1+num2)</div>
+<div class="line">-If found triplet, account for permutations of the same (sort, check if not in ans).</div>
+<div class="line">-else add to hash num (of the 2nd loop)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">threeSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
         <span class="c1"># edge cases</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
@@ -194,11 +257,11 @@ although the input may contain duplicates.</p>
 
 <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">threeSum</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>    <span class="c1"># [[-1, 0, 1], [-1, -1, 2]]</span>
-
-<span class="c1">### My V</span>
-<span class="c1"># (Brute force, use Python std lib.)</span>
-
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+</pre></div>
+</div>
+<p>My V
+(Brute force, use Python std lib.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
 <span class="k">def</span> <span class="nf">sums_to_zero</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="c1"># Out of all combinations with size 3, choose those that sum to 0.</span>
     <span class="n">combos</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>

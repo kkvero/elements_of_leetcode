@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Array Questions Part 4 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Array Questions Part 3" href="array_3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 4 (66-75)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-1109-corporate-flight-bookings">66. (LC 1109) Corporate Flight Bookings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-697-degree-of-an-array">67. (LC 697) Degree of an Array</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Array Questions Part 4</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/array/array_4.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="array-questions-part-4">
+<h1>Array Questions Part 4<a class="headerlink" href="#array-questions-part-4" title="Link to this heading"></a></h1>
+<section id="lc-1109-corporate-flight-bookings">
+<h2>66. (LC 1109) Corporate Flight Bookings<a class="headerlink" href="#lc-1109-corporate-flight-bookings" title="Link to this heading"></a></h2>
+<p>1109. <a class="reference external" href="https://leetcode.com/problems/corporate-flight-bookings/">Corporate Flight Bookings</a>
+<em>Medium</em></p>
+<p><strong>My version 1</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corpFlightBookings</span><span class="p">(</span><span class="n">bookings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">for</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">seats</span> <span class="ow">in</span> <span class="n">bookings</span><span class="p">:</span>
+        <span class="n">ans</span><span class="p">[</span><span class="n">first</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">seats</span>
+        <span class="k">while</span> <span class="n">last</span> <span class="o">&gt;</span> <span class="n">first</span><span class="p">:</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">last</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">seats</span>
+            <span class="n">last</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">bookings</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">20</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">]]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corpFlightBookings</span><span class="p">(</span><span class="n">bookings</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>  <span class="c1"># [10, 55, 45, 25, 25]</span>
+
+<span class="c1">### V2</span>
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">for</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">seats</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">first</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span> <span class="c1">#again indexing in our ans is first-1</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">seats</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corpFlightBookings</span><span class="p">(</span><span class="n">bookings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">for</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">seats</span> <span class="ow">in</span> <span class="n">bookings</span><span class="p">:</span>
+        <span class="n">ans</span><span class="p">[</span><span class="n">first</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">seats</span>
+        <span class="k">if</span> <span class="n">last</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">last</span><span class="p">]</span> <span class="o">-=</span> <span class="n">seats</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">ans</span><span class="p">))</span>
+
+<span class="n">bookings</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">20</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">]]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corpFlightBookings</span><span class="p">(</span><span class="n">bookings</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>  <span class="c1"># [10, 55, 45, 25, 25]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line">ans[first - 1] because we initiate ans = [0,0,0,0,0] where indexing starts at 0, while in our bookings indexing start at 1.</div>
+</div>
+<div class="line-block">
+<div class="line"># Seeing inside the loop</div>
+<div class="line">10, 0, -10, 0, 0</div>
+<div class="line">10,20, -10,-20, 0</div>
+<div class="line">10,45, -10,-20, 0</div>
+<div class="line">Notes: 45=20+25, we don’t have at i=5, -25, because the condition is if last &lt; n.</div>
+<div class="line">Accumulation on ans array gives [10, 55, 45, 25, 25]</div>
+</div>
+</section>
+<section id="lc-697-degree-of-an-array">
+<h2>67. (LC 697) Degree of an Array<a class="headerlink" href="#lc-697-degree-of-an-array" title="Link to this heading"></a></h2>
+<ol class="arabic simple" start="697">
+<li><p><a class="reference external" href="https://leetcode.com/problems/degree-of-an-array/">Degree of an Array</a></p></li>
+</ol>
+<div class="line-block">
+<div class="line">NOTE</div>
+<div class="line">The answer in the second example might seem crazy, until  you realize that</div>
+<div class="line">you are asked to give the shortest CONTIGUOUS subarray.</div>
+<div class="line"><br /></div>
+<div class="line">KEYS</div>
+<div class="line">-Use cnt=collections.Counter(array) to count occurrences for all nums</div>
+<div class="line">-degree=max(cnt.values())</div>
+<div class="line">-Recognize that there can be more than one number with the highest degree.</div>
+<div class="line">- make 2 dicts left, right = {}, {}</div>
+<div class="line">{number: index}.</div>
+<div class="line">left - records when you encounter a number for the first time (the leftmost encounter).</div>
+<div class="line">right - the rightmost encounter of a number.</div>
+<div class="line">E.g. nums = [1,2,2,3,1]</div>
+<div class="line">left = {1:0, 2:1, 3:3}</div>
+<div class="line">right = {1:4, 2:2, 3:3}</div>
+<div class="line">For that use: enumerate(array),</div>
+<div class="line-block">
+<div class="line">left.setdefault(n, i)</div>
+<div class="line">right[n] = i</div>
+</div>
+<div class="line">-For each num with highest degree calculate subarray len via: right[num] - left[num] + 1</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (left, right dicts)</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">findShortestSubArray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type nums: List[int]</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="n">left</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">right</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">degree</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">right</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">-</span><span class="n">left</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span> \
+                <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> \
+                <span class="k">if</span> <span class="n">counts</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">==</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="c1">### My remake of S1, left, right dicts (Final efficiency+readability balance)</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">max_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnt</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>  <span class="c1"># find most frequent count, e.g. 2 times</span>
+    <span class="n">max_nums</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnt</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">max_cnt</span>
+    <span class="p">]</span>  <span class="c1"># nums for most freq count, e.g. [1,2]</span>
+    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+        <span class="n">left</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">right</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">lengths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">max_nums</span><span class="p">:</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">right</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">-</span> <span class="n">left</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>  <span class="c1"># 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums2</span><span class="p">))</span>  <span class="c1"># 6</span>
+
+<span class="c1">### My V (indexing)</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">max_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnt</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>  <span class="c1"># find most frequent count, e.g. 2 times</span>
+    <span class="n">max_nums</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnt</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">max_cnt</span>
+    <span class="p">]</span>  <span class="c1"># nums for most freq count, e.g. [1,2]</span>
+    <span class="n">subarrays</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">max_nums</span><span class="p">:</span>  <span class="c1"># for each of the most freq numbers</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">subarrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>  <span class="c1"># append len of subarray</span>
+
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">subarrays</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Logic to solution 1</strong></div>
+<div class="line">Iterate through the array, keep two dics: left and right, {number: index}.</div>
+<div class="line">left - records when you encounter a number for the first time (the leftmost encounter).</div>
+<div class="line">right - the rightmost encounter of a number.</div>
+<div class="line">E.g. nums = [1,2,2,3,1]</div>
+<div class="line">left = {1:0, 2:1, 3:3}</div>
+<div class="line">right = {1:4, 2:2, 3:3}</div>
+</div>
+<div class="line-block">
+<div class="line">degree - max in collections.Counter(nums), here degree=2</div>
+<div class="line">Number we encounter most of the time. (To satisfy the first condition of the task.)</div>
+</div>
+<div class="line-block">
+<div class="line">return min(right[num]-left[num]+1 \</div>
+<div class="line-block">
+<div class="line">for num in counts.keys() \</div>
+<div class="line">if counts[num] == degree)</div>
+</div>
+<div class="line">E.g. nums = [1,2,2,3,1], counts = {1:2, 2:2, 3:1}</div>
+<div class="line">1)For keys in counts - just all our unique numbers.</div>
+<div class="line">2)if, i.e. look at only those that we encounter most of the time, here just</div>
+<div class="line">numbers 1,2, their values in counter = degree = 2</div>
+<div class="line">3)look up indexes for these numbers in right and left, the difference will tell us</div>
+<div class="line">how far apart they are. Choose the minimum.</div>
+<div class="line">Here we calculate for num=1, num=2</div>
+<div class="line">r[1] - l[1] +1 = 4-0+1=5</div>
+<div class="line">r[2] - l[2] +1 = 2-2+1=2</div>
+<div class="line">We got our winner, the answer is 2.</div>
+</div>
+<p><strong>Tools</strong>
+How do we make the ‘left’ dictionary. To record only the first time we encounter
+a number.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dict.setdefault(key[,</span> <span class="pre">default])</span></code>
+If key is in the dictionary, return its value. If not, insert key with a value of
+default and return default. (default defaults to None.)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">30</span><span class="p">:</span><span class="mi">45</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1">#new key</span>
+<span class="go">50</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span>
+<span class="go">{30: 45, 25: 50}    #OK, sets new key with value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>   <span class="c1">#key already in dict</span>
+<span class="go">50</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span>
+<span class="go">{30: 45, 25: 50}    #Not OK, keep the old value</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution with &quot;no tricks&quot; (the least efficient for that)</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># Because there can be several values with the same degree</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnt</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>  <span class="c1">#OR degree=max(cnt.values())</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">degree</span><span class="p">:</span>
+            <span class="n">degree</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="p">[</span><span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnt</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">degree</span><span class="p">]</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="n">subarray_len</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+                <span class="n">subarray_len</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">degree</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">n</span> <span class="o">!=</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">degree</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">subarray_len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">subarray_len</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarray_len</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="array_3.html" class="btn btn-neutral float-left" title="Array Questions Part 3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
