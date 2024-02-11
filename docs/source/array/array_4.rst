@@ -202,7 +202,55 @@ default and return default. (default defaults to None.)
             ans.append(subarray_len)
         return min(ans)
 
+68. (LC 498) Diagonal Traverse
+--------------------------------
+`498. Diagonal Traverse <https://leetcode.com/problems/diagonal-traverse/>`_
+Medium
 
+| Main points
+| Keep in mind:
+| i j
+| 0 0 01 02
+| So i is width, first index, j is height, 2nd index.
+
+**Solution**::
+
+    class Solution:
+        def findDiagonalOrder(self, mat: List[List[int]]) -> List[int]:
+            m, n = len(mat), len(mat[0])  #n is matrix width,
+            ans = []
+            for k in range(m + n - 1):
+                t = []
+                i = 0 if k < n else k - n + 1  #after k>n, i grows +1
+                j = k if k < n else n - 1      #after k>n, j will be static, =2
+                while i < m and j >= 0:
+                    t.append(mat[i][j])
+                    i += 1
+                    j -= 1
+                if k % 2 == 0:
+                    t = t[::-1]
+                ans.extend(t)
+            return ans
+
+| **Explained**
+| # m, n = matrix width, length
+| # k is the number of diagonals we can make in the matrix.
+|     for k in range(m + n - 1):
+| E.g. in a 3x3 matrix we can make m+n-1=5 diagonals. Take a look:
+| 1 2 3
+| 4 5 6
+| 7 8 9
+| So our main loop is k (0, 5).
+| # t is each diagonal, e.g. here t=[1], t=[2,4] etc
+| # We are going to collect our diagonals all in one direction (top-down), 
+| reverse if k is even (0,2,4)
+| if k % 2 == 0:
+|     t = t[::-1]
+| #
+|     i = 0 if k < n else k - n + 1
+| Diagonals start at row index=0, until we reach the end of row 0, i.e. n=3, 
+| when k > n, our 4th (k=3) diagonal cannot start at i=0, which has only 3 elements. 
+| Then we start on the next row i+1, i.e. k-n+1 (e.g. 3-3+1=1=i,4-3+1=2=i)
 
 
 

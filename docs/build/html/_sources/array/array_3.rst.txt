@@ -52,13 +52,73 @@ Here we are not given a sorted input. We sort before proceeding to the algorithm
 | (sorting + we still use nested loops)
 | Space: O(1) or O(n) depending on the implementation of sorting (language internals).
  
-| Keys:
-| [-1,0,1,2,-1,-4] sort ->
-| [-4,-1,-1,0,1,2] use pointers ->
-| [-4,-1,-1,0,1,2] 
-| cur  L        R
+Keys::
 
-::
+    # Visualization
+    # [-1,0,1,2,-1,-4] sort ->
+    # [-4,-1,-1,0,1,2] use pointers ->
+    # [-4,-1,-1,0,1,2] 
+    # cur  L        R
+
+**My V3** (Solution2, dropping extra optimizations, the core algorithm. 
+Just for understanding. Not efficient enough for Leetcode.) ::
+
+    def f(a):
+        if len(a) < 3:
+            return []
+        a.sort()
+        ans = []
+        for i, v in enumerate(a):
+            lp = i + 1
+            rp = len(a) - 1
+            while lp < rp:
+                s = v + a[lp] + a[rp]
+                if s > 0:
+                    rp -= 1
+                elif s < 0:
+                    lp += 1
+                else:
+                    res = [v, a[lp], a[rp]]
+                    res.sort()
+                    if res not in ans:
+                        ans.append(res)
+                    lp += 1
+                    rp -= 1
+        return ans
+
+**My V2** (Solution2 with edge cases. Leetcode accepted.) ::
+
+    class Solution:
+        def threeSum(self, a: List[int]) -> List[List[int]]:
+            a.sort()
+            ans = []
+            if len(a) < 3:
+                return []
+            if len(a) == 3:
+                return [a] if sum(a) == 0 else []
+            for i in range(len(a) - 2):
+                if a[i] > 0:
+                    break
+                if i > 0 and a[i] == a[i - 1]:
+                    continue
+                cur = a[i]
+                lp = i + 1
+                rp = len(a) - 1
+                while lp < rp:
+                    s = sum([cur, a[lp], a[rp]])
+                    if s < 0:
+                        lp += 1
+                    elif s > 0:
+                        rp -= 1
+                    else:
+                        ans.append([cur, a[lp], a[rp]])
+                        lp += 1
+                        rp -= 1
+                        while a[lp] == a[lp - 1] and lp < rp:
+                            lp += 1
+            return ans
+
+**Solution 2 explained** ::
 
     class Solution:
         def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -94,16 +154,20 @@ as well (sorted array), and we won't sum them to 0.
 | I.e. we don't use it as the <first number> again for triplets like [-2,0,2], [-2,0,2].
 | (We can use it as a second like [-2,-2,4].)
 
-| #2 3 nums = Our current value and two pointers
-| [-4,-1,-1,0,1,2] 
-|   a  L        R
+#2 3 nums = Our current value and two pointers::
+
+    # [-4,-1,-1,0,1,2] 
+    #   a  L        R
  
 | #3 To avoid duplicates
 | Again if we have 
-| [-1,-1,-1,0,3..]
-| a   L
-| If we move L+=1, it will move to the same value, so we move L till it is a different value, 
-| or L meets R.  
+
+::
+
+    # [-1,-1,-1,0,3..]
+    #   a   L
+
+If we move L+=1, it will move to the same value, so we move L till it is a different value, or L meets R.  
 
 | **Solution 1 (Nested loops)**
 | Uses Two Sum internally.

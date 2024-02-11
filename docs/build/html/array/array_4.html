@@ -59,6 +59,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 4 (66-75)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lc-1109-corporate-flight-bookings">66. (LC 1109) Corporate Flight Bookings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-697-degree-of-an-array">67. (LC 697) Degree of an Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-498-diagonal-traverse">68. (LC 498) Diagonal Traverse</a></li>
 </ul>
 </li>
 </ul>
@@ -306,6 +307,64 @@ default and return default. (default defaults to None.)</p>
         <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subarray_len</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
 </pre></div>
+</div>
+</section>
+<section id="lc-498-diagonal-traverse">
+<h2>68. (LC 498) Diagonal Traverse<a class="headerlink" href="#lc-498-diagonal-traverse" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/diagonal-traverse/">498. Diagonal Traverse</a>
+Medium</p>
+<div class="line-block">
+<div class="line">Main points</div>
+<div class="line">Keep in mind:</div>
+<div class="line">i j</div>
+<div class="line">0 0 01 02</div>
+<div class="line">So i is width, first index, j is height, 2nd index.</div>
+</div>
+<p><strong>Solution</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findDiagonalOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">#n is matrix width,</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="k">else</span> <span class="n">k</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1">#after k&gt;n, i grows +1</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">k</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="k">else</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>      <span class="c1">#after k&gt;n, j will be static, =2</span>
+            <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line"># m, n = matrix width, length</div>
+<div class="line"># k is the number of diagonals we can make in the matrix.</div>
+<div class="line-block">
+<div class="line">for k in range(m + n - 1):</div>
+</div>
+<div class="line">E.g. in a 3x3 matrix we can make m+n-1=5 diagonals. Take a look:</div>
+<div class="line">1 2 3</div>
+<div class="line">4 5 6</div>
+<div class="line">7 8 9</div>
+<div class="line">So our main loop is k (0, 5).</div>
+<div class="line"># t is each diagonal, e.g. here t=[1], t=[2,4] etc</div>
+<div class="line"># We are going to collect our diagonals all in one direction (top-down),</div>
+<div class="line">reverse if k is even (0,2,4)</div>
+<div class="line">if k % 2 == 0:</div>
+<div class="line-block">
+<div class="line">t = t[::-1]</div>
+</div>
+<div class="line">#</div>
+<div class="line-block">
+<div class="line">i = 0 if k &lt; n else k - n + 1</div>
+</div>
+<div class="line">Diagonals start at row index=0, until we reach the end of row 0, i.e. n=3,</div>
+<div class="line">when k &gt; n, our 4th (k=3) diagonal cannot start at i=0, which has only 3 elements.</div>
+<div class="line">Then we start on the next row i+1, i.e. k-n+1 (e.g. 3-3+1=1=i,4-3+1=2=i)</div>
 </div>
 </section>
 </section>

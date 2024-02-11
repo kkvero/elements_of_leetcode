@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="next" title="Array Questions Part 4" href="array_4.html" />
     <link rel="prev" title="Array Questions Part 2" href="array_2.html" /> 
 </head>
 
@@ -68,6 +68,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-605-can-place-flowers">65. (LC 605) Can Place Flowers</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="array_4.html">Part 4 (66-75)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -154,13 +155,73 @@ Internally uses Two Sum II - Input Array Is Sorted.</p>
 <div class="line">(sorting + we still use nested loops)</div>
 <div class="line">Space: O(1) or O(n) depending on the implementation of sorting (language internals).</div>
 </div>
-<div class="line-block">
-<div class="line">Keys:</div>
-<div class="line">[-1,0,1,2,-1,-4] sort -&gt;</div>
-<div class="line">[-4,-1,-1,0,1,2] use pointers -&gt;</div>
-<div class="line">[-4,-1,-1,0,1,2]</div>
-<div class="line">cur  L        R</div>
+<p>Keys:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualization</span>
+<span class="c1"># [-1,0,1,2,-1,-4] sort -&gt;</span>
+<span class="c1"># [-4,-1,-1,0,1,2] use pointers -&gt;</span>
+<span class="c1"># [-4,-1,-1,0,1,2]</span>
+<span class="c1"># cur  L        R</span>
+</pre></div>
 </div>
+<p><strong>My V3</strong> (Solution2, dropping extra optimizations, the core algorithm.
+Just for understanding. Not efficient enough for Leetcode.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+        <span class="n">lp</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="n">rp</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]]</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">res</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ans</span><span class="p">:</span>
+                    <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+                <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<p><strong>My V2</strong> (Solution2 with edge cases. Leetcode accepted.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">threeSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">lp</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">rp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="n">rp</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">cur</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]])</span>
+                <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">cur</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]])</span>
+                    <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="k">while</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span> <span class="o">==</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="n">rp</span><span class="p">:</span>
+                        <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<p><strong>Solution 2 explained</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">threeSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
         <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
@@ -196,21 +257,20 @@ as well (sorted array), and we won’t sum them to 0.</p>
 <div class="line">I.e. we don’t use it as the &lt;first number&gt; again for triplets like [-2,0,2], [-2,0,2].</div>
 <div class="line">(We can use it as a second like [-2,-2,4].)</div>
 </div>
-<div class="line-block">
-<div class="line">#2 3 nums = Our current value and two pointers</div>
-<div class="line">[-4,-1,-1,0,1,2]</div>
-<div class="line-block">
-<div class="line">a  L        R</div>
-</div>
+<p>#2 3 nums = Our current value and two pointers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># [-4,-1,-1,0,1,2]</span>
+<span class="c1">#   a  L        R</span>
+</pre></div>
 </div>
 <div class="line-block">
 <div class="line">#3 To avoid duplicates</div>
 <div class="line">Again if we have</div>
-<div class="line">[-1,-1,-1,0,3..]</div>
-<div class="line">a   L</div>
-<div class="line">If we move L+=1, it will move to the same value, so we move L till it is a different value,</div>
-<div class="line">or L meets R.</div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># [-1,-1,-1,0,3..]</span>
+<span class="c1">#   a   L</span>
+</pre></div>
+</div>
+<p>If we move L+=1, it will move to the same value, so we move L till it is a different value, or L meets R.</p>
 <div class="line-block">
 <div class="line"><strong>Solution 1 (Nested loops)</strong></div>
 <div class="line">Uses Two Sum internally.</div>
@@ -877,7 +937,7 @@ violating the no-adjacent-flowers rule and false otherwise.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="array_2.html" class="btn btn-neutral float-left" title="Array Questions Part 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="array_4.html" class="btn btn-neutral float-right" title="Array Questions Part 4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
