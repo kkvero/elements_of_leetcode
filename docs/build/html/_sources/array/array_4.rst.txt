@@ -252,7 +252,92 @@ Medium
 | when k > n, our 4th (k=3) diagonal cannot start at i=0, which has only 3 elements. 
 | Then we start on the next row i+1, i.e. k-n+1 (e.g. 3-3+1=1=i,4-3+1=2=i)
 
+69. (LC 888) Fair Candy Swap
+-----------------------------
+`LC 888 Fair Candy Swap <https://leetcode.com/problems/fair-candy-swap/>`_
+Easy
 
+| Example
+| Input: aliceSizes = [1,2], bobSizes = [2,3]
+| Output: [1,2]
+ 
+| In short.
+| The goal - Alice and Bob should have the same number of candies.
+| Alice has 1 candy in box 1, 2 candies in box 2. [1,2]
+| Bob has 2 candies in box 1, 3 candies in box 2. [2,3]
+| Output  [1,2] is, i=0 is how many candies Alice should give to Bob, 
+| i=1 i how many candies Bob should give to Alice 
+| so that they both have the same number of candies.
+| (If box has 2 candies, box is not divisible, both candies should be given.)
+
+**Solutions** ::
+
+    ### V3
+    def candy_swap(A, B):
+        mid = int((sum(A + B)) / 2)
+        for n in A:
+            pair = mid - (sum(A) - n)
+            if pair in B:
+                return [n, pair]
+
+    ### V0
+    class Solution:
+        def fairCandySwap(self, aliceSizes: List[int], bobSizes: List[int]) -> List[int]:
+            diff = (sum(aliceSizes) - sum(bobSizes)) >> 1 
+            s = set(bobSizes)
+            for a in aliceSizes:
+                target = a - diff
+                if target in s:
+                    return [a, target]
+
+**Explained**
+
+``diff = (sum(aliceSizes) - sum(bobSizes)) >> 1``
+We are ensured that there is a solution, means the total number of candies both
+kids have is an even number. Means it is divisible by 2. The most efficient way to divide
+by 2 is to remove one LSB from the even number (LSB in even numbers is always 0).
+Removing LSB 0 amounts to dividing by 2. 
+
+>>> bin(6)
+'0b110'
+>>> 6 >> 1
+3
+>>> bin(3)
+'0b11'
+
+diff - is rather the num of candies each kid will have, when they both have the same num.
+
+**More solutions** ::
+
+    ### V1
+    class Solution(object):
+        def fairCandySwap(self, A, B):
+            """
+            :type A: List[int]
+            :type B: List[int]
+            :rtype: List[int]
+            """
+            sum_A, sum_B, set_B = sum(A), sum(B), set(B)
+            target = (sum_A + sum_B) / 2
+            for a in A:
+                b = target - (sum_A - a)
+                if b >= 1 and b <= 100000 and b in set_B:
+                    return [a, b]
+
+    ### V2
+    class Solution(object):
+        def fairCandySwap(self, A, B):
+            """
+            :type A: List[int]
+            :type B: List[int]
+            :rtype: List[int]
+            """
+            diff = (sum(A)-sum(B))//2
+            setA = set(A)
+            for b in set(B):
+                if diff+b in setA:
+                    return [diff+b, b]
+            return []
 
 
 

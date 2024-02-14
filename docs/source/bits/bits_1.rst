@@ -611,6 +611,24 @@ leftmost and rightmost digits, working inward), but without converting to string
     # True
     # False
 
+    ### My rewrite
+    def is_palindrome(n):
+        if n < 0:
+            return False
+        elif n < 10:
+            return True
+        le = math.floor(math.log10(n)) + 1
+        mask = 10 ** (le - 1)
+        for _ in range(le // 2):
+            msd = n // mask
+            lsd = n % 10
+            if msd != lsd:
+                return False
+            n = n % mask
+            n = n // 10
+            mask = mask // 100
+        return True
+
 *Logic*
 We come up with expressions that extract the least significant digit and the 
 most significant digit of the input integer (without converting it).
