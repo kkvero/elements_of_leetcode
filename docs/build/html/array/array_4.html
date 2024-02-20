@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="next" title="Array Questions Part 5" href="array_5.html" />
     <link rel="prev" title="Array Questions Part 3" href="array_3.html" /> 
 </head>
 
@@ -61,8 +61,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-697-degree-of-an-array">67. (LC 697) Degree of an Array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-498-diagonal-traverse">68. (LC 498) Diagonal Traverse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-888-fair-candy-swap">69. (LC 888) Fair Candy Swap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-442-find-all-duplicates-in-an-array">70. (LC 442) Find All Duplicates in an Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-448-find-all-numbers-disappeared-in-an-array">71. (LC 448) Find All Numbers Disappeared in an Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-724-find-pivot-index">72. (LC 724) Find Pivot Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-1275-find-winner-on-a-tic-tac-toe-game">73. (LC 1275) Find Winner on a Tic Tac Toe Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-287-find-the-duplicate-number">74. (LC 287) Find the Duplicate Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-412-fizz-buzz">75. (LC 412) Fizz Buzz</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="array_5.html">Part 5 (76-85)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -455,6 +462,544 @@ Removing LSB 0 amounts to dividing by 2.</p>
 </pre></div>
 </div>
 </section>
+<section id="lc-442-find-all-duplicates-in-an-array">
+<h2>70. (LC 442) Find All Duplicates in an Array<a class="headerlink" href="#lc-442-find-all-duplicates-in-an-array" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/find-all-duplicates-in-an-array/">442. Find All Duplicates in an Array</a>
+Medium</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">findDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type nums: List[int]</span>
+<span class="sd">        :rtype: List[int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nums</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># Logic - mark met elements at index of the value.</div>
+<div class="line">(It uses the fact that the constraint is our array values are in range [1, n],</div>
+<div class="line">where n == nums.length,</div>
+<div class="line">i.e. 1 &lt;= nums[i] &lt;= n ).</div>
+<div class="line">That’s like a straight hint that all values are also valid indices for that array</div>
+<div class="line">(more precisely i=value-1).</div>
+<div class="line">We iterate through the array numbers.</div>
+<div class="line">We lookup elements at index of the current value.</div>
+<div class="line">A = [4, 3, 2, 7, 8, 2, 3, 1]</div>
+<div class="line">n=4, A[n-1]=7</div>
+<div class="line">We actually don’t care what the value is at index A[n-1].</div>
+<div class="line">It’s just that if there are 2 equal items in A, then we will be SENT to the same</div>
+<div class="line">index TWICE, its like THE SAME ADDRESS.</div>
+<div class="line">So what do we do, when we are sent to an address, we mark that we’ve been there.</div>
+<div class="line">How: just value at A[n-1] =* (-1).</div>
+<div class="line">So really the first step is to check - have we been there? (is A[n-1] &lt; 0).</div>
+<div class="line">Otherwise mark we’ve been there.</div>
+<div class="line">(If we’ve been there just once, then A[n-1] &lt; 0, if we’ve been there twice, or not once yet, then value is &gt; 0).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V0</span>
+<span class="n">Note</span><span class="p">,</span> <span class="n">this</span> <span class="n">doesn</span><span class="s1">&#39;t satisfy O(1) space of the task</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">findDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">elem</span> <span class="k">for</span> <span class="n">elem</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-448-find-all-numbers-disappeared-in-an-array">
+<h2>71. (LC 448) Find All Numbers Disappeared in an Array<a class="headerlink" href="#lc-448-find-all-numbers-disappeared-in-an-array" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/">448. Find All Numbers Disappeared in an Array</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V1</span>
+<span class="k">def</span> <span class="nf">findDisappearedNumbers2</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+
+<span class="c1">### V2</span>
+<span class="k">def</span> <span class="nf">findDisappearedNumbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">new</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span>   <span class="c1"># works on &quot;set&quot; data structure</span>
+
+<span class="c1">### V my</span>
+<span class="k">def</span> <span class="nf">find_missing</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ans</span><span class="p">:</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-724-find-pivot-index">
+<h2>72. (LC 724) Find Pivot Index<a class="headerlink" href="#lc-724-find-pivot-index" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/find-pivot-index/">724. Find Pivot Index</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># V1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">pivotIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="n">right</span> <span class="o">-=</span> <span class="n">x</span>         <span class="c1">#(right=(right - value_of_pivot))</span>
+            <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="n">right</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span>
+            <span class="n">left</span> <span class="o">+=</span> <span class="n">x</span>         <span class="c1">#(left + value_of_pivot)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Note:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">right</span> <span class="pre">-=</span> <span class="pre">x</span></code></p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">When testing if i is pivot.</div>
+<div class="line">We subtract value at i (at pivot) from the sum on the right.</div>
+<div class="line">But we do not yet add value at pivot to left.</div>
+<div class="line">We first test if left == right,</div>
+<div class="line">only then add value at i (possible pivot) to left: left += x</div>
+<div class="line">E.g. [1,7,3,5]. When looking at 7, we subtract value 7 from right, but we do not yet add it to left,</div>
+<div class="line">because at pivot 7 we compare sums “1” and “3+5”.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># V2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pivotIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type nums: List[int]</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sums</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">sums</span> <span class="o">-</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">total</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">x</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">n</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1"># My V1</span>
+<span class="k">def</span> <span class="nf">find_pivot</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">sl</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">sr</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)])</span>
+        <span class="k">if</span> <span class="n">sl</span> <span class="o">==</span> <span class="n">sr</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">p</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>  <span class="c1">#3</span>
+<span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>         <span class="c1">#0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">find_pivot</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">find_pivot</span><span class="p">(</span><span class="n">nums2</span><span class="p">))</span>
+
+<span class="c1"># V2</span>
+<span class="k">def</span> <span class="nf">find_pivot</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)]):</span>
+            <span class="k">return</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">find_pivot</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="c1">#3</span>
+
+<span class="c1"># V3</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">s_left</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s_left</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">s_right</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s_right</span> <span class="o">=</span> <span class="n">s</span> <span class="o">-</span> <span class="n">s_left</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">s_left</span> <span class="o">==</span> <span class="n">s_right</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-1275-find-winner-on-a-tic-tac-toe-game">
+<h2>73. (LC 1275) Find Winner on a Tic Tac Toe Game<a class="headerlink" href="#lc-1275-find-winner-on-a-tic-tac-toe-game" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game/">1275. Find Winner on a Tic Tac Toe Game</a>
+Easy</p>
+<div class="admonition-a-catch-in-creating-multidimensional-arrays admonition">
+<p class="admonition-title">A catch in creating multidimensional arrays</p>
+<p>This type of declaration will not create m*n spaces in memory; rather, only one integer
+will be created and referenced by each element of the inner list.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>
+<span class="go">[[&#39;&#39;, &#39;&#39;, &#39;&#39;], [&#39;&#39;, &#39;&#39;, &#39;&#39;], [&#39;&#39;, &#39;&#39;, &#39;&#39;]]</span>
+</pre></div>
+</div>
+<p>The usual assignment will give you what you expect.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>
+<span class="go">[[&#39;x&#39;, &#39;&#39;, &#39;&#39;], [&#39;x&#39;, &#39;&#39;, &#39;&#39;], [&#39;x&#39;, &#39;&#39;, &#39;&#39;]]</span>
+</pre></div>
+</div>
+<p>Use generator, then elements will be independent.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span> <span class="c1"># Generalizing, [ [0] * c for i in range(r) ]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>
+<span class="go">[[0, 0, 0], [0, 0, 0], [0, 0, 0]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>
+<span class="go">[[4, 0, 0], [0, 0, 0], [0, 0, 0]]</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># IDEA : RECORD EACH MOVE</span>
+<span class="k">def</span> <span class="nf">tictactoe</span><span class="p">(</span><span class="n">moves</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># size of the board</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">diag</span> <span class="o">=</span> <span class="n">anti_diag</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># player A will have value 1, player B value -1, player A starts.</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
+        <span class="c1"># Using data from the given array &#39;moves&#39; record the move of a player.</span>
+        <span class="n">rows</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">+=</span> <span class="n">player</span>
+        <span class="n">cols</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">+=</span> <span class="n">player</span>
+
+        <span class="c1"># If this move is placed on diagonal or anti-diagonal,</span>
+        <span class="c1"># we shall update the relative value as well.</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">==</span> <span class="n">col</span><span class="p">:</span>
+            <span class="n">diag</span> <span class="o">+=</span> <span class="n">player</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">+</span> <span class="n">col</span> <span class="o">==</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">anti_diag</span> <span class="o">+=</span> <span class="n">player</span>
+
+        <span class="c1"># check if this move meets any of the winning conditions.</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">row</span><span class="p">],</span> <span class="n">cols</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">diag</span><span class="p">,</span> <span class="n">anti_diag</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="s2">&quot;A&quot;</span> <span class="k">if</span> <span class="n">player</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;B&quot;</span>
+
+        <span class="c1"># If no one wins so far, change to the other player.</span>
+        <span class="n">player</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="c1"># If all moves are completed and there is still no result, we shall check if</span>
+    <span class="c1"># the grid is full or not. If so, the game ends with draw, otherwise pending.</span>
+    <span class="k">return</span> <span class="s2">&quot;Draw&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">moves</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="k">else</span> <span class="s2">&quot;Pending&quot;</span>
+
+<span class="n">moves</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tictactoe</span><span class="p">(</span><span class="n">moves</span><span class="p">))</span>  <span class="c1">#A</span>
+
+
+<span class="c1"># The same without comments</span>
+<span class="k">def</span> <span class="nf">tictactoe</span><span class="p">(</span><span class="n">moves</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">diag</span> <span class="o">=</span> <span class="n">anti_diag</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
+        <span class="n">rows</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">+=</span> <span class="n">player</span>
+        <span class="n">cols</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">+=</span> <span class="n">player</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">==</span> <span class="n">col</span><span class="p">:</span>
+            <span class="n">diag</span> <span class="o">+=</span> <span class="n">player</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">+</span> <span class="n">col</span> <span class="o">==</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">anti_diag</span> <span class="o">+=</span> <span class="n">player</span>
+
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">row</span><span class="p">],</span> <span class="n">cols</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">diag</span><span class="p">,</span> <span class="n">anti_diag</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="s2">&quot;A&quot;</span> <span class="k">if</span> <span class="n">player</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;B&quot;</span>
+
+        <span class="n">player</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">return</span> <span class="s2">&quot;Draw&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">moves</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="k">else</span> <span class="s2">&quot;Pending&quot;</span>
+
+
+<span class="n">moves</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tictactoe</span><span class="p">(</span><span class="n">moves</span><span class="p">))</span>  <span class="c1">#A</span>
+</pre></div>
+</div>
+<p>BRUTE FORCE:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V3</span>
+<span class="k">def</span> <span class="nf">tic_tac</span><span class="p">(</span><span class="n">moves</span><span class="p">):</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">[</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">player</span>
+        <span class="n">player</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">search1</span> <span class="o">=</span> <span class="n">find_winner</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">rotated_grid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">grid</span><span class="p">))</span>
+    <span class="n">search2</span> <span class="o">=</span> <span class="n">find_winner</span><span class="p">(</span><span class="n">rotated_grid</span><span class="p">)</span>
+    <span class="n">diag1</span> <span class="o">=</span> <span class="n">diag2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">diag1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">diag2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotated_grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">search3</span> <span class="o">=</span> <span class="n">calc_sum</span><span class="p">(</span><span class="n">diag1</span><span class="p">)</span>
+    <span class="n">search4</span> <span class="o">=</span> <span class="n">calc_sum</span><span class="p">(</span><span class="n">diag2</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">search1</span><span class="p">,</span> <span class="n">search2</span><span class="p">,</span> <span class="n">search3</span><span class="p">,</span> <span class="n">search4</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">r</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">r</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">moves</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Pending&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Draw&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">calc_sum</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">winner</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>
+    <span class="k">elif</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
+        <span class="n">winner</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">winner</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">winner</span>
+
+
+<span class="k">def</span> <span class="nf">find_winner</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">calc_sum</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">winner</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">winner</span>
+
+<span class="c1">### My V2</span>
+<span class="k">def</span> <span class="nf">tic_tac_toe</span><span class="p">(</span><span class="n">moves</span><span class="p">):</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+    <span class="n">mark</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">move</span> <span class="ow">in</span> <span class="n">moves</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">[</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">move</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mark</span>
+        <span class="n">mark</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="c1"># print(grid)</span>
+    <span class="n">winner1</span> <span class="o">=</span> <span class="n">get_winner</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">winner2</span> <span class="o">=</span> <span class="n">get_winner</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">grid</span><span class="p">)))</span>
+    <span class="n">winner3</span> <span class="o">=</span> <span class="n">get_winner</span><span class="p">(</span><span class="n">get_diagonals</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span>
+    <span class="c1"># print(winner1, winner2, winner3)</span>
+    <span class="n">winners</span> <span class="o">=</span> <span class="p">[</span><span class="n">winner1</span><span class="p">,</span> <span class="n">winner2</span><span class="p">,</span> <span class="n">winner3</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">winners</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">w</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">w</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">moves</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Pending&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Draw&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">get_winner</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="n">winner</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">winner</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>
+        <span class="k">elif</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
+            <span class="n">winner</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span>
+    <span class="k">return</span> <span class="n">winner</span>
+
+
+<span class="k">def</span> <span class="nf">get_diagonals</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="n">d2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">d1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">d2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)])</span>
+    <span class="n">diagonals</span> <span class="o">=</span> <span class="p">[</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">diagonals</span>
+
+
+<span class="n">moves</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="n">moves2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="n">moves3</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tic_tac_toe</span><span class="p">(</span><span class="n">moves</span><span class="p">))</span>  <span class="c1"># A</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tic_tac_toe</span><span class="p">(</span><span class="n">moves2</span><span class="p">))</span>  <span class="c1"># B</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tic_tac_toe</span><span class="p">(</span><span class="n">moves3</span><span class="p">))</span>  <span class="c1"># Draw</span>
+
+
+<span class="c1">### My V1</span>
+<span class="k">def</span> <span class="nf">tic_tac_toe</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mark</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mark</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">grid</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mark</span>
+    <span class="c1"># print(grid)</span>
+    <span class="c1"># print(list(zip(*grid)))</span>
+    <span class="n">ans1</span> <span class="o">=</span> <span class="n">find_winner</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">ans2</span> <span class="o">=</span> <span class="n">find_winner</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">grid</span><span class="p">)))</span>  <span class="c1"># transpose grid and do the same check</span>
+    <span class="n">ans3</span> <span class="o">=</span> <span class="n">find_winner2</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>  <span class="c1"># check winner in diagonals</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="n">ans1</span><span class="p">,</span> <span class="n">ans2</span><span class="p">,</span> <span class="n">ans3</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">ans</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ans</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Pending&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;Draw&quot;</span>
+
+<span class="k">def</span> <span class="nf">find_winner</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;A&quot;</span>
+        <span class="k">elif</span> <span class="nb">sum</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;B&quot;</span>
+
+<span class="k">def</span> <span class="nf">find_winner2</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="n">diag1</span> <span class="o">=</span> <span class="n">diag2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">diag1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">diag2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">diag1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="nb">sum</span><span class="p">(</span><span class="n">diag2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;A&quot;</span>
+    <span class="k">elif</span> <span class="nb">sum</span><span class="p">(</span><span class="n">diag1</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span> <span class="ow">or</span> <span class="nb">sum</span><span class="p">(</span><span class="n">diag2</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;B&quot;</span>
+
+<span class="n">moves</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="n">moves2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="n">moves3</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tic_tac_toe</span><span class="p">(</span><span class="n">moves</span><span class="p">))</span>   <span class="c1"># [None, None, &#39;A&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tic_tac_toe</span><span class="p">(</span><span class="n">moves2</span><span class="p">))</span>  <span class="c1"># [&#39;B&#39;, None, None]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tic_tac_toe</span><span class="p">(</span><span class="n">moves3</span><span class="p">))</span>  <span class="c1"># Draw</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-287-find-the-duplicate-number">
+<h2>74. (LC 287) Find the Duplicate Number<a class="headerlink" href="#lc-287-find-the-duplicate-number" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/find-the-duplicate-number/">287. Find the Duplicate Number</a>
+Medium</p>
+<p>Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+There is only one repeated number in nums, return this repeated number.</p>
+<p>You must solve the problem without modifying the array nums and uses only constant extra space.</p>
+<p>Example 1:
+Input: nums = [1,3,4,2,2]
+Output: 2</p>
+<p><strong>Easier solutions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set</span>
+<span class="k">def</span> <span class="nf">find_dups</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+
+<span class="c1"># Counter</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="k">def</span> <span class="nf">find_dups2</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Satisfactory solutions</strong></div>
+<div class="line"><strong>Key points</strong></div>
+</div>
+<div class="line-block">
+<div class="line">If the number of elements in [1,..x] is greater than x, then the duplicate number must be in [1,..x].</div>
+<div class="line">E.g. x=3, len([1,2,3])=3, len([1,2,3,3])=4</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sum(v</span> <span class="pre">&lt;=</span> <span class="pre">x</span> <span class="pre">for</span> <span class="pre">v</span> <span class="pre">in</span> <span class="pre">nums)</span></code></div>
+<div class="line">here we are actually counting the True statements, not summing [1,2,3..]</div>
+<div class="line">But if 1&lt;=x, 2&lt;=x, then +1+1. If we found 3 numbers in nums that are &lt;= x, then sum=3,</div>
+<div class="line">if there was a dup, then sum=4.</div>
+<div class="line">- binary search gives us O(n log n), space O(1)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (using builtin for bin search)</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span>
+
+<span class="k">def</span> <span class="nf">findDuplicate</span><span class="p">(</span><span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">x</span>  <span class="c1">#*</span>
+    <span class="k">return</span> <span class="n">bisect_left</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>  <span class="c1">#**</span>
+</pre></div>
+</div>
+<p>#* mostly returns False, but for one True</p>
+<p>#** for [1,3,4,2,2] , range(0, 5), lookup for [0,1,2,3,4] gives [False, False, True, False..]
+we search for True, bisect returns index 2. (So the f function takes as arguments nums from
+the range?)</p>
+<div class="line-block">
+<div class="line">nums = [1, 3, 4, 2, 2]</div>
+<div class="line">print(findDuplicate(nums)) #2</div>
+<div class="line"># key=f is the key function, a callable that returns a value used for sorting or ordering</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2 (Implement bin search manually)</span>
+<span class="c1">#V1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">findDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">mid</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="n">mid</span><span class="p">:</span>
+                <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">low</span>
+
+<span class="c1">#V2</span>
+<span class="k">def</span> <span class="nf">findDuplicate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">L</span> <span class="o">&lt;=</span> <span class="n">R</span><span class="p">:</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="n">R</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="p">:</span>
+            <span class="n">L</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">L</span>
+
+<span class="c1">### Solution 3</span>
+<span class="c1"># IDEA : TWO POINTERS</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">findDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type nums: List[int]</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">slow</span> <span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="n">nums</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">while</span> <span class="n">slow</span> <span class="o">!=</span> <span class="n">fast</span><span class="p">:</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">slow</span><span class="p">]</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="n">fast</span><span class="p">]]</span>
+
+        <span class="n">slow</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">slow</span> <span class="o">!=</span> <span class="n">fast</span><span class="p">:</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">slow</span><span class="p">]</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">fast</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">slow</span>
+</pre></div>
+</div>
+<p><strong>Not acceptable solutions</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using dict lookup, but space</span>
+<span class="c1"># addresses, but changes given array</span>
+<span class="k">def</span> <span class="nf">find_dups3</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1"># Sort array first, but changes array</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-412-fizz-buzz">
+<h2>75. (LC 412) Fizz Buzz<a class="headerlink" href="#lc-412-fizz-buzz" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/fizz-buzz/">412. Fizz Buzz</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fizzBuzz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type n: int</span>
+<span class="sd">        :rtype: List[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">15</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="s2">&quot;FizzBuzz&quot;</span>
+            <span class="k">elif</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="s2">&quot;Fizz&quot;</span>
+            <span class="k">elif</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="s2">&quot;Buzz&quot;</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -462,7 +1007,7 @@ Removing LSB 0 amounts to dividing by 2.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="array_3.html" class="btn btn-neutral float-left" title="Array Questions Part 3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="array_5.html" class="btn btn-neutral float-right" title="Array Questions Part 5" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

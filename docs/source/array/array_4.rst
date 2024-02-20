@@ -339,13 +339,540 @@ diff - is rather the num of candies each kid will have, when they both have the 
                     return [diff+b, b]
             return []
 
+70. (LC 442) Find All Duplicates in an Array
+----------------------------------------------
+`442. Find All Duplicates in an Array <https://leetcode.com/problems/find-all-duplicates-in-an-array/>`_
+Medium ::
+
+    ### V1
+    class Solution(object):
+        def findDuplicates(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: List[int]
+            """
+            ans = []
+            for n in nums:
+                if nums[abs(n) - 1] < 0:
+                    ans.append(abs(n))
+                else:
+                    nums[abs(n) - 1] *= -1
+            return ans
+
+| # Logic - mark met elements at index of the value.
+| (It uses the fact that the constraint is our array values are in range [1, n],
+| where n == nums.length, 
+| i.e. 1 <= nums[i] <= n ).
+| That's like a straight hint that all values are also valid indices for that array
+| (more precisely i=value-1).
+| We iterate through the array numbers. 
+| We lookup elements at index of the current value.
+| A = [4, 3, 2, 7, 8, 2, 3, 1]
+| n=4, A[n-1]=7
+| We actually don't care what the value is at index A[n-1].
+| It's just that if there are 2 equal items in A, then we will be SENT to the same
+| index TWICE, its like THE SAME ADDRESS.
+| So what do we do, when we are sent to an address, we mark that we've been there.
+| How: just value at A[n-1] =* (-1).
+| So really the first step is to check - have we been there? (is A[n-1] < 0).
+| Otherwise mark we've been there.
+| (If we've been there just once, then A[n-1] < 0, if we've been there twice, or not once yet, then value is > 0).
+
+::
+
+    ### V0
+    Note, this doesn't satisfy O(1) space of the task
+    from collections import Counter
+    class Solution(object):
+        def findDuplicates(self, nums):
+            return [elem for elem, count in Counter(nums).items() if count == 2]
+
+71. (LC 448) Find All Numbers Disappeared in an Array
+--------------------------------------------------------
+`448. Find All Numbers Disappeared in an Array <https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/>`_
+Easy ::
+
+    ### V1
+    def findDisappearedNumbers2(nums):
+        return list(set(range(1, len(nums) + 1)) - set(nums))
+
+    ### V2
+    def findDisappearedNumbers(self, nums):
+        n = set(nums)
+        new = set(range(1, len(nums) + 1))
+        return list(new - n)   # works on "set" data structure 
+
+    ### V my
+    def find_missing(a):
+        ans = list(range(1, len(a) + 1))
+        for i in a:
+            if i in ans:
+                ans.remove(i)
+        return ans
+
+72. (LC 724) Find Pivot Index
+--------------------------------
+`724. Find Pivot Index <https://leetcode.com/problems/find-pivot-index/>`_
+Easy ::
+
+    # V1
+    class Solution:
+        def pivotIndex(self, nums: List[int]) -> int:
+            left, right = 0, sum(nums)
+            for i, x in enumerate(nums):
+                right -= x         #(right=(right - value_of_pivot))
+                if left == right:
+                    return i
+                left += x         #(left + value_of_pivot)
+            return -1
+
+Note:
+    ``right -= x``
+
+| When testing if i is pivot.
+| We subtract value at i (at pivot) from the sum on the right.
+| But we do not yet add value at pivot to left.
+| We first test if left == right,
+| only then add value at i (possible pivot) to left: left += x
+| E.g. [1,7,3,5]. When looking at 7, we subtract value 7 from right, but we do not yet add it to left,
+| because at pivot 7 we compare sums "1" and "3+5".
+
+::
+
+    # V2
+    class Solution(object):
+        def pivotIndex(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            sums = sum(nums)
+            total = 0
+            for x, n in enumerate(nums):
+                if sums - n == 2 * total: 
+                    return x
+                total += n
+            return -1
+
+    # My V1
+    def find_pivot(a):
+        a = [0] + a + [0]
+        p = -1
+        for i in range(1, len(a) - 1):
+            sl = sum(a[0:i])
+            sr = sum(a[i + 1 : len(a)])
+            if sl == sr:
+                p = i - 1
+        return p
+
+    nums = [1, 7, 3, 6, 5, 6]  #3
+    nums2 = [2, 1, -1]         #0
+    print(find_pivot(nums))
+    print(find_pivot(nums2))
+
+    # V2
+    def find_pivot(a):
+        a = [0] + a + [0]
+        for i in range(1, len(a) - 1):
+            if sum(a[0:i]) == sum(a[(i + 1) : len(a)]):
+                return i - 1
+        return -1
+
+    nums = [1, 7, 3, 6, 5, 6]
+    print(find_pivot(nums)) #3
+
+    # V3
+    def f(a):
+        s = sum(a)
+        for i in range(len(a)):
+            if i == 0:
+                s_left = 0
+            else:
+                s_left = sum(a[0:i])
+            if i == len(a) - 1:
+                s_right = 0
+            else:
+                s_right = s - s_left - a[i]
+            if s_left == s_right:
+                return i
+        return -1
+
+73. (LC 1275) Find Winner on a Tic Tac Toe Game
+----------------------------------------------------
+`1275. Find Winner on a Tic Tac Toe Game <https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game/>`_
+Easy
+
+.. admonition:: A catch in creating multidimensional arrays
+
+    This type of declaration will not create m*n spaces in memory; rather, only one integer 
+    will be created and referenced by each element of the inner list.
+
+    >>> grid = [[""] * 3] * 3
+    >>> grid
+    [['', '', ''], ['', '', ''], ['', '', '']]
+
+    The usual assignment will give you what you expect.
+
+    >>> grid[0][0] = 'x'
+    >>> grid
+    [['x', '', ''], ['x', '', ''], ['x', '', '']]
+
+    Use generator, then elements will be independent.
+
+    >>> grid = [[0]*3 for i in range(3)] # Generalizing, [ [0] * c for i in range(r) ]
+    >>> grid
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    >>> grid[0][0]= 4
+    >>> grid
+    [[4, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+::
+
+    # IDEA : RECORD EACH MOVE
+    def tictactoe(moves):
+        n = 3  # size of the board
+        rows, cols = [0] * n, [0] * n
+        diag = anti_diag = 0
+
+        # player A will have value 1, player B value -1, player A starts.
+        player = 1
+
+        for row, col in moves:
+            # Using data from the given array 'moves' record the move of a player.
+            rows[row] += player
+            cols[col] += player
+
+            # If this move is placed on diagonal or anti-diagonal,
+            # we shall update the relative value as well.
+            if row == col:
+                diag += player
+            if row + col == n - 1:
+                anti_diag += player
+
+            # check if this move meets any of the winning conditions.
+            if any(abs(line) == n for line in (rows[row], cols[col], diag, anti_diag)):
+                return "A" if player == 1 else "B"
+
+            # If no one wins so far, change to the other player.
+            player *= -1
+
+        # If all moves are completed and there is still no result, we shall check if
+        # the grid is full or not. If so, the game ends with draw, otherwise pending.
+        return "Draw" if len(moves) == n * n else "Pending"
+
+    moves = [[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]]
+    print(tictactoe(moves))  #A
 
 
+    # The same without comments 
+    def tictactoe(moves):
+        n = 3  
+        rows, cols = [0] * n, [0] * n
+        diag = anti_diag = 0
+        player = 1
+        for row, col in moves:
+            rows[row] += player
+            cols[col] += player
+            if row == col:
+                diag += player
+            if row + col == n - 1:
+                anti_diag += player
+
+            if any(abs(line) == n for line in (rows[row], cols[col], diag, anti_diag)):
+                return "A" if player == 1 else "B"
+
+            player *= -1
+
+        return "Draw" if len(moves) == n * n else "Pending"
 
 
+    moves = [[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]]
+    print(tictactoe(moves))  #A
+
+BRUTE FORCE::
+
+    ### My V3
+    def tic_tac(moves):
+        grid = [[0] * 3 for i in range(3)]
+        player = 1
+        for m in moves:
+            grid[m[0]][m[1]] = player
+            player *= -1
+        search1 = find_winner(grid)
+        rotated_grid = list(list(reversed(x)) for x in zip(*grid))
+        search2 = find_winner(rotated_grid)
+        diag1 = diag2 = []
+        for i in range(3):
+            diag1.append(grid[i][i])
+            diag2.append(rotated_grid[i][i])
+        search3 = calc_sum(diag1)
+        search4 = calc_sum(diag2)
+        result = [search1, search2, search3, search4]
+        if any(result):
+            for r in result:
+                if r:
+                    return r
+        elif len(moves) < 9:
+            return "Pending"
+        else:
+            return "Draw"
 
 
+    def calc_sum(row):
+        if sum(row) == 3:
+            winner = "A"
+        elif sum(row) == -3:
+            winner = "B"
+        else:
+            winner = None
+        return winner
 
 
+    def find_winner(grid):
+        for row in grid:
+            winner = calc_sum(row)
+            if winner:
+                return winner
 
+    ### My V2
+    def tic_tac_toe(moves):
+        grid = [[0] * 3 for i in range(3)]
+        mark = 1
+        for move in moves:
+            grid[move[0]][move[1]] = mark
+            mark *= -1
+        # print(grid)
+        winner1 = get_winner(grid)
+        winner2 = get_winner(list(zip(*grid)))
+        winner3 = get_winner(get_diagonals(grid))
+        # print(winner1, winner2, winner3)
+        winners = [winner1, winner2, winner3]
+        for w in winners:
+            if w != None:
+                return w
+        if len(moves) < 9:
+            return "Pending"
+        else:
+            return "Draw"
+
+
+    def get_winner(grid):
+        winner = None
+        for row in grid:
+            if sum(row) == 3:
+                winner = "A"
+            elif sum(row) == -3:
+                winner = "B"
+        return winner
+
+
+    def get_diagonals(grid):
+        d1 = d2 = []
+        for i in range(3):
+            d1.append(grid[i][i])
+            d2.append(grid[i][abs(i - 2)])
+        diagonals = [d1, d2]
+        return diagonals
+
+
+    moves = [[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]]
+    moves2 = [[0, 0], [2, 0], [1, 1], [2, 1], [1, 2], [2, 2]]
+    moves3 = [[0, 0], [1, 1], [2, 0], [1, 0], [1, 2], [2, 1], [0, 1], [0, 2], [2, 2]]
+    print(tic_tac_toe(moves))  # A
+    print(tic_tac_toe(moves2))  # B
+    print(tic_tac_toe(moves3))  # Draw
+
+
+    ### My V1
+    def tic_tac_toe(a):
+        grid = [[0] * 3 for i in range(3)]
+        for i in range(len(a)):
+            if i % 2 == 0:
+                mark = 1
+            else:
+                mark = -1
+            grid[a[i][0]][a[i][1]] = mark
+        # print(grid)
+        # print(list(zip(*grid)))
+        ans1 = find_winner(grid)
+        ans2 = find_winner(list(zip(*grid)))  # transpose grid and do the same check
+        ans3 = find_winner2(grid)  # check winner in diagonals
+        ans = [ans1, ans2, ans3]
+        if any(ans):
+            return ans
+        if len(a) < 9:
+            return "Pending"
+        return "Draw"
+
+    def find_winner(grid):
+        for i in grid:
+            if sum(i) == 3:
+                return "A"
+            elif sum(i) == -3:
+                return "B"
+
+    def find_winner2(grid):
+        diag1 = diag2 = []
+        for i in range(3):
+            diag1.append(grid[i][i])
+            diag2.append(grid[i][abs(i - 2)])
+        if sum(diag1) == 3 or sum(diag2) == 3:
+            return "A"
+        elif sum(diag1) == -3 or sum(diag2) == -3:
+            return "B"
+
+    moves = [[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]]
+    moves2 = [[0, 0], [2, 0], [1, 1], [2, 1], [1, 2], [2, 2]]
+    moves3 = [[0, 0], [1, 1], [2, 0], [1, 0], [1, 2], [2, 1], [0, 1], [0, 2], [2, 2]]
+    print(tic_tac_toe(moves))   # [None, None, 'A']
+    print(tic_tac_toe(moves2))  # ['B', None, None]
+    print(tic_tac_toe(moves3))  # Draw
+
+74. (LC 287) Find the Duplicate Number
+------------------------------------------
+`287. Find the Duplicate Number <https://leetcode.com/problems/find-the-duplicate-number/>`_
+Medium
+
+Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+There is only one repeated number in nums, return this repeated number.
+
+You must solve the problem without modifying the array nums and uses only constant extra space.
+
+Example 1:
+Input: nums = [1,3,4,2,2]
+Output: 2
+
+**Easier solutions** ::
+
+    # set
+    def find_dups(a):
+        return sum(a) - sum(set(a))
+
+    # Counter
+    from collections import Counter
+    def find_dups2(a):
+        return [k for k, v in Counter(a).items() if v > 1]
+
+| **Satisfactory solutions**
+| **Key points**
+
+| If the number of elements in [1,..x] is greater than x, then the duplicate number must be in [1,..x].
+| E.g. x=3, len([1,2,3])=3, len([1,2,3,3])=4
+
+| ``sum(v <= x for v in nums)``
+| here we are actually counting the True statements, not summing [1,2,3..]
+| But if 1<=x, 2<=x, then +1+1. If we found 3 numbers in nums that are <= x, then sum=3,
+| if there was a dup, then sum=4.
+| - binary search gives us O(n log n), space O(1)
+
+::
+
+    ### Solution 1 (using builtin for bin search)
+    from typing import List
+    from bisect import bisect_left
+
+    def findDuplicate(nums: List[int]) -> int:
+        def f(x: int) -> bool:
+            return sum(v <= x for v in nums) > x  #* 
+        return bisect_left(range(len(nums)), True, key=f)  #**
+
+#* mostly returns False, but for one True  
+
+#** for [1,3,4,2,2] , range(0, 5), lookup for [0,1,2,3,4] gives [False, False, True, False..] 
+we search for True, bisect returns index 2. (So the f function takes as arguments nums from 
+the range?)
+
+| nums = [1, 3, 4, 2, 2]
+| print(findDuplicate(nums)) #2
+| # key=f is the key function, a callable that returns a value used for sorting or ordering
+
+::
+
+    ### Solution 2 (Implement bin search manually)
+    #V1 
+    class Solution(object):
+        def findDuplicate(self, nums):
+            low, high = 1, len(nums) - 1
+            while low <= high:
+                mid = (low + high) >> 1
+                cnt = sum(x <= mid for x in nums)
+                if cnt > mid:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            return low
+
+    #V2
+    def findDuplicate(nums):
+        L, R = 1, len(nums) - 1
+        while L <= R:
+            mid = (L + R) >> 1
+            cnt = sum([1 for num in nums if num <= mid])
+
+            if cnt <= mid:
+                L = mid + 1
+            else:
+                R = mid - 1
+        return L
+
+    ### Solution 3
+    # IDEA : TWO POINTERS
+    class Solution(object):
+        def findDuplicate(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            slow , fast = nums[0] , nums[nums[0]]
+            while slow != fast:
+                slow = nums[slow]
+                fast = nums[nums[fast]]
+
+            slow = 0
+            while slow != fast:
+                slow = nums[slow]
+                fast = nums[fast]
+            return slow
+
+
+**Not acceptable solutions**::
+    
+    # Using dict lookup, but space
+    # addresses, but changes given array
+    def find_dups3(a):
+        for i in a:
+            if a[abs(i) - 1] < 0:
+                return i
+            a[i - 1] *= -1
+
+    # Sort array first, but changes array
+    class Solution:
+        def findDuplicate(self, nums):
+            nums.sort()
+            for i in range(1, len(nums)):
+                if nums[i] == nums[i-1]:
+                    return nums[i]
+
+75. (LC 412) Fizz Buzz
+-----------------------------
+`412. Fizz Buzz <https://leetcode.com/problems/fizz-buzz/>`_
+Easy ::
+
+    class Solution(object):
+        def fizzBuzz(self, n):
+            """
+            :type n: int
+            :rtype: List[str]
+            """
+            ans = []
+            for x in range(1, n + 1):
+                n = str(x)
+                if x % 15 == 0:
+                    n = "FizzBuzz"
+                elif x % 3 == 0:
+                    n = "Fizz"
+                elif x % 5 == 0:
+                    n = "Buzz"
+                ans.append(n)
+            return ans
 
