@@ -188,6 +188,18 @@ of the element.
 | *time and space O(n)*
 | When using an additional array to write the resulting array.
 
+- Do not mark elems of a, mark elems of p::
+
+    ### My V3
+    def f(a, p):
+        for i in range(len(a)):
+            if p[i] < 0:
+                continue
+            else:
+                ind = p[i]
+                a[i], a[ind] = a[ind], a[i]
+                p[ind] -= len(p)
+
 ::
 
     ### My V2

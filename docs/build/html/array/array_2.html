@@ -68,6 +68,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_5.html">Part 5 (76-85)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -298,6 +300,21 @@ of the element.</p>
 <div class="line"><em>time and space O(n)</em></div>
 <div class="line">When using an additional array to write the resulting array.</div>
 </div>
+<ul>
+<li><p>Do not mark elems of a, mark elems of p:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V3</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ind</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">p</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2</span>
 <span class="k">def</span> <span class="nf">perm</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
