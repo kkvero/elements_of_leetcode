@@ -59,6 +59,10 @@
 <li class="toctree-l1"><a class="reference internal" href="array_4.html">Part 4 (66-75)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 5 (76-85)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lc-896-monotonic-array">76. (LC 896) Monotonic Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-293-flip-game">77. (LC 293) Flip Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-832-flipping-an-image">78. (LC 832) Flipping an Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-48-rotate-image">79. (LC 48) Rotate Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-334-increasing-triplet-subsequence">80. (LC 334) Increasing Triplet Subsequence</a></li>
 </ul>
 </li>
 </ul>
@@ -142,6 +146,262 @@ Easy</p>
     <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">all</span><span class="p">(</span><span class="n">L3</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-293-flip-game">
+<h2>77. (LC 293) Flip Game<a class="headerlink" href="#lc-293-flip-game" title="Link to this heading"></a></h2>
+<p>You are playing a Flip Game with your friend.
+You are given a string currentState that contains only ‘+’ and ‘-‘.
+You and your friend take turns to flip two consecutive “++” into “–“.
+The game ends when a person can no longer make a move, and therefore the other person will be the winner.</p>
+<p>Return all possible states of the string currentState after one valid move.
+You may return the answer in any order. If there is no valid move, return an empty list [].</p>
+<p>Example 1:
+Input: currentState = “++++”
+Output: [”–++”,”+–+”,”++–“]</p>
+<p>Example 2:
+Input: currentState = “+”
+Output: []</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">generatePossibleNextMoves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">currentState</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">currentState</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span>
+                <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1"># With comments</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">generatePossibleNextMoves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">currentState</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">currentState</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span> <span class="c1">#len(s)-1, because we will do i+1</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span>   <span class="c1">#change in place to --</span>
+                <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>  <span class="c1">#add to ans changed and the items we don&#39;t know</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span>   <span class="c1">#change back to ++</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1">### My V2</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;++&quot;</span><span class="p">:</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;--&quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span> <span class="p">:]])</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1">### My V1</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span> <span class="ow">and</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+            <span class="n">ans_c</span> <span class="o">=</span> <span class="n">L</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span> <span class="p">:]</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ans_c</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-832-flipping-an-image">
+<h2>78. (LC 832) Flipping an Image<a class="headerlink" href="#lc-832-flipping-an-image" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/flipping-an-image/">832. Flipping an Image</a>
+Easy</p>
+<p><strong>Solutions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># My V</span>
+<span class="k">def</span> <span class="nf">flip_img</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+            <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">^=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">m</span>
+
+<span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">flipAndInvertImage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">image</span><span class="p">:</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                    <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^=</span> <span class="mi">1</span>
+                    <span class="n">row</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^=</span> <span class="mi">1</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">image</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line">row - is each inner list of the image, image - is list of lists</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">row</span> <span class="pre">in</span> <span class="pre">image:</span></code></div>
+</div>
+<div class="line">-We traverse each inner list.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i,</span> <span class="pre">j</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">n</span> <span class="pre">-</span> <span class="pre">1</span></code></div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">j:</span></code></div>
+</div>
+</div>
+<div class="line">-Comparing left most, right most items. Moving towards the list center.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">row[i]</span> <span class="pre">==</span> <span class="pre">row[j]:</span></code></div>
+</div>
+<div class="line">-If items are the same, e.g. [1,0,0,1], 1) it means there is no need to swap them</div>
+<div class="line">(swapping 1 with 1), 2)then we can straight away flip them, i.e. do the 2nd step.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">i,</span> <span class="pre">j</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">j</span> <span class="pre">-</span> <span class="pre">1</span></code></div>
+</div>
+<div class="line">-Keep moving towards the center</div>
+<div class="line">#**</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">i</span> <span class="pre">==</span> <span class="pre">j:</span></code></div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">row[i]</span> <span class="pre">^=</span> <span class="pre">1</span></code></div>
+</div>
+</div>
+<div class="line">-If a list has an odd number of items, then we look at the center item when i==j</div>
+<div class="line">(e.g. [1,1,0]).</div>
+<div class="line">We flip it no matter what.</div>
+</div>
+<p>#**It might look like we are missing the case when items at i, j are different, e.g.
+[1,1,0] we neither swap nor flip them. But there is no need! 1 and 0 swapped and flipped
+is still 1 and 0.
+We need to flip only if items are the same, 1,1 or 0,0.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2</span>
+<span class="p">(</span><span class="n">Unlike</span> <span class="n">solution</span> <span class="mi">1</span><span class="p">,</span> <span class="n">here</span> <span class="n">we</span> <span class="n">swap</span><span class="o">/</span><span class="n">reverse</span> <span class="nb">all</span><span class="p">,</span> <span class="n">flip</span> <span class="nb">all</span><span class="p">,</span> <span class="n">even</span> <span class="k">if</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">need</span><span class="p">,</span>
+<span class="n">we</span> <span class="n">don</span><span class="s1">&#39;t check the actual values.)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">flipAndInvertImage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type A: List[List[int]]</span>
+<span class="sd">        :rtype: List[List[int]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">row</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>   <span class="c1">#reverse all</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+                <span class="n">A</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">^=</span> <span class="mi">1</span>    <span class="c1">#flip all</span>
+        <span class="k">return</span> <span class="n">A</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Also there is no need for different rows and col variables, as we are told that</div>
+<div class="line">n == image.length</div>
+<div class="line">n == image[i].length</div>
+<div class="line">So row=col=n</div>
+<div class="line">(Num of lists = items in inner list. E.g. 3 lists, 3 items in each list.)</div>
+</div>
+</section>
+<section id="lc-48-rotate-image">
+<h2>79. (LC 48) Rotate Image<a class="headerlink" href="#lc-48-rotate-image" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/rotate-image/">48. Rotate Image</a>
+Medium</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">matrix</span><span class="p">)]</span>
+
+<span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rotate</span><span class="p">(</span><span class="n">matrix</span><span class="p">))</span> <span class="c1">#[[7, 4, 1], [8, 5, 2], [9, 6, 3]]</span>
+</pre></div>
+</div>
+<div class="admonition-transpose-vs-rotate-90 admonition">
+<p class="admonition-title">Transpose vs. rotate 90</p>
+<p>There is a difference.
+To transpose a matrix (for rows to become columns).
+The transposed matrix is not rotated but mirrored on the diagonal (i.e. columns and rows are swapped).</p>
+<p>Compare and visualize:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># original-transposed-rotated</span>
+<span class="c1"># 1 2 3   1 4 7   7 4 1</span>
+<span class="c1"># 4 5 6   2 5 8   8 5 2</span>
+<span class="c1"># 7 8 9   3 6 9   9 6 3</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">So if the task was to transpose, we would do:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">list(zip(*matrix))</span></code></div>
+<div class="line">To rotate, note the Visualization above, we just need to reverse the rows in transposed result.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">[list(reversed(x))</span> <span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">zip(*matrix)]</span></code></div>
+</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Explanation</em></p>
+<p>According to the requirements of the problem, we actually need to rotate
+<code class="docutils literal notranslate"><span class="pre">matrix[i][j]</span></code> to <code class="docutils literal notranslate"><span class="pre">matrix[j][n</span> <span class="pre">-</span> <span class="pre">i</span> <span class="pre">-</span> <span class="pre">1]</span></code>.
+We can first flip the matrix upside down, that is, swap <code class="docutils literal notranslate"><span class="pre">matrix[i][j]</span></code> and
+<code class="docutils literal notranslate"><span class="pre">matrix[n</span> <span class="pre">-</span> <span class="pre">i</span> <span class="pre">-</span> <span class="pre">1][j]</span></code>, and then flip the matrix along the main diagonal, that is,
+swap <code class="docutils literal notranslate"><span class="pre">matrix[i][j]</span></code> and <code class="docutils literal notranslate"><span class="pre">matrix[j][i]</span></code>. This way we can rotate <code class="docutils literal notranslate"><span class="pre">matrix[i][j]</span></code> to <code class="docutils literal notranslate"><span class="pre">matrix[j][n</span> <span class="pre">-</span> <span class="pre">i</span> <span class="pre">-</span> <span class="pre">1]</span></code>.</p>
+<p>Time O(N**2), N is the length of the matrix, space O(1).</p>
+</section>
+<section id="lc-334-increasing-triplet-subsequence">
+<h2>80. (LC 334) Increasing Triplet Subsequence<a class="headerlink" href="#lc-334-increasing-triplet-subsequence" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/increasing-triplet-subsequence/">334. Increasing Triplet Subsequence</a>
+Medium</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">def</span> <span class="nf">increasingTriplet</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="n">second</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="n">first</span><span class="p">:</span>     <span class="c1"># min num</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="n">num</span>
+            <span class="k">elif</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="n">second</span><span class="p">:</span>  <span class="c1"># 2nd min num, i.e. mid</span>
+                <span class="n">second</span> <span class="o">=</span> <span class="n">num</span>
+            <span class="k">else</span><span class="p">:</span>                <span class="c1"># 3rd min num, i.e. max</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1">### Solution 1 My V1 (LC accepted)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">min1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="n">min1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">min1</span><span class="p">:</span>   <span class="c1">#IMPORTANT &lt; or =</span>
+            <span class="n">min1</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>    <span class="c1">#do not be tempted to do also mid=min1</span>
+        <span class="k">elif</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1">### Solution 2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">increasingTriplet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">mi</span><span class="p">,</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">inf</span><span class="p">,</span> <span class="n">inf</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="n">mid</span><span class="p">:</span>    <span class="c1"># i.e we found max, triplet is complete</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="n">mi</span><span class="p">:</span>
+                <span class="n">mi</span> <span class="o">=</span> <span class="n">num</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mid</span> <span class="o">=</span> <span class="n">num</span>
+        <span class="k">return</span> <span class="kc">False</span>
 </pre></div>
 </div>
 </section>

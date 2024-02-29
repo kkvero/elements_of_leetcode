@@ -237,16 +237,49 @@ My V
 
 58. (LC 16) 3Sum Closest
 --------------------------
+`16. 3Sum Closest <https://leetcode.com/problems/3sum-closest/submissions/1189356541/>`_
 *(Medium)*
-Given an integer array nums of length n and an integer target, find three integers 
-in nums such that the sum is closest to target.
-Return the sum of the three integers.
-(You may assume that each input would have exactly one solution.)
 
-| # Example 1:
-| Input: nums = [-1,2,1,-4], target = 1
-| Output: 2
-| Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+| **Keys**:
+| -sort
+| -three pointers, diff var
+| -if threeSum > Greater than target, move RP
+
+::
+
+    #      <----|
+    #  [-4,-1,1,2]
+    #           R
+
+-if threeSum < Less than target, move MidPoint ::
+
+    #       |--->
+    #  [-4,-1,1,2]
+    #       M
+
+**Solutions**::
+
+    ### My V3 (LC accepted, 16, 74%)
+    def threeSumClosest(a, t):
+        a.sort()
+        ans = 0
+        dif = float("inf")
+        for lp in range(len(a) - 2):
+            rp = len(a) - 1
+            mp = lp + 1
+            while mp < rp:
+                summing = sum([a[lp], a[mp], a[rp]])
+                cur_dif = abs(summing - t)
+                if cur_dif < dif:
+                    dif = cur_dif
+                    ans = summing
+                if summing > t:
+                    rp -= 1
+                elif summing < t:
+                    mp += 1
+                else:
+                    return t
+        return ans
 
 ::
 
@@ -288,7 +321,7 @@ Solutions Time:  O(n^2)::
                     return target
         return res
 
-    ### 2 (pretty much the same, more compact)
+    ### 2 (pretty much the same)
     def threeSumClosest(num, target):
         num.sort()
         mindiff = 100000
