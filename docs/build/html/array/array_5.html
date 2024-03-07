@@ -63,6 +63,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-832-flipping-an-image">78. (LC 832) Flipping an Image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-48-rotate-image">79. (LC 48) Rotate Image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-334-increasing-triplet-subsequence">80. (LC 334) Increasing Triplet Subsequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-56-merge-intervals">81. (LC 56) Merge Intervals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-57-insert-interval">82. (LC 57) Insert Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-215-kth-largest-element-in-an-array">83. (LC 215) Kth Largest Element in an Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-747-largest-number-at-least-twice-of-others">84. (LC 747) Largest Number At Least Twice of Others</a></li>
 </ul>
 </li>
 </ul>
@@ -402,6 +406,328 @@ Medium</p>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">mid</span> <span class="o">=</span> <span class="n">num</span>
         <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-56-merge-intervals">
+<h2>81. (LC 56) Merge Intervals<a class="headerlink" href="#lc-56-merge-intervals" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/merge-intervals/">56. Merge Intervals</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><em>Side note. Sorting list of lists.</em></div>
+<div class="line">Sorts on the first element.</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">L3</span>
+<span class="go">[[2, 1], [1, 3]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L3</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L3</span>
+<span class="go">[[1, 3], [2, 1]]</span>
+</pre></div>
+</div>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">intervals</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="n">intervals</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">:</span>
+                <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Example</strong></div>
+<div class="line">Input: intervals = [[1,3],[2,6],[8,10],[15,18]]</div>
+<div class="line">Output: [[1,6],[8,10],[15,18]]</div>
+<div class="line">Merging intervals [1,3] and [2,6] into [1,6].</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">ans = [intervals[0]]</div>
+</div>
+<div class="line">Put the first interval into answer.</div>
+<div class="line">ans = [[1,3]]</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">for s, e in intervals[1:]:</div>
+</div>
+<div class="line">For all the rest intervals, look at start, end for each.</div>
+</div>
+<div class="line-block">
+<div class="line">if ans[-1][1] &lt; s:</div>
+<div class="line-block">
+<div class="line">ans.append([s, e])</div>
+</div>
+</div>
+<p>If end of the last interval in answer, here [1,3], end=3 is &lt; start of the interval
+we are looking at, here [2,6], s=2. So if next interval starts later than the previous
+ends, we would’ve appended that WHOLE interval to the answer.</p>
+<div class="line-block">
+<div class="line">else:</div>
+<div class="line-block">
+<div class="line">ans[-1][1] = max(ans[-1][1], e)</div>
+</div>
+</div>
+<p>If [2,6] starts within [1,3], then we don’t append the whole interval [2,6]
+but instead check if it finishes within interval already in answer, i.e. [1,3].
+Check WHICH END IS GREATER, make that new end for existing interval, [1,3] -&gt; [1,6]</p>
+</section>
+<section id="lc-57-insert-interval">
+<h2>82. (LC 57) Insert Interval<a class="headerlink" href="#lc-57-insert-interval" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/insert-interval/">57. Insert Interval</a>
+Medium</p>
+<p><strong>Logic</strong>
+We append the given interval to the list of intervals, then call the merge()
+method on it. merge() will first sort the intervals, us having added a new interval,
+then perform the unchanged logic of merge from the previous question.</p>
+<p><strong>Solution</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">newInterval</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">intervals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+            <span class="n">intervals</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="n">intervals</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ans</span>
+
+        <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newInterval</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merge</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>My attempt (LC accepted 60,65%)</em>
+I insert the interval into the right spot, keeping the intervals sorted.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inter</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">inter</span><span class="p">]</span>
+        <span class="c1"># insert new interval</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">inter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">inter</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+                <span class="k">break</span>
+            <span class="k">elif</span> <span class="n">i</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inter</span><span class="p">)</span>
+
+        <span class="c1"># merge intervals</span>
+        <span class="n">new_m</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">new_m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
+            <span class="c1">#omit interval completely, it is within prev interval</span>
+            <span class="k">if</span> <span class="n">new_m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">new_m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="c1">#append interval completely</span>
+            <span class="k">elif</span> <span class="n">new_m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">new_m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="c1">#intervals intersect</span>
+            <span class="k">elif</span> <span class="n">new_m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">new_m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">new_m</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-215-kth-largest-element-in-an-array">
+<h2>83. (LC 215) Kth Largest Element in an Array<a class="headerlink" href="#lc-215-kth-largest-element-in-an-array" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/kth-largest-element-in-an-array/">215. Kth Largest Element in an Array</a>
+Medium</p>
+<p>The task asks not to use sorting.</p>
+<p><strong>Sort</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kth</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">)[</span><span class="o">-</span><span class="n">k</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">kth2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">Solution1</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findKthLargest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">nums</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>No sorting</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Idea : remove max</span>
+<span class="k">def</span> <span class="nf">findKthLargest</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">nums</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+
+<span class="c1"># The same my V</span>
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span>
+</pre></div>
+</div>
+<p><strong>Heap</strong></p>
+<p>Complexity:
+Making a heap is O(N). Popping from a heap one time is logN, so KlogN for k pops.
+Overall = N+KlogN.
+Which is a bit better than sorting with NlogN, depending on k.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">heapq</span> <span class="kn">import</span> <span class="n">heapify</span><span class="p">,</span> <span class="n">heappop</span>
+<span class="k">def</span> <span class="nf">f4</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">max_heap</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>  <span class="c1">#alt. -int(n) for..</span>
+    <span class="n">heapify</span><span class="p">(</span><span class="n">max_heap</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">max_heap</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ans</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Quickselect</strong></p>
+<p># Complexity [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]
+Quickselect average case O(N), worst case O(N**2).
+Compare with quicksort avg. O(NlogN). Because quicksort performs the search on both
+sides of the partitioned array. In quick select we search only in one partition
+(because we compare pivot index with target k and know on which one side we have to search.)
+More precisely, its going to be n + n/2 + n/4 .. infinite series = 2n = O(n)</p>
+<p>What is the worst case.
+When each time we pick a pivot, it happens to be the greatest number, landing at right side (_,_,_,_,P).
+Meaning we would decrease our search not by half, but only by -1 item.
+Ending up with O(N**2)</p>
+<p>We don’t have to sort the entire array to give the answer.</p>
+<p>Quickselect can be thought of as a hybrid of Quicksort and binary search.
+Like Quicksort, Quickselect relies on partitioning.</p>
+<p>After a partition, the pivot value ends up in the appropriate spot in the
+array. So if we end up with pivot at 5th place, then this is our
+5th lowest value in the array. For good!</p>
+<p>==&gt; So after each partition, we check where the pivot ended up, i.e. we check pivot’s index.
+If it is not entirely what we were looking for, then we keep partitioning
+only that halve of array, to the left or right of pivot, depending whether
+we were looking for the Nth lowest or highest value.</p>
+<p>Solution [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">12</span></a>]:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">left_pointer</span><span class="p">,</span> <span class="n">right_pointer</span><span class="p">):</span>
+        <span class="n">pivot_index</span> <span class="o">=</span> <span class="n">right_pointer</span>
+        <span class="n">pivot</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">pivot_index</span><span class="p">]</span>
+        <span class="n">right_pointer</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">a</span><span class="p">[</span><span class="n">left_pointer</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">:</span>
+                <span class="n">left_pointer</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">a</span><span class="p">[</span><span class="n">right_pointer</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">:</span>
+                <span class="n">right_pointer</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">left_pointer</span> <span class="o">&gt;=</span> <span class="n">right_pointer</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">a</span><span class="p">[</span><span class="n">left_pointer</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">right_pointer</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">a</span><span class="p">[</span><span class="n">right_pointer</span><span class="p">],</span>
+                    <span class="n">a</span><span class="p">[</span><span class="n">left_pointer</span><span class="p">],</span>
+                <span class="p">)</span>
+                <span class="n">left_pointer</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">left_pointer</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">pivot_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">pivot_index</span><span class="p">],</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">left_pointer</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">left_pointer</span>
+
+    <span class="k">def</span> <span class="nf">quickselect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">left_index</span><span class="p">,</span> <span class="n">right_index</span><span class="p">):</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">k</span>  <span class="c1"># kth lowest equivalent of kth largest</span>
+        <span class="k">if</span> <span class="n">right_index</span> <span class="o">-</span> <span class="n">left_index</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">left_index</span><span class="p">]</span>
+        <span class="n">pivot_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">left_index</span><span class="p">,</span> <span class="n">right_index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">pivot_index</span><span class="p">:</span>  <span class="c1"># search left side       #2</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">quickselect</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">left_index</span><span class="p">,</span> <span class="n">pivot_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">pivot_index</span><span class="p">:</span>  <span class="c1"># search right side</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">quickselect</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">pivot_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right_index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">pivot_index</span><span class="p">]</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="c1"># print(S.quickselect(nums, k, 0, len(nums) - 1))  # 4</span>
+<span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">quickselect</span><span class="p">(</span><span class="n">nums2</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1">#5</span>
+</pre></div>
+</div>
+<p><strong>Explained</strong></p>
+<p>#1 The adaptation line.
+Initially the algorithm is to search for the kth_lowest.
+The sorting is in normal, lowest to highest order. [1,2,3,4]
+Array 6 items long, 4th largest is 6-4=2 normal index.</p>
+<div class="line-block">
+<div class="line"># kth_lowest_value</div>
+<div class="line">Equivalent to the index</div>
+<div class="line"># if right_index - left_index &lt;= 0:</div>
+<div class="line">Base case</div>
+<div class="line">else # if kth_lowest_value == pivot_index</div>
+</div>
+</section>
+<section id="lc-747-largest-number-at-least-twice-of-others">
+<h2>84. (LC 747) Largest Number At Least Twice of Others<a class="headerlink" href="#lc-747-largest-number-at-least-twice-of-others" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/largest-number-at-least-twice-of-others/">747. Largest Number At Least Twice of Others</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">dominantIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">mx</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">mx</span><span class="p">:</span>
+                <span class="n">mid</span><span class="p">,</span> <span class="n">mx</span> <span class="o">=</span> <span class="n">mx</span><span class="p">,</span> <span class="n">v</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">elif</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">mid</span><span class="p">:</span>
+                <span class="n">mid</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">return</span> <span class="n">ans</span> <span class="k">if</span> <span class="n">mx</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">mid</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1">### My V1</span>
+<span class="c1">#(perhaps .index() lookup is not as efficient as using enumerate)</span>
+
+<span class="k">def</span> <span class="nf">twice_as</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">max1</span> <span class="o">=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">max1</span><span class="p">:</span>
+            <span class="n">max2</span> <span class="o">=</span> <span class="n">max1</span>
+            <span class="n">max1</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">max2</span><span class="p">:</span>
+            <span class="n">max2</span> <span class="o">=</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">max1</span> <span class="o">/</span> <span class="n">max2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">max1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">nums1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">twice_as</span><span class="p">(</span><span class="n">nums1</span><span class="p">))</span>  <span class="c1"># 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">twice_as</span><span class="p">(</span><span class="n">nums2</span><span class="p">))</span>  <span class="c1"># -1</span>
+
+<span class="c1">### My V2 - heap</span>
+<span class="p">(</span><span class="n">Uses</span> <span class="n">extra</span> <span class="n">space</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">heapq</span> <span class="kn">import</span> <span class="n">heapify</span><span class="p">,</span> <span class="n">heappop</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+    <span class="n">heapify</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="n">max1</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="n">max2</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">max1</span> <span class="o">/</span> <span class="n">max2</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="o">-</span><span class="n">max1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1">### My V3 - max</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">max1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">max1</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">max1</span><span class="p">)</span>
+    <span class="n">max2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">max1</span> <span class="o">/</span> <span class="n">max2</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1">### My V4</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="o">/</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
