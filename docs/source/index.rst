@@ -35,6 +35,7 @@ TABLE OF CONTENTS
     Part 3 (56-65) <array/array_3>
     Part 4 (66-75) <array/array_4>
     Part 5 (76-85) <array/array_5>
+    Part 6 (86-95) <array/array_6>
 
 
 .. toctree::
