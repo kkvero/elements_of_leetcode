@@ -65,6 +65,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-128-longest-consecutive-sequence">89. (LC 128) Longest Consecutive Sequence</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-229-majority-element-ii">90. (LC 229) Majority Element II</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-643-maximum-average-subarray-i">91. (LC 643) Maximum Average Subarray I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-624-maximum-distance-in-arrays">92. (LC 624) Maximum Distance in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-670-maximum-swap">93. (LC 670) Maximum Swap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-4-median-of-two-sorted-arrays">94. (LC 4) Median of Two Sorted Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-921-minimum-add-to-make-parentheses-valid">95. (LC 921) Minimum Add to Make Parentheses Valid</a></li>
 </ul>
 </li>
 </ul>
@@ -412,6 +416,333 @@ Easy</p>
         <span class="n">avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="n">k</span>
         <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">avg</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-624-maximum-distance-in-arrays">
+<h2>92. (LC 624) Maximum Distance in Arrays<a class="headerlink" href="#lc-624-maximum-distance-in-arrays" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><strong>Task</strong></div>
+<div class="line">You are given m arrays, where each array is sorted in ascending order.</div>
+</div>
+<p>You can pick up two integers from two different arrays (each array picks one) and
+calculate the distance. We define the distance between two integers a and b to be
+their absolute difference |a - b|.</p>
+<p>Return the maximum distance.</p>
+<p>Example 1:
+Input: arrays = [[1,2,3],[4,5],[1,2,3]]
+Output: 4
+Explanation: One way to reach the maximum distance 4 is to pick 1 in the first or third array and pick 5 in the second array.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arrays</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">mi</span><span class="p">,</span> <span class="n">mx</span> <span class="o">=</span> <span class="n">arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>    <span class="c1">#**1</span>
+        <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">mx</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">mi</span><span class="p">)</span>  <span class="c1">#**2</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">mi</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">mi</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">mx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">mx</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Keys</strong></div>
+<div class="line">#**</div>
+<div class="line">1)Work with the fact that we are given SORTED arrays.</div>
+<div class="line">2)Make sure each time we pick min and max from two &lt;different arrays&gt;.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arrays</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type arrays: List[List[int]]</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span><span class="p">,</span> <span class="n">curMin</span><span class="p">,</span> <span class="n">curMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="o">-</span><span class="mi">10000</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arrays</span> <span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">curMin</span><span class="p">,</span> <span class="n">curMax</span><span class="o">-</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">curMin</span><span class="p">,</span> <span class="n">curMax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">curMin</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">curMax</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-670-maximum-swap">
+<h2>93. (LC 670) Maximum Swap<a class="headerlink" href="#lc-670-maximum-swap" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/maximum-swap/">670. Maximum Swap</a>
+Medium</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2 No tools. (LC accepted 73,35%, Time and Space O(log m))</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maximumSwap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">s</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]:</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>In short</strong></div>
+<div class="line">-two traversals:</div>
+<div class="line">1)right to left; array d to record index of max value to the right of current</div>
+<div class="line">2)left to right traverse d, if index&lt;value, swap</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Full elaboration</strong></div>
+<div class="line">E.g. num = 98368 -&gt; 98863</div>
+<div class="line">-convert num to s=[‘9’, ‘8’, ‘3’, ‘6’, ‘8’]</div>
+<div class="line">-n=len(s)=5</div>
+<div class="line">-d=[0,1,2,3,4]</div>
+<div class="line">—Traverse right to left: for i 3,2,1,0:</div>
+</div>
+<div class="line-block">
+<div class="line">i=3</div>
+<div class="line">s=[‘9’, ‘8’, ‘3’, ‘6’, ‘8’]</div>
+<div class="line">d=[0,1,2,3,4]</div>
+<div class="line">If s[i]&lt;=max at right (max at right is stored in d)</div>
+<div class="line-block">
+<div class="line">if s[i] &lt;= s[d[i + 1]]:</div>
+</div>
+<div class="line">6 &lt; 8</div>
+<div class="line">d=[0,1,2,4,4]</div>
+</div>
+<div class="line-block">
+<div class="line">—Traverse left to right d</div>
+<div class="line">If s at index d index &lt; s at index d value: swap</div>
+</div>
+<div class="line-block">
+<div class="line">s=[‘9’, ‘8’, &lt;’3’&gt;, ‘6’, ‘8’]</div>
+<div class="line-block">
+<div class="line">0    1     2</div>
+</div>
+<div class="line">d=[0,1,&lt;4&gt;,4,4]</div>
+<div class="line">Here value at index 2 &lt; value at index 4.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted: 50,90%)</span>
+<span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
+    <span class="n">L2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="n">L2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">max_val</span><span class="p">:</span>
+            <span class="n">ind</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rindex</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">max_val</span><span class="p">))</span>
+            <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">L</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">break</span>
+    <span class="n">L3</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L3</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">swap</span><span class="p">(</span><span class="mi">937</span><span class="p">))</span>  <span class="c1"># 973</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">swap</span><span class="p">(</span><span class="mi">2736</span><span class="p">))</span>  <span class="c1"># 7236</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">swap</span><span class="p">(</span><span class="mi">90979</span><span class="p">))</span>  <span class="c1"># 99970</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">swap</span><span class="p">(</span><span class="mi">93774</span><span class="p">))</span>  <span class="c1"># 97374 after using str.rindex(max_val) 97734</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Note the case when n=93774</div>
+<div class="line">1)we swap not the first integer (here at i=2)</div>
+<div class="line">2)there are several occurrences of the max_value 7.</div>
+<div class="line">We have to look for the rightmost index of the occurrence of max_value.</div>
+<div class="line">So that after the swap the number is bigger.</div>
+</div>
+<div class="line-block">
+<div class="line"># Here str.rindex(value) was used.</div>
+<div class="line">[Credit: <a class="reference external" href="https://stackoverflow.com/questions/6890170/how-to-find-the-last-occurrence-of-an-item-in-a-python-list">https://stackoverflow.com/questions/6890170/how-to-find-the-last-occurrence-of-an-item-in-a-python-list</a> ]</div>
+</div>
+<p>For the more general case you could use list.index on the reversed list:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">li</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p>The slicing here creates a copy of the entire list. That’s fine for short lists,
+but for the case where li is very large, efficiency can be better with a lazy approach:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">list_rindex</span><span class="p">(</span><span class="n">li</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">))):</span>
+        <span class="k">if</span> <span class="n">li</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not in list&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># One-liner version:</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">li</span><span class="p">)))</span> <span class="k">if</span> <span class="n">li</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-4-median-of-two-sorted-arrays">
+<h2>94. (LC 4) Median of Two Sorted Arrays<a class="headerlink" href="#lc-4-median-of-two-sorted-arrays" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/median-of-two-sorted-arrays/">4. Median of Two Sorted Arrays</a>
+Hard</p>
+<p>The thing here is that the task asks for a solution o(log(n+m)).
+It is easier to find solutions O(n+m). Several listed below.
+While O(log(n+m) is more complicated, uses binary search.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="c1"># (Merging, i.e. here nums1+nums2 is O(n+m).</span>
+<span class="c1"># Despite that, submitting to Leetcode gives a pretty good acceptance statistics -</span>
+<span class="c1"># Time beats 99.28% of users with Python3. Memory beats 61%.)</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findMedianSortedArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">concat</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">nums1</span><span class="o">+</span><span class="n">nums2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">med</span> <span class="o">=</span> <span class="n">concat</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tot_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">med</span> <span class="o">=</span> <span class="p">(</span><span class="n">concat</span><span class="p">[</span><span class="n">tot_len</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">concat</span><span class="p">[</span><span class="n">tot_len</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">med</span>
+
+<span class="c1">### Solution 2 (less efficient according to Leetcode)</span>
+<span class="kn">import</span> <span class="nn">statistics</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findMedianSortedArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">nums3</span> <span class="o">=</span> <span class="n">nums1</span> <span class="o">+</span> <span class="n">nums2</span>
+        <span class="n">nums3</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">nums3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">statistics</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">nums3</span><span class="p">)</span>
+
+<span class="c1">#OR (Runtime Beats80.53%of users with Python3, Memory Beats86.27%of users with Python3)</span>
+<span class="kn">import</span> <span class="nn">statistics</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findMedianSortedArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">statistics</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">nums1</span><span class="o">+</span><span class="n">nums2</span><span class="p">))</span>
+
+
+<span class="c1">### Solution 3 (Leetcode editorial, O(n+m))</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findMedianSortedArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">)</span>
+        <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="c1"># Get the smaller value between nums1[p1] and nums2[p2].</span>
+        <span class="k">def</span> <span class="nf">get_min</span><span class="p">():</span>
+            <span class="k">nonlocal</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span>
+            <span class="k">if</span> <span class="n">p1</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">nums1</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nums2</span><span class="p">[</span><span class="n">p2</span><span class="p">]:</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">nums1</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span>   <span class="c1">#**1</span>
+                    <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+                    <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">p2</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">nums1</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span>
+                <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+                <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">ans</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">get_min</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">get_min</span><span class="p">()</span> <span class="o">+</span> <span class="n">get_min</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>  <span class="c1">#**2</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">get_min</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">get_min</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">1# Gets us values at current p1,p2 first (so at 0 initially), only then increments +1.</div>
+<div class="line">2# These loops</div>
+<div class="line">for _ in range((m + n) // 2 - 1)</div>
+<div class="line">Iterate that many times before the actual answer that we need.</div>
+<div class="line">E.g. [1,2], [3]</div>
+<div class="line">total len=3, mid =1</div>
+<div class="line">for _ in range(1) -&gt; iterates once.</div>
+<div class="line">return get_min() -&gt; iterates once the 2nd time</div>
+<div class="line">So we get ans at p1=1 which nums1[p1]=value 2.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 3, My V (Leetcode checked, beets 75% of Py3 solutions both T&amp;M.)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findMedianSortedArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">a2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+        <span class="n">total_len</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span>
+        <span class="n">mid_index</span> <span class="o">=</span> <span class="n">total_len</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="c1"># returns CURRENT min values at p1 or p2, then moves +1 p1 or p2</span>
+        <span class="k">def</span> <span class="nf">get_min</span><span class="p">():</span>
+            <span class="k">nonlocal</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span>
+            <span class="k">if</span> <span class="n">p1</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">a2</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+                <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">p2</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">a1</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span>
+                <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># both p1 and p2 are within array lens</span>
+                <span class="k">if</span> <span class="n">a1</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a2</span><span class="p">[</span><span class="n">p2</span><span class="p">]:</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">a1</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span>
+                    <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">a2</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+                    <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">ans</span>
+
+        <span class="k">if</span> <span class="n">total_len</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># odd</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mid_index</span><span class="p">):</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">get_min</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">get_min</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># even</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mid_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">get_min</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">get_min</span><span class="p">()</span> <span class="o">+</span> <span class="n">get_min</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-921-minimum-add-to-make-parentheses-valid">
+<h2>95. (LC 921) Minimum Add to Make Parentheses Valid<a class="headerlink" href="#lc-921-minimum-add-to-make-parentheses-valid" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/">921. Minimum Add to Make Parentheses Valid</a>
+Medium</p>
+<p>NOTE:
+The simplistic examples of the task hide the fact that you should account for cases
+like ‘)(’. So it is not enough to count parentheses. We should keep track of them in order.
+(i.e. use stack).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">minAddToMakeValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type S: str</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># left is length of stack</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">left</span><span class="p">:</span>
+                    <span class="n">left</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">right</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">minAddToMakeValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">stk</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span> <span class="ow">and</span> <span class="n">stk</span> <span class="ow">and</span> <span class="n">stk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+                <span class="n">stk</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">stk</span><span class="p">)</span>
+
+<span class="c1">### My V (LC accepted)</span>
+<span class="k">def</span> <span class="nf">make_valid</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># for &#39;(&#39;</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># for &#39;)&#39; without pair</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">cnt</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

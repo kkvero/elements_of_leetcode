@@ -14,6 +14,10 @@ While the solutions are widely available through different sources, it is a grea
 challenge to find the logic behind the provided answers. 
 This resource seeks to fill (or diminish) that gap.
 
+Questions numbering is not the same as on Leetcode.
+To search for a Leetcode question use the "search docs" field. 
+Enter the question number or title as it appears on Leetcode.
+
 TABLE OF CONTENTS
 -----------------
 
