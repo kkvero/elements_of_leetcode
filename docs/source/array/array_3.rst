@@ -637,6 +637,14 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 <https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/>`_
 *(Medium)*
 
+| Key is that you can buy and sell on the same day.
+| -Basically you can sell each time you meet a higher price. 
+| -If successful sell, then set <cur buy price> = <cur price> (so sell and buy on the same day).
+| -Add up the results.
+| E.g. prices=[1,2,3,4,5]
+| You don't have to look for the best option, which is here buy at 1, sell at 5.
+| You can buy at 1, sell at 2. Then buy at 2, sell at 3 etc.
+
 **Solution 1** [:ref:`2 <ref-label>`] ::
 
     ### Solution 1
@@ -663,6 +671,22 @@ Explanation: In this case, no transactions are done and the max profit = 0.
                 if prices[i] > prices[i-1]:
                     max_profit += prices[i] - prices[i-1]
             return max_profit
+
+**My V** (LC accepted 50, 70%) ::
+
+    class Solution:
+        def maxProfit(self, prices: List[int]) -> int:
+            cur_min = prices[0]
+            total_profit = 0
+            for price in prices:
+                cur_min = min(cur_min, price)
+                profit = price - cur_min
+                if profit > 0:
+                    cur_min = price
+                total_profit += profit
+            return total_profit
+
+Emulating as close as possible the classic buy-sell stock.
 
 64. (LC 1014) Best Sightseeing Pair
 -------------------------------------

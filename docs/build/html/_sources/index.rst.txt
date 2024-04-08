@@ -40,6 +40,7 @@ TABLE OF CONTENTS
     Part 4 (66-75) <array/array_4>
     Part 5 (76-85) <array/array_5>
     Part 6 (86-95) <array/array_6>
+    Part 7 (96-105) <array/array_7>
 
 
 .. toctree::

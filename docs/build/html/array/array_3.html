@@ -70,6 +70,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="array_4.html">Part 4 (66-75)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array_6.html">Part 6 (86-95)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -752,6 +753,15 @@ Explanation: In this case, no transactions are done and the max profit = 0.</p>
 <h2>63. (LC 122) Best Time to Buy and Sell Stock II<a class="headerlink" href="#lc-122-best-time-to-buy-and-sell-stock-ii" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">122. Best Time to Buy and Sell Stock II</a>
 <em>(Medium)</em></p>
+<div class="line-block">
+<div class="line">Key is that you can buy and sell on the same day.</div>
+<div class="line">-Basically you can sell each time you meet a higher price.</div>
+<div class="line">-If successful sell, then set &lt;cur buy price&gt; = &lt;cur price&gt; (so sell and buy on the same day).</div>
+<div class="line">-Add up the results.</div>
+<div class="line">E.g. prices=[1,2,3,4,5]</div>
+<div class="line">You don’t have to look for the best option, which is here buy at 1, sell at 5.</div>
+<div class="line">You can buy at 1, sell at 2. Then buy at 2, sell at 3 etc.</div>
+</div>
 <p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
@@ -780,6 +790,21 @@ Explanation: In this case, no transactions are done and the max profit = 0.</p>
         <span class="k">return</span> <span class="n">max_profit</span>
 </pre></div>
 </div>
+<p><strong>My V</strong> (LC accepted 50, 70%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">cur_min</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">total_profit</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">cur_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cur_min</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+            <span class="n">profit</span> <span class="o">=</span> <span class="n">price</span> <span class="o">-</span> <span class="n">cur_min</span>
+            <span class="k">if</span> <span class="n">profit</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">cur_min</span> <span class="o">=</span> <span class="n">price</span>
+            <span class="n">total_profit</span> <span class="o">+=</span> <span class="n">profit</span>
+        <span class="k">return</span> <span class="n">total_profit</span>
+</pre></div>
+</div>
+<p>Emulating as close as possible the classic buy-sell stock.</p>
 </section>
 <section id="lc-1014-best-sightseeing-pair">
 <h2>64. (LC 1014) Best Sightseeing Pair<a class="headerlink" href="#lc-1014-best-sightseeing-pair" title="Link to this heading"></a></h2>
