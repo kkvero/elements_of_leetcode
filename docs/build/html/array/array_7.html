@@ -65,6 +65,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-3-longest-substring-without-repeating-characters">98. (LC 3) Longest Substring Without Repeating Characters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-163-missing-ranges">99. (LC 163) Missing Ranges</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-238-product-of-array-except-self">100. (LC 238) Product of Array Except Self</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-53-maximum-subarray">101. (LC 53) Maximum Subarray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-152-maximum-product-subarray">102. (LC 152) Maximum Product Subarray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-217-contains-duplicate">103. (LC 217) Contains Duplicate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-33-search-in-rotated-sorted-array">104. (LC 33) Search in Rotated Sorted Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-11-container-with-most-water">105. (LC 11) Container With Most Water</a></li>
 </ul>
 </li>
 </ul>
@@ -413,6 +418,257 @@ for this). Then for the final list we use just the last item, [-1], of the accum
 <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">prod_except_self</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="c1">#[24, 12, 8, 6]</span>
 </pre></div>
+</div>
+</section>
+<section id="lc-53-maximum-subarray">
+<h2>101. (LC 53) Maximum Subarray<a class="headerlink" href="#lc-53-maximum-subarray" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/maximum-subarray/">53. Maximum Subarray</a>
+Medium</p>
+<p><strong>Keys</strong></p>
+<div class="line-block">
+<div class="line">-If cur sum drops to a negative value, drop the entire cur subarray and start building from scratch.</div>
+<div class="line">+Don’t calculate the subarry sum each time. Do just += num</div>
+<div class="line">-Edge case when adjacent nums like [-3,4].</div>
+<div class="line">If going forward their sum is 1.</div>
+<div class="line">If calculating the sum first, s=-3, less than 0, so drop to 0 first, then add +4.</div>
+<div class="line">OR set the initial sum to 0 from the start. And drop it to 0 again if cur_s &lt; 0.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 50, 50%)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">max_s</span> <span class="o">=</span> <span class="n">cur_s</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">cur_s</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cur_s</span><span class="p">)</span>  <span class="c1">#drop sum to 0 Before adding the next num</span>
+        <span class="n">cur_s</span> <span class="o">+=</span> <span class="n">n</span>
+        <span class="n">max_s</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_s</span><span class="p">,</span> <span class="n">cur_s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">max_s</span>
+
+<span class="c1">### Solution 2 (neetcode, LC accepted 75, 98%)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">max_s</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cur_s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="n">cur_s</span> <span class="o">+=</span> <span class="n">n</span>
+        <span class="n">max_s</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_s</span><span class="p">,</span> <span class="n">cur_s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cur_s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cur_s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">max_s</span>
+
+<span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxSubArray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span>   <span class="c1">#**</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1">#** max out of sum of previous numbers (because f is built out of +x0+x1..),</span>
+<span class="ow">or</span> <span class="mi">0</span><span class="o">+</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="n">x</span> <span class="n">alone</span><span class="o">.</span>
+<span class="n">I</span><span class="o">.</span><span class="n">e</span><span class="o">.</span> <span class="k">if</span> <span class="n">previous</span> <span class="nb">sum</span> <span class="n">of</span> <span class="n">numbers</span> <span class="ow">is</span> <span class="n">lower</span> <span class="n">than</span> <span class="mf">0.</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-152-maximum-product-subarray">
+<h2>102. (LC 152) Maximum Product Subarray<a class="headerlink" href="#lc-152-maximum-product-subarray" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/maximum-product-subarray/">152. Maximum Product Subarray</a>
+Medium</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">lp</span><span class="p">,</span> <span class="n">prod</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">rp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="n">prod</span> <span class="o">=</span> <span class="n">prod</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">prod</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">prod</span> <span class="o">&lt;</span> <span class="n">ans</span> <span class="ow">and</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="n">rp</span><span class="p">:</span>
+            <span class="n">prod</span> <span class="o">/=</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span>
+            <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">prod</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+
+<span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">max_prod</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">mp</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="n">prod</span> <span class="o">=</span> <span class="n">mp</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">prod</span> <span class="o">&lt;</span> <span class="n">mp</span><span class="p">:</span>
+            <span class="n">mp</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">mp</span> <span class="o">=</span> <span class="n">prod</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1">### Solution</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">f</span> <span class="o">=</span> <span class="n">g</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">ff</span><span class="p">,</span> <span class="n">gg</span> <span class="o">=</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ff</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">gg</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ff</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">gg</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<p>We keep track of max and min, because if the next x is negative, then our min
+might become the max.</p>
+</section>
+<section id="lc-217-contains-duplicate">
+<h2>103. (LC 217) Contains Duplicate<a class="headerlink" href="#lc-217-contains-duplicate" title="Link to this heading"></a></h2>
+<p><cite>217. Contains Duplicate &lt;https://leetcode.com/problems/contains-duplicate/&gt;_</cite>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (LC accepted, most efficient)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">containsDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+
+<span class="c1">### Solution 2 (my V, LC accepted 2nd in efficiency)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">containsDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">dups</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnt</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">dups</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+<span class="c1">### Solution 3 (LC accepted least efficient)</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">containsDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">pairwise</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">nums</span><span class="p">)))</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-33-search-in-rotated-sorted-array">
+<h2>104. (LC 33) Search in Rotated Sorted Array<a class="headerlink" href="#lc-33-search-in-rotated-sorted-array" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/search-in-rotated-sorted-array/">33. Search in Rotated Sorted Array</a>
+Medium</p>
+<p>Hint: Binary search</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V2 Neetcode</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">:</span>            <span class="c1">#if a=[1]</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="n">mid</span>
+
+            <span class="c1"># left sorted portion</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]:</span>  <span class="c1">#if this side of array is sorted</span>
+                <span class="k">if</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="ow">or</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]:</span>
+                    <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="c1"># right sorted portion</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="ow">or</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]:</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">O(logN) means we would use binary search.</div>
+<div class="line">a=[4,5,6,7,0,1,2]</div>
+<div class="line">In an array sorted with an offset/rotation, we will have 2 portions that are</div>
+<div class="line">exactly sorted.</div>
+<div class="line">But using M in binary search, we could end up with 2 portions, that are not sorted.</div>
+<div class="line">To combat this fact:</div>
+<div class="line">1)Having L,M,R. t=0.</div>
+<div class="line">We first check if portion L-M is sorted. How: we check if a[L] &lt;= a[M].</div>
+<div class="line">if it is sorted, and our t&gt;a[M] then we can be certain, we need to search M-R.</div>
+</div>
+<div class="line-block">
+<div class="line">+EDGE CASE. t&lt;a[M] could be both on left and right sides.</div>
+<div class="line">=&gt; If t&lt;a[M] and t&lt;a[L], then we know we have to search M-R.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">target</span> <span class="o">&lt;=</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]:</span>
+                    <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span> <span class="o">&lt;=</span> <span class="n">nums</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span>
+        <span class="k">return</span> <span class="n">left</span> <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-11-container-with-most-water">
+<h2>105. (LC 11) Container With Most Water<a class="headerlink" href="#lc-11-container-with-most-water" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/container-with-most-water/">11. Container With Most Water</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Keys</strong></div>
+<div class="line">-Two pointers.</div>
+<div class="line">-Volume = min(values)*(dif of indices)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2 (Two Pointers) LC accepted 20,40%</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span>  <span class="c1">#Volume current</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vmax</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">]:</span>
+            <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">vmax</span>
+
+<span class="c1">### Solution</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="nb">min</span><span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1">### My V 1</span>
+<span class="c1"># (left to right iteration)</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">m1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">m1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vmax</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">m1</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vmax</span>
+
+<span class="n">height</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">height</span><span class="p">))</span> <span class="c1">#49</span>
+<span class="n">height2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">height2</span><span class="p">))</span> <span class="c1">#1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">We record the max height as m1 tuple, (value, index).</div>
+<div class="line">We always need to know the index of max value because Volume = height*width</div>
+<div class="line">(width = current i - m1 index)</div>
 </div>
 </section>
 </section>

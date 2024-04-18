@@ -297,12 +297,253 @@ for this). Then for the final list we use just the last item, [-1], of the accum
     nums = [1, 2, 3, 4]
     print(prod_except_self(nums)) #[24, 12, 8, 6]
 
+101. (LC 53) Maximum Subarray
+---------------------------------
+`53. Maximum Subarray <https://leetcode.com/problems/maximum-subarray/>`_
+Medium
 
+**Keys**
 
+| -If cur sum drops to a negative value, drop the entire cur subarray and start building from scratch.
+| +Don't calculate the subarry sum each time. Do just += num
+| -Edge case when adjacent nums like [-3,4].
+| If going forward their sum is 1.
+| If calculating the sum first, s=-3, less than 0, so drop to 0 first, then add +4.
+| OR set the initial sum to 0 from the start. And drop it to 0 again if cur_s < 0.
 
+::
 
+    ### My V (LC accepted 50, 50%)
+    def f(a):
+        max_s = cur_s = a[0]
+        for n in a[1:]:
+            cur_s = max(0, cur_s)  #drop sum to 0 Before adding the next num
+            cur_s += n
+            max_s = max(max_s, cur_s)
+        return max_s
 
+    ### Solution 2 (neetcode, LC accepted 75, 98%)
+    def f(a):
+        max_s = a[0]
+        cur_s = 0
+        for n in a:
+            cur_s += n
+            max_s = max(max_s, cur_s)
+            if cur_s < 0:
+                cur_s = 0
+        return max_s
 
+    ### Solution 1
+    class Solution:
+        def maxSubArray(self, nums: List[int]) -> int:
+            ans = f = nums[0]
+            for x in nums[1:]:
+                f = max(f, 0) + x   #**
+                ans = max(ans, f)
+            return ans
 
+    #** max out of sum of previous numbers (because f is built out of +x0+x1..), 
+    or 0+x, i.e. x alone. 
+    I.e. if previous sum of numbers is lower than 0.
+
+102. (LC 152) Maximum Product Subarray
+-------------------------------------------
+`152. Maximum Product Subarray <https://leetcode.com/problems/maximum-product-subarray/>`_
+Medium ::
+
+    ### My V2
+    def f(a):
+        lp, prod = 0, 1
+        ans = -float("inf")
+        for rp in range(len(a)):
+            prod = prod * a[rp]
+            ans = max(ans, prod)
+            while prod < ans and lp < rp:
+                prod /= a[lp]
+                lp += 1
+                ans = max(ans, prod)
+        return int(ans)
+
+    ### My V
+    def max_prod(a):
+        ans = mp = a[0]
+        for i in range(1, len(a)):
+            prod = mp * a[i]
+            if prod < mp:
+                mp = a[i]
+            else:
+                ans = mp = prod
+        return ans
+
+    ### Solution
+    class Solution:
+        def maxProduct(self, nums: List[int]) -> int:
+            ans = f = g = nums[0]
+            for x in nums[1:]:
+                ff, gg = f, g
+                f = max(x, ff * x, gg * x)
+                g = min(x, ff * x, gg * x)
+                ans = max(ans, f)
+            return ans
+
+We keep track of max and min, because if the next x is negative, then our min
+might become the max.
+
+103. (LC 217) Contains Duplicate
+--------------------------------------
+`217. Contains Duplicate <https://leetcode.com/problems/contains-duplicate/>_`
+Easy ::
+
+    ### Solution 1 (LC accepted, most efficient)
+    class Solution:
+        def containsDuplicate(self, nums: List[int]) -> bool:
+            return len(set(nums)) < len(nums)
+
+    ### Solution 2 (my V, LC accepted 2nd in efficiency)
+    class Solution:
+        def containsDuplicate(self, nums: List[int]) -> bool:
+            cnt = collections.Counter(nums)
+            dups = [k for k, v in cnt.items() if v > 1]
+            return len(dups) > 0
+
+    ### Solution 3 (LC accepted least efficient)
+    import itertools
+    class Solution:
+        def containsDuplicate(self, nums: List[int]) -> bool:
+            return any(a == b for a, b in itertools.pairwise(sorted(nums)))
+
+104. (LC 33) Search in Rotated Sorted Array
+-----------------------------------------------
+`33. Search in Rotated Sorted Array <https://leetcode.com/problems/search-in-rotated-sorted-array/>`_
+Medium
+
+Hint: Binary search ::
+
+    ### V2 Neetcode
+    class Solution:
+        def search(self, nums: List[int], target: int) -> int:
+            l, r = 0, len(nums) - 1
+
+            while l <= r:            #if a=[1]
+                mid = (l + r) // 2
+                if target == nums[mid]:
+                    return mid
+
+                # left sorted portion
+                if nums[l] <= nums[mid]:  #if this side of array is sorted
+                    if target > nums[mid] or target < nums[l]:
+                        l = mid + 1
+                    else:
+                        r = mid - 1
+                # right sorted portion
+                else:
+                    if target < nums[mid] or target > nums[r]:
+                        r = mid - 1
+                    else:
+                        l = mid + 1
+            return -1
+
+| O(logN) means we would use binary search.
+| a=[4,5,6,7,0,1,2]
+| In an array sorted with an offset/rotation, we will have 2 portions that are 
+| exactly sorted.
+| But using M in binary search, we could end up with 2 portions, that are not sorted.
+| To combat this fact:
+| 1)Having L,M,R. t=0. 
+| We first check if portion L-M is sorted. How: we check if a[L] <= a[M].
+| if it is sorted, and our t>a[M] then we can be certain, we need to search M-R.
+
+| +EDGE CASE. t<a[M] could be both on left and right sides.
+| => If t<a[M] and t<a[L], then we know we have to search M-R.
+
+::
+
+    ### V 1
+    class Solution:
+        def search(self, nums: List[int], target: int) -> int:
+            n = len(nums)
+            left, right = 0, n - 1
+            while left < right:
+                mid = (left + right) >> 1
+                if nums[0] <= nums[mid]:
+                    if nums[0] <= target <= nums[mid]:
+                        right = mid
+                    else:
+                        left = mid + 1
+                else:
+                    if nums[mid] < target <= nums[n - 1]:
+                        left = mid + 1
+                    else:
+                        right = mid
+            return left if nums[left] == target else -1
+
+    ### My V
+    def f(a, n):
+        try:
+            ans = a.index(n)
+        except:
+            ans = -1
+        return ans
+
+105. (LC 11) Container With Most Water
+--------------------------------------------
+`11. Container With Most Water <https://leetcode.com/problems/container-with-most-water/>`_
+Medium
+
+| **Keys**
+| -Two pointers.
+| -Volume = min(values)*(dif of indices)
+
+::
+
+    ### My V2 (Two Pointers) LC accepted 20,40%
+    def f(a):
+        l = 0
+        r = len(a) - 1
+        vmax = 0
+        while l < r:
+            v = min(a[l], a[r]) * (r - l)  #Volume current
+            vmax = max(vmax, v)
+            if a[l] < a[r]:
+                l += 1
+            else:
+                r -= 1
+        return vmax
+
+    ### Solution
+    class Solution:
+        def maxArea(self, height: List[int]) -> int:
+            i, j = 0, len(height) - 1
+            ans = 0
+            while i < j:
+                t = (j - i) * min(height[i], height[j])
+                ans = max(ans, t)
+                if height[i] < height[j]:
+                    i += 1
+                else:
+                    j -= 1
+            return ans
+
+    ### My V 1
+    # (left to right iteration)
+
+    def f(a):
+        m1 = (0, 0)
+        vmax = 0
+        for i in range(len(a)):
+            v = min(m1[0], a[i]) * (i - m1[1])
+            vmax = max(vmax, v)
+            if a[i] - i > m1[0]:
+                m1 = (a[i], i)
+        return vmax
+
+    height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+    print(f(height)) #49
+    height2 = [1, 1]
+    print(f(height2)) #1
+
+| We record the max height as m1 tuple, (value, index).
+| We always need to know the index of max value because Volume = height*width 
+| (width = current i - m1 index)
 
 
