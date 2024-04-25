@@ -43,6 +43,11 @@ TABLE OF CONTENTS
     Part 7 (96-105) <array/array_7>
     Extra (137) <array/array_extra>
 
+.. toctree::
+    :caption: Strings:
+
+    Knowledge base <strings/strings_kb>
+    Part 1 (106-115) <strings/strings_1>
 
 .. toctree::
     :caption: Math:

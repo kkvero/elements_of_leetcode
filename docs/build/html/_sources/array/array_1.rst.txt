@@ -397,92 +397,47 @@ NOTE, its array indexing, so the indexes are [0,1,2,3,etc]
     n2 = [7, 5, 3, 2]
     print(f(n1, n2)) #[2, 6, 0, 2, 0, 0, 4, 7, 2]
 
-42. (LC 55) Advancing through an array
----------------------------------------
+42. (LC 55) Jump Game (Advancing through an array)
+----------------------------------------------------
 | `55. Jump Game <https://leetcode.com/problems/jump-game/>`_
 | Medium
 
-::
+| **Task note**
+| Each element in the array represents your MAXIMUM JUMP length.
+| So in [3,0,8,2,0,0,1] you don't have to jump from i=0 to i=3, you can jump to i=2 (with 8).
 
-    ### Solution to Leetcode
+| **Key**
+| - Start looking at nums[i] values in reverse.
+| [2,3,1,1,<4>]  #<We imagine index 4 to be our end goal.>
+|  0,1,2,3,4     #i
+| End goal = index 4
+| Can we get from i=3 (1 jump) to goal i=4, yes. 
+| Then we can move our goal post to this position. Goal = index 3.
+| [2,3,1,<1>,4]
+| 
+| Can we get from i=2 (1 jump) to goal i=3, yes. Move goal.
+| [2,3,<1>,1,4]
+| ...
+
+Greedy, O(n). ::
+
+    ### Solution 1 (neetcode)
     class Solution:
         def canJump(self, nums: List[int]) -> bool:
-            mx = 0
-            for i, x in enumerate(nums):
-                if mx < i:
-                    return False
-                mx = max(mx, i + x)
-            return True
+            goal = len(nums) - 1
+            for i in range(len(nums) - 2, -1, -1):
+                if i + nums[i] >= goal:
+                    goal = i
+            return goal == 0
 
-# Back to Advancing through an array task [:ref:`2 <ref-label>`]
-
-Write a program which takes an array of n nonnegative integers, where A[i] denotes the maximum you can
-advance from index i in one move, and returns whether it is possible to reach the end of the array.
-
-| You begin at the first position (A[0]) and need to get to the last position.
-| E.g. A = [1,3,1,0,2,0,1]
-| Starting at i=0, A[0]=1, we make 1 step reaching A[1], A[1]=3 we reach A[4]=2
-| going 2 steps we reach the end of the array.
-| E.g. A = [3,3,1,0,2,0,1] here we would not move past i=3 which is A[3]=0
-
-MY NOTE: You initially start at index 0, but you can try to start from other index, 
-UNLESS value at that index is 0. So in [3,2,1,0,4] we try to start at i=0,1,2,3 
-but not past i=3 with value 0. 
-
-| **Solution**
-| time O(n), space O(1) (three integer variables)
-
-| Note,
-| Because the journey through the array does not have to start from i=0, 
-| we have to iterate through all entries.
- 
-| # A[i] + i
-| A[i] - is how far this index will get us (A[3] will get us 3 steps)
-| i - is where we are
-| So it is fair to say that (A[i] + i) is the furthest we can get from index i.
-| (i - where we are, A[i] - where we're going to, so A[i] + i is total distance
-| from A[0].)
- 
-| # ans = max(ans, A[i]+i)
-| We get the 'furthest we got so far'
-
-::
-
-    def can_reach_end(A):
-        """ ans - furthest_reach_so_far, last_i - last_index"""
-        ans, last_i = 0, len(A) - 1
-        i = 0
-        while i <= ans and ans < last_i:
-            ans = max(ans, A[i]+i)
-            i += 1
-        return ans >= last_i
-
-    a = [3,2,0,0,2,0,1]
-    a2 = [3,3,1,0,2,0,1]
-    print(can_reach_end(a))
-    print(can_reach_end(a2))
-    False
-    True
-
-    ### My V
-    def f(a):
-        for i in range(len(a)):
-            if a[i] == 0:
-                return False
-            while a[i] != 0:
-                i += a[i]
-                if i >= (len(a) - 1):
-                    return True
-        return False
-    A = [3, 3, 1, 0, 2, 0, 1]
-    B = [3, 3, 1, 0, 1, 0, 0]
-    C = [3, 3, 1, 0, 1, 0, 1]
-    print(f(A))
-    print(f(B))
-    print(f(C))
-    True
-    False
-    False
+    ### My V (LC accepted 60, 60)
+    class Solution:
+        def canJump(self, nums: List[int]) -> bool:
+            goal = len(nums) - 1
+            for i in reversed(list(range(len(nums)))):
+                if i + nums[i] >= goal:
+                    goal = i
+            return goal == 0
 
 43. (LC 26) Delete duplicates from a sorted array
 ----------------------------------------------------
