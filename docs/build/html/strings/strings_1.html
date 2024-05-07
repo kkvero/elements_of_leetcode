@@ -68,6 +68,15 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (106-115)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lc-125-test-palindromicity-valid-palindrome">106. (LC 125) Test palindromicity (Valid Palindrome)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-8-string-to-integer">107. (LC 8) String to Integer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-171-excel-sheet-column-number">108. (LC 171) Excel Sheet Column Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-168-excel-sheet-column-title">108.2 (LC 168) Excel Sheet Column Title</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-186-reverse-words-in-a-string-ii">109. (LC 186) Reverse Words in a String II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-17-letter-combinations-of-a-phone-number">110. (LC 17) Letter Combinations of a Phone Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-38-count-and-say-look-and-say">111. (LC 38) Count and Say (Look-and-say)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-13-roman-to-integer">112. (LC 13) Roman to Integer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-93-restore-ip-addresses">113. (LC 93) Restore IP Addresses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#write-a-string-sinusoidally">114. Write a string sinusoidally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implement-run-length-encoding">115. Implement run-length encoding</a></li>
 </ul>
 </li>
 </ul>
@@ -291,6 +300,764 @@ in the calculation, and serves as a default when the iterable is empty.</p>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">num</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">num</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-171-excel-sheet-column-number">
+<h2>108. (LC 171) Excel Sheet Column Number<a class="headerlink" href="#lc-171-excel-sheet-column-number" title="Link to this heading"></a></h2>
+<p>Easy
+(Compute the spreadsheet column encoding)</p>
+<p>Spreadsheets have column names ‘A’, ‘B’…’Z’, ‘AA’, ‘AB’…’AAA’, ‘AAB’..</p>
+<ul class="simple">
+<li><p>Implement a function that converts a spreadsheet column id to the corresponding integer, with ‘A’ corresponding to 1.</p></li>
+</ul>
+<p>You would return 4 for ‘D’, 27 for AA, 702 for ZZ.</p>
+<ul class="simple">
+<li><p>How would you test the function? (Test edge cases and a few random ones.)</p></li>
+</ul>
+<div class="line-block">
+<div class="line">Logic:</div>
+<div class="line">We should convert a string representing a base-26 number to the corresponding integer.</div>
+<div class="line">We take that A corresponds to 1, not 0.</div>
+<div class="line">So we use the ‘string to integer’ conversion.</div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>], O(n)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="k">def</span> <span class="nf">convert_col</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">result</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">result</span> <span class="o">*</span> <span class="mi">26</span> <span class="o">+</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="p">)</span>
+
+<span class="c1">### My V2 (when you do know how ord() works) (LC accepted 97,91%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">titleToNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span> <span class="o">*</span> <span class="mi">26</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">))</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Note:</div>
+<div class="line">-ord(char1) - ord(first char) = char value a=1, b=2 etc.</div>
+<div class="line">-because a=1, not a=0, we add +1</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">-</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>-ord(‘a’), ord(‘A’) are different values!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V1 simple (LC accepted: 13, 95%)</span>
+<span class="c1">#(when you don&#39;t know how ord works)</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">titleToNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span>
+        <span class="n">d</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">cnt</span><span class="o">=</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">=</span><span class="n">cnt</span>
+            <span class="n">cnt</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">res</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">*</span> <span class="mi">26</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1">### Solution</span>
+<span class="kn">import</span> <span class="nn">functools</span><span class="o">,</span> <span class="nn">string</span>
+<span class="k">def</span> <span class="nf">convert_col2</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">result</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">result</span> <span class="o">*</span> <span class="mi">26</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="p">)</span>
+
+<span class="n">col</span> <span class="o">=</span> <span class="s2">&quot;Z&quot;</span>
+<span class="n">col2</span> <span class="o">=</span> <span class="s2">&quot;AB&quot;</span>
+<span class="n">col3</span> <span class="o">=</span> <span class="s2">&quot;ZZ&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">convert_col2</span><span class="p">(</span><span class="n">col</span><span class="p">))</span>  <span class="c1"># 26</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">convert_col2</span><span class="p">(</span><span class="n">col2</span><span class="p">))</span>  <span class="c1"># 28</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">convert_col2</span><span class="p">(</span><span class="n">col3</span><span class="p">))</span>  <span class="c1"># 702</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-168-excel-sheet-column-title">
+<h2>108.2 (LC 168) Excel Sheet Column Title<a class="headerlink" href="#lc-168-excel-sheet-column-title" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/excel-sheet-column-title/description/">LC 168.</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My rewrite (LC accepted)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">convertToTitle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ans</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span>        <span class="c1">#**off by 1, because A=1</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">res</span><span class="p">)</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">res</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">26</span>         <span class="c1">#**off by 1, because A=1</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="c1">### Solution 1 (neetcode)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">convertToTitle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columnNumber</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># Time: O(logn) - Log base 26 of n</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">while</span> <span class="n">columnNumber</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">remainder</span> <span class="o">=</span> <span class="p">(</span><span class="n">columnNumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">remainder</span><span class="p">)</span>
+            <span class="n">columnNumber</span> <span class="o">=</span> <span class="p">(</span><span class="n">columnNumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">26</span>
+
+        <span class="k">return</span> <span class="n">res</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># reverse output</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">E.g. n=701 (maps to ‘ZY’)</div>
+<div class="line">(701-1)%26=24</div>
+<div class="line">ord(‘A’)+24=89</div>
+<div class="line">chr(89)=’Y’</div>
+<div class="line">n= (n-1)//26  (n-1 takes care of the fact that A=1 in task description)</div>
+<div class="line">Repeat</div>
+</div>
+<div class="line-block">
+<div class="line">-Time complexity</div>
+<div class="line">In each loop we divide by 26. So (log base 26 of n).</div>
+<div class="line">The base of the logarithm is not relevant in big O, so O(log N).</div>
+<div class="line">Space O(1).</div>
+</div>
+</section>
+<section id="lc-186-reverse-words-in-a-string-ii">
+<h2>109. (LC 186) Reverse Words in a String II<a class="headerlink" href="#lc-186-reverse-words-in-a-string-ii" title="Link to this heading"></a></h2>
+<p>(Reverse all the words in a sentence)</p>
+<div class="line-block">
+<div class="line">Task 1:</div>
+<div class="line">For example, “Alice likes Bob” transforms to “Bob likes Alice”.</div>
+<div class="line">We do not need to keep the original string.</div>
+</div>
+<div class="line-block">
+<div class="line">LC task:</div>
+<div class="line">Solve the problem in-place, i.e. without allocating extra space.</div>
+<div class="line">Input: s = [“t”,”h”,”e”,” “,”s”,”k”,”y”,” “,”i”,”s”,” “,”b”,”l”,”u”,”e”]</div>
+<div class="line">Output: [“b”,”l”,”u”,”e”,” “,”i”,”s”,” “,”s”,”k”,”y”,” “,”t”,”h”,”e”]</div>
+</div>
+<div class="line-block">
+<div class="line">Difference:</div>
+<div class="line">In task 1 we are given a string encoded as bytearray.</div>
+</div>
+<div class="line-block">
+<div class="line">Logic:</div>
+<div class="line">Reverse all characters, then reverse again but individual words.</div>
+<div class="line">“ram is costly” -&gt; “yltsoc si mar” -&gt; “costly is ram”</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line">O(n) time, O(1) space</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># s is bytearray</span>
+<span class="k">def</span> <span class="nf">reverse_sentence</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="c1"># Reverse the whole string</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">reverse_word</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">start</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">end</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">end</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">start</span><span class="p">]</span>
+            <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">reverse_word</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># reverse the last word</span>
+    <span class="n">reverse_word</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;ram is costly&quot;</span>
+<span class="n">s_b</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reverse_sentence</span><span class="p">(</span><span class="n">s_b</span><span class="p">))</span>  <span class="c1"># bytearray(b&#39;costly is ram&#39;)</span>
+
+<span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">p1</span><span class="p">:</span><span class="n">p2</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">p2</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="kc">None</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1">#**otherwise doesn&#39;t work when p1=0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">p1</span><span class="p">:</span><span class="n">p2</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">p2</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">p1</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">p2</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1">#reversing last word when p2 is not &#39; &#39;</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">p1</span> <span class="p">:</span> <span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">p2</span> <span class="p">:</span> <span class="n">p1</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="c1">#[&#39;b&#39;, &#39;l&#39;, &#39;u&#39;, &#39;e&#39;, &#39; &#39;, &#39;i&#39;, &#39;s&#39;, &#39; &#39;, &#39;s&#39;, &#39;k&#39;, &#39;y&#39;, &#39; &#39;, &#39;t&#39;, &#39;h&#39;, &#39;e&#39;]</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-17-letter-combinations-of-a-phone-number">
+<h2>110. (LC 17) Letter Combinations of a Phone Number<a class="headerlink" href="#lc-17-letter-combinations-of-a-phone-number" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/">LC 17. Letter Combinations of a Phone Number</a>
+Medium</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1</span>
+<span class="k">def</span> <span class="nf">letterCombinations0</span><span class="p">(</span><span class="n">digits</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">digits</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="s2">&quot;def&quot;</span><span class="p">,</span> <span class="s2">&quot;ghi&quot;</span><span class="p">,</span> <span class="s2">&quot;jkl&quot;</span><span class="p">,</span> <span class="s2">&quot;mno&quot;</span><span class="p">,</span> <span class="s2">&quot;pqrs&quot;</span><span class="p">,</span> <span class="s2">&quot;tuv&quot;</span><span class="p">,</span> <span class="s2">&quot;wxyz&quot;</span><span class="p">]</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">ans</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">digits</span> <span class="o">=</span> <span class="s2">&quot;23&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">letterCombinations0</span><span class="p">(</span><span class="n">digits</span><span class="p">))</span>
+<span class="c1"># [&#39;ad&#39;, &#39;ae&#39;, &#39;af&#39;, &#39;bd&#39;, &#39;be&#39;, &#39;bf&#39;, &#39;cd&#39;, &#39;ce&#39;, &#39;cf&#39;]</span>
+
+<span class="c1"># After 1st pass ans = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+<span class="c1"># During 2nd pass ans = [&#39;a&#39;+&#39;g&#39;, &#39;a&#39;+&#39;h&#39;, &#39;a&#39;+&#39;i&#39;, &#39;b&#39;+&#39;g&#39;, &#39;b&#39;+&#39;h&#39; etc. ]</span>
+
+<span class="c1"># Solution 2 Cartesian product</span>
+<span class="c1">### My V (LC accepted 90,40%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">letterCombinations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">digits</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="s1">&#39;def&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="s1">&#39;ghi&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">:</span> <span class="s1">&#39;jkl&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">:</span> <span class="s1">&#39;mno&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;7&#39;</span><span class="p">:</span> <span class="s1">&#39;pqrs&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">:</span> <span class="s1">&#39;tuv&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">:</span> <span class="s1">&#39;wxyz&#39;</span><span class="p">}</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">letters</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span>  <span class="c1">#*</span>
+</pre></div>
+</div>
+<p>#* Have to join because product() returns res = [[‘a’, ‘d’], [‘a’, ‘e’] .. ] –&gt;
+so we join to have the required format [“ad”,”ae”..]</p>
+</section>
+<section id="lc-38-count-and-say-look-and-say">
+<h2>111. (LC 38) Count and Say (Look-and-say)<a class="headerlink" href="#lc-38-count-and-say-look-and-say" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/count-and-say/">38. Count and Say (Look-and-say)</a>
+Medium</p>
+<div class="line-block">
+<div class="line"># More elaboration on the task.</div>
+<div class="line">The sequence starts with 1.</div>
+<div class="line">“How many + Item” - 1 -&gt; one 1 -&gt; 11</div>
+<div class="line">11 -&gt; two 1 -&gt; 21 NOTE, we do not append to previous, we build from scratch each time.</div>
+<div class="line">21 -&gt; one 2, one 1 -&gt; 1211 NOTE, we count from MSB</div>
+<div class="line">The first 6 items in such a sequence.</div>
+<div class="line">[1, 11, 21, 1211, 111221, 312211]</div>
+</div>
+<div class="line-block">
+<div class="line">You are given integer n, return nth item in sequence.</div>
+<div class="line">Note, return the result as a string.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">c</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">c</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">cnt</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="c1">#21</span>
+<span class="c1">#1211</span>
+<span class="c1">#312211</span>
+
+<span class="c1"># Use Stdlib</span>
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">it</span>
+<span class="k">def</span> <span class="nf">look_and_say_pythonic</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">group</span><span class="p">)))</span> <span class="o">+</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">it</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">look_and_say_pythonic</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 1211</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">itertools.groupby(iterable,</span> <span class="pre">key=None)</span></code></div>
+<div class="line">How it works.</div>
+<div class="line">import itertools as it</div>
+<div class="line">L = “224555”</div>
+<div class="line"># Output groups</div>
+<div class="line">print([list(g) for k, g in it.groupby(L)])</div>
+<div class="line">[[‘2’, ‘2’], [‘4’], [‘5’, ‘5’, ‘5’]]</div>
+</div>
+<div class="line-block">
+<div class="line"># Omitting k (for k, g ..) it gets weird</div>
+<div class="line">print([list(g) for g in it.groupby(L)])</div>
+<div class="line">[[‘2’, &lt;itertools._grouper object at 0x7fc58273b9a0&gt;], [‘4’,..</div>
+</div>
+<div class="line-block">
+<div class="line"># Output (group, group item)</div>
+<div class="line">print([(list(g), k) for k, g in it.groupby(L)])</div>
+<div class="line">[([‘2’, ‘2’], ‘2’), ([‘4’], ‘4’), ([‘5’, ‘5’, ‘5’], ‘5’)]</div>
+</div>
+<div class="line-block">
+<div class="line">- what is g</div>
+<div class="line">The actual group. [‘2’, ‘2’]</div>
+<div class="line">- what is k</div>
+<div class="line">Grouper function. When None it is the value of item (result of identity function). ‘2’</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1 (book attr)</span>
+<span class="k">def</span> <span class="nf">look_and_say1</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">next_number</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">next_number</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">look_and_say1</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 1211</span>
+
+<span class="c1"># Solution 2 (doocs attribution)</span>
+<span class="k">def</span> <span class="nf">countAndSay2</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">countAndSay2</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  <span class="c1"># 1211</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Time O(n2**n)</div>
+<div class="line">2**n - because each successive number can have twice as many digits as the previous.</div>
+<div class="line">n - n iteration</div>
+</div>
+</section>
+<section id="lc-13-roman-to-integer">
+<h2>112. (LC 13) Roman to Integer<a class="headerlink" href="#lc-13-roman-to-integer" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/roman-to-integer/">LC 13. Roman to Integer</a>
+Easy</p>
+<div class="line-block">
+<div class="line"><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+</div>
+<ul class="simple">
+<li><p>Invalid roman numbers</p></li>
+</ul>
+<p>Note, we do not account for invalid romans (like IC and would return 99 for it,
+while I can only come before V and X), because the task guarantees that we are given
+only valid roman numbers.</p>
+<ul class="simple">
+<li><p>key points</p></li>
+</ul>
+<p>We iterate from right to left. If current value is smaller than the value to the
+right, then we subtract (right-left), otherwise add.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="k">def</span> <span class="nf">roman_to_integer</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;I&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">val</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="n">val</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">if</span> <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span> <span class="k">else</span> <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]),</span>
+        <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">roman_to_integer</span><span class="p">(</span><span class="s2">&quot;IX&quot;</span><span class="p">))</span>  <span class="c1"># 9</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">roman_to_integer</span><span class="p">(</span><span class="s2">&quot;XI&quot;</span><span class="p">))</span>  <span class="c1"># 11</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line">- Reminder</div>
+<div class="line">functools.reduce(function, iterable[, initializer])</div>
+</div>
+<div class="line-block">
+<div class="line">So</div>
+<div class="line-block">
+<div class="line">T[s[-1]],</div>
+</div>
+<div class="line">as last arg to reduce() is the initializer,</div>
+<div class="line">E.g. ‘IX’, initializer is ‘X’.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">reversed(range(len(s) - 1)),</div>
+</div>
+<div class="line">We iterate from right to left, start at i=-2</div>
+<div class="line">E.g. ‘IX’, we start with ‘I’</div>
+</div>
+<div class="line-block">
+<div class="line">if T[s[i]] &lt; T[s[i + 1]]</div>
+<div class="line">if ‘I’ &lt; ‘X’, yes it is, then</div>
+<div class="line">val + (-T[s[i]]), i.e.(‘X’ - ‘I’) (because we iterate from right to left).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 but no magic</span>
+<span class="p">(</span><span class="n">Iterate</span> <span class="n">left</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">no</span> <span class="n">jumps</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">romanToInt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">roman</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;I&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">roman</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">roman</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]:</span>
+                <span class="n">res</span> <span class="o">-=</span> <span class="n">roman</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">roman</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1">### Solution 1, still no magic, my V (LC accepted)</span>
+<span class="p">(</span><span class="n">iterate</span> <span class="n">right</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="mi">2</span> <span class="n">step</span> <span class="n">jumps</span> <span class="k">if</span> <span class="n">met</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">IV</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;I&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]]):</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">d</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]]</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">d</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1">#### My brute force (LC accepted, with middle stats)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;I&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">}</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">add_from_dict</span><span class="p">():</span>
+        <span class="k">nonlocal</span> <span class="n">d</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">ans</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="n">d</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="mi">4</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="mi">9</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">add_from_dict</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="mi">40</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="mi">90</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">add_from_dict</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="mi">400</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="mi">900</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">add_from_dict</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">add_from_dict</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-93-restore-ip-addresses">
+<h2>113. (LC 93) Restore IP Addresses<a class="headerlink" href="#lc-93-restore-ip-addresses" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/restore-ip-addresses/">LC 93. Restore IP Addresses</a>
+Medium
+(Or compute all valid IP addresses.)</p>
+<p>The simpler version of a backtrack process is 22. Generate Parentheses
+(in stacks, here N 177.)</p>
+<p>=&gt; When you see: create all possible combinations: think Backtracking</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 2 (neetcode, LC accepted 95, 18%)</span>
+<span class="c1"># The order of s stays the same, but we place the &quot;.&quot; in different places</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">restoreIpAddresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">:</span>   <span class="c1">#no valid response possible</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">def</span> <span class="nf">backtrack</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">dots</span><span class="p">,</span> <span class="n">curIP</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">dots</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>  <span class="c1">#we&#39;re beyond limits</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curIP</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">dots</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))):</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">255</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+                    <span class="n">backtrack</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dots</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curIP</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">backtrack</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p><strong>Explained</strong></p>
+<div class="line-block">
+<div class="line-block">
+<div class="line">if len(s) &gt; 12:</div>
+</div>
+<div class="line">s=’123454245653356’</div>
+<div class="line">Our given initial string &lt;s&gt; is too long, not possible to construct a single valid IP</div>
+<div class="line">from such a string.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">def backtrack(i, dots, curIP):</div>
+</div>
+<div class="line">=&gt;Give to backtrack func variables that will change during the backtracking.</div>
+<div class="line">i - index we are at in the given string</div>
+<div class="line">dots - we keep count of total num of dots inserted so far.</div>
+<div class="line">curIP - current IP we are constructing.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">if dots == 4 and i == len(s):</div>
+<div class="line-block">
+<div class="line">res.append(curIP[:-1])</div>
+</div>
+</div>
+<div class="line">The “good” base case. When we are done with constructing the current IP and add it to result.</div>
+<div class="line">When the i index in the current loop would be out of bounds, and we’ve recorded the 4th dot: ‘0.1.2.3.’</div>
+<div class="line">We also slice off the last dot:</div>
+<div class="line">0.1.2.3.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">if dots &gt; 4:</div>
+<div class="line-block">
+<div class="line">return</div>
+</div>
+</div>
+<div class="line">We got 4 dots but index didn’t yet reach the end of the string.</div>
+<div class="line">E.g. 1.2.3.4.5667</div>
+<div class="line">So no valid IP from this combination of dots.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">for j in range(i, min(i + 3, len(s))):</div>
+</div>
+<div class="line">The max of our looping is the size of 1 part, which is index+3 (or len of initial string).</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">if int(s[i:j+1]) &lt;= 255 and (i == j or s[i] != “0”):</div>
+</div>
+<div class="line">If slice results in a num &lt;=255 AND (that num is EITHER a single digit OR the first digit of several digits is not zero).</div>
+<div class="line">i == j -&gt; if len of char is just 1. We are slicing, so when i==j, len of slice is 1.</div>
+<div class="line">s[i] != “0” -&gt; that is the first char is not zero.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 2</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line">Tips:</div>
+<div class="line">-Brute force with nested loops.</div>
+<div class="line">-Separate func that checks part validity.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (LC accepted 80, 90%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">restoreIpAddresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">def</span> <span class="nf">is_valid_part</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="c1"># &#39;00&#39;, &#39;000&#39;, &#39;01&#39;, etc. are not valid, but &#39;0&#39; is valid.</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">255</span><span class="p">)</span>
+
+        <span class="n">result</span><span class="p">,</span> <span class="n">parts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))):</span>
+            <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">is_valid_part</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">)):</span>
+                    <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">is_valid_part</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="n">j</span><span class="p">,</span> <span class="mi">4</span><span class="p">)):</span>
+                            <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="n">k</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="n">k</span> <span class="p">:]</span>
+                            <span class="k">if</span> <span class="n">is_valid_part</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="ow">and</span> <span class="n">is_valid_part</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>
+                                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;25525511135&quot;</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;101023&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">get_valid_ip_address</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>  <span class="c1"># [&#39;255.255.11.135&#39;, &#39;255.255.111.35&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">get_valid_ip_address</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span> <span class="c1"># [&#39;1.0.10.23&#39;, &#39;1.0.102.3&#39;, &#39;10.1.0.23&#39;, &#39;10.10.2.3&#39;, &#39;101.0.2.3&#39;]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Time complexity (don’t quite get it).</div>
+<div class="line">The total number of IP addresses is a constant (2**32), implying an O(1) time complexity</div>
+<div class="line">for the above algorithm.</div>
+</div>
+<div class="line-block">
+<div class="line">Explained:</div>
+<div class="line">s[0] != ‘0’</div>
+<div class="line">Meaning first digit of a part is not 0. E.g. 01.. with leading 0 is not valid.</div>
+<div class="line">(While 0 alone is valid.)</div>
+</div>
+<div class="line-block">
+<div class="line">in range(1, min(4, len(s))</div>
+<div class="line">till 4 (exclusive 4, i.e. really 3 digits) or len(s) whichever we reach first.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">parts[0] = s[:i]</div>
+<div class="line">..</div>
+<div class="line-block">
+<div class="line">parts[1] = s[i : i + j]</div>
+</div>
+</div>
+<div class="line">E.g. s=’255..’ i=1</div>
+<div class="line">parts[0] = s[:1] (=[2])</div>
+<div class="line">parts[1] = s[1:1+1] (=[5])</div>
+</div>
+</section>
+<section id="write-a-string-sinusoidally">
+<h2>114. Write a string sinusoidally<a class="headerlink" href="#write-a-string-sinusoidally" title="Link to this heading"></a></h2>
+<p><strong>Task</strong>
+Given string s like “Hello_World”. Its sinusoid (snakestring) is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># e   _   l</span>
+<span class="c1">#H l o W r d</span>
+<span class="c1">#   l   o   !</span>
+</pre></div>
+</div>
+<p>Written in 1 dimension it is: “e_lHloWrdlo!”.</p>
+<p>Given string, output its sinusoid (snakestring).</p>
+<div class="line-block">
+<div class="line"><strong>Logic:</strong></div>
+<div class="line">Look for pattern.</div>
+<div class="line">I.e. write down concrete examples.</div>
+<div class="line">Any sinusoid has 3 rows.</div>
+<div class="line">The above concrete example shows this pattern:</div>
+<div class="line">Row 1: s[1],s[5],s[9],… -&gt;step=4 starting with 1</div>
+<div class="line">Row 2: s[0],s[2],s[4],..  -&gt;step=2 starting with 0</div>
+<div class="line">Row 3: s[3],s[7],s[11],.. -&gt;step=4 starting with 3</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution V1 (full book attr)</span>
+<span class="c1"># Three iterations through s</span>
+<span class="k">def</span> <span class="nf">snake_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># outputs the first row, step=4, starting with 1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Hello_World&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">snake_string</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="c1"># e_lHloWrdlo</span>
+
+<span class="c1">### Solution V2 (full book attr)</span>
+<span class="c1"># Using Python slicing.</span>
+
+<span class="k">def</span> <span class="nf">snake_string_pythonic</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Time:
+3 iterations, O(n) each, so overall O(n). n is len of string.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">sin_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s3</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">s2</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">s1</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">s3</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span> <span class="o">+</span> <span class="n">s3</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Hello_World&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sin_string</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="c1">#e_lHloWrdlo</span>
+</pre></div>
+</div>
+</section>
+<section id="implement-run-length-encoding">
+<h2>115. Implement run-length encoding<a class="headerlink" href="#implement-run-length-encoding" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><strong>Task</strong></div>
+<div class="line">Run-length encoding (RLE) compression.</div>
+<div class="line">Encoding.</div>
+<div class="line">Encodes string “aaaabcccaa” into “4a1b3c2a”.</div>
+<div class="line">Decoding of “3e4f2e” refurns “eeeffffee”.</div>
+<div class="line">Implement both encoding and decoding functions.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution (O(n))</span>
+<span class="k">def</span> <span class="nf">decoding</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">cnt</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">cnt</span><span class="p">)</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>[<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">encoding</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>  <span class="c1">#if 1st part of or is True, he is not going to eval the 2nd, so no out of bounds error</span>
+            <span class="c1"># Found new character so write the count of previous character</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># s[i] == s[i - 1].</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;ffyyu&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">encoding</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="c1"># 2f2y1u</span>
+
+<span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">encode2</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># to make &#39;aaabb..c0&#39; extra char to compare with the previous char</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">index</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;aaaabcccaa&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">encode2</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>  <span class="c1"># 4a1b3c2a</span>
+
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">ascii_lowercase</span>
+<span class="k">def</span> <span class="nf">decode1</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ascii_lowercase</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;2a5f1t&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">decode1</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>  <span class="c1"># aaffffft</span>
 </pre></div>
 </div>
 </section>
