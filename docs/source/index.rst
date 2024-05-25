@@ -48,6 +48,7 @@ TABLE OF CONTENTS
 
     Knowledge base <strings/strings_kb>
     Part 1 (106-115) <strings/strings_1>
+    Part 2 (116-125) <strings/strings_2>
 
 .. toctree::
     :caption: Math:

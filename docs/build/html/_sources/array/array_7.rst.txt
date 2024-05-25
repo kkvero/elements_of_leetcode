@@ -5,15 +5,27 @@ Array Questions Part 7
 `945. Minimum Increment to Make Array Unique <https://leetcode.com/problems/minimum-increment-to-make-array-unique/>`_
 Medium ::
 
+    ### My V (LC accepted, 40, 90)
+    class Solution:
+        def minIncrementForUnique(self, nums: List[int]) -> int:
+            nums.sort()
+            moves = 0
+            for i in range(1, len(nums)):
+                if nums[i] <= nums[i-1]:
+                    dif = nums[i-1] - nums[i] + 1
+                    nums[i] += dif
+                    moves += dif
+            return moves
+
     class Solution(object):
     def minIncrementForUnique(self, A):
         A.sort()
         ans = 0
         for i in range(1, len(A)):
-        if A[i] > A[i - 1]: 
-            continue
-        ans += A[i - 1] - A[i] + 1
-        A[i] = A[i - 1] + 1
+            if A[i] > A[i - 1]: 
+                continue
+            ans += A[i - 1] - A[i] + 1
+            A[i] = A[i - 1] + 1
         return ans
 
     def minIncrementForUnique(nums) -> int:

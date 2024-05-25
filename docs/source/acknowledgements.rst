@@ -16,3 +16,4 @@ Acknowledgements and References
 10. `Neetcode coding practice <https://neetcode.io>`_.
 11. `Sai Anish Malla YouTube Channel <https://www.youtube.com/@saianishmalla2646>`_.
 12. A Common-Sense Guide to Data Structures and Algorithms, Second Edition, by Jay Wengrow. ISBN-10 1680507222.
+13. Programming Interview Problems: Dynamic Programming (with solutions in Python), by Leonardo Rossi.  ISBN-13 979-8558191189.

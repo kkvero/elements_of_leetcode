@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strings Questions Part 2 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Strings Questions Part 1" href="strings_1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_6.html">Part 6 (86-95)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_7.html">Part 7 (96-105)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_extra.html">Extra (137)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2 (116-125)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-443-string-compression">116. (LC 443) String Compression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-28-find-the-index-of-the-first-occurrence-in-a-string">117. (LC 28) Find the Index of the First Occurrence in a String</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-424-longest-repeating-character-replacement">118. (LC 424) Longest Repeating Character Replacement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-76-minimum-window-substring">119. (LC 76) Minimum Window Substring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-242-valid-anagram">120. (LC 242) Valid Anagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-49-group-anagrams">121. (LC 49) Group Anagrams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-20-valid-parentheses">122. (LC 20) Valid Parentheses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-5-longest-palindromic-substring">123. (LC 5) Longest Palindromic Substring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-647-palindromic-substrings">124. (LC 647) Palindromic Substrings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-271-encode-and-decode-strings">125. (LC 271) Encode and Decode Strings</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Strings Questions Part 2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/strings/strings_2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="strings-questions-part-2">
+<h1>Strings Questions Part 2<a class="headerlink" href="#strings-questions-part-2" title="Link to this heading"></a></h1>
+<section id="lc-443-string-compression">
+<h2>116. (LC 443) String Compression<a class="headerlink" href="#lc-443-string-compression" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/string-compression/">443. String Compression</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Key:</strong></div>
+<div class="line">-The task describes exactly what alg they want you to use:</div>
+<div class="line">“Begin with an empty string s. For each group of consecutive repeating characters in chars.”</div>
+<div class="line">So don’t use something entirely different.</div>
+</div>
+<p>-Using 2 pointers that build a string s of consecutive characters, e.g. ‘aaaa’.</p>
+<div class="line-block">
+<div class="line"><strong>Hooks:</strong></div>
+<div class="line">#1 Stop when it is the last index in chars.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">p2</span> <span class="pre">&lt;</span> <span class="pre">(len(chars))</span> <span class="pre">and</span> <span class="pre">(not</span> <span class="pre">s</span> <span class="pre">or</span> <span class="pre">s[0]</span> <span class="pre">==</span> <span class="pre">chars[p2]):</span></code></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2 (LC accepted 25, 98)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">compress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chars</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">while</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">s</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">chars</span><span class="p">[</span><span class="n">p2</span><span class="p">]):</span> <span class="c1">#1</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">chars</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+                <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">chars</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>  <span class="c1">#working with string repr of num</span>
+                    <span class="n">chars</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+                    <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">p1</span>
+
+<span class="c1">### My V1 (LC accepted 97, 30)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">compress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chars</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">while</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">s</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">chars</span><span class="p">[</span><span class="n">p2</span><span class="p">]):</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">chars</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+                <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">chars</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>            <span class="c1">#**</span>
+                <span class="n">zeros</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">zeros</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">while</span> <span class="n">num</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">n</span> <span class="o">=</span> <span class="n">length</span> <span class="o">//</span> <span class="n">num</span>
+                    <span class="n">length</span> <span class="o">%=</span> <span class="n">num</span>
+                    <span class="n">num</span> <span class="o">/=</span> <span class="mi">10</span>
+                    <span class="n">chars</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+                    <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">p1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#**</div>
+<div class="line">This decomposes num working with integers.</div>
+<div class="line">Simpler to work with str repr of int.</div>
+<div class="line-block">
+<div class="line">for c in cnt:</div>
+<div class="line-block">
+<div class="line">chars[k] = c</div>
+<div class="line">k += 1</div>
+</div>
+</div>
+</div>
+<p>But makes a difference for runtime.</p>
+</section>
+<section id="lc-28-find-the-index-of-the-first-occurrence-in-a-string">
+<h2>117. (LC 28) Find the Index of the First Occurrence in a String<a class="headerlink" href="#lc-28-find-the-index-of-the-first-occurrence-in-a-string" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/">28. Find the Index of the First Occurrence in a String</a>
+Easy</p>
+<p>AKA Find the first occurrence of a substring, OR, Find needle in a haystack</p>
+<div class="line-block">
+<div class="line"><strong>Keys to easy solution</strong></div>
+<div class="line">-Slicing</div>
+<div class="line">(Slice haystack the size of string and compare to needle.)</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>How easy can become hard</strong></div>
+<div class="line">There is an easy solution.</div>
+<div class="line">The brute force solution, O(n*m).</div>
+</div>
+<p>(But in best case O(n). E.g. hay=’abcde’, needle=’xyz’. We check ‘abc’ and ‘xyz’,
+but we check first chars, see they don’t match and don’t compare the rest. Move on to
+‘bcd’.)</p>
+<div class="line-block">
+<div class="line">We need a better solution for the case like:</div>
+<div class="line">haystack = “mississippi”</div>
+<div class="line">needle = “issip”</div>
+<div class="line">Where in several cases we would need to compare to every/many chars of the string.</div>
+</div>
+<div class="line-block">
+<div class="line">So testing string equality is expensive.</div>
+<div class="line">There are three linear time string matching algorithms: KMP, Boyer-Moore, and Rabin-Karp.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 Brute force (doocs attribution [7])</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">strStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">haystack</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">needle</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">haystack</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">haystack</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">]</span> <span class="o">==</span> <span class="n">needle</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p><strong>Rabin-Karp algorithm</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">13</span></a>]</p>
+<p>O(m+n), m, n are string lengths.
+Of the three algs mentioned above, Rabin-Karp is by far the simplest to understand and implement.
+The algorithm uses a hash function. We hash strings as numbers, compare those,
+only if we think we found a match, to make sure we don’t stumble upon a collision,
+we check string representations.</p>
+<div class="line-block">
+<div class="line">- What exactly</div>
+<div class="line">t = ‘GACGCCA’ (text/haystack)</div>
+<div class="line">s = ‘CGC’  (string/needle)</div>
+</div>
+<p>If containing letters = [A,C,G,T] are hashed to their indices, then A=0, C=1, G=2, T=3.
+Then the hash code for s=’CGC’=121.
+How we move through the text string:
+‘GAC’ is 201, not our s=121, then
+‘ACG’, we compute its code from the previous string of ‘GAC’. I.e. ((201-200)*10)+2=12
+etc.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="k">def</span> <span class="nf">rabin_karp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># s is not a substring of t</span>
+    <span class="n">BASE</span> <span class="o">=</span> <span class="mi">26</span>
+    <span class="c1"># Hash codes for the substring of t and s.</span>
+    <span class="n">t_hash</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">h</span> <span class="o">*</span> <span class="n">BASE</span> <span class="o">+</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">t</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">s_hash</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">h</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">h</span> <span class="o">*</span> <span class="n">BASE</span> <span class="o">+</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">power_s</span> <span class="o">=</span> <span class="n">BASE</span> <span class="o">**</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># BASE^|s-1|.</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+        <span class="c1"># Checks the two substrings are actually equal or not</span>
+        <span class="c1"># against hash col-lision.</span>
+        <span class="k">if</span> <span class="n">t_hash</span> <span class="o">==</span> <span class="n">s_hash</span> <span class="ow">and</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">:</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>  <span class="c1"># Found a match.</span>
+
+        <span class="c1"># Uses rolling hash to compute the hash code</span>
+        <span class="n">t_hash</span> <span class="o">-=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)])</span> <span class="o">*</span> <span class="n">power_s</span>
+        <span class="n">t_hash</span> <span class="o">=</span> <span class="n">t_hash</span> <span class="o">*</span> <span class="n">BASE</span> <span class="o">+</span> <span class="nb">ord</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="c1"># Tries to match s and t[-len(s):].</span>
+        <span class="k">if</span> <span class="n">t_hash</span> <span class="o">==</span> <span class="n">s_hash</span> <span class="ow">and</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># s is not a substring of t.</span>
+
+<span class="n">haystack</span> <span class="o">=</span> <span class="s2">&quot;sadbutsad&quot;</span>
+<span class="n">needle</span> <span class="o">=</span> <span class="s2">&quot;sad&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rabin_karp</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">))</span> <span class="c1"># 0</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>KMP (Knuth-Morris-Pratt algorithm)</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
+<div class="line">O(N+M)</div>
+<div class="line">See the neetcode for that.</div>
+</div>
+</section>
+<section id="lc-424-longest-repeating-character-replacement">
+<h2>118. (LC 424) Longest Repeating Character Replacement<a class="headerlink" href="#lc-424-longest-repeating-character-replacement" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/longest-repeating-character-replacement/">LC 424. Longest Repeating Character Replacement</a>
+Medium
+Topics: String, Sliding window</p>
+<div class="line-block">
+<div class="line"><strong>Keys</strong></div>
+<div class="line">In addition to sliding window:</div>
+<div class="line">- hash table</div>
+<div class="line">- while (r - l + 1) - max(count.values()) &gt; k:</div>
+<div class="line">(window total size - the letter which predominates in cur window, its number of occurrences)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># O(26n)</span>
+<span class="k">def</span> <span class="nf">characterReplacement</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1">#count letters in window{&#39;A&#39;: 2}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="n">count</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">count</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line-block">
+<div class="line">count[s[r]] = 1 + count.get(s[r], 0)</div>
+</div>
+<div class="line">We make our first entry into the hash table count={‘A’: 1}</div>
+<div class="line">I.e. it is:</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span>
+<span class="go">{&#39;A&#39;: 1}</span>
+</pre></div>
+</div>
+<p># 0 is the default value</p>
+<div class="line-block">
+<div class="line-block">
+<div class="line">while (r - l + 1) - max(count.values()) &gt; k:</div>
+</div>
+<div class="line">This checks if our window is a valid window.</div>
+<div class="line">(r - l + 1) - this is the OVERALL current window, i.e. (right pointer - left + 1)</div>
+<div class="line">(+1 is because indexing starts at 0, ind1 - ind0 is actually len 2, not 1, so 1+1)</div>
+</div>
+<div class="line-block">
+<div class="line">max(count.values()) - is the max number of the SAME LETTERS in our window,</div>
+<div class="line">e.g. in window ‘ABA’ max number of the same letters is A=2.</div>
+<div class="line">So it is the number of letters we will not have to change to make it a valid window.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>(Current window - letters we won’t have to touch) = letters we will have to change</p>
+</div>
+<p>And that number, “letters we will have to change” should not be greater than k,
+(k is num of letters that we are allowed to change.)</p>
+<div class="line-block">
+<div class="line">count[s[l]] -= 1</div>
+<div class="line">l += 1</div>
+</div>
+<p>When in current window the number of letters we will have to change exceeds k,
+we have to decrease the size of the current window, i.e. move i +1.
+And also of course remove that letter in our count hash table.
+(e.g. window was ‘ABA’ count={A:2, B:1}, l=+1, window becomes ‘BA’ count={A:1, B:1})</p>
+<div class="line-block">
+<div class="line-block">
+<div class="line">res = max(res, r - l + 1)</div>
+</div>
+<div class="line">Record max value of a valid window.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution with optimization (a tiny one) making O(n)</span>
+<span class="k">def</span> <span class="nf">characterReplacement</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">maxf</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="n">count</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">maxf</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxf</span><span class="p">,</span> <span class="n">count</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]])</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">maxf</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">count</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-76-minimum-window-substring">
+<h2>119. (LC 76) Minimum Window Substring<a class="headerlink" href="#lc-76-minimum-window-substring" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/minimum-window-substring/">76. Minimum Window Substring</a>
+Hard</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># O(n)</span>
+<span class="k">def</span> <span class="nf">minWindow</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">countT</span><span class="p">,</span> <span class="n">window</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+        <span class="n">countT</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">countT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">have</span><span class="p">,</span> <span class="n">need</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">countT</span><span class="p">)</span>
+    <span class="n">res</span><span class="p">,</span> <span class="n">resLen</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;infinity&quot;</span><span class="p">)</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+        <span class="n">window</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">window</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">countT</span> <span class="ow">and</span> <span class="n">window</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="n">countT</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+            <span class="n">have</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">have</span> <span class="o">==</span> <span class="n">need</span><span class="p">:</span>
+            <span class="c1"># update our result</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">resLen</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
+                <span class="n">resLen</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="c1"># pop from the left of our window</span>
+            <span class="n">window</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>         <span class="c1">#we decrease the counter for that letter</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="ow">in</span> <span class="n">countT</span> <span class="ow">and</span> <span class="n">window</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">countT</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]:</span>
+                <span class="n">have</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span> <span class="p">:</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">resLen</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;infinity&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;ADOBECODEBANC&quot;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;ABC&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">minWindow</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">))</span>  <span class="c1"># BANC</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">have, need = 0, len(countT)</div>
+</div>
+<div class="line">have and need are single integer counts.</div>
+<div class="line">E.g. in the given example we need overall 3 letters.</div>
+<div class="line">{‘A’: 1, ‘B’: 1, ‘C’: 1} (need=3)</div>
+<div class="line">if it were</div>
+<div class="line">{‘A’: 1, ‘B’: 1, ‘C’: 2} (Then need=4)</div>
+</div>
+<div class="line-block">
+<div class="line">For the have we count in a similar way, but for the current window.</div>
+<div class="line">We start with have=0.</div>
+<div class="line">Note that when window={‘A’: 1, ‘B’: 1, ‘C’: 2, ‘D’:4},</div>
+<div class="line">-&gt; have=3 still (if what we need is {‘A’: 1, ‘B’: 1, ‘C’: 1})</div>
+</div>
+<div class="line-block">
+<div class="line">Then when we achieve the state need==have, we can start moving the left pointer</div>
+<div class="line">(to get a shorter window), when popping letters that are not part of “t” (like R, G etc.),</div>
+<div class="line">“have” remains the same. Also popping characters that we have more than necessary (e.g. A:2),</div>
+<div class="line">we also don’t decrease the “have”.</div>
+</div>
+<p>The point of “need” and “have” is to avoid checking the actual hash tables (of the t and window),
+and only do the have == need comparisons.</p>
+<div class="line-block">
+<div class="line-block">
+<div class="line">res, resLen = [-1, -1], float(“infinity”)</div>
+</div>
+<div class="line">res=[-1,-1] because it just initializes for res=[lpointer, rpointer]</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">have</span> <span class="o">==</span> <span class="n">need</span><span class="p">:</span>
+    <span class="c1"># update our result</span>
+    <span class="c1"># pop from the left of our window</span>
+    <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="ow">in</span> <span class="n">countT</span> <span class="ow">and</span> <span class="n">window</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">countT</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]:</span>
+        <span class="n">have</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Only while counts for have and need are the same, we try to get a shorter window,
+i.e. we will pop from the left by moving the left pointer.
+We will not touch the “have” count if the letter we pop is a letter we don’t care
+about, i.e. letter not in t.
+Only when the letter that we pop is in t (i.e. countT hash table),
+and this situation: window[s[l]] &lt; countT[s[l]],
+E.g. t=”B” and our window has {‘B’:2}, then we do window[‘B’]-=1, but we do not touch the “have”.</p>
+</section>
+<section id="lc-242-valid-anagram">
+<h2>120. (LC 242) Valid Anagram<a class="headerlink" href="#lc-242-valid-anagram" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/valid-anagram/">242. Valid Anagram</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 60, 30)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isAnagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">scnt</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">tcnt</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scnt</span> <span class="o">==</span> <span class="n">tcnt</span>
+
+<span class="c1">### Solution V1 (neetcode attr)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isAnagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">countS</span><span class="p">,</span> <span class="n">countT</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="n">countS</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">countS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">countT</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">countT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">countS</span> <span class="o">==</span> <span class="n">countT</span>
+
+<span class="c1">### Solution V2 (ddocs attr)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isAnagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+            <span class="n">cnt</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">cnt</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-49-group-anagrams">
+<h2>121. (LC 49) Group Anagrams<a class="headerlink" href="#lc-49-group-anagrams" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/group-anagrams/">49. Group Anagrams</a>
+Medium</p>
+<div class="line-block">
+<div class="line">Hints:</div>
+<div class="line">1) Sorting</div>
+<div class="line">2) Tuples are a hashable type.</div>
+<div class="line">We can’t use another dictionary as a key in another dict.</div>
+<div class="line">But we can use tuple as a key.</div>
+<div class="line">Also recall that <cite>ord(char)-ord(‘a’)</cite> gives a number 0-25.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution doocs attr</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">groupAnagrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1">### Solution doocs attr</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">groupAnagrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="n">cnt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">26</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="n">cnt</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">d</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">cnt</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1">### My V (LC accepted 90, 80)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">groupAnagrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">w</span><span class="p">))]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-20-valid-parentheses">
+<h2>122. (LC 20) Valid Parentheses<a class="headerlink" href="#lc-20-valid-parentheses" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/valid-parentheses/">20. Valid Parentheses</a>
+Easy TOPICS: STACK</p>
+<div class="line-block">
+<div class="line">Steps:</div>
+<div class="line">-use stack of opened characters, use hash for closed chars</div>
+<div class="line">-is char opened parentheses/braces</div>
+<div class="line">if yes, append to stack</div>
+<div class="line">if char closed parenthese/braces:</div>
+<div class="line">if no stack or stack[-1] and cur char are not the same, return false</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 0 (EPI, LC accepted 45,55%)</span>
+<span class="k">def</span> <span class="nf">is_well_formed</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">stack_opened</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lookup</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;(&quot;</span><span class="p">:</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span> <span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot;{&quot;</span><span class="p">:</span> <span class="s2">&quot;}&quot;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">lookup</span><span class="p">:</span>  <span class="c1"># it is opened char</span>
+            <span class="n">stack_opened</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">stack_opened</span> <span class="ow">or</span> <span class="n">lookup</span><span class="p">[</span><span class="n">stack_opened</span><span class="o">.</span><span class="n">pop</span><span class="p">()]</span> <span class="o">!=</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">stack_opened</span>
+
+<span class="c1">### Solution 1 (doocs attr)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">stk</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;[]&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;({[&#39;</span><span class="p">:</span>
+                <span class="n">stk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">stk</span> <span class="ow">or</span> <span class="n">stk</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">stk</span>
+
+<span class="c1">### Solution 2 (neetcode attr)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">Map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;)&quot;</span><span class="p">:</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;]&quot;</span><span class="p">:</span> <span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="s2">&quot;}&quot;</span><span class="p">:</span> <span class="s2">&quot;{&quot;</span><span class="p">}</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Map</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stack</span> <span class="ow">or</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Map</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">stack</span>
+
+<span class="c1">### My V2</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;)&quot;</span><span class="p">:</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;]&quot;</span><span class="p">:</span> <span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="s2">&quot;}&quot;</span><span class="p">:</span> <span class="s2">&quot;{&quot;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;)&quot;</span> <span class="ow">or</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;]&quot;</span> <span class="ow">or</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;}&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">!=</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>My V1
+(This is less memory efficient, because we store in ‘a’ where we collect all opened parentheses,
+twice as many parentheses. Like a=[‘()’, ‘{}’..]. When using a reference set or mapping,
+we store just that one map and a=[‘(’, ‘{’…])</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">valid_pair</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">:</span>
+            <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;()&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span>
+            <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;[]&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;{&quot;</span><span class="p">:</span>
+            <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-5-longest-palindromic-substring">
+<h2>123. (LC 5) Longest Palindromic Substring<a class="headerlink" href="#lc-5-longest-palindromic-substring" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/longest-palindromic-substring/">5. Longest Palindromic Substring</a>
+Medium</p>
+<div class="line-block">
+<div class="line">FYI, time complexity of the brute force approach would be:</div>
+<div class="line">n * n**2 = n**3</div>
+<div class="line">n (linear scan to check if a string is a palindrome) * n**2 (this many substrings)</div>
+<div class="line"><br /></div>
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-build palindrome from center</div>
+<div class="line">-odd/even length strings</div>
+<div class="line"><br /></div>
+<div class="line"><strong>Key aspects:</strong></div>
+<div class="line">- We will check for palindromicity from the middle, outwards.</div>
+</div>
+<p>So the usual way is having ‘bab’, we start on the left, right, move inwards.
+Here we will start form ‘a’ in ‘bab’.
+So looping through string s, we consider each character the center of a palindrome.
+Thus we achieve n*n=O(n**2).</p>
+<div class="line-block">
+<div class="line">- Edge case, handle the case when len(s)=even.</div>
+<div class="line">Relevant because we consider each character the center of a palindrome.</div>
+<div class="line">‘babad’, len=5</div>
+<div class="line">‘baba’, len=4</div>
+</div>
+<p>-This problem has as hint Dynamic programming. Bacause there is the Manachester
+alg that uses Dynamic programming. I.e. we keep track of the largest palindrom
+radius we found so far. So we won’t check chars within that radius.
+We use an additional array where we record the radius of a found palindrome.
+We are not using it here.</p>
+<p><strong>Solution 1</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (attr neetcode) (LC accepted 50, 85%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">longestPalindrome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ans</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">),</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)):</span>  <span class="c1"># odd and even lengths</span>
+                <span class="k">while</span> <span class="n">L</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">R</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">R</span><span class="o">-</span><span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">):</span>
+                        <span class="n">ans</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">L</span><span class="p">:</span><span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">L</span><span class="o">-=</span><span class="mi">1</span>
+                    <span class="n">R</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line-block">
+<div class="line">ans = “”</div>
+<div class="line"># ansLen=0</div>
+</div>
+<div class="line">We could separately initiate resLen=0 to keep track of the max len, instead we just</div>
+<div class="line">refer to len(res) for that info.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">for i in range(len(s)):</div>
+</div>
+<div class="line">Remember, i is the center of a potential palindrome.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">for l, r in ((i,i), (i,i+1)): # odd and even lengths</div>
+</div>
+<div class="line">This is an optimization. It could have been written as two separate loops:</div>
+<div class="line"># odd length substrings</div>
+<div class="line">l, r = i, i  —&gt; substring has one character as center</div>
+<div class="line">while l &gt;= 0…</div>
+</div>
+<div class="line-block">
+<div class="line"># even length substrings</div>
+<div class="line">l, r = i, i+1  —&gt; substring has two chars as center</div>
+<div class="line">while l &gt;= 0…</div>
+</div>
+<div class="line-block">
+<div class="line">So we repeat the while loop twice in case the len of string is odd, and in case len=even.</div>
+</div>
+<div class="line-block">
+<div class="line">l=i, r=i+1</div>
+<div class="line">Means for a string like ‘cbbd’ we initialize e.g. l=’c’, r=’b’; l=’b’, r=’b’, i.e. two centers.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">while l &gt;= 0 and r &lt; len(s) and s[l] == s[r]:</div>
+</div>
+<div class="line">While left and right pointers are inbound (within the string) AND while the substring</div>
+<div class="line">made with pointers is a palindrome.</div>
+</div>
+<div class="line-block">
+<div class="line">if (r - l + 1)</div>
+<div class="line">Len of our substring palindrome.</div>
+</div>
+<p><strong>Solution 2</strong>
+Optimization to avoid double pass for odd and even len substrings (with one center
+and two centers: ‘aba’, ‘baab’). That is inserting a guard character like ‘b!a!a!b’
+making all odd substring.
+Actually performs a bit worse on Leetcode: 47,85% against non such optimization 50,85%)
+(LC accepted)
+And yes the solution becomes giagantic, and yes we will have trouble with substrings lengths
+which we have to solve with mor code.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">longestPalindrome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ans</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>  <span class="c1">#i is center</span>
+            <span class="n">L</span><span class="o">=</span><span class="n">R</span><span class="o">=</span><span class="n">i</span>
+            <span class="k">while</span> <span class="n">L</span> <span class="o">&gt;=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">R</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">R</span><span class="p">]:</span>
+                <span class="n">L</span><span class="o">-=</span><span class="mi">1</span>
+                <span class="n">R</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="c1"># Undo last move that broke palindromic rule</span>
+            <span class="n">L</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="n">R</span><span class="o">-=</span><span class="mi">1</span>
+            <span class="n">palindrome</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">L</span><span class="p">:</span><span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unpadded_len</span><span class="p">(</span><span class="n">palindrome</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">unpadded_len</span><span class="p">(</span><span class="n">ans</span><span class="p">):</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">palindrome</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unpad</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="k">def</span> <span class="nf">pad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="s1">&#39;!&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;!&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="k">def</span> <span class="nf">unpad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="k">def</span> <span class="nf">unpadded_len</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pal</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pal</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">pal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;!&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">pal</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pal</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p><strong>ALL POSSIBLE SOLUTIONS</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">13</span></a>]</p>
+<p><strong>Solution 1: brute force, O(n**3)</strong></p>
+<ul class="simple">
+<li><p>Checking if a string is a palindrome</p></li>
+</ul>
+<p># Leveraging Python negative indexing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def is_palindrome(s):
+    def mirror(i):
+        return ­(i + 1)
+    for i in range(len(s) / 2):
+        if s[mirror(i)] != s[i]:
+            return False
+    return True
+</pre></div>
+</div>
+<p># A faster way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>check if it is equal to its reverse.
+def is_palindrome(s):
+    return s == s[::­1]
+</pre></div>
+</div>
+<p># Complete solution:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">longest_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">left</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">right</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="n">substring</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">:</span><span class="n">right</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">substring</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">substring</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">best</span><span class="p">):</span>
+                <span class="n">best</span> <span class="o">=</span> <span class="n">substring</span>
+    <span class="k">return</span> <span class="n">best</span>
+</pre></div>
+</div>
+<p>Time: Iterating over substrings is O(n**2 ) + is_palindrome helper has O(n) = O(n**3 ).</p>
+<p><strong>Solution 2: dynamic programming, O(n**2 )</strong></p>
+<div class="line-block">
+<div class="line">Avoid redundant comparisons, reuse previously computed results.</div>
+<div class="line">- Compare starting not from the edges, but from the center.</div>
+<div class="line">‘cdeedc’</div>
+<div class="line">Then we also have completed the check for all its smaller substrings that have the same center.</div>
+</div>
+<p>We take each char to be the center. Expand outwards till string edges or found chars that make
+current substring not a palindrome:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Illustration</span>
+<span class="c1"># ycabxbaddd</span>
+<span class="c1">#     ^</span>
+</pre></div>
+</div>
+<p>start e.g. at x. Checking bxb, abxba, stop at cabxbad.</p>
+<p># Complete alg (for odd-length palindromic substring):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">longest_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="c1"># Expand symetrically as long as the palindrome property holds</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">right</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">]:</span>
+            <span class="n">left</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">right</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># The last move broke the palindrome property, undo it</span>
+        <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">palindrome</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">:</span><span class="n">right</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># Record the palindrome if longest</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">palindrome</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">best</span><span class="p">):</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="n">palindrome</span>
+    <span class="k">return</span> <span class="n">best</span>
+</pre></div>
+</div>
+<p>Yes, it calculates only for odd-length substrs. To add calculating for even-length,
+we have options:</p>
+<ul class="simple">
+<li><p>change current func (quite a bit)</p></li>
+<li><p>add another func</p></li>
+<li><p>add a guard character to transform the palindrome so that it has odd length.</p></li>
+</ul>
+<p>And minimally change the original function.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">palindrome_pad</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="c1"># &#39;aa&#39; &gt; &#39;a!a&#39;, &#39;aba&#39; &gt; &#39;a!b!a&#39;</span>
+    <span class="k">assert</span> <span class="s1">&#39;!&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span>
+    <span class="k">return</span> <span class="s1">&#39;!&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The reverse transformation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def palindrome_unpad(padded):
+    return padded.replace(&#39;!&#39;, &#39;&#39;)
+
+def unpadded_length(padded):    #**
+    if not padded:
+        return 0
+    if padded[0] == &#39;!&#39;:
+        return (len(padded) ­ 1) / 2
+    return (len(padded) + 1) / 2
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#** Why unpadded_length func</div>
+<div class="line">E.g. s = ‘d!b!b!a’, palindrome = ‘!b!b!’, See, first char is !.</div>
+<div class="line">Then len can be calculated normally. 5//2=2</div>
+<div class="line">But if s = ‘a!b!b!a’, palindrome = ‘a!b!b!a’</div>
+<div class="line">Then if we do normally 7//2=3, So we have to adapt: (7+1)//2=4</div>
+</div>
+<p># Final solution:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">longest_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">palindrome_pad</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="c1"># Expand symetrically as long as the palindrome property holds</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">right</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">]:</span>
+            <span class="n">left</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">right</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># The last move broke the palindrome property, undo it</span>
+        <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">palindrome</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">:</span><span class="n">right</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># Record the palindrome if longest</span>
+        <span class="k">if</span> <span class="n">unpadded_size</span><span class="p">(</span><span class="n">palindrome</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">unpadded_size</span><span class="p">(</span><span class="n">best</span><span class="p">):</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="n">palindrome</span>
+    <span class="k">return</span> <span class="n">palindrome_unpad</span><span class="p">(</span><span class="n">best</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Solution 3: dynamic programming, O(n)</strong></p>
+<p>Manacher’s algorithm. Eliminate redundant expansion steps when the current
+center is inside a bigger palindrome identified previously.</p>
+<p>abcbaxyz</p>
+<p>If we already identified ‘abcba’, going a-&gt;b-&gt;c, then going b-&gt;a we can skip because they are inside
+a pigger palidromic substring.</p>
+<p>(Manacher’s optimization is not likely to come up during an interview due to its complexity.
+Still, it is good to be aware of its existence.)</p>
+<div class="line-block">
+<div class="line">-The alg includes again using guard char to make odd-length.</div>
+<div class="line">-Also using additional array where we record longest palindrom substring radius found so far.</div>
+<div class="line">radius = [0] * len(s)</div>
+<div class="line">For abcbaxyz</div>
+<div class="line">radius = [0,0,2,0,0..]</div>
+<div class="line">-Uses at most the O(n**2) alg, with some more condition stnts.</div>
+</div>
+</section>
+<section id="lc-647-palindromic-substrings">
+<h2>124. (LC 647) Palindromic Substrings<a class="headerlink" href="#lc-647-palindromic-substrings" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/palindromic-substrings/">647. Palindromic Substrings</a>
+Medium</p>
+<div class="line-block">
+<div class="line">Key:</div>
+<div class="line">-When iterating take each character to be the center of a possible palindrome.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">def</span> <span class="nf">palindrome_substrings</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span>
+        <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="k">while</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">l</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">r</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="c1">### Solution 1 rewrite (LC accepted 65, 30)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">countSubstrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="c1"># L=center</span>
+            <span class="c1"># R=center and R = center+1</span>
+            <span class="k">for</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span> <span class="ow">in</span> <span class="p">((</span><span class="n">center</span><span class="p">,</span> <span class="n">center</span><span class="p">),</span> <span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">center</span><span class="o">+</span><span class="mi">1</span><span class="p">)):</span>
+                <span class="k">while</span> <span class="n">L</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">L</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">R</span><span class="p">]:</span>
+                    <span class="n">res</span> <span class="o">+=</span><span class="mi">1</span>
+                    <span class="n">L</span><span class="o">-=</span><span class="mi">1</span>
+                    <span class="n">R</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1">### My V 1 (LC accepted 5, 85%)</span>
+<span class="c1"># Separate loops for strings with odd, even lengths.</span>
+<span class="c1"># I.e. Center 1 char (&#39;bab&#39;),</span>
+<span class="c1"># another loop for strings with center 2 chars (&#39;baab&#39;).</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">countSubstrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="n">L</span><span class="o">=</span><span class="n">center</span>
+            <span class="n">R</span><span class="o">=</span><span class="n">center</span>
+            <span class="k">while</span> <span class="n">L</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">L</span> <span class="p">:</span> <span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">res</span> <span class="o">+=</span><span class="mi">1</span>
+                <span class="n">L</span><span class="o">-=</span><span class="mi">1</span>
+                <span class="n">R</span><span class="o">+=</span><span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="n">L</span><span class="o">=</span><span class="n">center</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">R</span><span class="o">=</span><span class="n">center</span>
+            <span class="k">while</span> <span class="n">L</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">L</span> <span class="p">:</span> <span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">res</span> <span class="o">+=</span><span class="mi">1</span>
+                <span class="n">L</span><span class="o">-=</span><span class="mi">1</span>
+                <span class="n">R</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1">### The same, in one loop (efficiency though is a bit worse according to LC).</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">countSubstrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">center</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="n">L</span><span class="o">=</span><span class="n">center</span>
+            <span class="n">R</span><span class="o">=</span><span class="n">center</span>
+            <span class="k">while</span> <span class="n">L</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                <span class="c1"># when center is 1 character &#39;bab&#39;</span>
+                <span class="k">if</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">L</span> <span class="p">:</span> <span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">res</span> <span class="o">+=</span><span class="mi">1</span>
+                <span class="c1"># when center is 2 characters &#39;baab&#39;</span>
+                <span class="k">if</span> <span class="n">L</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span> <span class="p">:</span> <span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="n">res</span> <span class="o">+=</span><span class="mi">1</span>
+                <span class="n">L</span><span class="o">-=</span><span class="mi">1</span>
+                <span class="n">R</span><span class="o">+=</span><span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-271-encode-and-decode-strings">
+<h2>125. (LC 271) Encode and Decode Strings<a class="headerlink" href="#lc-271-encode-and-decode-strings" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://www.lintcode.com/problem/659/">271. Encode and Decode Strings</a>
+Medium</p>
+<p>Design an algorithm to encode a list of strings to a string. The encoded string is
+then sent over the network and is decoded back to the original list of strings.</p>
+<div class="line-block">
+<div class="line">Example</div>
+<div class="line">Input: dummy_input = [“Hello”,”World”]</div>
+<div class="line">My Note: Encode: Conversion to single string - e.g.”Hello%World”</div>
+<div class="line">Decode result: Output: [“Hello”,”World”]</div>
+</div>
+<div class="line-block">
+<div class="line">Logic</div>
+<div class="line">We will use a delimiter to separate strings.</div>
+<div class="line">1) We could pick a delimiter outside the 256 range, e.g. 257. Then that is all we have to do.</div>
+<div class="line">2.1) The follow up of the task is to make our alg be able to encodedecode any range of chars.</div>
+<div class="line">The we pick any char as a delimiter but also record the length of each string.</div>
+<div class="line">Example. Input = [“Hello”,”World”]</div>
+<div class="line">Encoded = “5#Hello5#World”   ‘#’ as delimiter</div>
+<div class="line">2.2) Use 4 spaces + len(string) as delimiter</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution (logic 1, delimiter char 257)</span>
+<span class="k">class</span> <span class="nc">Codec</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Encodes a list of strings to a single string.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">257</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decodes a single string to a list of strings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">257</span><span class="p">))</span>
+
+
+<span class="c1"># Usage</span>
+<span class="c1"># codec = Codec()</span>
+<span class="c1"># codec.decode(codec.encode(strs))</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">### Solution (Logic 2.1, delimiter # and len )</div>
+<div class="line">O(n), encode + decode</div>
+<div class="line">Explained</div>
+<div class="line">i is the pointer where we are in the string.</div>
+<div class="line">j is the pointer that points to delimiters</div>
+<div class="line-block">
+<div class="line">length = int(s[i:j])</div>
+</div>
+<div class="line">for str like ‘5#World’</div>
+<div class="line">We get the 5 (we read the integer before the delimiter).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># V1</span>
+<span class="k">class</span> <span class="nc">Codec</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">s</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="n">res</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">while</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">length</span><span class="p">])</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">length</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1"># V2</span>
+<span class="k">class</span> <span class="nc">Codec</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">strs</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">while</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">length</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="k">return</span> <span class="n">res</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Codec</span><span class="p">()</span>
+<span class="n">encoded</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">strs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span> <span class="c1"># 5#Hello5#World</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">decoded</span><span class="p">)</span> <span class="c1"># [&#39;Hello&#39;, &#39;World&#39;]</span>
+</pre></div>
+</div>
+<p><strong>Solution 2.2</strong> (4 spaces as delimiter)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">=</span><span class="s2">&quot;world&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ans</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:4}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="o">+</span><span class="n">s</span><span class="p">)</span>
+<span class="go">[&#39;   5world&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Codec</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Encodes a list of strings to a single string.&quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:4}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decodes a single string to a list of strings.&quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">])</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">4</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">size</span><span class="p">])</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="strings_1.html" class="btn btn-neutral float-left" title="Strings Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
