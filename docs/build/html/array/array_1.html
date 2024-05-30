@@ -73,6 +73,12 @@
 <li class="toctree-l1"><a class="reference internal" href="array_7.html">Part 7 (96-105)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="array_extra.html">Extra (137)</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
@@ -556,12 +562,21 @@ NOTE, its array indexing, so the indexes are [0,1,2,3,etc]</p>
 <div class="line">Easy</div>
 </div>
 <div class="line-block">
-<div class="line"><strong>Solution to Leetcode</strong></div>
-<div class="line">(Here we are not making the array of the form [_,_,_,0,0,0],</div>
-<div class="line">just [2, 3, 5, 7, 11, 13, 11, 11, 13]</div>
-<div class="line">and return num of valid numbers 6.)</div>
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-One write index + for num in nums iteration.</div>
+<div class="line">-Backwards lookup at write index-1</div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Illustration</span>
+<span class="c1">#[0, 0, 0, 1]</span>
+<span class="c1">#    wi    n</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">As soon as n != nums[wi-1]: we can write to wi, shift wi+=1</div>
+<div class="line">Else, continue for num in nums iteration.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
@@ -571,106 +586,43 @@ NOTE, its array indexing, so the indexes are [0,1,2,3,etc]</p>
         <span class="k">return</span> <span class="n">k</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>Back to task for “Delete duplicates from a sorted array”</p></li>
-</ul>
-<p>Write a program which takes as input a sorted array and updates it so that all
-duplicates have been removed and the remaining elements have been shifted left
-to fill the emptied indices. Return the number of valid elements.</p>
-<p>E.g. for array [2,3,5,5,7,11,11,11,13] after deletion array is [2,3,5,6,11,13,0,0,0]
-There are 6 valid entries after deletion.</p>
 <div class="line-block">
-<div class="line">Note.</div>
-<div class="line">-There are libraries in languages that perform this operation.</div>
-<div class="line">(My note, set())</div>
-<div class="line">We are not going to use them.</div>
-<div class="line">-There is an O(n) time and O(1) space solution.</div>
+<div class="line"><strong>V2</strong> (My V)</div>
+<div class="line">2 pointers + write pointer</div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### (Nevertheless here is my version using set.)</span>
-<span class="k">def</span> <span class="nf">del_dups</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="n">no_dups</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">no_dups</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_dups</span><span class="p">))</span>
-
-<span class="c1"># OUT: [2, 3, 5, 7, 11, 13, 0, 0, 0]</span>
+<div class="line-block">
+<div class="line">We start with a not valid write pointer (wp=-1).</div>
+<div class="line">The code below is a refactoring of the full logic of:</div>
+<div class="line">4 cases:</div>
+<div class="line">-values at p1, p2 are different</div>
+<div class="line-block">
+<div class="line">-wp not yet valid (then keep moving p1,p2)</div>
+<div class="line">-wp valid, write to it (move p1, p2)</div>
+</div>
+<div class="line">-values at p1, p2 are the same</div>
+<div class="line-block">
+<div class="line">-wp not valid, make wp valid (wp=p2), move p1,p2</div>
+<div class="line">-wp valid, only move p1,p2</div>
+</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 70, 98)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">wp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span>
+        <span class="k">while</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nums</span><span class="p">[</span><span class="n">p2</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">wp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">nums</span><span class="p">[</span><span class="n">wp</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+                    <span class="n">wp</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">wp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">wp</span> <span class="o">=</span> <span class="n">p2</span>
+            <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">p2</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">wp</span> <span class="k">if</span> <span class="n">wp</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">p2</span>
 </pre></div>
-</div>
-<p>Two other solutions with complexities that don’t meet our goal:</p>
-<p>1) O(n) time and space would be:
-Using a hash table, recording elements that do not appear multiple times in array,
-new values are also written to a list. List is then copied back into A.</p>
-<p>2) Brute force, space O(1) but O(n**2) time in worst case.
-Iterate through A, testing if A[i] equals A[i + 1], and, if so, shift all elements
-at and after i + 2 to the left by one. When all entries are equal,the number of
-shifts is (n-1)+(n-2)+…+2+1.,i.e. O(n**2)</p>
-<p><em>Logic</em>.
-To achieve the complexities we aim at, the key is to reduce the amount of shifting.
-We will move one element, rather than an entire subarray, when we meet a duplicate.</p>
-<div class="line-block">
-<div class="line">When A = [2,5,5,5,7]</div>
-<div class="line">After the first shift A = [2,5,7,5,7]</div>
-<div class="line">We write the non-dup to the index where there was a duplicate.</div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution, O(n) time and O(1) space</span>
-<span class="c1"># Returns the number of valid entries after deletion.</span>
-<span class="k">def</span> <span class="nf">delete_duplicates</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">A</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="n">write_index</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">write_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-            <span class="n">A</span><span class="p">[</span><span class="n">write_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">write_index</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">write_index</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">delete_duplicates</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>  <span class="c1">#6</span>
-
-<span class="c1">### My version</span>
-<span class="k">def</span> <span class="nf">remove_dups</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="n">wi</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># write index</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">wi</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
-            <span class="n">wi</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">wi</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
-            <span class="n">a</span><span class="p">[</span><span class="n">wi</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">wi</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">while</span> <span class="n">wi</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>  <span class="c1"># starting from wi, i.e. non-dups, fill with 0s</span>
-        <span class="n">a</span><span class="p">[</span><span class="n">wi</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">wi</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
-<span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">remove_dups</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">remove_dups</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span>
-<span class="c1"># OUT</span>
-<span class="c1"># [2, 3, 5, 7, 11, 13, 0, 0, 0]</span>
-<span class="c1"># 6</span>
-<span class="c1"># [1, 6, 7, 8, 9, 0, 0]</span>
-<span class="c1"># 5</span>
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line"><strong>Main version explained</strong></div>
-<div class="line">Here we have 2 sets of indexes.</div>
-</div>
-<p>i that always moves forward, and write_index that lags behind because it moves
-only when there are no duplicates, it stops incrementing when there are dups.</p>
-<p>Note we return this write_index at the end.
-write_index is the index where our unique numbers finish and where we would have
-been writing if the list were to go on.
-Since indexes start at 0, it’s ok to return the index of an already invalid array item.
-indexes [0,1,2,3] -&gt;returning 3, for array of len 3 [0,1,2] of valid items.</p>
-<div class="line-block">
-<div class="line">The loop walk through.</div>
-<div class="line">A = [2,5,5,5,7]  #wi=write_index</div>
-<div class="line">1) wi=1, i=1 [2,5,5,5,7]</div>
-<div class="line">2) wi=2, i=2 [2,5,5,5,7]</div>
-<div class="line">3) wi=2, i=3 [2,5,5,5,7]  #we stop incrementing wi, but we don’t yet write at wi.</div>
-<div class="line">We start writing at wi when items are non dups again.</div>
-<div class="line">4) wi=2, i=4 [2,5,7,5,7]  #we write at wi, and we increment wi, i reached len(A)</div>
-<div class="line">wi=3    #we return wi which is the len of the valid array with non dup values</div>
 </div>
 </section>
 <section id="lc-121-buy-and-sell-a-stock-once">

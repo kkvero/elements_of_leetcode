@@ -444,14 +444,22 @@ Greedy, O(n). ::
 | `26. Remove Duplicates from Sorted Array <https://leetcode.com/problems/remove-duplicates-from-sorted-array/>`_
 | Easy
 
-
-| **Solution to Leetcode**
-| (Here we are not making the array of the form [_,_,_,0,0,0], 
-| just [2, 3, 5, 7, 11, 13, 11, 11, 13]
-| and return num of valid numbers 6.)
+| **Keys:**
+| -One write index + for num in nums iteration.
+| -Backwards lookup at write index-1
 
 ::
 
+    #Illustration
+    #[0, 0, 0, 1]
+    #    wi    n
+
+| As soon as n != nums[wi-1]: we can write to wi, shift wi+=1
+| Else, continue for num in nums iteration.
+
+::
+
+    ### Solution 1
     class Solution:
         def removeDuplicates(self, nums: List[int]) -> int:
             k = 0
@@ -461,111 +469,38 @@ Greedy, O(n). ::
                     k += 1
             return k
 
-- Back to task for "Delete duplicates from a sorted array"
-
-Write a program which takes as input a sorted array and updates it so that all 
-duplicates have been removed and the remaining elements have been shifted left 
-to fill the emptied indices. Return the number of valid elements.
-
-E.g. for array [2,3,5,5,7,11,11,11,13] after deletion array is [2,3,5,6,11,13,0,0,0]
-There are 6 valid entries after deletion.
-
-| Note.
-| -There are libraries in languages that perform this operation.
-| (My note, set())
-| We are not going to use them.
-| -There is an O(n) time and O(1) space solution.
+| **V2** (My V)
+| 2 pointers + write pointer
+ 
+| We start with a not valid write pointer (wp=-1).
+| The code below is a refactoring of the full logic of:
+| 4 cases:
+| -values at p1, p2 are different
+|  -wp not yet valid (then keep moving p1,p2)
+|  -wp valid, write to it (move p1, p2)
+| -values at p1, p2 are the same
+|  -wp not valid, make wp valid (wp=p2), move p1,p2
+|  -wp valid, only move p1,p2
 
 ::
 
-    ### (Nevertheless here is my version using set.)
-    def del_dups(a):
-        no_dups = set(a)
-        return list(no_dups) + [0] * (len(a) - len(no_dups))
-
-    # OUT: [2, 3, 5, 7, 11, 13, 0, 0, 0]
-
-Two other solutions with complexities that don't meet our goal:
-
-1) O(n) time and space would be:
-Using a hash table, recording elements that do not appear multiple times in array,
-new values are also written to a list. List is then copied back into A.
-
-2) Brute force, space O(1) but O(n**2) time in worst case.
-Iterate through A, testing if A[i] equals A[i + 1], and, if so, shift all elements 
-at and after i + 2 to the left by one. When all entries are equal,the number of 
-shifts is (n-1)+(n-2)+...+2+1.,i.e. O(n**2)
-
-*Logic*.
-To achieve the complexities we aim at, the key is to reduce the amount of shifting.
-We will move one element, rather than an entire subarray, when we meet a duplicate.
-
-| When A = [2,5,5,5,7]
-| After the first shift A = [2,5,7,5,7]
-| We write the non-dup to the index where there was a duplicate.
-
-::
-
-    ### Solution, O(n) time and O(1) space
-    # Returns the number of valid entries after deletion.
-    def delete_duplicates(A):
-        if not A:
-            return 0
-        write_index = 1
-        for i in range(1, len(A)):
-            if A[write_index - 1] != A[i]:
-                A[write_index] = A[i]
-                write_index += 1
-        return write_index
-
-    A = [2,3,5,5,7,11,11,11,13]
-    print(delete_duplicates(A))  #6
-
-    ### My version
-    def remove_dups(a):
-        wi = 1  # write index
-        for i in range(1, len(a)):
-            if a[i] != a[i - 1] and wi == i:
-                wi += 1
-            elif a[i] != a[i - 1] and wi != i:
-                a[wi] = a[i]
-                wi += 1
-        while wi < len(a):  # starting from wi, i.e. non-dups, fill with 0s
-            a[wi] = 0
-            wi += 1
-        print(a)
-        return len([x for x in a if x != 0])
-
-    a = [2, 3, 5, 5, 7, 11, 11, 11, 13]
-    a2 = [1, 1, 6, 7, 8, 8, 9]
-    print(remove_dups(a))
-    print(remove_dups(a2))
-    # OUT
-    # [2, 3, 5, 7, 11, 13, 0, 0, 0]
-    # 6
-    # [1, 6, 7, 8, 9, 0, 0]
-    # 5
-
-| **Main version explained**
-| Here we have 2 sets of indexes.
-
-i that always moves forward, and write_index that lags behind because it moves
-only when there are no duplicates, it stops incrementing when there are dups.
-
-Note we return this write_index at the end. 
-write_index is the index where our unique numbers finish and where we would have
-been writing if the list were to go on. 
-Since indexes start at 0, it's ok to return the index of an already invalid array item.
-indexes [0,1,2,3] ->returning 3, for array of len 3 [0,1,2] of valid items.
-
-| The loop walk through.
-| A = [2,5,5,5,7]  #wi=write_index
-| 1) wi=1, i=1 [2,5,5,5,7]
-| 2) wi=2, i=2 [2,5,5,5,7]
-| 3) wi=2, i=3 [2,5,5,5,7]  #we stop incrementing wi, but we don't yet write at wi. 
-| We start writing at wi when items are non dups again.
-| 4) wi=2, i=4 [2,5,7,5,7]  #we write at wi, and we increment wi, i reached len(A)
-| wi=3    #we return wi which is the len of the valid array with non dup values 
+    ### My V (LC accepted 70, 98)
+    class Solution:
+        def removeDuplicates(self, nums: List[int]) -> int:
+            if len(nums) < 2:
+                return len(nums)
+            p1,p2,wp = 0,1,-1
+            while p2 < len(nums):
+                if nums[p1] != nums[p2]:
+                    if wp > 0:
+                        nums[wp] = nums[p2]
+                        wp += 1
+                else:
+                    if wp < 0:
+                        wp = p2
+                p1 += 1
+                p2 += 1
+            return wp if wp > 0 else p2
 
 44. (LC 121) Buy and sell a stock once
 ----------------------------------------
