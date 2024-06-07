@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strings Questions Part 3 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Strings Questions Part 2" href="strings_2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_6.html">Part 6 (86-95)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_7.html">Part 7 (96-105)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_extra.html">Extra (137)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strings_2.html">Part 2 (116-125)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 3 (126-136)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-67-add-binary">126. (LC 67) Add Binary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-415-add-strings">127. (LC 415) Add Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-58-length-of-last-word">128. (LC 58) Length of Last Word</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-14-longest-common-prefix">129. (LC 14) Longest Common Prefix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-43-multiply-strings">130. (LC 43) Multiply Strings</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Strings Questions Part 3</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/strings/strings_3.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="strings-questions-part-3">
+<h1>Strings Questions Part 3<a class="headerlink" href="#strings-questions-part-3" title="Link to this heading"></a></h1>
+<section id="lc-67-add-binary">
+<h2>126. (LC 67) Add Binary<a class="headerlink" href="#lc-67-add-binary" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/add-binary/">67. Add Binary</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># My V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># return bin(res)</span>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">res</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+
+<span class="c1"># Solution</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">addBinary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;1010&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;1011&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
+<span class="go">&#39;0b10101&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># V2</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;11&quot;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>  <span class="c1"># 100</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;1010&quot;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;1011&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>  <span class="c1"># 10101</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-415-add-strings">
+<h2>127. (LC 415) Add Strings<a class="headerlink" href="#lc-415-add-strings" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/add-strings/">415. Add Strings</a>
+Easy</p>
+<div class="line-block">
+<div class="line">Keys:</div>
+<div class="line">-String slicing</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (LC 85, 30)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">addStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">num1</span> <span class="ow">or</span> <span class="n">num2</span> <span class="ow">or</span> <span class="n">carry</span><span class="p">:</span>  <span class="c1"># takes care of nums being of different len</span>
+            <span class="n">digit</span> <span class="o">=</span> <span class="n">carry</span>
+            <span class="k">if</span> <span class="n">num1</span><span class="p">:</span>
+                <span class="n">digit</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">num1</span> <span class="o">=</span> <span class="n">num1</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">num2</span><span class="p">:</span>
+                <span class="n">digit</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">num2</span> <span class="o">=</span> <span class="n">num2</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">carry</span> <span class="o">=</span> <span class="n">digit</span> <span class="o">&gt;</span> <span class="mi">9</span>  <span class="c1"># True also means 1, and its not like carry can be &gt;1, but alt. carry=digit//10</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">digit</span> <span class="o">%</span> <span class="mi">10</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1">### My V (LC accepted 6-10, 80)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">addStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">num2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">num1</span> <span class="ow">or</span> <span class="n">num2</span> <span class="ow">or</span> <span class="n">carry</span><span class="p">:</span>
+            <span class="n">n1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">num1</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">n2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">num2</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span> <span class="o">+</span> <span class="n">carry</span>
+            <span class="n">carry</span> <span class="o">=</span> <span class="n">res</span><span class="o">//</span><span class="mi">10</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">num1</span> <span class="o">=</span> <span class="n">num1</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">num2</span> <span class="o">=</span> <span class="n">num2</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">### My attempt (LC accepted 30,60%) (a lot of off by 1 gotchas)</span>
+<span class="k">def</span> <span class="nf">add_strings</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">):</span>
+        <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s1</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="o">-</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="o">-</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">carry</span> <span class="o">=</span> <span class="n">res</span> <span class="o">//</span> <span class="mi">10</span>
+        <span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">carry</span>
+        <span class="n">ans</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="k">if</span> <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ans</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-58-length-of-last-word">
+<h2>128. (LC 58) Length of Last Word<a class="headerlink" href="#lc-58-length-of-last-word" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/length-of-last-word/">58. Length of Last Word</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (neetcode)</span>
+<span class="k">def</span> <span class="nf">lengthOfLastWord</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">c</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">c</span>
+
+<span class="c1">### Solution 1 v2</span>
+<span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1">#OR for i in s[::-1]:</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cnt</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">cnt</span>
+
+<span class="c1">### My V</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">lengthOfLastWord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="o">!=</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># char is a space</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="n">c</span>
+
+<span class="c1"># A shortcut (LC 55,85%)</span>
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># LC accepted (33,84%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">lengthOfLastWord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-14-longest-common-prefix">
+<h2>129. (LC 14) Longest Common Prefix<a class="headerlink" href="#lc-14-longest-common-prefix" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/longest-common-prefix/">14. Longest Common Prefix</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2 (LC accepted 17, 45%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">longestCommonPrefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">pref</span> <span class="o">=</span> <span class="n">strs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">w</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">w</span>
+            <span class="n">pointer</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">pointer</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pointer</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">pref</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">pref</span><span class="p">[</span><span class="n">pointer</span><span class="p">]</span> <span class="o">!=</span> <span class="n">w</span><span class="p">[</span><span class="n">pointer</span><span class="p">]:</span>
+                    <span class="n">pref</span> <span class="o">=</span> <span class="n">pref</span><span class="p">[:</span><span class="n">pointer</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">pref</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">pref</span>
+                    <span class="k">break</span>
+                <span class="n">pointer</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">pref</span> <span class="o">=</span> <span class="n">pref</span><span class="p">[:</span><span class="n">pointer</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">pref</span>
+
+<span class="c1">### My V1 (LC accepted 13, 99%)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">common</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">common</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">common</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[:</span><span class="n">i</span><span class="p">]:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cur_common</span> <span class="o">=</span> <span class="n">common</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">common</span> <span class="o">=</span> <span class="n">cur_common</span>
+    <span class="k">return</span> <span class="n">common</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-43-multiply-strings">
+<h2>130. (LC 43) Multiply Strings<a class="headerlink" href="#lc-43-multiply-strings" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/multiply-strings/">43. Multiply Strings</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Key things</strong></div>
+<div class="line">Edge case.</div>
+<div class="line">Initiate the response as list, [0]*</div>
+<div class="line">Reverse input from the start.</div>
+<div class="line">Multiply and add in one go.</div>
+<div class="line">Dealing with shift to the left in multiplication with res[i1+i2].</div>
+<div class="line">Filter out extra 0s at the front (check if value==0, from the front)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">num2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;0&quot;</span> <span class="ow">in</span> <span class="p">[</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="s2">&quot;0&quot;</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">num2</span><span class="p">))</span>
+        <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span> <span class="o">=</span> <span class="n">num1</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">num2</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num1</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">i2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num2</span><span class="p">)):</span>
+                <span class="n">digit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num1</span><span class="p">[</span><span class="n">i1</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">num2</span><span class="p">[</span><span class="n">i2</span><span class="p">])</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">i1</span> <span class="o">+</span> <span class="n">i2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">digit</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">i1</span> <span class="o">+</span> <span class="n">i2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">res</span><span class="p">[</span><span class="n">i1</span> <span class="o">+</span> <span class="n">i2</span><span class="p">]</span> <span class="o">//</span> <span class="mi">10</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">i1</span> <span class="o">+</span> <span class="n">i2</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">i1</span> <span class="o">+</span> <span class="n">i2</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span>
+
+        <span class="c1"># Filter out prepended 0s</span>
+        <span class="n">res</span><span class="p">,</span> <span class="n">beg</span> <span class="o">=</span> <span class="n">res</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">beg</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="ow">and</span> <span class="n">res</span><span class="p">[</span><span class="n">beg</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">beg</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">res</span><span class="p">[</span><span class="n">beg</span><span class="p">:])</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;0&quot;</span> <span class="ow">in</span> <span class="p">[</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="s2">&quot;0&quot;</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>              <span class="c1">#place into ans dynamically</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+=</span> <span class="n">res</span>
+            <span class="n">carry</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">//</span> <span class="mi">10</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">carry</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">%=</span> <span class="mi">10</span>
+    <span class="k">if</span> <span class="n">ans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>    <span class="c1">#del prepped 0</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ans</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="s2">&quot;14&quot;</span><span class="p">,</span> <span class="s2">&quot;15&quot;</span><span class="p">))</span>  <span class="c1"># &#39;210&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="s2">&quot;556&quot;</span><span class="p">,</span> <span class="s2">&quot;30&quot;</span><span class="p">))</span>  <span class="c1"># &#39;16680&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="s2">&quot;556&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>  <span class="c1"># &#39;0&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="strings_2.html" class="btn btn-neutral float-left" title="Strings Questions Part 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

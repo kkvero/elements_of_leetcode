@@ -305,7 +305,9 @@ Going 5,6,7. m=5&6=4, m=4&7=4, m=4&8=0 etc. ::
 
 26. (LC 461) Hamming distance 
 ---------------------------------------
-*(Easy)*
+| `461. Hamming distance <https://leetcode.com/problems/hamming-distance/>`_
+| *(Easy)*
+
 The Hamming distance between two integers is the number of positions at which 
 the corresponding bits are different.
 Given two integers x and y, return the Hamming distance between them.
@@ -323,6 +325,17 @@ Given two integers x and y, return the Hamming distance between them.
     def hammingDistance(x, y):
         return bin(x ^ y).count('1')
 
+    ### My V2 (LC accepted 40, 80)
+    class Solution:
+        def hammingDistance(self, x: int, y: int) -> int:
+            ans = 0
+            nn = x ^ y      #produces num where at differing positions we get 1s
+            while nn:
+                if nn & 1 == 1:    #count those 1s
+                    ans +=1
+                nn >>= 1
+            return ans
+
 It uses the properties of Xor operator. Recall, that xor evaluates to 1 if 
 the two compared numbers are 0 and 1 (1^1, 0^0 evaluate to 0)
 
@@ -333,8 +346,7 @@ the two compared numbers are 0 and 1 (1^1, 0^0 evaluate to 0)
 So the resulting number evaluates to 1 only if the two compared numbers are different.
 Then we simply count 1s with .count('1') ::
 
-    ### My solutions
-    # 1
+    ### My V1
     def f31(x, y):
         z = x ^ y
         return bin(z).count('1')
@@ -342,18 +354,6 @@ Then we simply count 1s with .count('1') ::
     print(f31(1, 4)) #2
     print(f31(29, 5)) #2
 
-    # 2
-    def f32(x, y):
-        z = x ^ y
-        count = 0
-        while z:
-            if z & 1:
-                count += 1
-            z >>= 1
-        return count
-
-    print(f32(1, 4)) #2
-    print(f32(29, 5)) #2
 
 27. (LC 477) Total Hamming Distance
 ------------------------------------

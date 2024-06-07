@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Acknowledgements and References" href="../acknowledgements.html" />
+    <link rel="next" title="Bit Manipulation Questions Part 4" href="bits_4.html" />
     <link rel="prev" title="Bit Manipulation Questions Part 2" href="bits_2.html" /> 
 </head>
 
@@ -60,6 +60,30 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-421-maximum-xor-of-two-numbers-in-an-array">29. (LC 421) Maximum XOR of Two Numbers in an Array</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_6.html">Part 6 (86-95)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_7.html">Part 7 (96-105)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_extra.html">Extra (137)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_3.html">Part 3 (126-136)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
@@ -400,8 +424,11 @@ Going 5,6,7. m=5&amp;6=4, m=4&amp;7=4, m=4&amp;8=0 etc.</p>
 </section>
 <section id="lc-461-hamming-distance">
 <h2>26. (LC 461) Hamming distance<a class="headerlink" href="#lc-461-hamming-distance" title="Link to this heading"></a></h2>
-<p><em>(Easy)</em>
-The Hamming distance between two integers is the number of positions at which
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://leetcode.com/problems/hamming-distance/">461. Hamming distance</a></div>
+<div class="line"><em>(Easy)</em></div>
+</div>
+<p>The Hamming distance between two integers is the number of positions at which
 the corresponding bits are different.
 Given two integers x and y, return the Hamming distance between them.</p>
 <div class="line-block">
@@ -415,6 +442,17 @@ Given two integers x and y, return the Hamming distance between them.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1 (Bitwise operator)</span>
 <span class="k">def</span> <span class="nf">hammingDistance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span> <span class="o">^</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+
+<span class="c1">### My V2 (LC accepted 40, 80)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">hammingDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>      <span class="c1">#produces num where at differing positions we get 1s</span>
+        <span class="k">while</span> <span class="n">nn</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nn</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>    <span class="c1">#count those 1s</span>
+                <span class="n">ans</span> <span class="o">+=</span><span class="mi">1</span>
+            <span class="n">nn</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ans</span>
 </pre></div>
 </div>
 <p>It uses the properties of Xor operator. Recall, that xor evaluates to 1 if
@@ -426,27 +464,13 @@ the two compared numbers are 0 and 1 (1^1, 0^0 evaluate to 0)</p>
 </div>
 <p>So the resulting number evaluates to 1 only if the two compared numbers are different.
 Then we simply count 1s with .count(‘1’)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My solutions</span>
-<span class="c1"># 1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V1</span>
 <span class="k">def</span> <span class="nf">f31</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>
     <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">f31</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1">#2</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f31</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1">#2</span>
-
-<span class="c1"># 2</span>
-<span class="k">def</span> <span class="nf">f32</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="n">z</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">z</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">z</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">count</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">f32</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1">#2</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">f32</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1">#2</span>
 </pre></div>
 </div>
 </section>
@@ -706,7 +730,7 @@ shorter numbers, smaller i-s, like i= 4, for num 25 (10000) first MSB revealed).
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="bits_2.html" class="btn btn-neutral float-left" title="Bit Manipulation Questions Part 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../acknowledgements.html" class="btn btn-neutral float-right" title="Acknowledgements and References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="bits_4.html" class="btn btn-neutral float-right" title="Bit Manipulation Questions Part 4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
