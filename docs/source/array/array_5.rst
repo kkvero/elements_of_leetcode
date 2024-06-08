@@ -309,6 +309,14 @@ Medium
 >>> L3
 [[1, 3], [2, 1]]
 
+
+| **Task gotchas**
+| -Task examples don't make it clear that you might be given unsorted intervals
+| [[1,4],[0,4]]
+| Or 
+| [[1,4],[2,3]]
+| So sort the input first.
+
 **Solution** ::
 
     class Solution:
@@ -321,6 +329,19 @@ Medium
                 else:
                     ans[-1][1] = max(ans[-1][1], e)
             return ans
+
+    ### My V (LC accepted 85, 32%)
+    class Solution:
+        def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+            intervals.sort()
+            new = [intervals[0]]
+            for start, end in intervals:
+                if start <= new[-1][1]:
+                    if end > new[-1][1]:
+                        new[-1][1] = end
+                else:
+                    new.append([start, end])
+            return new
 
 | **Example**
 | Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
