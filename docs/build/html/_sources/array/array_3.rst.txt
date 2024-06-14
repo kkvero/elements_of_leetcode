@@ -473,6 +473,14 @@ Given num, the array-form of an integer, and an integer k, return the array-form
 60. (LC 419) Battleships in a Board
 -------------------------------------
 `419. Battleships in a Board <https://leetcode.com/problems/battleships-in-a-board/>`_
+Medium
+
+| **Solution 1**
+| **Keys:**
+
+-Just check for each cell that has 'X' if the cell <immediately above> or the cell 
+<immediately to the left> also has 'X'. Means you already counted that 'X', so you can continue. 
+
 ::
 
     class Solution(object):
@@ -497,6 +505,36 @@ Given num, the array-form of an integer, and an integer k, return the array-form
 
 | Note, 
 | h (height) is x (first index in matrix)
+
+| **Solution 2**
+| If you overdid problems on graphs. 
+
+::
+
+    ### My V (LC accepted 5, 8% slow)
+    class Solution:
+        def countBattleships(self, board: List[List[str]]) -> int:
+            rows = len(board)
+            cols = len(board[0])
+            visited = set()
+            ships = 0
+
+            def dfs(r,c):
+                if r not in range(rows) or c not in range(cols) or (
+                        board[r][c] == '.' or (r,c) in visited):
+                    return
+                visited.add((r,c))
+                dfs(r, c+1)
+                dfs(r, c-1)
+                dfs(r+1, c)
+                dfs(r-1, c)
+
+            for r in range(rows):
+                for c in range(cols):
+                    if board[r][c] == 'X' and (r,c) not in visited:
+                        dfs(r,c)
+                        ships +=1
+            return ships
 
 61. (LC 121) Best Time to Buy and Sell Stock
 ------------------------------------------------

@@ -73,6 +73,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-58-length-of-last-word">128. (LC 58) Length of Last Word</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-14-longest-common-prefix">129. (LC 14) Longest Common Prefix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-43-multiply-strings">130. (LC 43) Multiply Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-496-next-greater-element-i">131. (LC 496) Next Greater Element I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-344-reverse-string">132. (LC 344) Reverse String</a></li>
 </ul>
 </li>
 </ul>
@@ -353,6 +355,220 @@ Medium</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="s2">&quot;14&quot;</span><span class="p">,</span> <span class="s2">&quot;15&quot;</span><span class="p">))</span>  <span class="c1"># &#39;210&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="s2">&quot;556&quot;</span><span class="p">,</span> <span class="s2">&quot;30&quot;</span><span class="p">))</span>  <span class="c1"># &#39;16680&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="s2">&quot;556&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>  <span class="c1"># &#39;0&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-496-next-greater-element-i">
+<h2>131. (LC 496) Next Greater Element I<a class="headerlink" href="#lc-496-next-greater-element-i" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/next-greater-element-i/">496. Next Greater Element I</a>
+Easy</p>
+<div class="line-block">
+<div class="line">Note, in output, you return values in array2, not indexes.</div>
+<div class="line">Attribution [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>].</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Two approaches.</strong></div>
+<div class="line"><strong>O(n*m)</strong></div>
+<div class="line">n and m our two arrays a1, a2.</div>
+<div class="line">~O(N**2), space O(m)</div>
+<div class="line">O(n*m) because we do have a nested loop iterating a2.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Key things</strong></div>
+<div class="line">1)Hash map a1.</div>
+<div class="line">2)Iterating over a2, we use hash of a1 in 2 ways:</div>
+<div class="line">- To see if n in a2 is at all in a1.</div>
+<div class="line">E,g, a1=[4,1,2], a2=[1,3,4,2], 3 is not in a1, so we can skeep it.</div>
+<div class="line">- To know where to put n on a2 in res.</div>
+<div class="line">E.g. 1 in a2, hash of a1 says that 1 is at index 1 in a1.</div>
+<div class="line">So having 3 from a2, we know to put it at index 1 in res.</div>
+<div class="line">res=[_,3,_]</div>
+<div class="line">3)Initialize res=[-1]*len(a1)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Solution</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">nextGreaterElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="c1"># O (n * m)</span>
+        <span class="n">nums1Idx</span> <span class="o">=</span> <span class="p">{</span> <span class="n">n</span><span class="p">:</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span> <span class="p">}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">nums1Idx</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">)):</span>  <span class="c1">#check values after a2[i+1]</span>
+                <span class="k">if</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nums2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="n">idx</span> <span class="o">=</span> <span class="n">nums1Idx</span><span class="p">[</span><span class="n">nums2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="c1">#get index of that N in a1</span>
+                    <span class="n">res</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1">### My V (LC accepted 28, 85)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">nextGreaterElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">)):</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">nums2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nums2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">nums2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="k">break</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums1</span><span class="p">:</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>O(n+m)</strong></div>
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-Monotonic stack</div>
+<div class="line">-ans, initiate as [-1, -1, -1..]</div>
+<div class="line">-hash of nums1, {value: index}</div>
+<div class="line">-iterate nums2, if value &lt; stack[-1], add to stack, if value is greater, then</div>
+<div class="line">that is the next greater value for all values in stack.</div>
+</div>
+<div class="line-block">
+<div class="line">Input: nums1 = [4,1,2], nums2 = [1,3,4,2]</div>
+<div class="line">Output: [-1,3,-1]</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">nextGreaterElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">nums1Idx</span> <span class="o">=</span> <span class="p">{</span> <span class="n">n</span><span class="p">:</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span> <span class="p">}</span>  <span class="c1"># {4:0, 1:1, 2:2}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">)):</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="c1"># Mono decreasing stack. If we found in nums2 N that is greater than stack[-1]</span>
+            <span class="c1"># than it is the next greater value for ALL values in stack</span>
+            <span class="c1"># (and in stack we have all values that are in nums1)</span>
+            <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">cur</span> <span class="o">&gt;</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># take top val</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">nums1Idx</span><span class="p">[</span><span class="n">val</span><span class="p">]</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur</span>
+
+            <span class="k">if</span> <span class="n">cur</span> <span class="ow">in</span> <span class="n">nums1Idx</span><span class="p">:</span>  <span class="c1">#because we can have values in nums2 that are not in nums1</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line">Example.</div>
+<div class="line">a1=[4,1,2], a2=[2,1,3,4]</div>
+<div class="line">In general:</div>
+<div class="line">Notice that when we find answer 3, it is the answer for all nums before that, i.e. for 1,2.</div>
+<div class="line">3&gt;1, 3&gt;2.</div>
+</div>
+<div class="line-block">
+<div class="line">Walkthrough:</div>
+<div class="line">1)stack=[]</div>
+<div class="line">a2=[2..]</div>
+<div class="line">If 2 in a1, we add 2 to stack.</div>
+<div class="line">stack=[2]</div>
+<div class="line">2)a2=[2,1..]</div>
+<div class="line">Next up is 1.</div>
+<div class="line">Is 1 greater than any num in stack. No. Add 1 to stack. Move on.</div>
+<div class="line">3)</div>
+<div class="line">stack=[2,1]  &lt;–Note, stack is always in decreasing order</div>
+<div class="line">a2=[2,1,3..]</div>
+<div class="line">Looking at 3.</div>
+<div class="line">3 &gt; stack[-1]</div>
+<div class="line">So 3 is the answer for all nums in stack.</div>
+<div class="line">Start popping from stack.</div>
+<div class="line">stack.pop()=1</div>
+<div class="line">We find index of 1 in a1, put value 3 at that index</div>
+<div class="line">stack.pop()=2 ..</div>
+<div class="line">So: res = [_,3,3]</div>
+<div class="line">-&gt;As last thing we check if 3 is in a1, only if it is, put 3 to the stack, otherwise no.</div>
+</div>
+</section>
+<section id="lc-344-reverse-string">
+<h2>132. (LC 344) Reverse String<a class="headerlink" href="#lc-344-reverse-string" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/reverse-string/">344. Reverse String</a>
+Easy</p>
+<div class="line-block">
+<div class="line">Note:</div>
+<div class="line">Input: s = [“h”,”e”,”l”,”l”,”o”]</div>
+<div class="line">Input format is important, would need a different solution for string, not array input.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 1</strong> (most efficient)</div>
+<div class="line">Key points:</div>
+<div class="line">-change in place</div>
+<div class="line">-pointers</div>
+<div class="line">-do not return anything</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverse_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">],</span><span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">],</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+        <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="c1">### My V (LC accepted 98, 70)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do not return anything, modify s in-place instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">lp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="n">rp</span><span class="p">]:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">lp</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">rp</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span>
+            <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 2</strong></div>
+<div class="line">Somewhat less efficient. But good to know if you will need to discuss alternatives.</div>
+<div class="line">Uses Stack. O(N). Extra space.</div>
+<div class="line">-We put all chars to stack.</div>
+<div class="line">-Pop from stack, each time replacing chars in array.</div>
+<div class="line">-Again, do not return, we’re modifying in place.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">]</span>
+<span class="n">f</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1"># [&#39;o&#39;, &#39;l&#39;, &#39;l&#39;, &#39;e&#39;, &#39;h&#39;]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 3. Recursion.</strong></div>
+<div class="line">Even less efficient. Time O(N), space O(N).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">rev_str</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+                <span class="n">rev_str</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">rev_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="n">sol</span><span class="o">.</span><span class="n">reverseString</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1"># [&#39;o&#39;, &#39;l&#39;, &#39;l&#39;, &#39;e&#39;, &#39;h&#39;]</span>
+
+<span class="c1"># Recursion my V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="n">r</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+    <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1"># [&#39;o&#39;, &#39;l&#39;, &#39;l&#39;, &#39;e&#39;, &#39;h&#39;]</span>
 </pre></div>
 </div>
 </section>

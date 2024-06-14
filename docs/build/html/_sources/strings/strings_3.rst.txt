@@ -242,9 +242,214 @@ Medium
     print(f("556", "30"))  # '16680'
     print(f("556", "0"))  # '0'
 
+131. (LC 496) Next Greater Element I
+-----------------------------------------
+`496. Next Greater Element I <https://leetcode.com/problems/next-greater-element-i/>`_
+Easy
+
+| Note, in output, you return values in array2, not indexes.
+| Attribution [:ref:`10 <ref-label>`].
+
+| **Two approaches.**
+| **O(n*m)**
+| n and m our two arrays a1, a2.
+| ~O(N**2), space O(m)
+| O(n*m) because we do have a nested loop iterating a2.
+
+| **Key things**
+| 1)Hash map a1.
+| 2)Iterating over a2, we use hash of a1 in 2 ways:
+| - To see if n in a2 is at all in a1. 
+| E,g, a1=[4,1,2], a2=[1,3,4,2], 3 is not in a1, so we can skeep it.
+| - To know where to put n on a2 in res.
+| E.g. 1 in a2, hash of a1 says that 1 is at index 1 in a1.
+| So having 3 from a2, we know to put it at index 1 in res.
+| res=[_,3,_]
+| 3)Initialize res=[-1]*len(a1)
+
+::
+
+    #Solution
+    class Solution:
+        def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+            # O (n * m)
+            nums1Idx = { n:i for i, n in enumerate(nums1) }
+            res = [-1] * len(nums1)
+            
+            for i in range(len(nums2)):
+                if nums2[i] not in nums1Idx:
+                    continue
+                for j in range(i + 1, len(nums2)):  #check values after a2[i+1]
+                    if nums2[j] > nums2[i]:
+                        idx = nums1Idx[nums2[i]] #get index of that N in a1
+                        res[idx] = nums2[j]
+                        break
+            return res
+
+    ### My V (LC accepted 28, 85)
+    class Solution:
+        def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+            d = {}
+            for i in range(len(nums2)):
+                d[nums2[i]] = -1
+                for j in range(i, len(nums2)):
+                    if nums2[j] > nums2[i]:
+                        d[nums2[i]] = nums2[j]
+                        break
+            ans = []
+            for n in nums1:
+                ans.append(d[n])
+            return ans
+
+| **O(n+m)**
+| **Keys:**
+| -Monotonic stack
+| -ans, initiate as [-1, -1, -1..]
+| -hash of nums1, {value: index}
+| -iterate nums2, if value < stack[-1], add to stack, if value is greater, then 
+| that is the next greater value for all values in stack.
+
+| Input: nums1 = [4,1,2], nums2 = [1,3,4,2]
+| Output: [-1,3,-1]
+
+::
+
+    class Solution:
+        def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+            nums1Idx = { n:i for i, n in enumerate(nums1) }  # {4:0, 1:1, 2:2}
+            res = [-1] * len(nums1)
+            stack = []
+            for i in range(len(nums2)):
+                cur = nums2[i]
+
+                # Mono decreasing stack. If we found in nums2 N that is greater than stack[-1] 
+                # than it is the next greater value for ALL values in stack
+                # (and in stack we have all values that are in nums1)
+                while stack and cur > stack[-1]:
+                    val = stack.pop() # take top val
+                    idx = nums1Idx[val]
+                    res[idx] = cur
+
+                if cur in nums1Idx:  #because we can have values in nums2 that are not in nums1
+                    stack.append(cur)
+            return res
+
+| **Explained**
+| Example.
+| a1=[4,1,2], a2=[2,1,3,4]
+| In general:
+| Notice that when we find answer 3, it is the answer for all nums before that, i.e. for 1,2.
+| 3>1, 3>2.
+ 
+| Walkthrough:
+| 1)stack=[]
+| a2=[2..]
+| If 2 in a1, we add 2 to stack.
+| stack=[2]
+| 2)a2=[2,1..]
+| Next up is 1.
+| Is 1 greater than any num in stack. No. Add 1 to stack. Move on.
+| 3)
+| stack=[2,1]  <--Note, stack is always in decreasing order
+| a2=[2,1,3..]
+| Looking at 3.
+| 3 > stack[-1]
+| So 3 is the answer for all nums in stack.
+| Start popping from stack.
+| stack.pop()=1
+| We find index of 1 in a1, put value 3 at that index
+| stack.pop()=2 ..
+| So: res = [_,3,3]
+| ->As last thing we check if 3 is in a1, only if it is, put 3 to the stack, otherwise no.
+
+132. (LC 344) Reverse String
+---------------------------------
+`344. Reverse String <https://leetcode.com/problems/reverse-string/>`_
+Easy
+
+| Note:
+| Input: s = ["h","e","l","l","o"]
+| Input format is important, would need a different solution for string, not array input.
+ 
+| **Solution 1** (most efficient)
+| Key points:
+| -change in place
+| -pointers
+| -do not return anything
+
+::
+
+    def reverse_string(s):
+        l = 0
+        r = len(s) - 1
+        while l < r:
+            s[l],s[r] = s[r],s[l]
+            l += 1
+            r -= 1
+
+    ### My V (LC accepted 98, 70)
+    class Solution:
+        def reverseString(self, s: List[str]) -> None:
+            """
+            Do not return anything, modify s in-place instead.
+            """
+            if len(s) <=1:
+                return
+            rp = len(s)-1
+            for lp in range(len(s)//2):
+                if s[lp] != s[rp]:
+                    s[lp], s[rp] = s[rp], s[lp]
+                rp -= 1
 
 
+| **Solution 2**
+| Somewhat less efficient. But good to know if you will need to discuss alternatives.
+| Uses Stack. O(N). Extra space.
+| -We put all chars to stack.
+| -Pop from stack, each time replacing chars in array.
+| -Again, do not return, we're modifying in place.
 
+::
+
+    def f(a):
+        stack = []
+        for c in a:
+            stack.append(c)
+        i = 0
+        while stack:
+            a[i] = stack.pop()
+            i += 1
+
+    s = ["h", "e", "l", "l", "o"]
+    f(s)
+    print(s) # ['o', 'l', 'l', 'e', 'h']
+
+| **Solution 3. Recursion.**
+| Even less efficient. Time O(N), space O(N).
+
+::
+
+    class Solution:
+        def reverseString(self, s: List[str]) -> None:
+            def rev_str(l, r):
+                if l < r:
+                    s[l], s[r] = s[r], s[l]
+                    rev_str(l + 1, r - 1)
+            rev_str(0, len(s) - 1)
+
+    sol = Solution()
+    sol.reverseString(s)
+    print(s) # ['o', 'l', 'l', 'e', 'h']
+
+    # Recursion my V
+    def f(a, l=0, r=len(a) - 1):
+        if l >= r:
+            return
+        a[l], a[r] = a[r], a[l]
+        f(a, l + 1, r - 1)
+
+    f(s)
+    print(s) # ['o', 'l', 'l', 'e', 'h']
 
 
 
