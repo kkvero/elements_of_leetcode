@@ -641,88 +641,54 @@ Easy ::
 `LC 949. Largest Time for Given Digits <https://leetcode.com/problems/largest-time-for-given-digits/>`_
 Medium
 
-| 2 main versions:
-| 1-make all possible time strings from the given 4 digits. Use itertools.permutations()
-| 2-greedy
+| **Keys**
+| -Brute force trying all combinations. Nested loops.
+| 4*4*4*4 = 64 combinations overall.
+| So time O(64) = O(1)
 
-::
+**Solution 1** [:ref:`14 <ref-label>`] ::
 
-    # My V2
-    import itertools as it
-    def latest_time(a):
-        valid_time = [
-            x
-            for x in it.permutations(a, 4)
-            if ((x[0] * 10 + x[1]) < 24) and ((x[2] * 10 + x[3]) < 60)
-        ]
-        if valid_time:
-            max_time = max(valid_time)  # we can find max of tuples without any conversions
-            return "%02d:%02d" % (
-                max_time[0] * 10 + max_time[1],
-                max_time[2] * 10 + max_time[3],
-            )
-        return ""
+    class Solution:
+        def largestTimeFromDigits(self, arr: List[int]) -> str:
+            res = ''
+            for i in range(4):
+                for j in range(4):
+                    for k in range(4):
+                        if i == j or j == k or k == i:
+                            continue
+                        hh = str(arr[i]) + str(arr[j])
+                        mm = str(arr[k]) + str(arr[6-i-j-k])  #1
+                        _time = hh + ':' + mm
+                        if hh < '24' and mm < '60' and _time > res:  #2
+                            res = _time
+            return res
 
-    arr = [1, 2, 3, 4]
-    arr2 = [1, 2]
-    arr3 = [5, 5, 6, 6]
-    print(latest_time(arr))  #23:41
-    print(latest_time(arr2)) #''
-    print(latest_time(arr3)) #''
+| #1
+| arr[6-i-j-k]
+| We need to go through all 4 digits of the arr.
+| First 3 we get using 3 nested loops. 4th we just get as the remaining: total - what loops give us.
+| Total indices we have = 0+1+2+3=6 
+| E.g. i=0,j=2,k=3 
+| 4th index = 6-0-2-3=6-5=1
+| So 4th digit is at index 1.
+ 
+| #2
+| yes we can compare strings
 
-    ### My V1
-    import itertools
+>>> '24' < '25'
+True
+>>> '24' < '4'
+True
+>>> '24' < '04'
+False
+# Also:
+>>> '23:00' < '22:01'
+False
+>>> '23:00' < '23:01'
+True
 
-    def latest_time(a):
-        L = list(itertools.permutations(a))
-        L2 = L[:]
-        # print(L)
-        for i in L:
-            if (i[0] > 2) or (i[0] == 2 and i[1] >= 4) or (i[2] >= 6):
-            #OR if i[0]*10 + i[1] < 24 and i[2]*10 + i[3] < 60:
-                L2.remove(i)
-        # print(L2)
-        if L2:
-            mt = max(L2)  # max time
-            return f"{mt[0]}{mt[1]}:{mt[2]}{mt[3]}"
-        return ""
+And our alg guarantees that strings we compare will be of the same len.
 
-    arr1 = [1, 2, 3, 4]
-    arr2 = [5, 5, 5, 5]
-    print(latest_time(arr1))  # 23:41
-    print(latest_time(arr2))  # ''
 
-    ### My V (greedy)
-    # (Probably needs more testing)
-    def latest_time(a):
-        h1 = h2 = m1 = m2 = 0
-        for n in a:
-            if h1 <= n and n < 3:
-                if h2 < h1:
-                    h2 = h1
-                h1 = n
-            elif h2 < n and (h1 * 10 + n) <= 23:
-                if m1 < h2:
-                    m1 = h2
-                h2 = n
-            elif m1 < n and (n * 10 + m1) < 60:
-                if m2 < m1:
-                    m2 = m1
-                m1 = n
-            elif m2 < n:
-                m2 = n
-            else:
-                return ""
-        return f"{h1}{h2}:{m1}{m2}"
-
-    arr = [1, 2, 3, 4]
-    print(latest_time(arr))
-    arr2 = [5, 5, 5, 5]
-    print(latest_time(arr2))
-    arr3 = [0, 9, 9, 5]
-    print(latest_time(arr3))
-    #23:41
-    #""
-    #09:59
 
 

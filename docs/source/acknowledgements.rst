@@ -14,6 +14,7 @@ Acknowledgements and References
 8. `Top 100 LeetCode Questions <https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-100-LeetCode-Questions-to-Save-Your-Time-OaM1orEU>`_.
 9. `Leetcode Patterns <https://seanprashad.com/leetcode-patterns/>`_.
 10. `Neetcode coding practice <https://neetcode.io>`_.
-11. `Sai Anish Malla YouTube Channel <https://www.youtube.com/@saianishmalla2646>`_.
+11. `Sai Anish Malla, YouTube Channel <https://www.youtube.com/@saianishmalla2646>`_.
 12. A Common-Sense Guide to Data Structures and Algorithms, Second Edition, by Jay Wengrow. ISBN-10 1680507222.
 13. Programming Interview Problems: Dynamic Programming (with solutions in Python), by Leonardo Rossi.  ISBN-13 979-8558191189.
+14. `Knowledge Center, YouTube Channel <https://www.youtube.com/@KnowledgeCenter>`_.
