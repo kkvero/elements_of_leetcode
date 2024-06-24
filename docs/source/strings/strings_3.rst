@@ -451,5 +451,266 @@ Easy
     f(s)
     print(s) # ['o', 'l', 'l', 'e', 'h']
 
+133. (LC 929) Unique Email Addresses
+--------------------------------------
+`929. Unique Email Addresses <https://leetcode.com/problems/unique-email-addresses/>`_
+Easy
+
+**Solution** [:ref:`10 <ref-label>`]
+::
+
+    class Solution:
+        def numUniqueEmails(self, emails: list[str]) -> int:
+            unique_emails: set[str] = set()
+            for email in emails:
+                local_name, domain_name = email.split('@')
+                local_name = local_name.split('+')[0]
+                local_name = local_name.replace('.', '')
+                email = local_name + '@' + domain_name
+                unique_emails.add(email)
+            return len(unique_emails)
+
+    ### My V1 (Iteration) (LC accepted 8, 72)
+    class Solution:
+        def numUniqueEmails(self, emails: List[str]) -> int:
+            ans = set()
+            for e in emails:
+                s = ''
+                i = 0
+                while i < len(e):
+                    if e[i] == '@':
+                        s += e[i:]
+                        i = len(e)
+                    elif e[i] == '.':
+                        i += 1
+                        continue
+                    elif e[i] == '+':
+                        while e[i] != '@':
+                            i+=1
+                    else:
+                        s += e[i]
+                        i += 1
+                ans.add(s)
+            return len(ans)
+
+134. (LC 680) Valid Palindrome II
+-----------------------------------
+`680. Valid Palindrome II <https://leetcode.com/problems/valid-palindrome-ii/>`_
+Easy
+
+| **Solution** [:ref:`10, 7 <ref-label>`]
+| **Logic**
+| **V1**
+
+Having met s[L] != s[R], build 2 subarrays that skip left letter (s[l + 1 : r + 1] 
+and s[l:r] that skips right letter.
+Reverse and see if after this one skip the rest of the array will be a valid palindrome. 
+(+O(N) of space because we build subarrays.) ::
+
+    ### V1
+    def f(s):
+        l, r = 0, len(s) - 1
+        while l < r:
+            if s[l] != s[r]:
+                skipL, skipR = s[l + 1 : r + 1], s[l:r]  # python of L+1->R, L->R-1
+                return skipL == skipL[::-1] or skipR == skipR[::-1]
+            l, r = l + 1, r - 1
+        return True
+
+| **V2**
+| Helper function
+| (checks palindromicity, we give it string with L+1, or R-1 string.)
+| Having met chars at L, R that ar not equal. -> aaaz
+| We remove char on left, and see if the remaining string is a palindrome (with classic alg for that).
+| We remove char on the right, see if the remaining string is a palindrome.
+
+::
+
+    class Solution:
+        def validPalindrome(self, s: str) -> bool:
+            i, j = 0, len(s) - 1
+            while i < j:
+                if s[i] != s[j]:
+                    return check(i, j - 1) or check(i + 1, j)
+                i, j = i + 1, j - 1
+            return True
+
+            def check(i, j):
+                while i < j:
+                    if s[i] != s[j]:
+                        return False
+                    i, j = i + 1, j - 1
+                return True
+
+
+135. (LC 953) Verifying an Alien Dictionary
+----------------------------------------------
+`953. Verifying an Alien Dictionary <https://leetcode.com/problems/verifying-an-alien-dictionary/>`_
+Easy
+
+| **Solution** [:ref:`10 <ref-label>`]
+| **Keys**
+| -Use hash table.
+| -if 2nd word is prefix of first (e.g. wowe, wow), return false.
+| /Note that it also works for ["abba", "abc"]. i.e. shorter word after, but still order is correct.
+| /How to define prefix. When index j==len(w2). 
+| Note, it is the index out of range for w2. (len(w2)=3, j=3, there is no index 3 in w2).
+| -But it is not just about the len. By the time we reached j==len(w2), we have established
+| that all chars before j in w1 and w2 are the same, because:
+
+::
+
+            if w1[j] != w2[j]:
+                if orderInd[w2[j]] < orderInd[w1[j]]:
+                    return False
+                break
+
+1)False if different characters, 2)break out of the loop if not the same chars, but in correct order,
+so we never get to j==len(w2) in that case.  
+
+::
+
+    def f(words, order: str) -> bool:
+        # first differing char
+        # if word A is prefix of word B, word B must be AFTER word A
+        orderInd = {c: i for i, c in enumerate(order)}
+
+        for i in range(len(words) - 1):
+            w1, w2 = words[i], words[i + 1]
+
+            for j in range(len(w1)):
+                if j == len(w2):
+                    return False
+
+                if w1[j] != w2[j]:
+                    if orderInd[w2[j]] < orderInd[w1[j]]:
+                        return False
+                    break
+        return True
+
+    ### My V1
+    def f(words, order):
+        d = {}
+        for index, letter in enumerate(order):
+            d[letter] = index
+        for i in range(len(words) - 1):
+            lp = 0
+            while lp < len(words[i]):
+                if lp == len(words[i + 1]) or d[words[i][lp]] > d[words[i + 1][lp]]:
+                    return False
+                elif d[words[i][lp]] < d[words[i + 1][lp]]:
+                    break
+                lp += 1
+        return True
+
+| Logic:
+| -put the alien alphabet into the hash (letter:index)
+| -do not overcomplicate. It does have a flavour of brute force.
+| Go through each word and compare it with the next one, then nex with the next next.
+| -keep track of word lens for the case ['abcd', 'ab']
+| Iterate while len word1.
+| False if lp == len word2 (then it is ['abcd', 'ab'], which is wrong)
+| -break when word1 letter < word2 letter
+| -when word1 letter == word2 letter, continue, i.e. do nothing
+
+136. (LC 6) Zigzag Conversion
+-----------------------------------
+`6. Zigzag Conversion <https://leetcode.com/problems/zigzag-conversion/>`_
+Medium
+
+| **My V**
+| //Main points.
+| Use dict to store data for each row.
+| Identify direction of the zigzag using %(totalrowNum-1).
+
+Logic::
+
+    # Visualize
+    # r0 P     I    N
+    # r1 A   L S  I G
+    # r2 Y A   H R
+    # r3 P     I
+
+| Note that we change direction of the zigzag when rowN=0 and rowN=maxRnum.
+| E.g. r=4. Note indices for rows are 0,1,2,3.
+| At 0 and 3 we have to change direction. 0%4-1==0, 3%4-1==0
+| -Initialize dict R:[], where R is row number
+| -initialize index=0, direction=-1
+| -Loop through string, check if index in srting%rows==0, if yes, change direction.
+| index+direction. (Will do +1 or -1 depending on the direction.)
+
+::
+
+    def f(s, r):
+        if r == 1:    #edge case, to avoid division by zero in %(r-1)
+            return s
+        d = {}
+        for i in range(r):
+            d[i] = []
+        index = 0
+        direction = -1
+        for j in range(len(s)):
+            if index % (r - 1) == 0:
+                direction *= -1
+            d[index].append(s[j])
+            index += direction
+        print(d)
+        ans = []
+        for k in range(r):
+            ans += d[k]
+        return "".join(ans)
+
+    s = "PAYPALISHIRING"
+    numRows = 4
+    print(f(s, numRows))
+    # {0: ['P', 'I', 'N'], 1: ['A', 'L', 'S', 'I', 'G'], 2: ['Y', 'A', 'H', 'R'], 3: ['P', 'I']}
+    # PINALSIGYAHRPI
+
+    ### V2 (using not dict but indexing a nested array like [[], [], [], []])
+    def f(s, r):
+        if r == 1:
+            return s
+        # Create nested array
+        rows = []
+        for _ in range(r):
+            rows.append([])
+
+        direction = -1
+        row = 0
+        for i in range(len(s)):
+            if row % (r - 1) == 0:  #NOTE (numRows-1)
+                direction *= -1
+            rows[row].append(s[i])
+            row += direction
+
+        # return rows #[['P', 'I', 'N'], ['A', 'L', 'S', 'I', 'G'], ['Y', 'A', 'H', 'R'], ['P', 'I']]
+        ans = ""
+        for line in rows:
+            ans += "".join(line)
+        return ans
+
+| **Solution** [:ref:`2 <ref-label>`]
+| (Here we don't use extra space like in the array/dict version.)
+| We use a different logic.
+| We will be jumping/skipping values in s.
+| For the first and last row it will be 6 jumps. (r-1)*2=(4-1)*2
+| Middle rows: 4 and 2 jumps, so decreasing by 2 each time. Formula=[(r-1)*2 - 2*r]
+
+::
+
+    def f(s, numRows):
+        if numRows == 1:
+            return s
+        res = ""
+        for r in range(numRows):
+            increment = (numRows - 1) * 2  # e.g.(4-1)*2
+            for i in range(r, len(s), increment):
+                res += s[i]  
+                if (r > 0 and r < numRows - 1 and 
+                    i + increment - 2 * r < len(s)):  # also check if inbond
+                    res += s[i + increment - 2 * r]
+        return res
+
+
 
 
