@@ -52,6 +52,11 @@ TABLE OF CONTENTS
     Part 3 (126-136) <strings/strings_3>
 
 .. toctree::
+    :caption: Two Pointers:
+
+    Part 1 (138-145) <two_pointers/two_pointers>
+
+.. toctree::
     :caption: Math:
 
     Knowledge base <math/math_kb>

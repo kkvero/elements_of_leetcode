@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two Pointers Questions Part 1 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Strings Questions Part 3" href="../strings/strings_3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_6.html">Part 6 (86-95)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_7.html">Part 7 (96-105)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_extra.html">Extra (137)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_3.html">Part 3 (126-136)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Two Pointers:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (138-145)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-167-two-sum-ii-input-array-is-sorted">138. (LC 167) Two Sum II - Input Array Is Sorted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-42-trapping-rain-water">139. (LC 42) Trapping Rain Water</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-259-3sum-smaller">140. (LC 259) 3Sum Smaller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-844-backspace-string-compare">141. (LC 844) Backspace String Compare</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-977-squares-of-a-sorted-array">142. (LC 977) Squares of a Sorted Array</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Two Pointers Questions Part 1</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/two_pointers/two_pointers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="two-pointers-questions-part-1">
+<h1>Two Pointers Questions Part 1<a class="headerlink" href="#two-pointers-questions-part-1" title="Link to this heading"></a></h1>
+<section id="lc-167-two-sum-ii-input-array-is-sorted">
+<h2>138. (LC 167) Two Sum II - Input Array Is Sorted<a class="headerlink" href="#lc-167-two-sum-ii-input-array-is-sorted" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">167. Two Sum II - Input Array Is Sorted</a>
+Medium</p>
+<p><strong>Key:</strong>
+If you are given a sorted array, consider moving from both ends toward the center.</p>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]
+O(n)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">twoSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+            <span class="n">curSum</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">numbers</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">curSum</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">curSum</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Explained:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">curSum</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">How do we know to decrease the right pointer.</div>
+<div class="line">Consider our sorted a=[2,7,11,15], t=9</div>
+<div class="line">2+15=17 &gt;9</div>
+<div class="line">So we know we need a smaller sum.</div>
+<div class="line">If we moved lp, 7+15 we would only be making the sum greater.</div>
+<div class="line">So we must move the right pointer.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 70, 80)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">twoSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+        <span class="k">while</span> <span class="n">p1</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">:</span>
+            <span class="n">sum_</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">+</span> <span class="n">numbers</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">sum_</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">p1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">p2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">sum_</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">p2</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">p1</span> <span class="o">+=</span><span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-42-trapping-rain-water">
+<h2>139. (LC 42) Trapping Rain Water<a class="headerlink" href="#lc-42-trapping-rain-water" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/trapping-rain-water/">42. Trapping Rain Water</a>
+Hard</p>
+<div class="line-block">
+<div class="line">2 approaches.</div>
+<div class="line">Both are O(n) time.</div>
+<div class="line">One is O(n) space, optimization with pointers is O(1) space.</div>
+<div class="line"><br /></div>
+<div class="line">Keys (O(n) space)</div>
+<div class="line">-find running max for right side</div>
+<div class="line">-find running max for left side (while calculating water trapped)</div>
+<div class="line">Water trapped = min(current_left_max, current_right_max) - current_height</div>
+<div class="line">-If water trapped &gt; 0, then add to ans.</div>
+<div class="line"><br /></div>
+<div class="line"># The one with O(n) space, linear traversal.</div>
+<div class="line">We traverse the given array height=[0,1,0,2,1,0,1,3,2,1,2,1]</div>
+</div>
+<div class="admonition-the-formula-for-trapped-water-is admonition">
+<p class="admonition-title">The formula for trapped water is:</p>
+<p>min(maxLeft, maxRight) - height[i]</p>
+</div>
+<div class="line-block">
+<div class="line">So we calculate for each index, including here at index 1, h=[1,2,3]</div>
+<div class="line">min(mL,mR) - h[i] = min(1,3)-h[1] = 1-2=-1 (no water trapped)</div>
+<div class="line"><br /></div>
+<div class="line">Calculating maxL, maxR for a current index gives us the closest max left and max right walls.</div>
+<div class="line">E.g.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Illustration</span>
+<span class="c1"># height:    0,1,0,2,1,0,1,3,2,1,2,1</span>
+<span class="c1"># maxLeft:   0 0 1 1 2 2 2 2 3 3 3 3  --&gt;</span>
+<span class="c1"># maxRight:  3 3 3 3 3 3 3 2 2 2 1 0  &lt;--</span>
+<span class="c1"># min(mL,mR) 0 0 1 1 2 2 2 2 2 2 1 0  ^V</span>
+<span class="c1"># trapped w: 0 0 1 0 1 2 1 0 0 1 0 0 (some zeros are actually -N, but we make sure we make it 0)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V O(N) (LC accepted 25, 70%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">trap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># Calculating running max for values at the right side</span>
+        <span class="n">max_right</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">max_v</span> <span class="o">=</span> <span class="n">height</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">))):</span>
+            <span class="n">max_v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_v</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">max_right</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_v</span><span class="p">)</span>
+        <span class="n">max_right</span> <span class="o">=</span> <span class="n">max_right</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1">#Calculating running max for left side. At the same time as calculating water trapped.</span>
+        <span class="n">max_left_v</span> <span class="o">=</span> <span class="n">height</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ans</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)):</span>
+            <span class="n">max_left_v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_left_v</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">min_v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_left_v</span><span class="p">,</span> <span class="n">max_right</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">water</span> <span class="o">=</span> <span class="n">min_v</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">water</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="n">water</span>
+
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Logic when using pointers</strong></div>
+<div class="line">-Initiate pointers.</div>
+<div class="line">-Initiate leftMax, rightMax</div>
+<div class="line-block">
+<div class="line">Iteration:</div>
+</div>
+<div class="line">-Compare leftMax and rightMax, we will be moving that pointer, which max is smaller.</div>
+<div class="line">(If they have the same value, we move whichever.)</div>
+<div class="line">height=[0,1,0,2,1,0,1,3,2,1,2,1]</div>
+<div class="line-block">
+<div class="line">L                     R</div>
+</div>
+<div class="line">leftMax=0, rightMax=1</div>
+<div class="line">mL&lt;mR, so we would move L+=1</div>
+<div class="line">-Check if we found a new leftMax or rightMax.</div>
+<div class="line-block">
+<div class="line">leftMax = max(leftMax, height[l])</div>
+</div>
+<div class="line">-Calculate water we can trap</div>
+<div class="line">leftMax - height[l]</div>
+<div class="line">Note that because we first assigned a new leftMax and if current h[i]= new leftMax</div>
+<div class="line">then water trapped = h[i]-h[i]=0. This is how we avoid negative amounts of water trapped.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Two pointers</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">trap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">height</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">leftMax</span><span class="p">,</span> <span class="n">rightMax</span> <span class="o">=</span> <span class="n">height</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">height</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">leftMax</span> <span class="o">&lt;</span> <span class="n">rightMax</span><span class="p">:</span>
+                <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">leftMax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">leftMax</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">leftMax</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">rightMax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rightMax</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">rightMax</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="c1">### My V3</span>
+<span class="k">def</span> <span class="nf">trap_water</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">lp</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">maxL</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span>
+    <span class="n">maxR</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
+    <span class="n">water</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="n">rp</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">maxL</span> <span class="o">&lt;</span> <span class="n">maxR</span><span class="p">:</span>  <span class="c1">#From this we already know we&#39;re dealing with the result of minH=min(maxL, MaxR)</span>
+            <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">maxL</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">],</span> <span class="n">maxL</span><span class="p">)</span>
+            <span class="n">water</span> <span class="o">+=</span> <span class="n">maxL</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">maxR</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">],</span> <span class="n">maxR</span><span class="p">)</span>
+            <span class="n">water</span> <span class="o">+=</span> <span class="n">maxR</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">water</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-259-3sum-smaller">
+<h2>140. (LC 259) 3Sum Smaller<a class="headerlink" href="#lc-259-3sum-smaller" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/3sum-smaller">259. 3Sum Smaller</a>
+(Locked content)</p>
+<p>Given an array of n integers nums and an integer target, find the number of
+index triplets i, j, k with 0 &lt;= i &lt; j &lt; k &lt; n that satisfy the condition
+nums[i] + nums[j] + nums[k] &lt; target.</p>
+<div class="line-block">
+<div class="line">Example 1:</div>
+<div class="line">Input: nums = [-2,0,1,3], target = 2</div>
+<div class="line">Output: 2</div>
+<div class="line">Explanation: Because there are two triplets which sums are less than 2:</div>
+<div class="line">[-2,0,1]</div>
+<div class="line">[-2,0,3]</div>
+</div>
+<p><strong>Keys:</strong>
+If we need 3 pointers, make the third P the index in array.</p>
+<div class="line-block">
+<div class="line">-Sort the input array.</div>
+<div class="line">-initiate pointers within the loop len(a)</div>
+<div class="line">leftP=i+1</div>
+<div class="line">So e.g.:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Illustration</span>
+<span class="c1"># [-2,0,1,3]</span>
+<span class="c1">#   i L   R</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">So L is actually our middle pointer, i index is our leftmost pointer.</div>
+<div class="line">-while L&lt;R: (i is constant in this loop)</div>
+<div class="line">move R-=1 if sum&gt;=t</div>
+<div class="line">otherwise, ATTENTION add to answer rp-lp, and lp+=1 AFTER that</div>
+<div class="line">(by rp-lp we add all combinations between rp and lp)</div>
+<div class="line">-move on to the next i, assign L, R anew:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># [-2,0,1,3]</span>
+<span class="c1">#     i L R</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="n">lp</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="n">rp</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="n">rp</span> <span class="o">-</span> <span class="n">lp</span>   <span class="c1">#&lt;===</span>
+                <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">target</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span> <span class="c1">#2</span>
+<span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">target2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums2</span><span class="p">,</span> <span class="n">target2</span><span class="p">))</span> <span class="c1">#0</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-844-backspace-string-compare">
+<h2>141. (LC 844) Backspace String Compare<a class="headerlink" href="#lc-844-backspace-string-compare" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/backspace-string-compare/">844. Backspace String Compare</a>
+Easy</p>
+<div class="line-block">
+<div class="line">Solution ideas:</div>
+<div class="line">-Initiate 2 pointers, both at the end of each string.</div>
+<div class="line">-Initiate vars skip1, skip2 to keep track of the encountered backspace #.</div>
+<div class="line">-Main while loop while i &gt;= 0 or j &gt;= 0</div>
+<div class="line">-inner 2 while loops for each pointer ‘while pointer &gt;=0’, check for #, use break</div>
+<div class="line">-at the end of the main while loop check if one of the pointers reached the end of string.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">backspaceCompare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">skip1</span><span class="p">,</span> <span class="n">skip2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                    <span class="n">skip1</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>       <span class="c1">#&lt;==1</span>
+                <span class="k">elif</span> <span class="n">skip1</span><span class="p">:</span>
+                    <span class="n">skip1</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>       <span class="c1">#&lt;==2</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                    <span class="n">skip2</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">skip2</span><span class="p">:</span>
+                    <span class="n">skip2</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1">#AND</span>
+                <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1">#OR</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-977-squares-of-a-sorted-array">
+<h2>142. (LC 977) Squares of a Sorted Array<a class="headerlink" href="#lc-977-squares-of-a-sorted-array" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/squares-of-a-sorted-array/">977. Squares of a Sorted Array</a>
+Easy</p>
+<div class="line-block">
+<div class="line">[<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
+<div class="line"># Time: O(n), one pass using two pointers.</div>
+<div class="line"># Space: O(1), output array is not considered for space complexity.</div>
+</div>
+<div class="line-block">
+<div class="line">Idea:</div>
+<div class="line">Recognize that sorted array like [-4, -1, 0, 3, 10], squares are [16,1,0,9,100].</div>
+<div class="line">An array like that will have greatest values at its far ends.</div>
+<div class="line">===&gt; We can iterate with two pointers from the far ends of the squared array.</div>
+<div class="line">Check which value at the pointer is greater, put that value into a new ‘ans’ array</div>
+<div class="line">in reverse order, e.g. ans=[0,0,0,0,100]. Or put from front and reverse when giving the final answer.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution V1 + my V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">lp</span><span class="p">,</span> <span class="n">rp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">lp</span> <span class="o">&lt;=</span> <span class="n">rp</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]:</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">])</span>
+            <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">])</span>
+            <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">### My V</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">lp</span><span class="p">,</span> <span class="n">rp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">lp</span> <span class="o">&lt;=</span> <span class="n">rp</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]:</span>
+            <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
+            <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span>
+            <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="c1">#[0, 1, 9, 16, 100]</span>
+
+<span class="c1">### Solution V2</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">sortedSquares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+        <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">:</span>
+            <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">left</span> <span class="o">*</span> <span class="n">left</span>
+                <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">right</span> <span class="o">*</span> <span class="n">right</span>
+                <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p><strong>My solution.</strong> If you forgot to traverse from opposite ends. (LC accepted: 72, 78%)
+(Traversing from left if all positives, from right if all negatives, from somewhere
+in the middle if both pos and neg).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">sortedSquares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">lp</span><span class="p">,</span> <span class="n">rp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">lp</span><span class="p">,</span> <span class="n">rp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">lp</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="n">rp</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="k">break</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">lp</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">rp</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">rp</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+                <span class="n">lp</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+                <span class="n">rp</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">lp</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">rp</span><span class="p">]:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+                <span class="n">lp</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+                <span class="n">rp</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../strings/strings_3.html" class="btn btn-neutral float-left" title="Strings Questions Part 3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
