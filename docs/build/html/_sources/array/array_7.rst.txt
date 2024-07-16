@@ -361,45 +361,99 @@ Medium
 102. (LC 152) Maximum Product Subarray
 -------------------------------------------
 `152. Maximum Product Subarray <https://leetcode.com/problems/maximum-product-subarray/>`_
-Medium ::
+Medium
 
-    ### My V2
-    def f(a):
-        lp, prod = 0, 1
-        ans = -float("inf")
-        for rp in range(len(a)):
-            prod = prod * a[rp]
-            ans = max(ans, prod)
-            while prod < ans and lp < rp:
-                prod /= a[lp]
-                lp += 1
-                ans = max(ans, prod)
-        return int(ans)
+| **Keys:**
+| -track both max, min. Min, max selected from (cur_num, max*cur_num, min*cur_num) Greedy select answer.
 
-    ### My V
-    def max_prod(a):
-        ans = mp = a[0]
-        for i in range(1, len(a)):
-            prod = mp * a[i]
-            if prod < mp:
-                mp = a[i]
-            else:
-                ans = mp = prod
-        return ans
+| **Brute force** 
+| Making all possible subarrays would be O(n**2)
 
-    ### Solution
+::
+
+    # Illustration
+    # [2,3,-2,4]     [2,3,-2,4]
+    # |-|              |-|
+    # |---| etc        |----| etc
+
+| **Recognize the pattern**
+| Multiplying nums with dif signs (-/+) flips the product.
+| So keep track of both min, max product so far.
+| The final answer will depend on whether the next num is -/+.
+ 
+| //next_num (+): makes max bigger, min smaller
+| //next_num (0): resets min, max (then min=max=0)
+| //next_num (-): max, min swap places (because the sign gets flipped)
+ 
+::
+
+#     [-3, 2,-4, 6, 0, -8, 5]
+# max: -3, 2,24,144,0,  0, 5
+# mix: -3,-6,-8,-48,0, -8,-40
+ 
+| At -3
+| max_so_far=-3
+| min_so_far=-3
+| max_overall=-3
+| At 2
+| max_so_far=2  arr=[2]
+| min_so_far=-6 arr=[-3,2]
+| max_overall=2
+| At -4
+| max_so_far=24 arr=[-3,2,-4]
+| min_so_far=-8 arr=[2,-4]
+| max_overall=24
+| At 6
+| max_so_far=144 arr=[-3,2,-4,6]
+| min_so_far=-48 arr=[2,-4,6]
+| max_overall=144
+| etc.
+
+**Solution 1** [:ref:`10 <ref-label>`]
+::
+
+    ### Solution 1
     class Solution:
         def maxProduct(self, nums: List[int]) -> int:
-            ans = f = g = nums[0]
-            for x in nums[1:]:
-                ff, gg = f, g
-                f = max(x, ff * x, gg * x)
-                g = min(x, ff * x, gg * x)
-                ans = max(ans, f)
-            return ans
+            # O(n)/O(1) : Time/Memory
+            res = nums[0]
+            curMin, curMax = 1, 1
+            for n in nums:
+                tmp = curMax * n                         #1
+                curMax = max(n * curMax, n * curMin, n)
+                curMin = min(tmp, n * curMin, n)
+                res = max(res, curMax)
+            return res
 
-We keep track of max and min, because if the next x is negative, then our min
-might become the max.
+| #1
+| tmp variable because the code could have been:
+|     curMax = max(n * curMax, n * curMin, n)
+|     curMin = max(n * curMax, n * curMin, n)
+| But when computing curMin, we want the old value of curMax, not the reassigned in the step above.
+
+**C++** [:ref:`14 <ref-label>`]
+
+.. code-block:: cpp
+
+    //C++:
+    class Solution {
+    public:
+        int maxProduct(vector<int>& nums) {
+            int max_overall = nums[0];
+            int max_ending_here = nums[0], min_ending_here = nums[0];
+            
+            for(int i = 1; i < nums.size(); ++i){
+                int tmp = max_ending_here;
+                max_ending_here = max({nums[i], nums[i]*max_ending_here, nums[i]*min_ending_here});
+                min_ending_here = min({nums[i], nums[i]*tmp, nums[i]*min_ending_here});
+                max_overall = max(max_overall, max_ending_here);
+            }
+            return max_overall;
+        }
+    };
+
+| max({item1, item2, item3})
+| When >2 params, include initializer braces {}.
 
 103. (LC 217) Contains Duplicate
 --------------------------------------

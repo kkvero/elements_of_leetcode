@@ -78,6 +78,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../strings/strings_kb.html">Knowledge base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../strings/strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_3.html">Part 3 (126-136)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Two Pointers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -490,44 +496,102 @@ Medium</p>
 <h2>102. (LC 152) Maximum Product Subarray<a class="headerlink" href="#lc-152-maximum-product-subarray" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://leetcode.com/problems/maximum-product-subarray/">152. Maximum Product Subarray</a>
 Medium</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="n">lp</span><span class="p">,</span> <span class="n">prod</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
-    <span class="n">ans</span> <span class="o">=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">rp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
-        <span class="n">prod</span> <span class="o">=</span> <span class="n">prod</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
-        <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">prod</span><span class="p">)</span>
-        <span class="k">while</span> <span class="n">prod</span> <span class="o">&lt;</span> <span class="n">ans</span> <span class="ow">and</span> <span class="n">lp</span> <span class="o">&lt;</span> <span class="n">rp</span><span class="p">:</span>
-            <span class="n">prod</span> <span class="o">/=</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span>
-            <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">prod</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
-
-<span class="c1">### My V</span>
-<span class="k">def</span> <span class="nf">max_prod</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="n">ans</span> <span class="o">=</span> <span class="n">mp</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
-        <span class="n">prod</span> <span class="o">=</span> <span class="n">mp</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">prod</span> <span class="o">&lt;</span> <span class="n">mp</span><span class="p">:</span>
-            <span class="n">mp</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">ans</span> <span class="o">=</span> <span class="n">mp</span> <span class="o">=</span> <span class="n">prod</span>
-    <span class="k">return</span> <span class="n">ans</span>
-
-<span class="c1">### Solution</span>
-<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">maxProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="n">ans</span> <span class="o">=</span> <span class="n">f</span> <span class="o">=</span> <span class="n">g</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="n">ff</span><span class="p">,</span> <span class="n">gg</span> <span class="o">=</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ff</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">gg</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ff</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">gg</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ans</span>
+<div class="line-block">
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-track both max, min. Min, max selected from (cur_num, max*cur_num, min*cur_num) Greedy select answer.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Brute force</strong></div>
+<div class="line">Making all possible subarrays would be O(n**2)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Illustration</span>
+<span class="c1"># [2,3,-2,4]     [2,3,-2,4]</span>
+<span class="c1"># |-|              |-|</span>
+<span class="c1"># |---| etc        |----| etc</span>
 </pre></div>
 </div>
-<p>We keep track of max and min, because if the next x is negative, then our min
-might become the max.</p>
+<div class="line-block">
+<div class="line"><strong>Recognize the pattern</strong></div>
+<div class="line">Multiplying nums with dif signs (-/+) flips the product.</div>
+<div class="line">So keep track of both min, max product so far.</div>
+<div class="line">The final answer will depend on whether the next num is -/+.</div>
+</div>
+<div class="line-block">
+<div class="line">//next_num (+): makes max bigger, min smaller</div>
+<div class="line">//next_num (0): resets min, max (then min=max=0)</div>
+<div class="line">//next_num (-): max, min swap places (because the sign gets flipped)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#     [-3, 2,-4, 6, 0, -8, 5]</span>
+<span class="c1"># max: -3, 2,24,144,0,  0, 5</span>
+<span class="c1"># mix: -3,-6,-8,-48,0, -8,-40</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">At -3</div>
+<div class="line">max_so_far=-3</div>
+<div class="line">min_so_far=-3</div>
+<div class="line">max_overall=-3</div>
+<div class="line">At 2</div>
+<div class="line">max_so_far=2  arr=[2]</div>
+<div class="line">min_so_far=-6 arr=[-3,2]</div>
+<div class="line">max_overall=2</div>
+<div class="line">At -4</div>
+<div class="line">max_so_far=24 arr=[-3,2,-4]</div>
+<div class="line">min_so_far=-8 arr=[2,-4]</div>
+<div class="line">max_overall=24</div>
+<div class="line">At 6</div>
+<div class="line">max_so_far=144 arr=[-3,2,-4,6]</div>
+<div class="line">min_so_far=-48 arr=[2,-4,6]</div>
+<div class="line">max_overall=144</div>
+<div class="line">etc.</div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># O(n)/O(1) : Time/Memory</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">curMin</span><span class="p">,</span> <span class="n">curMax</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">curMax</span> <span class="o">*</span> <span class="n">n</span>                         <span class="c1">#1</span>
+            <span class="n">curMax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">curMax</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">curMin</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">curMin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">curMin</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">curMax</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#1</div>
+<div class="line">tmp variable because the code could have been:</div>
+<div class="line-block">
+<div class="line">curMax = max(n * curMax, n * curMin, n)</div>
+<div class="line">curMin = max(n * curMax, n * curMin, n)</div>
+</div>
+<div class="line">But when computing curMin, we want the old value of curMax, not the reassigned in the step above.</div>
+</div>
+<p><strong>C++</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">14</span></a>]</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//C++:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">maxProduct</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nums</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">max_overall</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">max_ending_here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">min_ending_here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_ending_here</span><span class="p">;</span>
+<span class="w">            </span><span class="n">max_ending_here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">({</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">max_ending_here</span><span class="p">,</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">min_ending_here</span><span class="p">});</span>
+<span class="w">            </span><span class="n">min_ending_here</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">({</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">tmp</span><span class="p">,</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">min_ending_here</span><span class="p">});</span>
+<span class="w">            </span><span class="n">max_overall</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">max_overall</span><span class="p">,</span><span class="w"> </span><span class="n">max_ending_here</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">max_overall</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">max({item1, item2, item3})</div>
+<div class="line">When &gt;2 params, include initializer braces {}.</div>
+</div>
 </section>
 <section id="lc-217-contains-duplicate">
 <h2>103. (LC 217) Contains Duplicate<a class="headerlink" href="#lc-217-contains-duplicate" title="Link to this heading"></a></h2>

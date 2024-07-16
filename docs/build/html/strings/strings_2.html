@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="next" title="Strings Questions Part 3" href="strings_3.html" />
     <link rel="prev" title="Strings Questions Part 1" href="strings_1.html" /> 
 </head>
 
@@ -79,6 +79,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-271-encode-and-decode-strings">125. (LC 271) Encode and Decode Strings</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="strings_3.html">Part 3 (126-136)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Two Pointers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -226,6 +231,14 @@ but we check first chars, see they don’t match and don’t compare the rest. M
         <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">haystack</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">haystack</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">]</span> <span class="o">==</span> <span class="n">needle</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="c1">### My V (LC accepted 5, 68%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">strStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">haystack</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">needle</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">haystack</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">haystack</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)]</span> <span class="o">==</span> <span class="n">needle</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">i</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 </pre></div>
@@ -1127,7 +1140,7 @@ then sent over the network and is decoded back to the original list of strings.<
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="strings_1.html" class="btn btn-neutral float-left" title="Strings Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="strings_3.html" class="btn btn-neutral float-right" title="Strings Questions Part 3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

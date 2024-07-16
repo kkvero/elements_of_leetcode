@@ -112,6 +112,14 @@ but we check first chars, see they don't match and don't compare the rest. Move 
                     return i
             return -1
 
+    ### My V (LC accepted 5, 68%)
+    class Solution:
+        def strStr(self, haystack: str, needle: str) -> int:
+            for i in range(len(haystack) - len(needle) + 1):
+                if haystack[i: i + len(needle)] == needle:
+                    return i
+            return -1
+
 **Rabin-Karp algorithm** [:ref:`13 <ref-label>`]
 
 O(m+n), m, n are string lengths.

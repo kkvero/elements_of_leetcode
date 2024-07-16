@@ -190,18 +190,37 @@ in the calculation, and serves as a default when the iterable is empty.
 
 108. (LC 171) Excel Sheet Column Number
 -------------------------------------------
+`171. Excel Sheet Column Number <https://leetcode.com/problems/excel-sheet-column-number/description/>`_
 Easy
-(Compute the spreadsheet column encoding)
 
-Spreadsheets have column names 'A', 'B'...'Z', 'AA', 'AB'...'AAA', 'AAB'..
+**Keys:**
+::
 
-- Implement a function that converts a spreadsheet column id to the corresponding integer, with 'A' corresponding to 1.
+    # Calculation:
+    # char1 * 26 + char2
+    #                    * 26 + char3
+    #                                 *26 + char4
+    #                                             ...
 
-You would return 4 for 'D', 27 for AA, 702 for ZZ.
+**Solution** :: 
 
-- How would you test the function? (Test edge cases and a few random ones.)
+    ### My V2 (when you do know how ord() works) (LC accepted 97,91%)
+    class Solution:
+        def titleToNumber(self, s: str) -> int:
+            res=0
+            for char in s:
+                res = (res * 26) + ((ord(char) - ord('A')) +1)
+            return res 
 
-| Logic:
+| s='FXDH' (6,24,19,8)
+| res = (((6*26 + 24) * 26 + 24) * 26 + 19) * 26 + 8 = 122182
+
+| res=0
+| 0*26 + 6, res=6
+| 6 * 26 + 24
+| etc.
+
+| **Logic:**
 | We should convert a string representing a base-26 number to the corresponding integer.
 | We take that A corresponds to 1, not 0.
 | So we use the 'string to integer' conversion.
@@ -214,14 +233,6 @@ You would return 4 for 'D', 27 for AA, 702 for ZZ.
         return functools.reduce(
             lambda result, c: result * 26 + ord(c) - ord("A") + 1, col, 0
         )
-
-    ### My V2 (when you do know how ord() works) (LC accepted 97,91%)
-    class Solution:
-        def titleToNumber(self, s: str) -> int:
-            res=0
-            for char in s:
-                res = (res * 26) + ((ord(char) - ord('A')) +1)
-            return res 
 
 | Note:
 | -ord(char1) - ord(first char) = char value a=1, b=2 etc.
@@ -255,13 +266,20 @@ You would return 4 for 'D', 27 for AA, 702 for ZZ.
             lambda result, c: result * 26 + string.ascii_uppercase.index(c) + 1, col, 0
         )
 
-    col = "Z"
-    col2 = "AB"
-    col3 = "ZZ"
+.. code-block:: cpp
 
-    print(convert_col2(col))  # 26
-    print(convert_col2(col2))  # 28
-    print(convert_col2(col3))  # 702
+    //C++
+    //LC accepted 100, 6%
+    class Solution {
+    public:
+        int titleToNumber(string columnTitle) {
+            int res{0};
+            for (char a : columnTitle){
+                res = res * 26 + (int(a) - int('A') + 1);
+            }
+            return res;
+        }
+    };
 
 108.2 (LC 168) Excel Sheet Column Title
 ------------------------------------------
