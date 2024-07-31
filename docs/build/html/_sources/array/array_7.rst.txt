@@ -435,7 +435,7 @@ Medium
 
 .. code-block:: cpp
 
-    //C++:
+    //C++
     class Solution {
     public:
         int maxProduct(vector<int>& nums) {

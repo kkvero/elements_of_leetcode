@@ -199,15 +199,6 @@ We need to flip only if items are the same, 1,1 or 0,0.
 `48. Rotate Image <https://leetcode.com/problems/rotate-image/>`_
 Medium
 
-::
-
-    ### Solution 1
-    def rotate(matrix):
-        return [list(reversed(x)) for x in zip(*matrix)]
-
-    matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    print(rotate(matrix)) #[[7, 4, 1], [8, 5, 2], [9, 6, 3]]
-
 .. admonition:: Transpose vs. rotate 90
 
     There is a difference.
@@ -221,33 +212,170 @@ Medium
         # 4 5 6   2 5 8   8 5 2
         # 7 8 9   3 6 9   9 6 3 
 
-    | So if the task was to transpose, we would do:
-    | ``list(zip(*matrix))``
-    | To rotate, note the Visualization above, we just need to reverse the rows in transposed result.
-    | ``[list(reversed(x)) for x in zip(*matrix)]``
+| **To do not in-place**
+| Transpose:
+| ``list(zip(*matrix))``
+| Rotate:
+| ``[list(reversed(x)) for x in zip(*matrix)]``
+
+>>> matrix = [[1,2,3],[4,5,6],[7,8,9]]
+>>> m = [list(reversed(x)) for x in zip(*matrix)]
+>>> m
+[[7, 4, 1], [8, 5, 2], [9, 6, 3]]  
+
+| **Logic for LC solution (rotate in-place)** [:ref:`10 <ref-label>`]
+| 0)Two things we deal with:
+| 1-an entire outer layer of rotation: 
+| when all values in the top row become values of the right column, etc.
+
+:: 
+
+    # 123 -> 1
+    #        2
+    #        3
+
+2-Rotation of each value within the entire layer ::
+
+    # 1 _ _ ->  1
+    #           _
+    #           _
+
+
+1) How to cope with an entire outer layer of rotation, 
+then how to move to the inner layer of rotation.
+Mark L,R,T,B::
+
+    #    L        R
+    # T  5  1  9  11
+    #    2  4  8  10
+    #    13 3  6   7
+    # B  15 14 12 16
+
+Rotation of outer layer -> next layer  -> stop when L, R cross, L >= R::
+
+    #  L     R         L R       
+    # T x x x x      _ _ _ _
+    #   x _ _ x     T_ x x _
+    #   x _ _ x     B_ x x _
+    # R x x x x      _ _ _ _    
 
 ::
 
-    ### Solution 2
+    l, r = 0, len(matrix) - 1
+    while l < r:
+        top, bottom = l, r
+
+2) Within one whole rotation of a layer, how to rotate each value.
+We need to rotate/change the position 4 times (as 4 sides of a rectangle). ::
+
+    #    L        R       5->11
+    # T  5  1  9  11      11->16
+    #    2  4  8  10      16->15
+    #    13 3  6   7      15->5  
+    # B  15 14 12 16
+
+| Within one entire layer we need to do it n-1 times (n x n matrix, 4 x 4, rotate 3).
+| 5->11   1->10   9->7  (3 rounds)
+| 11->16  10->12  ..
+| 16->15  ..
+| 15->5 
+
+| # Using temporary variables
+| When we want to move 5->11, tmp=11, 11->16, tmp=16.
+| To have to store just 1 tmp, mode counter-clockwise.
+| tmp=5, 15->5, 16->15, 11->16, 5->11.
+| So our algorithm in the while l < r: is just these 4 moves above.
+| Write them with addresses using indices L,R,T,B.
+| /Store temp=5
+| 1 _ _ _   topLeft = matrix[T][L]
+| _ _ _ _
+| _ _ _ _
+| _ _ _ _
+ 
+| /Move 15->5 (moving counter-clockwise)
+| 1 _ _ 4   matrix[T][L] = matrix[B][L]  
+| _ _ _ _
+| _ _ _ _
+| 2 _ _ 3                                     
+| etc.
+ 
+| # Within the same layer (row, col), move to the next set of values.
+| _ x _ _
+| _ _ _ x
+| x _ _ _
+| _ _ x _
+
+| The offset is 1 from the previous set.
+| Hence we have an inner loop to cover all these sets. n-1 of them. In 4x4 matrix, 3 sets.
+| ``for i in range(R - L):``  #equivalent to (L, R-1), 4x4 matrix, range(0, 3)
+| So we modify the code to consider these offsets: offset=0, offset=1, offset=2
+    
+| _ 1 _ _  topLeft = matrix[T][L + i]  
+| _ _ _ 4  
+| 2 _ _ _  matrix[T][L+i] = matrix[B-i][L]  #again move counter-clockwise 1>2>3>4
+| _ _ 3 _  
+
+::
+
+    ### Solution 1 (neetcode)
     class Solution:
         def rotate(self, matrix: List[List[int]]) -> None:
-            n = len(matrix)
-            for i in range(n >> 1):
-                for j in range(n):
-                    matrix[i][j], matrix[n - i - 1][j] = matrix[n - i - 1][j], matrix[i][j]
-            for i in range(n):
-                for j in range(i):
-                    matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+            """
+            Do not return anything, modify matrix in-place instead.
+            """
+            l, r = 0, len(matrix) - 1
+            while l < r:
+                top, bottom = l, r
+                for i in range(r - l):
+                    # save the topleft
+                    topLeft = matrix[top][l + i]
 
-*Explanation*
+                    # move bottom left into top left
+                    matrix[top][l + i] = matrix[bottom - i][l]
 
-According to the requirements of the problem, we actually need to rotate 
-``matrix[i][j]`` to ``matrix[j][n - i - 1]``.
-We can first flip the matrix upside down, that is, swap ``matrix[i][j]`` and 
-``matrix[n - i - 1][j]``, and then flip the matrix along the main diagonal, that is, 
-swap ``matrix[i][j]`` and ``matrix[j][i]``. This way we can rotate ``matrix[i][j]`` to ``matrix[j][n - i - 1]``.
+                    # move bottom right into bottom left
+                    matrix[bottom - i][l] = matrix[bottom][r - i]
 
-Time O(N**2), N is the length of the matrix, space O(1).
+                    # move top right into bottom right
+                    matrix[bottom][r - i] = matrix[top + i][r]
+
+                    # move top left into top right
+                    matrix[top + i][r] = topLeft
+                r -= 1
+                l += 1
+
+Time O(N**2), space O(1).
+
+| **C++**
+| Keys:
+| Transpose + reflect (rev on diag then rev left to right) [:ref:`10 <ref-label>`]
+
+.. code-block:: cpp
+
+    class Solution {
+    public:
+        void rotate(vector<vector<int>>& matrix) {
+            int n = matrix.size();
+            for (int i = 0; i < n; i++) {
+                for (int j = i; j < n; j++) {
+                    swap(matrix[i][j], matrix[j][i]);
+                }
+                reverse(matrix[i].begin(), matrix[i].end());
+            }
+        }
+    };
+
+|     ``swap(matrix[i][j], matrix[j][i]);``
+| Transposes (reflects on diagonal).
+|     ``reverse(matrix[i].begin(), matrix[i].end());``
+| Reverses left to right.
+
+::
+
+    # original-transposed-rotated
+    # 1 2 3   1 4 7   7 4 1
+    # 4 5 6   2 5 8   8 5 2
+    # 7 8 9   3 6 9   9 6 3 
 
 80. (LC 334) Increasing Triplet Subsequence
 ----------------------------------------------
