@@ -81,6 +81,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../strings/strings_3.html">Part 3 (126-136)</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Two Pointers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
@@ -118,43 +122,79 @@
 <h1>Array Questions Part 3<a class="headerlink" href="#array-questions-part-3" title="Link to this heading"></a></h1>
 <section id="lc-1-two-sum">
 <h2>56. (LC 1) Two Sum<a class="headerlink" href="#lc-1-two-sum" title="Link to this heading"></a></h2>
-<p><em>(Easy)</em>
-Given an array of integers nums and an integer target, return indices of the two
-numbers such that they add up to target.
-(You may assume that each input would have exactly one solution, and you may not use the same element twice.)</p>
-<div class="line-block">
-<div class="line"># Example 1:</div>
-<div class="line">Input: nums = [2,7,11,15], target = 9</div>
-<div class="line">Output: [0,1]</div>
-<div class="line">Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].</div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V my</span>
-<span class="k">def</span> <span class="nf">two_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">t</span> <span class="o">-</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">n</span><span class="p">]</span>
-        <span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
-    <span class="k">return</span> <span class="kc">False</span>
-
-<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">two_sum</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span> <span class="c1"># (1, 0)</span>
-
-<span class="c1">### Solution 1</span>
-<span class="k">def</span> <span class="nf">two_sum</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">dic</span><span class="p">[</span><span class="n">num</span><span class="p">],</span> <span class="n">i</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">dic</span><span class="p">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
-    <span class="k">return</span> <span class="kc">None</span>
+<p><a class="reference external" href="https://leetcode.com/problems/two-sum/submissions/1340375300/">1. Two Sum</a>
+Easy</p>
+<p><strong>Python3</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># My V (LC accepted 99, 50)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">twoSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">hash_t</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="n">n</span>
+            <span class="k">if</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">hash_t</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">hash_t</span><span class="p">[</span><span class="n">pair</span><span class="p">],</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">hash_t</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
 </pre></div>
+</div>
+<p><strong>C++</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">14</span></a>]</p>
+<div class="line-block">
+<div class="line">nums={3,2,10,11,7,15}, target = 9</div>
+<div class="line"><strong>The naive approach</strong></div>
+<div class="line">Iterate nums, for each number iterate the rest of nums and look for the pair_value=target-num.</div>
+<div class="line">E.g. 3, 9-3=6, look for 6 to the right of 3.</div>
+<div class="line">2, 9-2=7, look for 7 to the right of 2.</div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">twoSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nums</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w">  </span><span class="c1">//for two answer indices</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">it1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">it1</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it1</span><span class="p">){</span>
+<span class="w">            </span><span class="k">auto</span><span class="w"> </span><span class="n">it2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find</span><span class="p">(</span><span class="n">it1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">*</span><span class="n">it1</span><span class="p">);</span><span class="w"> </span><span class="c1">//it1+1 to look to the right of cur num only</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span><span class="w">  </span><span class="c1">//found the number</span>
+<span class="w">                </span><span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">it1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span><span class="w">  </span><span class="c1">//iterators subtraction allows to obtain a proper number of an index, not iterator</span>
+<span class="w">                </span><span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">it2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w">   </span><span class="c1">//cannot use return here, otherwise error: non-void function does not return a value in all control paths</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span><span class="w"> </span><span class="c1">//returning empty vector if complement was not found</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Approach 2</strong></div>
+<div class="line">Using hash map.</div>
+<div class="line">keys: nums values, values: their position</div>
+<div class="line">Insert all elems into the map. (The catch is not to insert all values, then traverse</div>
+<div class="line">again and search, but do it simultaneously.)</div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">twoSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nums</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_map</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">complement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">num</span><span class="p">;</span>
+<span class="w">            </span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_map</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">complement</span><span class="p">);</span><span class="w"> </span><span class="c1">//returns iter if finds key in map, end of container iter otherwise. Iter points to key, value pair.</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">_map</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span><span class="w"> </span><span class="c1">//found</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">};</span><span class="w">  </span><span class="c1">//iter points at the (key,value) pair, *iter is tha pair. (*iter).mem, we want the second, i.e. value. i is the index of cur num</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">_map</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w">  </span><span class="c1">//insert into hash map, like in Python</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span><span class="w"> </span><span class="c1">//returning empty vector if complement was not found</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Note how we iterate:</div>
+<div class="line">Approach 1 -&gt; vector -&gt; iterators</div>
+<div class="line">Approach 1 -&gt; unordered_map -&gt; subscripting</div>
 </div>
 </section>
 <section id="lc-15-3sum">
 <h2>57. (LC 15) 3Sum<a class="headerlink" href="#lc-15-3sum" title="Link to this heading"></a></h2>
-<p>15. <a class="reference external" href="https://leetcode.com/problems/3sum/description/">3Sum</a>
+<p><a class="reference external" href="https://leetcode.com/problems/3sum/description/">15. 3Sum</a>
 <em>(Medium)</em></p>
 <p><strong>Solution 2 (Sorting + pointers)</strong>
 Internally uses Two Sum II - Input Array Is Sorted.</p>

@@ -2,43 +2,81 @@ Array Questions Part 3
 ======================
 56. (LC 1) Two Sum
 --------------------
-*(Easy)*
-Given an array of integers nums and an integer target, return indices of the two 
-numbers such that they add up to target.
-(You may assume that each input would have exactly one solution, and you may not use the same element twice.)
+`1. Two Sum <https://leetcode.com/problems/two-sum/submissions/1340375300/>`_
+Easy
 
-| # Example 1:
-| Input: nums = [2,7,11,15], target = 9
-| Output: [0,1]
-| Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+**Python3**
 
 ::
 
-    ### V my
-    def two_sum(a, t):
-        d = {}
-        for i, n in enumerate(a):
-            if t - n in d:
-                return i, d[t - n]
-            d[n] = i
-        return False
+    # My V (LC accepted 99, 50)
+    class Solution:
+        def twoSum(self, nums: List[int], target: int) -> List[int]:
+            hash_t = {}
+            for i, n in enumerate(nums):
+                pair = target - n
+                if pair in hash_t:
+                    return [hash_t[pair], i]
+                hash_t[n] = i
 
-    nums = [2, 7, 11, 15]
-    print(two_sum(nums, 9)) # (1, 0)
+**C++** [:ref:`14 <ref-label>`]
 
-    ### Solution 1   
-    def two_sum(array, target):
-        dic = {}
-        for i, num in enumerate(array):
-            if num in dic:
-                return dic[num], i
-            else:
-                dic[target - num] = i
-        return None
+| nums={3,2,10,11,7,15}, target = 9
+| **The naive approach**
+| Iterate nums, for each number iterate the rest of nums and look for the pair_value=target-num.
+| E.g. 3, 9-3=6, look for 6 to the right of 3.
+| 2, 9-2=7, look for 7 to the right of 2.
+
+.. code-block:: cpp
+
+    class Solution {
+    public:
+        vector<int> twoSum(vector<int>& nums, int target) {
+            vector<int> result;  //for two answer indices
+            for (auto it1 = nums.begin(); it1 != nums.end(); ++it1){
+                auto it2 = find(it1+1, nums.end(), target - *it1); //it1+1 to look to the right of cur num only
+                if (it2 != nums.end()){  //found the number
+                    result.push_back(it1 - nums.begin());  //iterators subtraction allows to obtain a proper number of an index, not iterator
+                    result.push_back(it2 - nums.begin());
+                    break;   //cannot use return here, otherwise error: non-void function does not return a value in all control paths 
+                }
+            }
+            return {}; //returning empty vector if complement was not found
+        }
+    };
+
+| **Approach 2**
+| Using hash map.
+| keys: nums values, values: their position
+| Insert all elems into the map. (The catch is not to insert all values, then traverse 
+| again and search, but do it simultaneously.)
+
+.. code-block:: cpp
+
+    class Solution {
+    public:
+        vector<int> twoSum(vector<int>& nums, int target) {
+            unordered_map<int, int> _map;
+            for (int i = 0; i < nums.size(); ++i){
+                int num = nums[i];
+                int complement = target - num;
+                auto it = _map.find(complement); //returns iter if finds key in map, end of container iter otherwise. Iter points to key, value pair.
+                if(it != _map.end()){ //found
+                    return {it->second, i};  //iter points at the (key,value) pair, *iter is tha pair. (*iter).mem, we want the second, i.e. value. i is the index of cur num
+                }
+                _map[num] = i;  //insert into hash map, like in Python
+            }
+            return {}; //returning empty vector if complement was not found
+        }
+    };
+
+| Note how we iterate:
+| Approach 1 -> vector -> iterators
+| Approach 1 -> unordered_map -> subscripting
 
 57. (LC 15) 3Sum
 -------------------
-15. `3Sum <https://leetcode.com/problems/3sum/description/>`_
+`15. 3Sum <https://leetcode.com/problems/3sum/description/>`_
 *(Medium)*
 
 **Solution 2 (Sorting + pointers)**
