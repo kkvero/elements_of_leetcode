@@ -445,8 +445,14 @@ We need to rotate/change the position 4 times (as 4 sides of a rectangle).</p>
 <div class="line-block">
 <div class="line">The offset is 1 from the previous set.</div>
 <div class="line">Hence we have an inner loop to cover all these sets. n-1 of them. In 4x4 matrix, 3 sets.</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(R</span> <span class="pre">-</span> <span class="pre">L):</span></code>  #equivalent to (L, R-1), 4x4 matrix, range(0, 3)</div>
 <div class="line">So we modify the code to consider these offsets: offset=0, offset=1, offset=2</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(R</span> <span class="pre">-</span> <span class="pre">L):</span></code></div>
+</div>
+<div class="line">#4x4 matrix, outer layer L=0,R=3, in range(3-0=3), i=0,1,2</div>
+<div class="line">#inner layer, L=1,R=2, in range(2-1=1), no offsets in the inner 2x2 matrix</div>
+<div class="line">x x</div>
+<div class="line">x x</div>
 </div>
 <div class="line-block">
 <div class="line">_ 1 _ _  topLeft = matrix[T][L + i]</div>

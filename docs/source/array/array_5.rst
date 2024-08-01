@@ -307,9 +307,14 @@ We need to rotate/change the position 4 times (as 4 sides of a rectangle). ::
 
 | The offset is 1 from the previous set.
 | Hence we have an inner loop to cover all these sets. n-1 of them. In 4x4 matrix, 3 sets.
-| ``for i in range(R - L):``  #equivalent to (L, R-1), 4x4 matrix, range(0, 3)
 | So we modify the code to consider these offsets: offset=0, offset=1, offset=2
-    
+|    ``for i in range(R - L):``
+| #4x4 matrix, outer layer L=0,R=3, in range(3-0=3), i=0,1,2
+| #inner layer, L=1,R=2, in range(2-1=1), no offsets in the inner 2x2 matrix
+| x x
+| x x
+
+
 | _ 1 _ _  topLeft = matrix[T][L + i]  
 | _ _ _ 4  
 | 2 _ _ _  matrix[T][L+i] = matrix[B-i][L]  #again move counter-clockwise 1>2>3>4
