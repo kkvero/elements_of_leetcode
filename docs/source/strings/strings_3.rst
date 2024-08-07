@@ -102,7 +102,25 @@ Easy
 128. (LC 58) Length of Last Word
 ------------------------------------
 `58. Length of Last Word <https://leetcode.com/problems/length-of-last-word/>`_
-Easy ::
+Easy 
+
+| Task gotcha:
+| s = "   fly me   to   the moon  " 
+| Has 2 spaced after moon.
+
+**Python3**
+
+::
+
+    # A shortcut (LC 55,85%)
+    def f2(s):
+        return len(s.split()[-1])
+
+    # LC accepted (33,84%)
+    class Solution:
+        def lengthOfLastWord(self, s: str) -> int:
+            a = s.split()
+            return len(a[-1])
 
     ### Solution 1 (neetcode)
     def lengthOfLastWord(s: str) -> int:
@@ -138,15 +156,72 @@ Easy ::
                         return c
             return c
 
-    # A shortcut (LC 55,85%)
-    def f2(s):
-        return len(s.split()[-1])
-
-    # LC accepted (33,84%)
+    ### My V2 (LC accepted 7,12)
     class Solution:
         def lengthOfLastWord(self, s: str) -> int:
-            a = s.split()
-            return len(a[-1])
+            cnt = 0
+            for i in reversed(range(len(s))):
+                if cnt==0 and s[i] == ' ':
+                    continue
+                else:
+                    if s[i] == ' ':
+                        break
+                    cnt +=1
+            return cnt
+
+| **C++**
+| -STL [:ref:`14 <ref-label>`]
+
+.. code-block:: cpp
+
+    #include <sstream> 
+    //(LC accepted 58, 10)
+    class Solution {
+    public:
+        int lengthOfLastWord(string s) {
+            stringstream ss(s);
+            string word;
+            while(ss >> word){}
+            return word.length();
+        }
+    };
+
+-Subscripting [:ref:`14 <ref-label>`]
+
+.. code-block:: cpp
+
+    //(LC accepted 100, 10)
+    class Solution {
+    public:
+        int lengthOfLastWord(string s) {
+            int n = s.length(), result = 0;
+            while(n > 0){
+                if(s[--n] != ' ') result++;
+                else if(result > 0) return result;
+            }
+            return result;
+        }
+    };
+
+-Iterators
+
+.. code-block:: cpp
+
+    //My V (LC accepted 45, 10; 100, 10)
+    class Solution {
+    public:
+        int lengthOfLastWord(string s) {
+            int cnt{0};
+            for (auto it = s.end()-1; it!=s.begin()-1; --it){ //start not past end; begin-1 because if len(s)=1
+                if(cnt == 0 && *it == ' ') continue;
+                else {
+                    if (*it == ' ') break;
+                    ++cnt;
+                }
+            }
+            return cnt;
+        }
+    };
 
 129. (LC 14) Longest Common Prefix
 -------------------------------------

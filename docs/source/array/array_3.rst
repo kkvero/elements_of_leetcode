@@ -74,6 +74,29 @@ Easy
 | Approach 1 -> vector -> iterators
 | Approach 1 -> unordered_map -> subscripting
 
+### My V (Approach 2 but with iterators. LC accepted 80, 30)
+
+.. code-block:: cpp
+
+    class Solution {
+    public:
+        vector<int> twoSum(vector<int>& nums, int target) {
+            unordered_map<int, int> _map;
+            vector <int> result;
+            for (auto it1 = nums.begin(); it1 != nums.end(); ++it1){
+                int complement = target - *it1;
+                auto it2 = _map.find(complement);
+                if (it2 != _map.end()){
+                    result.push_back(it2->second);
+                    result.push_back(it1 - nums.begin());
+                    break;
+                }
+                _map[*it1] = it1 - nums.begin();
+            }
+            return result;
+        }
+    };
+
 57. (LC 15) 3Sum
 -------------------
 `15. 3Sum <https://leetcode.com/problems/3sum/description/>`_
