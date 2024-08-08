@@ -102,84 +102,38 @@ Easy
 `15. 3Sum <https://leetcode.com/problems/3sum/description/>`_
 *(Medium)*
 
-**Solution 2 (Sorting + pointers)**
-Internally uses Two Sum II - Input Array Is Sorted.
+| **Solution 0**
+| My V (Time Limit Exceeded on case 308/313, so almost works)
+| (Brute force, use Python std lib.)
 
-Here we are not given a sorted input. We sort before proceeding to the algorithm.
-(LC Topics hints that we should use sorting + two pointers.)
+::
 
-| Complexity: 
-| Time: O(n log n) + O(n^2) = O(n^2)
-| (sorting + we still use nested loops)
-| Space: O(1) or O(n) depending on the implementation of sorting (language internals).
- 
-Keys::
-
-    # Visualization
-    # [-1,0,1,2,-1,-4] sort ->
-    # [-4,-1,-1,0,1,2] use pointers ->
-    # [-4,-1,-1,0,1,2] 
-    # cur  L        R
-
-**My V3** (Solution2, dropping extra optimizations, the core algorithm. 
-Just for understanding. Not efficient enough for Leetcode.) ::
-
-    def f(a):
-        if len(a) < 3:
-            return []
-        a.sort()
-        ans = []
-        for i, v in enumerate(a):
-            lp = i + 1
-            rp = len(a) - 1
-            while lp < rp:
-                s = v + a[lp] + a[rp]
-                if s > 0:
-                    rp -= 1
-                elif s < 0:
-                    lp += 1
-                else:
-                    res = [v, a[lp], a[rp]]
-                    res.sort()
-                    if res not in ans:
-                        ans.append(res)
-                    lp += 1
-                    rp -= 1
-        return ans
-
-**My V2** (Solution2 with edge cases. Leetcode accepted.) ::
-
+    from itertools import combinations
     class Solution:
-        def threeSum(self, a: List[int]) -> List[List[int]]:
-            a.sort()
-            ans = []
-            if len(a) < 3:
-                return []
-            if len(a) == 3:
-                return [a] if sum(a) == 0 else []
-            for i in range(len(a) - 2):
-                if a[i] > 0:
-                    break
-                if i > 0 and a[i] == a[i - 1]:
-                    continue
-                cur = a[i]
-                lp = i + 1
-                rp = len(a) - 1
-                while lp < rp:
-                    s = sum([cur, a[lp], a[rp]])
-                    if s < 0:
-                        lp += 1
-                    elif s > 0:
-                        rp -= 1
-                    else:
-                        ans.append([cur, a[lp], a[rp]])
-                        lp += 1
-                        rp -= 1
-                        while a[lp] == a[lp - 1] and lp < rp:
-                            lp += 1
-            return ans
+        def threeSum(self, nums: List[int]) -> List[List[int]]:
+            # Out of all combinations with size 3, choose those that sum to 0.
+            combos = [c for c in combinations(nums, 3) if sum(c) == 0]
+            # Choose only unique combinations
+            res = set([tuple(sorted(l)) for l in combos])
+            res = list([list(item) for item in res])
+            return res
 
-**Solution 2 explained** ::
+| **Solution 1** [:ref:`10 <ref-label>`]
+| Key notes:
+| -Pictorially:
+
+::
+
+    # [-4,-1,-1,0,1,2] 
+    #  a  L        R
+
+| -sort input
+| -a is current number, use i,a enumerate(nums), calculate L,R from i.
+| -2 edge cases: if a is positive, if a==nums[i-1]
+| -nested while l<r
+| -if successfully found a triple, again advance Lpointer till nums[L]!=nums[L+1]
+
+::
 
     class Solution:
         def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -228,73 +182,56 @@ as well (sorted array), and we won't sum them to 0.
     # [-1,-1,-1,0,3..]
     #   a   L
 
-If we move L+=1, it will move to the same value, so we move L till it is a different value, or L meets R.  
+If we move L+=1, it will move to the same value, so we move L till it is a different value, or L meets R. 
 
-| **Solution 1 (Nested loops)**
-| Uses Two Sum internally.
-| So time will be the same as for Solution 2 (sorting+nested loops).
-| Space will definitely be O(n). (While in Solution 2 space can be O(1).)
- 
-| Account for edge cases, sort, use 2sum internally.
-| 2sum:
-| -Main loop for each item in a, num1.
-| -Yes each time in the main loop make a new hash for all items except current.
-| -Yes, there is another nested loop for num2 (in a[i+1:])
-| -you are looking for num3 = -(num1+num2)
-| -If found triplet, account for permutations of the same (sort, check if not in ans).
-| -else add to hash num (of the 2nd loop)
+**Solution 1, V2** [:ref:`14 <ref-label>`] ::
 
-::
-
-    class Solution(object):
-        def threeSum(self, nums):
-            # edge cases
-            if not nums or len(nums) < 3:
-                return []
-            if len(nums) == 3:
-                return [nums] if sum(nums) == 0 else []
-            if nums.count(0) == len(nums):
-                return [[0,0,0]]
-            res = []
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+            n = len(nums)
+            if n < 3: return []
+            result = []
             nums.sort()
+            for i in range(n-2):
+                if i == 0 or nums[i] != nums[i-1]:
+                    j,k = i+1, n-1
+                    while j < k:
+                        sum = nums[i] + nums[j] + nums[k]
+                        if sum == 0:
+                            result.append([nums[i], nums[j], nums[k]])
+                            while j < k and nums[j] == nums[j+1]: j += 1
+                            while j < k and nums[k] == nums[k-1]: k -= 1
+                            j, k = j+1, k-1
+                        elif sum < 0: j += 1
+                        else: k -= 1
+            return result
 
-            for i in range(len(nums)):
-                cur = nums[i]
-                # 2 sum
-                d = {}
-                for j, x in enumerate(nums[i+1:]):
-                    # cur + x + y = 0
-                    # -> y = -x - cur
-                    if -x-cur in d:
-                        tmp = [cur, x, -x-cur]
-                        tmp.sort()  
-                        if tmp not in res:
-                            res.append(tmp)
-                    else:
-                        d[x] = j
-            return res
+**C++** [:ref:`14 <ref-label>`]
 
-    nums = [-1,0,1,2,-1,-4]
-    print(threeSum(nums))    # [[-1, 0, 1], [-1, -1, 2]]
+.. code-block:: cpp
 
-My V
-(Brute force, use Python std lib.) ::
-
-    from itertools import combinations
-    def sums_to_zero(a):
-        # Out of all combinations with size 3, choose those that sum to 0.
-        combos = [c for c in combinations(a, 3) if sum(c) == 0]
-        # Choose only unique combinations
-        ans = []
-        for c in combos:
-            c = list(c)
-            c.sort()
-            if c not in ans:
-                ans.append(c)
-        return ans
-
-    nums = [-1, 0, 1, 2, -1, -4]
-    print(sums_to_zero(nums))  #[[-1, 0, 1], [-1, -1, 2]]
+    vector<vector<int>> threeSum(vector<int>& nums) {
+            int n = nums.size();
+            if(n < 3) return {};
+            vector<vector<int>> result;
+            sort(nums.begin(), nums.end());
+            for(int i = 0; i < n-2; ++i){
+                if(i == 0 || nums[i] != nums[i-1]){
+                    int j = i + 1, k = n-1;
+                    while(j < k){
+                        int sum = nums[i] + nums[j] + nums[k];
+                        if(sum == 0){
+                            result.push_back({nums[i], nums[j], nums[k]});
+                            while(j < k && nums[j] == nums[j+1]) j++;
+                            while(j < k && nums[k] == nums[k-1]) k--;
+                            j++; k--;
+                        }
+                        else if (sum > 0) k--;
+                        else j++;
+                    }
+                }
+            }
+            return result;
+        }
 
 58. (LC 16) 3Sum Closest
 --------------------------
