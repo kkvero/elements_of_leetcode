@@ -77,6 +77,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-259-3sum-smaller">140. (LC 259) 3Sum Smaller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-844-backspace-string-compare">141. (LC 844) Backspace String Compare</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-977-squares-of-a-sorted-array">142. (LC 977) Squares of a Sorted Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-283-move-zeroes">143. (LC 283) Move Zeroes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-392-is-subsequence">144. (LC 392) Is Subsequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-713-subarray-product-less-than-k">145. (LC 713) Subarray Product Less Than K</a></li>
 </ul>
 </li>
 </ul>
@@ -503,6 +506,170 @@ in the middle if both pos and neg).</p>
             <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ans</span>
 </pre></div>
+</div>
+</section>
+<section id="lc-283-move-zeroes">
+<h2>143. (LC 283) Move Zeroes<a class="headerlink" href="#lc-283-move-zeroes" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/move-zeroes/">283. Move Zeroes</a>
+Easy</p>
+<div class="line-block">
+<div class="line">My V:</div>
+<div class="line">-I first look for a zero pointer, i.e. where is the first zero in nums array.</div>
+<div class="line">([0,1,2], [1,0,2] etc.)</div>
+<div class="line">-Then start the iteration in the main loop from the found &lt;zi&gt;.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 80, 6)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">moveZeroes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do not return anything, modify nums in-place instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nums</span>
+
+        <span class="c1"># search for zero pointer</span>
+        <span class="n">zp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">zp</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="k">break</span>
+
+        <span class="c1">#we didn&#39;t find a zero pointer (all nums are nonzero)</span>
+        <span class="k">if</span> <span class="n">zp</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nums</span>
+
+        <span class="c1"># move zeros</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zp</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">zp</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">zp</span><span class="p">]</span>
+                <span class="n">zp</span> <span class="o">+=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Idea:</div>
+<div class="line">-at p1 we keep track of values 0.</div>
+<div class="line">-loop that moves p2+=1</div>
+<div class="line">-if value at p2 !=0 and at p1 value is ==0, we swap.</div>
+<div class="line">-if at p1 value !=0, we move p1+=1</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### V1</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">p2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">p1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">p2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">p2</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">p1</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="c1">### V2</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">zi</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">zi</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">zi</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">zi</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+<span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums2</span><span class="p">))</span>
+<span class="n">nums3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums3</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-392-is-subsequence">
+<h2>144. (LC 392) Is Subsequence<a class="headerlink" href="#lc-392-is-subsequence" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/is-subsequence/description/">392. Is Subsequence</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isSubsequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1">### My V (LC accepted 90,50%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isSubsequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">pt</span><span class="o">=</span><span class="n">ps</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="n">pt</span><span class="p">]</span><span class="o">==</span><span class="n">s</span><span class="p">[</span><span class="n">ps</span><span class="p">]:</span>
+                <span class="n">ps</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">ps</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-713-subarray-product-less-than-k">
+<h2>145. (LC 713) Subarray Product Less Than K<a class="headerlink" href="#lc-713-subarray-product-less-than-k" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/subarray-product-less-than-k/description/">713. Subarray Product Less Than K</a>
+Medium</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">lp</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">prod</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">rp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="n">prod</span> <span class="o">*=</span> <span class="n">a</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">prod</span> <span class="o">&gt;=</span> <span class="n">k</span> <span class="ow">and</span> <span class="n">lp</span> <span class="o">&lt;=</span> <span class="n">rp</span><span class="p">:</span>  <span class="c1">#*</span>
+            <span class="n">prod</span> <span class="o">/=</span> <span class="n">a</span><span class="p">[</span><span class="n">lp</span><span class="p">]</span>
+            <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="n">rp</span> <span class="o">-</span> <span class="n">lp</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="c1">#8</span>
+<span class="c1"># [10], [5], [2], [6], [10, 5], [5, 2], [2, 6], [5, 2, 6]</span>
+</pre></div>
+</div>
+<p>#* My edit lp&lt;=rp not just &lt;, when e.g. nums=[200,10], i.e. we shouldn’t count the first num.</p>
+<div class="line-block">
+<div class="line">Logic:</div>
+<div class="line">We start Lp and Rp at index 0.</div>
+<div class="line">Move Rp in the main loop.</div>
+<div class="line">Note: we go into the while loop only when prod &gt;=k.</div>
+</div>
+<p>How it looks:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># [10, 5, 2, 6]</span>
+<span class="c1"># L,R</span>
+</pre></div>
+</div>
+<p>10&lt;k, no while loop, ans=0-0+1 (equivalent to adding [10] to the list of subarrays)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># [10, 5, 2, 6]</span>
+<span class="c1"># L    R</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">[10,5] prod=50&lt;k</div>
+<div class="line">no while loop, ans 1-0+1=2 (meaning both [10,5] and [5] can be counted as subarrays)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># [10, 5, 2, 6]</span>
+<span class="c1"># L       R</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">prod=100</div>
+<div class="line">going into the loop</div>
+<div class="line">prod/10=10</div>
+<div class="line">10&lt;k, moving out of the loop</div>
+<div class="line">ans=2-1+1=2 (counting 2 subarrays: [5,2], [2])</div>
 </div>
 </section>
 </section>

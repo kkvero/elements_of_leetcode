@@ -264,15 +264,29 @@ Easy ::
 `43. Multiply Strings <https://leetcode.com/problems/multiply-strings/>`_
 Medium
 
-| **Key things**
-| Edge case.
-| Initiate the response as list, [0]*
-| Reverse input from the start.
-| Multiply and add in one go.
-| Dealing with shift to the left in multiplication with res[i1+i2].
-| Filter out extra 0s at the front (check if value==0, from the front)
+| **Keys**
+| -len(x*y) is at max len(x) + len(y)
+| -whether carry or not carry, always ans[index] += calculation, not ans[index] = calculation
+| -take care to index correctly int(num1[j]) * int(num2[i])
 
 ::
+
+    ### My V (LC accepted 28,18)
+    class Solution:
+        def multiply(self, num1: str, num2: str) -> str:
+            if num1=='0' or num2=='0':
+                return '0'
+            ans = [0] * (len(num1) + len(num2))
+            for i in reversed(range(len(num2))):
+                for j in reversed(range(len(num1))):
+                    ind = i+j+1
+                    calc = ans[ind] + (int(num1[j]) * int(num2[i]))
+                    ans[ind] = calc%10
+                    ans[ind-1] += calc//10
+
+            ans = [str(n) for n in ans]
+            ans = ''.join(ans)
+            return ans if ans[0] != '0' else ans[1:]
 
     class Solution:
         def multiply(self, num1: str, num2: str) -> str:
@@ -295,27 +309,47 @@ Medium
             res = map(str, res[beg:])
             return "".join(res)
 
-    ### My V
-    def f(s1, s2):
-        if "0" in [s1, s2]:
-            return "0"
-        ans = [0] * (len(s1) + len(s2))
-        for i in range(len(s2) - 1, -1, -1):
-            for j in range(len(s1) - 1, -1, -1):
-                index = i + j + 1              #place into ans dynamically
-                res = int(s2[i]) * int(s1[j])
-                ans[index] += res
-                carry = ans[index] // 10
-                ans[index - 1] += carry
-                ans[index] %= 10
-        if ans[0] == 0:    #del prepped 0 
-            ans = ans[1:]
-        ans = [str(x) for x in ans]
-        return "".join(ans)
+**C++**
 
-    print(f("14", "15"))  # '210'
-    print(f("556", "30"))  # '16680'
-    print(f("556", "0"))  # '0'
+.. code-block:: cpp
+
+    //My V (LC accepted 50,60)
+    class Solution {
+    public:
+        string multiply(string num1, string num2) {
+            if (num1 == "0" || num2 == "0")
+                return "0";
+            vector<int> ans ((num1.size() + num2.size()), 0);
+            for (size_t i = num2.size()-1; i != -1; --i){
+                for (size_t j = num1.size()-1; j!= -1; --j){
+                    int ind = i+j+1;
+                    int calc = ans[ind] + ((num1[j] - '0') * (num2[i] - '0'));
+                    ans[ind] = calc % 10;
+                    ans[ind-1] += calc/10;
+                }
+            }
+            string res;
+            for(int n: ans){
+                res += '0' + n;
+            }
+            res = (res[0] == '0') ? string(res.begin()+1, res.end()) : res;  //if prepped with 0, start at index 1
+            return res;
+        }
+    };
+
+| **Notes on C++**
+| -C++ char/int conversions
+| Indexing a string gives you a char type. So we have to do char/int conversion.
+| //int from char
+|     char a = '4';
+|     int ia = a - '0'; //ascii value of '4' - '0' = 4
+| //char from int
+|     int n {6};
+|     char c = '0' + n;
+ 
+| -Aka slicing res[1:]
+| ``res = string(res.begin()+1, res.end())``
+| We assing a new string to res, and we make that new string from res itself but modified.
 
 131. (LC 496) Next Greater Element I
 -----------------------------------------

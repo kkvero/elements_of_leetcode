@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sliding Window Questions Part 1 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Two Pointers Questions Part 1" href="../two_pointers/two_pointers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_6.html">Part 6 (86-95)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_7.html">Part 7 (96-105)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_extra.html">Extra (137)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_3.html">Part 3 (126-136)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Two Pointers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sliding Window:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (146-151)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-567-permutation-in-string">146. (LC 567) Permutation in String</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-239-sliding-window-maximum">147 (LC 239) Sliding Window Maximum</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sliding Window Questions Part 1</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sliding_window/sw.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sliding-window-questions-part-1">
+<h1>Sliding Window Questions Part 1<a class="headerlink" href="#sliding-window-questions-part-1" title="Link to this heading"></a></h1>
+<section id="lc-567-permutation-in-string">
+<h2>146. (LC 567) Permutation in String<a class="headerlink" href="#lc-567-permutation-in-string" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/permutation-in-string/description/">567. Permutation in String</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">7</span></a>]</div>
+<div class="line">Key points:</div>
+<div class="line">1)Sliding window</div>
+<div class="line">2)Hash tables, just compare hash tables.</div>
+</div>
+<div class="line-block">
+<div class="line">-we make hash tables using collections.Counter()</div>
+<div class="line">Of the full s1.</div>
+<div class="line">Of the part of s2, window size, which is len of s1.</div>
+<div class="line">-we can compare dicts!</div>
+<div class="line">if cnt1 == cnt2:</div>
+<div class="line">-Move the window. Iterate starting from len(s1).</div>
+<div class="line">(Modify hash tables. Simply +=1 to the value at rp, -= to the key in hash at lp)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">checkInclusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+        <span class="n">cnt1</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+        <span class="n">cnt2</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">s2</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">cnt1</span> <span class="o">==</span> <span class="n">cnt2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)):</span>
+            <span class="n">cnt2</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">cnt2</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">n</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">cnt1</span> <span class="o">==</span> <span class="n">cnt2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1">### My remake</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">cnts1</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+    <span class="n">cnts2</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">s2</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="n">cnts1</span> <span class="o">==</span> <span class="n">cnts2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">lp</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">rp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)):</span>
+        <span class="n">cnts2</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">rp</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">cnts2</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">lp</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">cnts1</span> <span class="o">==</span> <span class="n">cnts2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Note</strong></div>
+<div class="line">we use special properties of dicts, created by collections.Counter(iterable)</div>
+<div class="line">1)</div>
+<div class="line-block">
+<div class="line">cnts2[s2[rp]] += 1</div>
+</div>
+<div class="line">Counter makes a dict with properties like defaultdict. So we can add to non-existent keys,</div>
+<div class="line">which doesn’t work in a regular dict.</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">=</span><span class="s1">&#39;abc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cnt</span><span class="o">=</span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cnt</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>   <span class="c1">#&#39;f&#39; is not in cnt, but we add to it OK</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cnt</span>
+<span class="go">Counter({&#39;a&#39;: 1, &#39;b&#39;: 1, &#39;c&#39;: 1, &#39;f&#39;: 1})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>     <span class="c1">#Nope in reg dict</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">KeyError</span>: <span class="n">&#39;c&#39;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">2)</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">cnts1</span> <span class="pre">==</span> <span class="pre">cnts2:</span></code></div>
+</div>
+<div class="line">cnts like cnt1={‘a’:1, ‘d’:0}, cnt2={‘a’:1} will be equal,</div>
+<div class="line">again which is not the case for normal dict.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 2</strong> (If you don’t want to use Python tricks.) [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
+<div class="line">-What is your sliding window going to be?</div>
+<div class="line">The size of your window in s2 (longer string) is the len of s1 (shorter string).</div>
+</div>
+<div class="line-block">
+<div class="line">We will have 2 hash maps: for chars in s1 and those in s2.</div>
+<div class="line">Arrays are used here: [0]*26</div>
+<div class="line">In each hash/array we will be tracking the counts for all 26 chars.</div>
+<div class="line">No char in string will have count 0, char present, count=1</div>
+</div>
+<div class="line-block">
+<div class="line">Variable matches=0</div>
+</div>
+<div class="line-block">
+<div class="line">E.g.</div>
+<div class="line">s1=’abc’, s2=’baxyzabc’</div>
+<div class="line">window 1 = ‘bax’</div>
+<div class="line">matches=24</div>
+<div class="line">window 2 = ‘axy’</div>
+<div class="line">matches=22</div>
+<div class="line">..Stop when we have matches=26</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">checkInclusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">s1Count</span><span class="p">,</span> <span class="n">s2Count</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">26</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">26</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)):</span>
+            <span class="n">s1Count</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1">#fills in hash/array for s1</span>
+            <span class="n">s2Count</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1">#fills in for window1 of s2</span>
+
+        <span class="n">matches</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">26</span><span class="p">):</span>  <span class="c1">#matches for window1,yes iterate through all 26 values</span>
+            <span class="n">matches</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">s1Count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2Count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+
+        <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)):</span>  <span class="c1">#&lt;==Move RP</span>
+            <span class="k">if</span> <span class="n">matches</span> <span class="o">==</span> <span class="mi">26</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">r</span><span class="p">])</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>    <span class="c1">#BLOCK 1 for rp</span>
+            <span class="n">s2Count</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">s1Count</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2Count</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+                <span class="n">matches</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">s1Count</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">s2Count</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span> <span class="c1">#if in s1 &#39;a&#39;=0, in s2 &#39;a&#39;=1</span>
+                <span class="n">matches</span> <span class="o">-=</span> <span class="mi">1</span>
+
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">l</span><span class="p">])</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>    <span class="c1">#BLOCK 2 for lp</span>
+            <span class="n">s2Count</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">s1Count</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2Count</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+                <span class="n">matches</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">s1Count</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">s2Count</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>  <span class="c1">#if in s1 we had &#39;a&#39;=1, now in s2 &#39;a&#39;=0</span>
+                <span class="n">matches</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>                      <span class="c1">#&lt;==Move LP</span>
+        <span class="k">return</span> <span class="n">matches</span> <span class="o">==</span> <span class="mi">26</span>
+
+<span class="c1">### My V (LC accepted 78,84%)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s1</span><span class="p">:</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">total_cnt</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+    <span class="n">lp</span> <span class="o">=</span> <span class="n">rp</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># for rp in range(len(s2)):  NOPE</span>
+    <span class="k">while</span> <span class="n">rp</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s2</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span> <span class="ow">in</span> <span class="n">d</span> <span class="ow">and</span> <span class="n">d</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">rp</span><span class="p">]]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">rp</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">total_cnt</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">total_cnt</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">s2</span><span class="p">[</span><span class="n">rp</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>   <span class="c1">#s2[rp] not in D, build from scratch</span>
+                <span class="k">while</span> <span class="n">lp</span> <span class="o">!=</span> <span class="n">rp</span><span class="p">:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">lp</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">total_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>               <span class="c1">#s2[rp] in D, don&#39;t build from scratch, just try moving lp</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">lp</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">total_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">rp</span> <span class="o">-=</span> <span class="mi">1</span>       <span class="c1">#Move rp BACK and try again</span>
+
+            <span class="n">lp</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">rp</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1">#DONT FORGET</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Seems to be a classic sliding window.</div>
+<div class="line">One tricky edge case:</div>
+<div class="line">s1 = “adc”</div>
+<div class="line">s2 = “dcda” #True has s1 substring</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># d c d a</span>
+<span class="c1"># L   R</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Case 1) value at R in hash and D[s2[R]]&gt; 0, so L stays, R +=1</div>
+<div class="line">Case 2) value at R not in hash, just move L all the way to R (L=R), start looking from scratch.</div>
+<div class="line">-&gt; spec. case 3) value at R in hash, but D[s2[R]]=0.</div>
+<div class="line">Then L+1, R-1 and try again.</div>
+</div>
+</section>
+<section id="lc-239-sliding-window-maximum">
+<h2>147 (LC 239) Sliding Window Maximum<a class="headerlink" href="#lc-239-sliding-window-maximum" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/sliding-window-maximum/description/">239. Sliding Window Maximum</a>
+Hard</p>
+<div class="line-block">
+<div class="line">The example given in the task is misleading (makes you think that mono increasing stack is enough).</div>
+<div class="line">A better one that covers more cases:</div>
+<div class="line">nums = [0, 5, 3, 2, 1, 2, 4, 4]</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Keys</strong></div>
+<div class="line">-use dequeue, mono decreasing, store (value, index)</div>
+<div class="line">E.g.: q = [(5,1), (3,2), (2,3)] (so the greatest value is always at q[0])</div>
+<div class="line">-pop from dequeue if current value greater than previous values, q[-1]</div>
+<div class="line">cur=2, q=[(2,3), (1,4)], pop val=1 =&gt; q=[(2,3), [2,5]]</div>
+<div class="line">-popleft if index of the value on the left of q (q[0] i.e. greatest) is beyond our k window</div>
+<div class="line">cur i = 4, q = [(5,1), (3,2), (2,3)], pop (5,1)</div>
+<div class="line">-append to ans value at q[0], first value in q is always the greatest.</div>
+</div>
+<p>QUEUE (my V):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 30, 50)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxSlidingWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">while</span> <span class="n">q</span> <span class="ow">and</span> <span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">while</span> <span class="n">q</span> <span class="ow">and</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">i</span><span class="o">-</span><span class="n">k</span><span class="p">:</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">HEAP</div>
+<div class="line">-Using min heap, store (value, index) pairs.</div>
+<div class="line">Because we may have a situation like this:</div>
+<div class="line">nums = [9,10,9,-7,-4,-8,2,-6]</div>
+<div class="line">k = 5</div>
+<div class="line">Storing just values in heap, would give output: [10,10,9,9] instead of [10,10,9,2].</div>
+<div class="line">(We never deleted 2nd to greatest (9) that we’ve passed.)</div>
+<div class="line">To delete all values that we’ve passed, store also indices in heap.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 10, 5)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxSlidingWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">[:</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">lp</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">k</span>
+            <span class="k">while</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lp</span><span class="p">:</span>
+                <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<p>Solution 2 [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">7</span></a>]:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxSlidingWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">[:</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])]</span>
+        <span class="n">heapify</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="n">heappush</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">))</span>
+            <span class="k">while</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">k</span><span class="p">:</span>
+                <span class="n">heappop</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+            <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../two_pointers/two_pointers.html" class="btn btn-neutral float-left" title="Two Pointers Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

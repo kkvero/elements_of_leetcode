@@ -118,7 +118,6 @@ Easy
             res = list([list(item) for item in res])
             return res
 
-| **Solution 1** [:ref:`10 <ref-label>`]
 | Key notes:
 | -Pictorially:
 
@@ -133,7 +132,32 @@ Easy
 | -nested while l<r
 | -if successfully found a triple, again advance Lpointer till nums[L]!=nums[L+1]
 
+**My V** (LC accepted 70,18)
 ::
+
+    class Solution:
+        def threeSum(self, nums: List[int]) -> List[List[int]]:
+            nums.sort()
+            n = len(nums) - 1
+            res = []
+            for i, a in enumerate(nums[:n-1]):
+                if a > 0:
+                    break
+                if i > 0 and a == nums[i-1]:
+                    continue
+                L, R = i+1, n
+                while L < R:
+                    if a + nums[L] + nums[R] == 0:
+                        res.append([a,nums[L],nums[R]])
+                        while(L < R and nums[R] == nums[R-1]): R-=1
+                        while(L < R and nums[L] == nums[L+1]): L+=1
+                        R-=1
+                        L+=1
+                    elif a+nums[L]+nums[R] > 0: R-=1
+                    else: L+=1
+            return res
+
+**Solution 1** [:ref:`10 <ref-label>`] ::
 
     class Solution:
         def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -205,7 +229,41 @@ If we move L+=1, it will move to the same value, so we move L till it is a diffe
                         else: k -= 1
             return result
 
-**C++** [:ref:`14 <ref-label>`]
+**C++** 
+
+My V (LC accepted 90, 60)
+
+.. code-block:: cpp
+
+    class Solution {
+    public:
+        vector<vector<int>> threeSum(vector<int>& nums) {
+            int n = nums.size();
+            vector<vector<int>> res;
+            sort(nums.begin(), nums.end());
+            for(int i=0; i != n-2; ++i){
+                if (nums[i] > 0)
+                    break;
+                if (i > 0 && nums[i] == nums[i-1])
+                    continue;
+                int L = i+1, R = n-1;
+                while(L < R){
+                    if(nums[i] + nums[L] + nums[R] == 0){
+                        res.push_back({nums[i], nums[L], nums[R]});
+                        while(R > L && (nums[R] == nums[R-1])) --R;
+                        while(R > L && (nums[L] == nums[L+1])) ++L;
+                        --R;
+                        ++L;
+                    }
+                    else if(nums[i] + nums[L] + nums[R] > 0) --R;
+                    else ++L;
+                }
+            }
+            return res;
+        }
+    };
+
+Solution [:ref:`14 <ref-label>`]
 
 .. code-block:: cpp
 

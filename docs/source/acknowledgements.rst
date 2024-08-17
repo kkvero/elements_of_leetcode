@@ -3,6 +3,7 @@
 
 Acknowledgements and References
 ===============================
+Solutions that are not marked with "My V" or "My Version" come from these sources:
 
 1. `Leetcode <https://leetcode.com/>`_. Formulation of problems, tasks. Solutions from Leetcode users.
 2. Elements of Programming Interviews in Python, by Adnan Aziz, Tsung-Hsien Lee, Amit Prakash.  ISBN-10 1537713949.

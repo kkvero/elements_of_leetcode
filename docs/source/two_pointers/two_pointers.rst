@@ -386,11 +386,166 @@ in the middle if both pos and neg). ::
                 ans.append(res)
             return ans
 
+143. (LC 283) Move Zeroes
+----------------------------
+`283. Move Zeroes <https://leetcode.com/problems/move-zeroes/>`_
+Easy
 
+| My V:
+| -I first look for a zero pointer, i.e. where is the first zero in nums array.
+| ([0,1,2], [1,0,2] etc.)
+| -Then start the iteration in the main loop from the found <zi>.
 
+::
 
+    ### My V (LC accepted 80, 6)
+    class Solution:
+        def moveZeroes(self, nums: List[int]) -> None:
+            """
+            Do not return anything, modify nums in-place instead.
+            """
+            if len(nums) == 1:
+                return nums
+            
+            # search for zero pointer
+            zp = -1
+            for i in range(len(nums)):
+                if nums[i] == 0:
+                    zp = i
+                    break
+            
+            #we didn't find a zero pointer (all nums are nonzero)
+            if zp == -1:   
+                return nums
+            
+            # move zeros
+            for p in range(zp+1, len(nums)):
+                if nums[p] !=0:
+                    nums[zp], nums[p] = nums[p], nums[zp]
+                    zp +=1
 
+| Idea:
+| -at p1 we keep track of values 0.
+| -loop that moves p2+=1
+| -if value at p2 !=0 and at p1 value is ==0, we swap.
+| -if at p1 value !=0, we move p1+=1
 
+::
+
+    ### V1
+    def f(a):
+        p1 = 0
+        for p2 in range(len(a)):
+            if a[p2] != 0 and a[p1] == 0:
+                a[p1], a[p2] = a[p2], a[p1]
+            if a[p1] != 0:
+                p1 += 1
+        return a
+
+    ### V2
+    def f(a):
+        zi = 0
+        for i in range(len(a)):
+            if a[i] != 0:
+                a[zi] = a[i]
+                if zi != i:
+                    a[i] = 0
+                zi += 1
+        return a
+
+    nums = [0, 1, 0, 3, 12]
+    print(f(nums))
+    nums2 = [0]
+    print(f(nums2))
+    nums3 = [4, 1, 0, 0, 3, 12, 0]
+    print(f(nums3))
+    [1, 3, 12, 0, 0]
+    [0]
+    [4, 1, 3, 12, 0, 0, 0]
+
+144. (LC 392) Is Subsequence
+------------------------------
+`392. Is Subsequence <https://leetcode.com/problems/is-subsequence/description/>`_
+Easy ::
+
+    ### Solution 1
+    class Solution:
+        def isSubsequence(self, s: str, t: str) -> bool:
+            i, j = 0, 0
+            while i < len(s) and j < len(t):
+                if s[i] == t[j]:
+                    i += 1
+                j += 1
+            return i == len(s)
+
+    ### My V (LC accepted 90,50%)
+    class Solution:
+        def isSubsequence(self, s: str, t: str) -> bool:
+            if (len(t)==0 and len(s)==0) or (len(s)==0):
+                return True
+            if len(t)==0:
+                return False
+            pt=ps=0
+            for pt in range(len(t)):
+                if t[pt]==s[ps]:
+                    ps+=1
+                    if ps == len(s):
+                        return True
+            return False
+
+145. (LC 713) Subarray Product Less Than K
+--------------------------------------------
+`713. Subarray Product Less Than K <https://leetcode.com/problems/subarray-product-less-than-k/description/>`_
+Medium ::
+
+    ### Solution
+    def f(a, k):
+        lp = 0
+        ans = 0
+        prod = 1
+        for rp in range(len(a)):
+            prod *= a[rp]
+            while prod >= k and lp <= rp:  #*
+                prod /= a[lp]
+                lp += 1
+            ans += rp - lp + 1
+        return ans
+
+    nums = [10, 5, 2, 6]
+    k = 100
+    print(f(nums, k)) #8
+    # [10], [5], [2], [6], [10, 5], [5, 2], [2, 6], [5, 2, 6]
+
+#* My edit lp<=rp not just <, when e.g. nums=[200,10], i.e. we shouldn't count the first num.
+
+| Logic:
+| We start Lp and Rp at index 0.
+| Move Rp in the main loop.
+| Note: we go into the while loop only when prod >=k.
+
+How it looks::
+
+    # [10, 5, 2, 6]
+    # L,R
+
+10<k, no while loop, ans=0-0+1 (equivalent to adding [10] to the list of subarrays) ::
+
+    # [10, 5, 2, 6]
+    # L    R
+
+| [10,5] prod=50<k
+| no while loop, ans 1-0+1=2 (meaning both [10,5] and [5] can be counted as subarrays)
+
+::
+
+    # [10, 5, 2, 6]
+    # L       R
+
+| prod=100
+| going into the loop
+| prod/10=10
+| 10<k, moving out of the loop
+| ans=2-1+1=2 (counting 2 subarrays: [5,2], [2])
 
 
 
