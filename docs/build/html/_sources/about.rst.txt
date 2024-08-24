@@ -10,7 +10,7 @@ Python and some in C++, including questions on Leetcode and elsewhere.
 **Languages**
 
 Python, C++.
-The first solution is always in Python, followed by a solution in C++ if available.
+The first solution is usually in Python, followed by a solution in C++ if available.
 
 **Why**
 

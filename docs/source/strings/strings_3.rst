@@ -727,10 +727,38 @@ so we never get to j==len(w2) in that case.
 `6. Zigzag Conversion <https://leetcode.com/problems/zigzag-conversion/>`_
 Medium
 
-| **My V**
-| //Main points.
-| Use dict to store data for each row.
-| Identify direction of the zigzag using %(totalrowNum-1).
+| **My V3** (LC accepted 90, 28)
+| Just two moves. (Initialize rows as [[], []..])
+| -Filling in rows down. Normal loop in range(numRows).
+| -Filling in rows in diagonal upwards (diagonal size has constant dependence on numRows = numRows-2).
+
+::
+
+    class Solution:
+        def convert(self, s: str, numRows: int) -> str:
+            ans = [[] for _ in range(numRows)]  #[[],[]..]
+            dir = -1   #always left to right diagonal, so decreases index
+            diag = numRows - 2
+            ind=0      #iterating the string
+            while(ind != len(s)):
+                for j in range(numRows):  #filling in rows straight down
+                    if ind != len(s):
+                        ans[j].append(s[ind])
+                        ind+=1
+                diagonal_index = numRows - 1 + dir  #filling in rows up (or in diagonal)
+                for i in range(diag):
+                    if ind != len(s):
+                        ans[diagonal_index].append(s[ind])
+                        ind+=1
+                        diagonal_index -=1
+            return ''.join(list(itertools.chain.from_iterable(ans))) #flatten list of lists
+
+
+
+| **My V1** (LC accepted 20, 10)
+| Main points.
+| -Use dict to store data for each row.
+| -Identify direction of the zigzag using %(totalrowNum-1).
 
 Logic::
 
@@ -751,21 +779,21 @@ Logic::
 ::
 
     def f(s, r):
-        if r == 1:    #edge case, to avoid division by zero in %(r-1)
+        if numRows == 1:    #edge case, to avoid division by zero in %(r-1)
             return s
         d = {}
-        for i in range(r):
+        for i in range(numRows):
             d[i] = []
         index = 0
         direction = -1
         for j in range(len(s)):
-            if index % (r - 1) == 0:
+            if index % (numRows - 1) == 0:
                 direction *= -1
             d[index].append(s[j])
             index += direction
-        print(d)
+        # print(d)
         ans = []
-        for k in range(r):
+        for k in range(numRows):
             ans += d[k]
         return "".join(ans)
 
@@ -775,19 +803,21 @@ Logic::
     # {0: ['P', 'I', 'N'], 1: ['A', 'L', 'S', 'I', 'G'], 2: ['Y', 'A', 'H', 'R'], 3: ['P', 'I']}
     # PINALSIGYAHRPI
 
-    ### V2 (using not dict but indexing a nested array like [[], [], [], []])
+**My V2** (LC accepted 65, 10)
+(using not dict but indexing a nested array like [[], [], [], []]) ::
+
     def f(s, r):
-        if r == 1:
+        if numRows == 1:
             return s
         # Create nested array
         rows = []
-        for _ in range(r):
+        for _ in range(numRows):
             rows.append([])
 
         direction = -1
         row = 0
         for i in range(len(s)):
-            if row % (r - 1) == 0:  #NOTE (numRows-1)
+            if row % (numRows - 1) == 0:  #NOTE (numRows-1)
                 direction *= -1
             rows[row].append(s[i])
             row += direction
@@ -796,7 +826,7 @@ Logic::
         ans = ""
         for line in rows:
             ans += "".join(line)
-        return ans
+        return ans 
 
 | **Solution** [:ref:`2 <ref-label>`]
 | (Here we don't use extra space like in the array/dict version.)
@@ -820,6 +850,36 @@ Logic::
                     res += s[i + increment - 2 * r]
         return res
 
+| **C++**
+| Initialize index of the row, direction of inserting into rows.
+| We change the direction when index row == 0 or last row.
 
+LC accepted (90, 60) [:ref:`7 <ref-label>`] 
+
+.. code-block:: cpp
+
+    class Solution {
+    public:
+        string convert(string s, int numRows) {
+            if (numRows == 1) {
+                return s;
+            }
+            vector<string> rows(numRows);
+            int row_index = 0, dir = -1;  //index of the row, direction normal increasing or diagonal=decresing
+            for (char c : s) {
+                rows[row_index] += c;
+                if (row_index == 0 || row_index == numRows - 1) {
+                    dir = -dir;
+                }
+                row_index += dir;
+            }
+            string ans;
+            for (auto& string_item : rows) {
+                ans += string_item;
+            }
+            return ans;
+            
+        }
+    };
 
 

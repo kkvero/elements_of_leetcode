@@ -17,6 +17,7 @@
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Two Pointers Questions Part 1" href="../two_pointers/two_pointers.html" />
@@ -86,12 +87,17 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Sliding Window:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sliding_window/sw.html">Part 1 (146-151)</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About The Project</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
 </ul>
 
@@ -852,10 +858,36 @@ so we never get to j==len(w2) in that case.</p>
 <p><a class="reference external" href="https://leetcode.com/problems/zigzag-conversion/">6. Zigzag Conversion</a>
 Medium</p>
 <div class="line-block">
-<div class="line"><strong>My V</strong></div>
-<div class="line">//Main points.</div>
-<div class="line">Use dict to store data for each row.</div>
-<div class="line">Identify direction of the zigzag using %(totalrowNum-1).</div>
+<div class="line"><strong>My V3</strong> (LC accepted 90, 28)</div>
+<div class="line">Just two moves. (Initialize rows as [[], []..])</div>
+<div class="line">-Filling in rows down. Normal loop in range(numRows).</div>
+<div class="line">-Filling in rows in diagonal upwards (diagonal size has constant dependence on numRows = numRows-2).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">numRows</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numRows</span><span class="p">)]</span>  <span class="c1">#[[],[]..]</span>
+        <span class="nb">dir</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>   <span class="c1">#always left to right diagonal, so decreases index</span>
+        <span class="n">diag</span> <span class="o">=</span> <span class="n">numRows</span> <span class="o">-</span> <span class="mi">2</span>
+        <span class="n">ind</span><span class="o">=</span><span class="mi">0</span>      <span class="c1">#iterating the string</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">ind</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numRows</span><span class="p">):</span>  <span class="c1">#filling in rows straight down</span>
+                <span class="k">if</span> <span class="n">ind</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                    <span class="n">ans</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+                    <span class="n">ind</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="n">diagonal_index</span> <span class="o">=</span> <span class="n">numRows</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">dir</span>  <span class="c1">#filling in rows up (or in diagonal)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">diag</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ind</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                    <span class="n">ans</span><span class="p">[</span><span class="n">diagonal_index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+                    <span class="n">ind</span><span class="o">+=</span><span class="mi">1</span>
+                    <span class="n">diagonal_index</span> <span class="o">-=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">ans</span><span class="p">)))</span> <span class="c1">#flatten list of lists</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>My V1</strong> (LC accepted 20, 10)</div>
+<div class="line">Main points.</div>
+<div class="line">-Use dict to store data for each row.</div>
+<div class="line">-Identify direction of the zigzag using %(totalrowNum-1).</div>
 </div>
 <p>Logic:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize</span>
@@ -875,21 +907,21 @@ Medium</p>
 <div class="line">index+direction. (Will do +1 or -1 depending on the direction.)</div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>    <span class="c1">#edge case, to avoid division by zero in %(r-1)</span>
+    <span class="k">if</span> <span class="n">numRows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>    <span class="c1">#edge case, to avoid division by zero in %(r-1)</span>
         <span class="k">return</span> <span class="n">s</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numRows</span><span class="p">):</span>
         <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">direction</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">index</span> <span class="o">%</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">%</span> <span class="p">(</span><span class="n">numRows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">direction</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">d</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
         <span class="n">index</span> <span class="o">+=</span> <span class="n">direction</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="c1"># print(d)</span>
     <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numRows</span><span class="p">):</span>
         <span class="n">ans</span> <span class="o">+=</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
     <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
 
@@ -898,20 +930,22 @@ Medium</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">numRows</span><span class="p">))</span>
 <span class="c1"># {0: [&#39;P&#39;, &#39;I&#39;, &#39;N&#39;], 1: [&#39;A&#39;, &#39;L&#39;, &#39;S&#39;, &#39;I&#39;, &#39;G&#39;], 2: [&#39;Y&#39;, &#39;A&#39;, &#39;H&#39;, &#39;R&#39;], 3: [&#39;P&#39;, &#39;I&#39;]}</span>
 <span class="c1"># PINALSIGYAHRPI</span>
-
-<span class="c1">### V2 (using not dict but indexing a nested array like [[], [], [], []])</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</pre></div>
+</div>
+<p><strong>My V2</strong> (LC accepted 65, 10)
+(using not dict but indexing a nested array like [[], [], [], []])</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">numRows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">s</span>
     <span class="c1"># Create nested array</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numRows</span><span class="p">):</span>
         <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
 
     <span class="n">direction</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">row</span> <span class="o">%</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1">#NOTE (numRows-1)</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">%</span> <span class="p">(</span><span class="n">numRows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1">#NOTE (numRows-1)</span>
             <span class="n">direction</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">rows</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="n">row</span> <span class="o">+=</span> <span class="n">direction</span>
@@ -943,6 +977,37 @@ Medium</p>
                 <span class="n">i</span> <span class="o">+</span> <span class="n">increment</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>  <span class="c1"># also check if inbond</span>
                 <span class="n">res</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">increment</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>C++</strong></div>
+<div class="line">Initialize index of the row, direction of inserting into rows.</div>
+<div class="line">We change the direction when index row == 0 or last row.</div>
+</div>
+<p>LC accepted (90, 60) [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">7</span></a>]</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">convert</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numRows</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">numRows</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">rows</span><span class="p">(</span><span class="n">numRows</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">row_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w">  </span><span class="c1">//index of the row, direction normal increasing or diagonal=decresing</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">rows</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">row_index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">row_index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">numRows</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">dir</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">row_index</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">dir</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">string</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">string_item</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">rows</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">ans</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">string_item</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span>
+
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </section>
