@@ -727,6 +727,26 @@ so we never get to j==len(w2) in that case.
 `6. Zigzag Conversion <https://leetcode.com/problems/zigzag-conversion/>`_
 Medium
 
+| **My V4** (LC accepted 60, 28)
+| -rows = [[], [], ..]
+| -Just increment/decrement row index where to inser char using direction. 
+| Change ditrection when index==0 or last row.
+
+::
+
+    class Solution:
+        def convert(self, s: str, numRows: int) -> str:
+            if numRows == 1: return s;  #will get index out of range without it
+            rows = [[] for _ in range(numRows)]
+            dir = -1
+            row_ind = 0
+            for c in s:
+                rows[row_ind].append(c)
+                if row_ind == 0 or row_ind == (numRows-1):
+                    dir *=(-1)
+                row_ind += dir
+            return ''.join(list(itertools.chain(*rows)))
+
 | **My V3** (LC accepted 90, 28)
 | Just two moves. (Initialize rows as [[], []..])
 | -Filling in rows down. Normal loop in range(numRows).
