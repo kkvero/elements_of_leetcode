@@ -110,6 +110,41 @@ My Note: lonely means no other B pixel on the ENTIRE row or column
 | If we encounter a "B", we record that on that row and on that column there is +1 of B.
 | Hence if the value will be 2 when we check later, then that pixel is not lonely.
 
+**My V3**
+
+Justs as the main solution, possible improvement, to make the 2nd traversal as little as possible.
+Add another data structure that stores addresses of cells with 'B'. 
+And only those that are candidates for being lonely so far (if rows[r]<=1, cols[c] <= 1).
+If we already see that at that row,col value >=2, not a loner.
+Then check only these candidates against the total record of rows, cols. ::
+
+    def count_lonely(picture) -> int:
+        rows_size = len(picture)
+        cols_size = len(picture[0])
+        rows = [0] * rows_size
+        cols = [0] * cols_size
+        b_pix_addresses = []  #[[r,c], [r,c], .. ]
+        for r in range(rows_size):
+            for c in range(cols_size):
+                if picture[r][c] == "B":
+                    rows[r] += 1
+                    cols[c] += 1
+                    if rows[r] <= 1 and cols[c] <= 1:
+                        b_pix_addresses.append([r, c])
+        loners = 0
+        while b_pix_addresses:
+            r, c = b_pix_addresses.pop()
+            if rows[r] <= 1 and cols[c] <= 1:
+                loners += 1
+        return loners
+
+    picture1 = [["W", "W", "B"], ["W", "B", "W"], ["B", "W", "W"]]
+    print(count_lonely(picture1))  # 3
+    picture2 = [["B", "B", "B"], ["B", "B", "W"], ["B", "B", "B"]]
+    print(count_lonely(picture2))  # 0
+    picture3 = [["W", "W", "W"], ["W", "B", "B"], ["W", "W", "W"]]
+    print(count_lonely(picture3))  # 0
+
 ::
 
     ### My V2
@@ -152,6 +187,48 @@ My Note: lonely means no other B pixel on the ENTIRE row or column
     #3
     #0
     #1
+
+**C++** (My V3)
+
+.. code-block:: cpp
+
+    #include <iostream>
+    #include <vector>
+    #include <string>
+    using namespace std;
+
+    int count_loners(vector<vector<string>> picture){
+        int rows_size = picture.size();
+        int cols_size = picture[0].size();
+        vector<int>rows(rows_size, 0);
+        vector<int>cols(cols_size, 0);
+        vector<vector<int>> b_pix_addresses;
+        for(int r=0; r!=rows_size; ++r){
+            for(int c=0; c!=cols_size; ++c){
+                if(picture[r][c] == "B"){
+                    ++rows[r];
+                    ++cols[c];
+                    if(rows[r] <= 1 && cols[c] <= 1)
+                        b_pix_addresses.push_back({r,c});
+                }
+            }
+        }
+        int loners{0};
+        while (!b_pix_addresses.empty()){
+            int r = b_pix_addresses.back()[0], c = b_pix_addresses.back()[1];
+            b_pix_addresses.pop_back();
+            if(rows[r] <= 1 && cols[c] <= 1)
+                ++loners;
+        }
+        return loners;
+    }
+
+    int main() {
+        vector<vector<string>> picture = {{"W","W","B"},{"W","B","W"},{"B","W","W"}};
+        cout << count_loners(picture) << endl; //3
+
+        return 0;
+    }
 
 88. (LC 674) Longest Continuous Increasing Subsequence
 ---------------------------------------------------------
