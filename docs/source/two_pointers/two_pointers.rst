@@ -283,6 +283,151 @@ Easy
                 i, j = i - 1, j - 1
             return True
 
+**My V easy**, using space (LC accepted 5, 70). Using stack over string does not improve according to LC. ::
+
+    # STRING SLICING
+    class Solution:
+        def backspaceCompare(self, s: str, t: str) -> bool:
+            new_s = ""
+            new_t = ""
+            for i in range(len(s)):
+                if s[i] != '#':
+                    new_s += s[i]
+                else:
+                    if len(new_s) >= 1:
+                        new_s = new_s[:-1]
+
+            for j in range(len(t)):
+                if t[j] != '#':
+                    new_t += t[j]
+                else:
+                    if len(new_t) >= 1:
+                        new_t = new_t[:-1]
+            return new_s == new_t
+
+    # STACK
+    class Solution:
+        def backspaceCompare(self, s: str, t: str) -> bool:
+            def backspace(s):
+                stack = []
+                for i in range(len(s)):
+                    if s[i] != '#':
+                        stack.append(s[i])
+                    else:
+                        if stack:
+                            stack.pop()
+                return stack
+            
+            return backspace(s) == backspace(t)
+
+| **My V difficult** (LC accepted 87, 35; 22,35; 5, 95)
+| DESIGN (TWO POINTERS AND STACK):
+| -Use a helper function that uses STACK. Call this function when value at p is '#'.
+| Function will move the pointer till it passes all accumulated '#'.
+| Including cases like "bxo#j##tw".
+| -Main solution: 
+| /account when one of the pointers ran off its string
+| /when at both pointers '#'
+| /when at one or both pointers '#'
+
+::
+
+    class Solution:
+        def backspaceCompare(self, s: str, t: str) -> bool:
+            # HELPER THAT USES STACK
+            def backspace(_str, p):
+                stk = ['#']
+                p-=1
+                while p >= 0 and stk or _str[p] == '#':
+                    if _str[p] == '#':
+                        stk.append('#')
+                        p-=1
+                    else:
+                        stk.pop()
+                        p-=1
+                return p
+
+            ps, pt = len(s) - 1, len(t) - 1
+            while ps >= 0 or pt >= 0:
+                # ONE OF THE POINTERS RAN OFF THE STRING
+                if ps < 0:
+                    if t[pt] == '#':
+                        pt = backspace(t, pt)
+                    return ps < 0 and pt < 0
+                elif pt < 0:
+                    if s[ps] == '#':
+                        ps = backspace(s, ps)
+                    return ps < 0 and pt < 0
+                
+                # BOTH POINTERS ARE NOT AT '#'
+                elif s[ps] != '#' and t[pt] != '#':
+                    if s[ps] != t[pt]:
+                        return False
+                    else:  #values at pointers are the same, then move on
+                        ps -= 1
+                        pt -= 1
+                # ONE OR BOTH POINTERS ARE AT '#'
+                else:
+                    if s[ps] == '#':
+                        ps = backspace(s, ps)
+                    if t[pt] == '#':
+                        pt = backspace(t, pt)
+            return ps < 0 and pt < 0
+
+**C++**
+
+.. code-block:: cpp
+
+    //My V1 (LC accepted 100, 7)
+    //Create new strings, iterate forward. Use helper to create each new string.
+
+    class Solution {
+        string build_new_string(string str){
+            string newS;
+            for(auto b = str.begin(); b != str.end(); ++b){
+                if(*b != '#'){
+                    newS += *b;
+                }
+                else {
+                    if(!newS.empty()){
+                        newS = string(newS.begin(), newS.end() - 1);
+                    }
+                }
+            }
+            return newS;
+        }
+
+    public:
+        bool backspaceCompare(string s, string t) {
+            return build_new_string(s) == build_new_string(t);
+        }
+    };
+
+
+    //My V2 (LC accepted 100, 12-19)
+    //Create 2 stacks, iterate forward. Use helper to create each stack. 
+
+    class Solution {
+        stack<char> remove_backspace(string str){
+            stack<char> stk;
+            for(auto b = str.begin(); b != str.end(); ++b){
+                if(*b != '#')
+                    stk.push(*b);
+                else {
+                    if(!stk.empty())
+                        stk.pop();
+                }
+            }
+            return stk;
+        }
+
+    public:
+        bool backspaceCompare(string s, string t) {
+            return remove_backspace(s) == remove_backspace(t);
+
+        }
+    };
+
 142. (LC 977) Squares of a Sorted Array
 ---------------------------------------------
 `977. Squares of a Sorted Array <https://leetcode.com/problems/squares-of-a-sorted-array/>`_
