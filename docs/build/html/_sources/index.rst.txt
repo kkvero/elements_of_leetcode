@@ -53,6 +53,11 @@ TABLE OF CONTENTS
     Part 1 (146-151) <sliding_window/sw>
 
 .. toctree::
+    :caption: Linked List:
+
+    Part 1 (152-160) <linked_list/ll_1>
+
+.. toctree::
     :caption: Math:
 
     Knowledge base <math/math_kb>

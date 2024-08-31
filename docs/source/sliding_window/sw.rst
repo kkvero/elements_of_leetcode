@@ -254,11 +254,171 @@ Solution 2 [:ref:`7 <ref-label>`]::
                 ans.append(-q[0][0])
             return ans
 
+148 (LC 904) Fruit Into Baskets
+----------------------------------
+`LC 904. Fruit Into Baskets <https://leetcode.com/problems/fruit-into-baskets/description/>`_
+Medium
 
+| **Keys**
+| -note, 2 kinds of fruit, so when dict has more than 2 keys: collect result, pop from
+| dict value at lp.
+| -Thanks to defaultdict(int), we can add value at rp to dict every time without testing
+| for presence. 
+| -Then subtract values at key a[lp], when d[a[lp]]==0, just pop it entirely from the dict.
 
+Solution 1 [:ref:`10 <ref-label>`] LC accepted ::
 
+    import collections
+    def f(a):
+        d = collections.defaultdict(int)
+        lp = 0
+        cur_len = 0
+        max_len = 0
+        for rp in range(len(a)):
+            d[a[rp]] += 1
+            cur_len += 1
+            while len(d) > 2:
+                value = a[lp]
+                d[value] -= 1
+                cur_len -= 1
+                lp += 1
+                if d[value] == 0:
+                    d.pop(value)
+            max_len = max(max_len, cur_len)
+        return max_len
 
+149 (LC 1456) Maximum Number of Vowels in a Substring of Given Length
+-------------------------------------------------------------------------
+`1456. Maximum Number of Vowels in a Substring of Given Length <https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/description/>`_
+Medium ::
 
+    # My V (LC accepted 75,90%)
+    class Solution:
+        def maxVowels(self, s: str, k: int) -> int:
+            vowels = {'a': 1, 'e': 1, 'i': 1, 'o':1, 'u':1}
+            L, cnt, cnt_cur = 0,0,0
+            for R in range(len(s)):
+                if s[R] in vowels:
+                    cnt_cur+=1
+                    cnt = max(cnt, cnt_cur)
+                if (R-L+1) == k:
+                    if s[L] in vowels:
+                        cnt_cur -=1
+                    L+=1
+            return cnt
+
+Solution 1 [:ref:`10 <ref-label>`] ::
+
+    class Solution:
+        def maxVowels(self, s: str, k: int) -> int:
+            l, res, total = 0, 0, 0
+            vowels = "aeiou"
+
+            for r in range(len(s)):
+                if s[r] in vowels:
+                    total += 1
+                if (r - l + 1) > k:
+                    if s[l] in vowels:
+                        total -= 1
+                    l += 1
+                res = max(res, total)
+            return res
+
+150. (LC 1004) Max Consecutive Ones III
+-----------------------------------------
+`1004. Max Consecutive Ones III <https://leetcode.com/problems/max-consecutive-ones-iii/description/>`_
+Medium
+
+| **Keys**
+| -Sliding window.
+| -When p2 is at the last item, be it 0 or 1, flips being == to k or not, calculate max_len always. 
+| (Also note that then len=p2-p1+1.)
+
+::
+
+    ### My V2 (LC accepted 72,93%)
+    def max_consequtive_ones(nums, k):
+        p1 = p2 = 0
+        max_len = 0
+        flips = 0
+        for p2 in range(len(nums)):
+            if nums[p2] == 0:
+                if flips < k:
+                    flips += 1
+                elif flips == k:
+                    max_len = max(max_len, p2 - p1)
+                    # flips+=1
+                    while nums[p1] == 1:
+                        p1 += 1
+                    p1 += 1
+                    # flips -= 1
+            if p2 == len(nums) - 1:  #important to have IF here not elif, when k is very large
+                max_len = max(max_len, p2 - p1 + 1)  # p2 - p1 + 1 
+        return max_len
+
+**Solution 1** [:ref:`7 <ref-label>`] ::
+    
+    class Solution:
+        def longestOnes(self, nums: List[int], k: int) -> int:
+            ans = 0
+            cnt = j = 0
+            for i, v in enumerate(nums):
+                if v == 0:
+                    cnt += 1
+                while cnt > k:
+                    if nums[j] == 0:
+                        cnt -= 1
+                    j += 1
+                ans = max(ans, i - j + 1)
+            return ans
+
+151. (LC 1493) Longest Subarray of 1's After Deleting One Element
+---------------------------------------------------------------------
+`1493. Longest Subarray of 1's After Deleting One Element <https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/description/>`_
+Medium
+
+| My note:
+| it's not that you are allowed to delete one element, you must, even if it is a 1.
+
+| **Solution 1**
+| (Recording zi, index at which we encounter 0 each time. To then move the lp there.)
+
+::
+
+    def f(a):
+        lp, ans, zi = 0, 0, -1
+        for rp in range(len(a)):
+            if a[rp] == 0:
+                lp = zi + 1
+                zi = rp
+            ans = max(ans, rp - lp)  #**
+        return ans
+
+| #**calculate here to take care of all the edge cases: 
+| -array ends with 1s, 
+| -there are no 0s in array.
+| 
+| nums = [0, 1, 1, 1, 0, 1, 1, 0, 1] #5
+| nums = [0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1] #6
+| nums = [1, 1, 1] #2
+| print(f(nums))
+
+**Solution 2**
+
+(Keep a count of how many zeros we encountered. When cnt > 1, shrink the window,
+i.e. move lp till cnt is again == 1. Because we can have one 0 in the window.) ::
+
+    def f(a):
+        lp, ans, zcnt = 0, 0, 0
+        for rp in range(len(a)):
+            if a[rp] == 0:
+                zcnt += 1
+            while zcnt > 1:
+                if a[lp] == 0:
+                    zcnt -= 1
+                lp += 1
+            ans = max(ans, rp - lp)
+        return ans
 
 
 

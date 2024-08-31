@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linked Lists Questions Part 1 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Sliding Window Questions Part 1" href="../sliding_window/sw.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_6.html">Part 6 (86-95)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_7.html">Part 7 (96-105)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_extra.html">Extra (137)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_3.html">Part 3 (126-136)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Two Pointers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sliding Window:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sliding_window/sw.html">Part 1 (146-151)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linked List:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (152-160)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-21-merge-two-sorted-lists">152. (LC 21) Merge Two Sorted Lists</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About The Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Linked Lists Questions Part 1</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/linked_list/ll_1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linked-lists-questions-part-1">
+<h1>Linked Lists Questions Part 1<a class="headerlink" href="#linked-lists-questions-part-1" title="Link to this heading"></a></h1>
+<section id="lc-21-merge-two-sorted-lists">
+<h2>152. (LC 21) Merge Two Sorted Lists<a class="headerlink" href="#lc-21-merge-two-sorted-lists" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/merge-two-sorted-lists/description/">21. Merge Two Sorted Lists</a>
+Easy</p>
+<div class="line-block">
+<div class="line"><strong>Keys (iterative approach)</strong></div>
+<div class="line">-put the merged list into a new LL</div>
+<div class="line">-use tail = dummy (as iterator for the new list and making dummy point to the head of the new list)</div>
+<div class="line">-consider that l1, l2 can be of different len</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1</span>
+<span class="k">def</span> <span class="nf">mergeList</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">):</span>
+    <span class="n">dummy</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">()</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">dummy</span>       <span class="c1">#solution for making an empty node and making dummy.next point to newList head in one go</span>
+
+    <span class="k">while</span> <span class="n">l1</span> <span class="ow">and</span> <span class="n">l2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">l1</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">l2</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l1</span>
+            <span class="n">l1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span>    <span class="c1">#we are given list HEADS, so we assign new head for l1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l2</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">next</span>
+        <span class="n">tail</span> <span class="o">=</span> <span class="n">tail</span><span class="o">.</span><span class="n">next</span>    <span class="c1">#**</span>
+    <span class="k">if</span> <span class="n">l1</span><span class="p">:</span>               <span class="c1">#if l1, l2 are of different sizes, stick the remainder of longer L to our new LL</span>
+        <span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l1</span>
+    <span class="k">if</span> <span class="n">l2</span><span class="p">:</span>
+        <span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l2</span>
+    <span class="k">return</span> <span class="n">dummy</span><span class="o">.</span><span class="n">next</span>
+
+<span class="c1">### Solution 1-2 (Iterative)</span>
+<span class="c1"># Definition for singly-linked list.</span>
+<span class="c1"># class ListNode:</span>
+<span class="c1">#     def __init__(self, val=0, next=None):</span>
+<span class="c1">#         self.val = val</span>
+<span class="c1">#         self.next = next</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mergeTwoLists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list1</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">list2</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>
+        <span class="n">dummy</span> <span class="o">=</span> <span class="n">node</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">list1</span> <span class="ow">and</span> <span class="n">list2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">list1</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">list2</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">list1</span>
+                <span class="n">list1</span> <span class="o">=</span> <span class="n">list1</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">list2</span>
+                <span class="n">list2</span> <span class="o">=</span> <span class="n">list2</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">next</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">list1</span> <span class="ow">or</span> <span class="n">list2</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="o">.</span><span class="n">next</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Iterative explained</strong></div>
+<div class="line-block">
+<div class="line">dummy = node = ListNode()</div>
+</div>
+<div class="line">Or</div>
+<div class="line">dummy = current_node</div>
+<div class="line">dummy = tail</div>
+<div class="line">Empty node for list start and current node that we will be moving.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">return dummy.next</div>
+</div>
+<div class="line">Because we are to return the head of the new merged list, if dummy.next is the head,</div>
+<div class="line">then dummy must be an empty node.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">list1 = list1.next</div>
+</div>
+<div class="line">Because initially we are given list1, list2 &lt;&lt;heads&gt;&gt;.</div>
+<div class="line">So list1 represents not the whole list, but list1’s head node.</div>
+<div class="line">So by list1=list1.next we set a different head for the list.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">node.next = list1 or list2</div>
+</div>
+<div class="line">Means the remaining of either list1 or list2.</div>
+<div class="line">I.e. for the situation when e.g.:</div>
+<div class="line">L1=1&gt;2&gt;3</div>
+<div class="line">L2=1&gt;4&gt;5&gt;6&gt;7</div>
+<div class="line">When we run out of nodes in L1, we just add the remainder of L2 to the answer List.</div>
+</div>
+<div class="admonition-python-x-a-or-b admonition">
+<p class="admonition-title">Python x = a or b</p>
+<p>returns a if bool(a) evaluates True, else it evaluates b.
+Has the effect of returning the first item that evaluates True, or the last item
+(even if it evaluates to False).</p>
+<p>Equivalent to:
+determination = arg_1 if arg_1 else arg_2 if arg_2 else ‘no arguments given!’</p>
+</div>
+<p><strong>Solution 2 (Recursive)</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># V1 [10]</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mergeTwoLists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">],</span> <span class="n">list2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">list1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">list2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">list2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">list1</span>
+        <span class="n">lil</span><span class="p">,</span> <span class="n">big</span> <span class="o">=</span> <span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span> <span class="k">if</span> <span class="n">list1</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">list2</span><span class="o">.</span><span class="n">val</span> <span class="k">else</span> <span class="p">(</span><span class="n">list2</span><span class="p">,</span> <span class="n">list1</span><span class="p">)</span>
+        <span class="n">lil</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mergeTwoLists</span><span class="p">(</span><span class="n">lil</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">big</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lil</span>
+
+<span class="c1"># V2 [7]</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mergeTwoLists</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">list1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">],</span> <span class="n">list2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">list1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">list2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">list1</span> <span class="ow">or</span> <span class="n">list2</span>
+        <span class="k">if</span> <span class="n">list1</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;=</span> <span class="n">list2</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="n">list1</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mergeTwoLists</span><span class="p">(</span><span class="n">list1</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">list1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">list2</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mergeTwoLists</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">list2</span>
+</pre></div>
+</div>
+<p>Iterative my versions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Iterative my V1 (LC accepted 92,71%)</span>
+<span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">):</span>
+    <span class="n">dummy</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">()</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">dummy</span>
+    <span class="k">while</span> <span class="n">l1</span> <span class="ow">or</span> <span class="n">l2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">l1</span><span class="p">:</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l2</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">l2</span><span class="p">:</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l1</span>
+            <span class="n">l1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">elif</span> <span class="n">l1</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">l2</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l1</span>
+            <span class="n">l1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l2</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">next</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">next</span>     <span class="c1">#&lt;========*</span>
+    <span class="k">return</span> <span class="n">dummy</span><span class="o">.</span><span class="n">next</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#*Remember that with e.g. cur.next=l2 we don’t yet move the node, just the pointer.</div>
+<div class="line">cur.next=l2</div>
+<div class="line">D—-&gt;L2</div>
+<div class="line">cur   cur.next</div>
+</div>
+<div class="line-block">
+<div class="line">cur=cur.next</div>
+<div class="line">D—-&gt;L2</div>
+<div class="line-block">
+<div class="line">cur</div>
+</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V2 iterative (LC accepted 75, 88)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mergeTwoLists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">],</span> <span class="n">list2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">list1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">list2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">list1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">list2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">list2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">list1</span>
+
+        <span class="n">dummy</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">()</span>
+        <span class="n">l3</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">()</span>
+        <span class="n">dummy</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">l3</span>
+
+        <span class="k">while</span> <span class="n">list1</span> <span class="ow">and</span> <span class="n">list2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">list1</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">list2</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+                <span class="n">l3</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">list1</span><span class="o">.</span><span class="n">val</span>
+                <span class="n">list1</span> <span class="o">=</span> <span class="n">list1</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">elif</span> <span class="n">list2</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;=</span> <span class="n">list1</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+                <span class="n">l3</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">list2</span><span class="o">.</span><span class="n">val</span>
+                <span class="n">list2</span> <span class="o">=</span> <span class="n">list2</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">if</span> <span class="n">list1</span> <span class="ow">and</span> <span class="n">list2</span><span class="p">:</span>      <span class="c1">#then making a new empty node</span>
+                <span class="n">l3</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">()</span>
+                <span class="n">l3</span> <span class="o">=</span> <span class="n">l3</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">if</span> <span class="n">list1</span> <span class="ow">or</span> <span class="n">list2</span><span class="p">:</span>
+            <span class="n">l3</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">list1</span> <span class="k">if</span> <span class="n">list1</span> <span class="k">else</span> <span class="n">list2</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="o">.</span><span class="n">next</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../sliding_window/sw.html" class="btn btn-neutral float-left" title="Sliding Window Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
