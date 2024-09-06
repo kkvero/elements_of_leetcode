@@ -17,6 +17,7 @@
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Array Questions Part 6" href="array_6.html" />
@@ -85,12 +86,21 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Sliding Window:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sliding_window/sw.html">Part 1 (146-151)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linked List:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linked_list/ll_1.html">Part 1 (152-160)</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About The Project</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
 </ul>
 
@@ -359,7 +369,63 @@ The transposed matrix is not rotated but mirrored on the diagonal (i.e. columns 
 </pre></div>
 </div>
 <div class="line-block">
-<div class="line"><strong>Logic for LC solution (rotate in-place)</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
+<div class="line"><strong>Approach 1</strong></div>
+<div class="line">Keys:</div>
+<div class="line">Transpose + reflect</div>
+<div class="line">(reverse on diagonal then reverse left to right).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize steps</span>
+<span class="c1"># original</span>
+<span class="c1"># 1 2 3    i=0, j=0,1,2                    1 4 7  row 0 is complete  7 4 1 &lt;= final state</span>
+<span class="c1"># 4 5 6     swap[i][j], [j][i]             2 x x  we can reverse it  2 x x</span>
+<span class="c1"># 7 8 9         0,0&gt;0,0; 0,1&gt;1,0; 0,2&gt;2,0  3 x x                     3 x x</span>
+</pre></div>
+</div>
+<p>etc for rows 1,2.</p>
+<div class="line-block">
+<div class="line"><strong>C++</strong></div>
+<div class="line">Keys:</div>
+<div class="line">Transpose + reflect (rev on diag then rev left to right) [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">rotate</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">matrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">matrix</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">swap</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span><span class="w"> </span><span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">reverse</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">end</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">swap(matrix[i][j],</span> <span class="pre">matrix[j][i]);</span></code></div>
+</div>
+<div class="line">Transposes (reflects on diagonal).</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">reverse(matrix[i].begin(),</span> <span class="pre">matrix[i].end());</span></code></div>
+</div>
+<div class="line">Reverses left to right.</div>
+</div>
+<p><strong>Python3</strong> (LC accepted 60, 85)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do not return anything, modify matrix in-place instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Approach 2</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
 <div class="line">0)Two things we deal with:</div>
 <div class="line">1-an entire outer layer of rotation:</div>
 <div class="line">when all values in the top row become values of the right column, etc.</div>
@@ -489,41 +555,6 @@ We need to rotate/change the position 4 times (as 4 sides of a rectangle).</p>
 </pre></div>
 </div>
 <p>Time O(N**2), space O(1).</p>
-<div class="line-block">
-<div class="line"><strong>C++</strong></div>
-<div class="line">Keys:</div>
-<div class="line">Transpose + reflect (rev on diag then rev left to right) [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
-</div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">rotate</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">matrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">matrix</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">swap</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span><span class="w"> </span><span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]);</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="n">reverse</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">end</span><span class="p">());</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">};</span>
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">swap(matrix[i][j],</span> <span class="pre">matrix[j][i]);</span></code></div>
-</div>
-<div class="line">Transposes (reflects on diagonal).</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">reverse(matrix[i].begin(),</span> <span class="pre">matrix[i].end());</span></code></div>
-</div>
-<div class="line">Reverses left to right.</div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># original-transposed-rotated</span>
-<span class="c1"># 1 2 3   1 4 7   7 4 1</span>
-<span class="c1"># 4 5 6   2 5 8   8 5 2</span>
-<span class="c1"># 7 8 9   3 6 9   9 6 3</span>
-</pre></div>
-</div>
 </section>
 <section id="lc-334-increasing-triplet-subsequence">
 <h2>80. (LC 334) Increasing Triplet Subsequence<a class="headerlink" href="#lc-334-increasing-triplet-subsequence" title="Link to this heading"></a></h2>

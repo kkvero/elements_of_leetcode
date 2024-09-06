@@ -223,7 +223,59 @@ Medium
 >>> m
 [[7, 4, 1], [8, 5, 2], [9, 6, 3]]  
 
-| **Logic for LC solution (rotate in-place)** [:ref:`10 <ref-label>`]
+| **Approach 1**
+| Keys:
+| Transpose + reflect 
+| (reverse on diagonal then reverse left to right).
+
+::
+
+    # Visualize steps
+    # original
+    # 1 2 3    i=0, j=0,1,2                    1 4 7  row 0 is complete  7 4 1 <= final state
+    # 4 5 6     swap[i][j], [j][i]             2 x x  we can reverse it  2 x x
+    # 7 8 9         0,0>0,0; 0,1>1,0; 0,2>2,0  3 x x                     3 x x
+
+etc for rows 1,2.
+
+| **C++**
+| Keys:
+| Transpose + reflect (rev on diag then rev left to right) [:ref:`10 <ref-label>`]
+
+.. code-block:: cpp
+
+    class Solution {
+    public:
+        void rotate(vector<vector<int>>& matrix) {
+            int n = matrix.size();
+            for (int i = 0; i < n; i++) {
+                for (int j = i; j < n; j++) {
+                    swap(matrix[i][j], matrix[j][i]);
+                }
+                reverse(matrix[i].begin(), matrix[i].end());
+            }
+        }
+    };
+
+|     ``swap(matrix[i][j], matrix[j][i]);``
+| Transposes (reflects on diagonal).
+|     ``reverse(matrix[i].begin(), matrix[i].end());``
+| Reverses left to right.
+
+**Python3** (LC accepted 60, 85) ::
+
+    class Solution:
+        def rotate(self, matrix: List[List[int]]) -> None:
+            """
+            Do not return anything, modify matrix in-place instead.
+            """
+            n = len(matrix)
+            for i in range(n):
+                for j in range(i,n):
+                    matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+                matrix[i] = matrix[i][::-1]
+
+| **Approach 2** [:ref:`10 <ref-label>`]
 | 0)Two things we deal with:
 | 1-an entire outer layer of rotation: 
 | when all values in the top row become values of the right column, etc.
@@ -351,36 +403,7 @@ We need to rotate/change the position 4 times (as 4 sides of a rectangle). ::
 
 Time O(N**2), space O(1).
 
-| **C++**
-| Keys:
-| Transpose + reflect (rev on diag then rev left to right) [:ref:`10 <ref-label>`]
 
-.. code-block:: cpp
-
-    class Solution {
-    public:
-        void rotate(vector<vector<int>>& matrix) {
-            int n = matrix.size();
-            for (int i = 0; i < n; i++) {
-                for (int j = i; j < n; j++) {
-                    swap(matrix[i][j], matrix[j][i]);
-                }
-                reverse(matrix[i].begin(), matrix[i].end());
-            }
-        }
-    };
-
-|     ``swap(matrix[i][j], matrix[j][i]);``
-| Transposes (reflects on diagonal).
-|     ``reverse(matrix[i].begin(), matrix[i].end());``
-| Reverses left to right.
-
-::
-
-    # original-transposed-rotated
-    # 1 2 3   1 4 7   7 4 1
-    # 4 5 6   2 5 8   8 5 2
-    # 7 8 9   3 6 9   9 6 3 
 
 80. (LC 334) Increasing Triplet Subsequence
 ----------------------------------------------
