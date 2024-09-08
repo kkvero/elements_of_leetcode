@@ -342,6 +342,56 @@ Easy ::
 | Reverse all characters, then reverse again but individual words.
 | "ram is costly" -> "yltsoc si mar" -> "costly is ram"
 
+**Python3** My V2 ::
+
+    def f(s):
+        s = s[::-1]
+        start = 0
+        for i in range(len(s)+1):
+            if i == len(s) or s[i].isalpha() == False:
+                s2 = s[start:i]
+                s2 = s2[::-1]
+                s[start:i] = s2
+                start = i+1
+        return s
+    
+    s = ["t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"]
+    print(f(s)) #['b', 'l', 'u', 'e', ' ', 'i', 's', ' ', 's', 'k', 'y', ' ', 't', 'h', 'e']
+
+**C++** My V
+
+.. code-block:: cpp
+
+    #include <iostream>
+    #include <vector>
+    #include <string>
+    #include <algorithm>
+    #include <cctype>
+    using namespace std;
+
+    void reverse_words(vector<string>& s){
+        reverse(s.begin(), s.end());
+        auto start = s.begin();
+        for(auto it = s.begin(); it <= s.end(); ++it){
+            if(it == s.end() || *it == " "){  
+            // if(it == s.end() || !isalpha((*it)[0])){ //OR (because isalpha takes char)
+                reverse(start, it);
+                start = ++it;
+            }
+        }
+    }
+
+    int main(){
+        vector <string> s = {"t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"};
+        reverse_words(s);
+        
+        for (auto e : s){
+            cout << e;
+        }
+        cout << endl;     //blue is sky the
+        return 0;
+    }
+
 | **Solution** [:ref:`2 <ref-label>`]
 | O(n) time, O(1) space 
 
@@ -372,7 +422,7 @@ Easy ::
     s_b = bytearray(s, "UTF-8")
     print(reverse_sentence(s_b))  # bytearray(b'costly is ram')
 
-    ### My V
+    ### My V1
     def f(s):
         s = s[::-1]
         p1 = p2 = 0
