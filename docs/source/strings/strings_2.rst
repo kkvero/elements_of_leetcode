@@ -783,9 +783,8 @@ Medium
 | Key:
 | -When iterating take each character to be the center of a possible palindrome. 
 
-::
+**Solution** [:ref:`10 <ref-label>`] ::
 
-    ### Solution 1
     def palindrome_substrings(s):
         ans = 0
         for i in range(len(s)):
@@ -811,10 +810,32 @@ Medium
                         R+=1
             return res
 
-    ### My V 1 (LC accepted 5, 85%)
-    # Separate loops for strings with odd, even lengths. 
-    # I.e. Center 1 char ('bab'), 
-    # another loop for strings with center 2 chars ('baab').
+**The simple naive approach version** ::
+
+    ### My V, O(N**3) (LC accepted 6, 80)
+    # Check for palindromicity not from center
+    # "a b c b a" #L,R initial positions
+    #  L          #L moves in the outer loop
+    #  R          #only R moves in the inner loop
+
+    class Solution:
+        def countSubstrings(self, s: str) -> int:
+            def is_pal(_s):
+                return _s == _s[::-1]
+            
+            cnt = 0
+            for L in range(len(s)):
+                for R in range(L, len(s)):
+                    cnt += is_pal(s[L:R+1])
+            
+            return cnt
+
+| My V1 attempts at main solution 1 (LC accepted 5, 85%)
+| Separate loops for strings with odd, even lengths. 
+| I.e. Center 1 char ('bab'), 
+| another loop for strings with center 2 chars ('baab').
+
+::
 
     class Solution:
         def countSubstrings(self, s: str) -> int:
@@ -867,6 +888,37 @@ Medium
                     R+=1
 
             return res
+
+**C++**
+
+.. code-block:: cpp
+
+    //My V (LC accepted 70, 97)
+    class Solution {
+    public:
+        int countSubstrings(string s) {
+            int cnt {0};
+            for(int i = 0; i != s.size(); ++i){
+                int L = i, R = i;
+                while(L >= 0 && R < s.size() && s.at(L) == s.at(R)){
+                    ++cnt;
+                    --L;
+                    ++R;
+                }
+            }
+
+            for(int j = 0; j != (s.size() - 1); ++j){
+                int L = j, R = j+1;
+                while(L >= 0 && R < s.size() && s.at(L) == s.at(R)){
+                    ++cnt;
+                    --L;
+                    ++R;
+                }
+            }
+
+            return cnt;
+        }
+    };
 
 125. (LC 271) Encode and Decode Strings
 -------------------------------------------
