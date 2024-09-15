@@ -56,6 +56,7 @@ TABLE OF CONTENTS
     :caption: Linked List:
 
     Part 1 (152-160) <linked_list/ll_1>
+    Part 2 (161-172) <linked_list/ll_2>
 
 .. toctree::
     :caption: Math:

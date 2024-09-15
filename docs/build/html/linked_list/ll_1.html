@@ -82,6 +82,14 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (152-160)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lc-21-merge-two-sorted-lists">152. (LC 21) Merge Two Sorted Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-206-reverse-linked-list">153. (LC 206) Reverse Linked List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-92-reverse-linked-list-ii">154. (LC 92) Reverse Linked List II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-141-linked-list-cycle">155. (LC 141) Linked List Cycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-142-linked-list-cycle-ii">156. (LC 142) Linked List Cycle II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-160-intersection-of-two-linked-lists">157. (LC 160) Intersection of Two Linked Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intersection-of-two-linked-lists-lists-may-have-cycles">158. Intersection of Two Linked Lists - lists may have cycles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-143-reorder-list">159. (LC 143) Reorder List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-237-delete-node-in-a-linked-list">160. (LC 237) Delete Node in a Linked List</a></li>
 </ul>
 </li>
 </ul>
@@ -304,6 +312,897 @@ determination = arg_1 if arg_1 else arg_2 if arg_2 else ‘no arguments given!�
         <span class="k">if</span> <span class="n">list1</span> <span class="ow">or</span> <span class="n">list2</span><span class="p">:</span>
             <span class="n">l3</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">list1</span> <span class="k">if</span> <span class="n">list1</span> <span class="k">else</span> <span class="n">list2</span>
         <span class="k">return</span> <span class="n">dummy</span><span class="o">.</span><span class="n">next</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-206-reverse-linked-list">
+<h2>153. (LC 206) Reverse Linked List<a class="headerlink" href="#lc-206-reverse-linked-list" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/reverse-linked-list/description/">LC 206. Reverse Linked List</a>
+Easy</p>
+<div class="line-block">
+<div class="line"><strong>ITERATIVE</strong></div>
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-prev=None</div>
+<div class="line">Loop:</div>
+<div class="line">-use temp</div>
+<div class="line">-&lt;point current to prev&gt;</div>
+<div class="line">-shift prev/cur/temp</div>
+<div class="line">-return prev because that’s the new head (while current is  pointing to None)</div>
+</div>
+<p>Solution [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definition for singly-linked list.</span>
+<span class="c1"># class ListNode:</span>
+<span class="c1">#     def __init__(self, x):</span>
+<span class="c1">#         self.val = x</span>
+<span class="c1">#         self.next = None</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>
+        <span class="n">prev</span><span class="p">,</span> <span class="n">curr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">curr</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">curr</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">curr</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">prev</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">curr</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="k">return</span> <span class="n">prev</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">The above is the iterative approach, T O(n) M O(1).</div>
+<div class="line">There is also recursive approach, but it is T O(n), M O(n).</div>
+</div>
+<p><strong>RECURSIVE</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### LC accepted 70, 60.</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">head</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">head</span>
+        <span class="n">new_head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverseList</span><span class="p">(</span><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>  <span class="c1">#1</span>
+        <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">head</span>                   <span class="c1">#2</span>
+        <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">new_head</span>                         <span class="c1">#3</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">1-&gt;2-&gt;3-&gt;4</div>
+<div class="line">#1</div>
+<div class="line">Calling recursively on the sublist 2-&gt;3-&gt;4</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 -&gt; 2-&gt;3-&gt;4</span>
+<span class="c1"># h   h.n</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#2</div>
+<div class="line">After calling on the subproblem, what we are left to do is point 2 to 1, point 1 to None.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 -&gt; 2-&gt;3-&gt;4</span>
+<span class="c1"># h   h.n</span>
+<span class="c1"># None &lt;- 1 &lt;- 2</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">2 = head.next</div>
+<div class="line">1 = head</div>
+<div class="line">To point 2 to 1: 2.next = 1, so head.next.next = head</div>
+</div>
+<div class="line-block">
+<div class="line">#3</div>
+<div class="line">Because we need to return the head of the reversed LL.</div>
+<div class="line">We store the call to the function in a variable new_head, means it will store</div>
+<div class="line">the return value of the function when no subproblems left, when no head.next,</div>
+<div class="line">1&gt;2&gt;3&gt;4, head=4, no head.next, so returns head, 4. And starts working on the call stack,</div>
+<div class="line">the actual reversing None&lt;3&lt;4, None&lt;2&lt;3&lt;4, None&lt;1&lt;2&lt;3&lt;4.</div>
+</div>
+</section>
+<section id="lc-92-reverse-linked-list-ii">
+<h2>154. (LC 92) Reverse Linked List II<a class="headerlink" href="#lc-92-reverse-linked-list-ii" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/reverse-linked-list-ii/description/">92. Reverse Linked List II</a></p>
+<div class="line-block">
+<div class="line">Medium</div>
+<div class="line">Other names: Reverse sublist, reverse between</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Hooks:</strong></div>
+<div class="line">-left, right are integers, not nodes.</div>
+<div class="line">-So you reach the node at left with iteration.</div>
+<div class="line">-Don’t break the sublist from the main list. Keep the node before left pointing to</div>
+<div class="line">the node at left.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualization</span>
+<span class="c1">#  1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5</span>
+<span class="c1">#       L         R</span>
+
+<span class="c1"># prev&lt;-|</span>
+<span class="c1">#  1 -&gt; 2 &lt;- 3 &lt;- 4 X 5</span>
+
+<span class="c1">#                 |-&gt;prev</span>
+<span class="c1">#  1    4 -&gt; 3 -&gt; 2 X 5</span>
+<span class="c1">#  |--------------^</span>
+<span class="c1">#       R         L</span>
+
+<span class="c1">#  1 -&gt; 4 -&gt; 3 -&gt; 2 -&gt; 5</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">After reversing the sublist between L-R:</div>
+<div class="line">(L-&gt;5) point the L node to the node immediately after R</div>
+<div class="line">(1-&gt;R) Node immediately before L point to R.</div>
+</div>
+<p><strong>Solution</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python3</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseBetween</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">],</span> <span class="n">left</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="n">dummy</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">head</span><span class="p">)</span>
+
+        <span class="c1"># 1) reach node at position &quot;left&quot;</span>
+        <span class="n">leftPrev</span><span class="p">,</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">dummy</span><span class="p">,</span> <span class="n">head</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">left</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">leftPrev</span><span class="p">,</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="p">,</span> <span class="n">cur</span><span class="o">.</span><span class="n">next</span>
+
+        <span class="c1"># Now cur=&quot;left&quot;, leftPrev=&quot;node before left&quot;</span>
+        <span class="c1"># 2) reverse from left to right</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">tmpNext</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">prev</span>
+            <span class="n">prev</span><span class="p">,</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="p">,</span> <span class="n">tmpNext</span>
+
+        <span class="c1"># 3) Update pointers</span>
+        <span class="n">leftPrev</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">cur</span>  <span class="c1"># LP.next.next means pointing L.next to: cur which is node after &quot;right&quot;</span>
+        <span class="n">leftPrev</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">prev</span>  <span class="c1"># prev is &quot;right&quot;</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="o">.</span><span class="n">next</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line">1) Reach node at L.</div>
+<div class="line">-dummy points to the head</div>
+<div class="line">-leftprev, with it we keep track of the node immediately before L</div>
+<div class="line">(after reaching L, we save it and not move it in the next step)</div>
+<div class="line">2) Reverse sublist L-R (iterating till R).</div>
+<div class="line">Just normal reverse.</div>
+<div class="line-block">
+<div class="line">temp = curr.next</div>
+<div class="line">curr.next = prev</div>
+<div class="line">prev = curr</div>
+<div class="line">curr = temp</div>
+</div>
+<div class="line">3) Connect the reversed sublist L-R to the main list.</div>
+<div class="line">L-&gt;cur (point L to node after R, which is stored in cur)</div>
+<div class="line">leftPrev -&gt; R (node before L point to R, R is stored in prev)</div>
+<div class="line"><br /></div>
+<div class="line">Connecting:</div>
+<div class="line">LeftPrev.next.next references the node at left because we didn’t disconnect the list.</div>
+<div class="line">Even after the reversal the node before left still points to the node at left.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1&gt;2&gt;3&gt;4&gt;5</span>
+<span class="c1">#   l   r</span>
+<span class="c1"># 1 4&gt;3&gt;2&gt;</span>
+<span class="c1"># |-----^</span>
+<span class="c1"># And 4 still points to 5.</span>
+<span class="c1"># 1 4&gt;3&gt;2&gt;N  5</span>
+<span class="c1">#   |-------^</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">My rewrite</div>
+<div class="line">(mistakes: we don’t ever break any pointers of nodes, i.e. pointing them to None:</div>
+<div class="line-block">
+<div class="line"># beforeL.next = None  &lt;==Nope</div>
+<div class="line"># cur.next = None  &lt;==Nope</div>
+</div>
+<div class="line">) (LC accepted)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python3</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseBetween</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">],</span> <span class="n">L</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">R</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="n">dummy</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">head</span><span class="p">)</span>
+        <span class="n">beforeL</span> <span class="o">=</span> <span class="n">dummy</span>
+        <span class="n">cur</span><span class="o">=</span><span class="n">head</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">beforeL</span><span class="o">=</span><span class="n">cur</span>
+            <span class="n">cur</span><span class="o">=</span><span class="n">cur</span><span class="o">.</span><span class="n">next</span>
+
+        <span class="c1">#reverse</span>
+        <span class="n">prev</span><span class="o">=</span><span class="kc">None</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">R</span><span class="o">-</span><span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">tmp</span><span class="o">=</span><span class="n">cur</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">next</span><span class="o">=</span><span class="n">prev</span>
+            <span class="n">prev</span><span class="o">=</span><span class="n">cur</span>
+            <span class="n">cur</span><span class="o">=</span><span class="n">tmp</span>
+        <span class="n">beforeL</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">=</span><span class="n">cur</span>
+        <span class="n">beforeL</span><span class="o">.</span><span class="n">next</span><span class="o">=</span><span class="n">prev</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="o">.</span><span class="n">next</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-141-linked-list-cycle">
+<h2>155. (LC 141) Linked List Cycle<a class="headerlink" href="#lc-141-linked-list-cycle" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/linked-list-cycle/description/">141. Linked List Cycle</a>
+Easy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definition for singly-linked list.</span>
+<span class="c1"># class ListNode:</span>
+<span class="c1">#     def __init__(self, x):</span>
+<span class="c1">#         self.val = x</span>
+<span class="c1">#         self.next = None</span>
+</pre></div>
+</div>
+<p>Solution [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">hasCycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">slow</span><span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">head</span><span class="p">,</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">if</span> <span class="n">slow</span> <span class="o">==</span> <span class="n">fast</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>My V (LC accepted 60, 90):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">hasCycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">head</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">slow</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">while</span> <span class="n">slow</span> <span class="o">!=</span> <span class="n">fast</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fast</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">slow</span> <span class="o">==</span> <span class="n">fast</span>
+</pre></div>
+</div>
+<p><strong>C++</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// My V (LC accepted 40, 20)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">hasCycle</span><span class="p">(</span><span class="n">ListNode</span><span class="w"> </span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">head</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">        </span><span class="n">ListNode</span><span class="o">*</span><span class="w"> </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">        </span><span class="n">ListNode</span><span class="o">*</span><span class="w"> </span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="n">slow</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">fast</span><span class="p">){</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">fast</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">fast</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slow</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">            </span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fast</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">slow</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">fast</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Code for two methods: Hash and Floyd’s</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">14</span></a>]</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unordered_map&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Node</span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Node</span><span class="o">*</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Node</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">d</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="n">data</span><span class="p">(</span><span class="n">d</span><span class="p">),</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="k">nullptr</span><span class="p">){}</span><span class="w"> </span><span class="c1">//constructor</span>
+<span class="p">};</span>
+
+<span class="c1">//PRINT LL</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">print_ll</span><span class="p">(</span><span class="n">Node</span><span class="o">*</span><span class="w"> </span><span class="n">head</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w"> </span><span class="c1">//dummy Node not to advance the head pointer</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">n</span><span class="p">){</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;-&gt;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;NULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//HASH MAP</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">detect_loop_map</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">head</span><span class="p">){</span>
+<span class="w">    </span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">visited</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">cur</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">visited</span><span class="p">[</span><span class="n">cur</span><span class="p">])</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="n">visited</span><span class="p">[</span><span class="n">cur</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//FLOYD&#39;S TWO POINTERS SLOW, FAST</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">detect_loop_floyd</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">head</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">slow</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">fast</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">fast</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">){</span>
+<span class="w">        </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slow</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">        </span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fast</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">slow</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">fast</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">create_loop</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">head</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">){</span><span class="w">    </span><span class="c1">//reach the last node</span>
+<span class="w">        </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span><span class="w">  </span><span class="c1">//point last node to the node after head</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="w">    </span><span class="c1">//1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;6-&gt;nullptr</span>
+<span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">n1</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n2</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">n3</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">n4</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">n5</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="n">n6</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<span class="w">    </span><span class="n">n1</span><span class="p">.</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">n2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n2</span><span class="p">.</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">n3</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n3</span><span class="p">.</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">n4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n4</span><span class="p">.</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">n5</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n5</span><span class="p">.</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">n6</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="o">*</span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">n1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">//NO LOOP, check with 2 methods</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">hasloop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">detect_loop_map</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">boolalpha</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hasloop</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">//false</span>
+<span class="w">    </span><span class="n">hasloop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">detect_loop_floyd</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hasloop</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">//false</span>
+
+<span class="w">    </span><span class="c1">//CREATE LOOP and check again with 2 methods</span>
+<span class="w">    </span><span class="n">create_loop</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+<span class="w">    </span><span class="n">hasloop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">detect_loop_map</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hasloop</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">//true</span>
+<span class="w">    </span><span class="n">hasloop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">detect_loop_floyd</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">hasloop</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">//true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-142-linked-list-cycle-ii">
+<h2>156. (LC 142) Linked List Cycle II<a class="headerlink" href="#lc-142-linked-list-cycle-ii" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/linked-list-cycle-ii/description/">142. Linked List Cycle II</a>
+Medium</p>
+<p><strong>Note on the task:</strong></p>
+<p>From the problem description you might think they want us to return the index of
+the node from which the cycle starts:
+Output: tail connects to node index 1.
+But from the code boilerplate we see that we are to return the node itself.
++If no cycle, return None.</p>
+<div class="line-block">
+<div class="line"><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-Is there a cycle</div>
+<div class="line">use S, F. Start both from head. While F.next and F.next.next loop till they meet.</div>
+<div class="line">-if S and F met, from that node:</div>
+<div class="line">2nd loop. Start S at head, F at where they met. Move each +1.</div>
+<div class="line">Where they meet again is the start of the cycle.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">detectCycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="n">slow</span><span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">if</span> <span class="n">slow</span> <span class="ow">is</span> <span class="n">fast</span><span class="p">:</span>                           <span class="c1"># There is a cycle, so find cycle start</span>
+                <span class="n">slow</span> <span class="o">=</span> <span class="n">head</span>
+                <span class="k">while</span> <span class="n">slow</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">fast</span><span class="p">:</span>
+                    <span class="n">slow</span><span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span>  <span class="c1"># both advance +1</span>
+                <span class="k">return</span> <span class="n">slow</span>                            <span class="c1"># where S and F meet</span>
+        <span class="k">return</span> <span class="kc">None</span>                                    <span class="c1"># no cycle</span>
+</pre></div>
+</div>
+<p><strong>Solution 2</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">detectCycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">if</span> <span class="n">slow</span> <span class="o">==</span> <span class="n">fast</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="c1"># If there is no cycle</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fast</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">ans</span> <span class="o">!=</span> <span class="n">slow</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">ans</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line">-Find if it is a cycle (find node where fast and slow meet).</div>
+<div class="line">-separate block to return None if there is no cycle</div>
+<div class="line">-Finding cycle start. Set two pointers</div>
+<div class="line">1)where fast and slow met, e.g. take slow</div>
+<div class="line">2)set new pointer to the head of the entire list, e.g. ans</div>
+<div class="line">Move both slow and ans with the same speed. When they meet, that’s your starting</div>
+<div class="line">node of the cycle. (There is a “mathematical” reason why it is so.)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># a    a1,s4</span>
+<span class="c1"># s,f  s1,f2  f1,s2  s3,f3</span>
+<span class="c1"># 3-&gt;    2 -&gt;   0 -&gt;   -4</span>
+<span class="c1">#        ^--------------|</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### My V (LC accepted 70, 60%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">detectCycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">head</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">slow</span><span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">head</span><span class="p">,</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+                <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+                <span class="k">if</span> <span class="n">slow</span> <span class="o">==</span> <span class="n">fast</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">ss1</span> <span class="o">=</span> <span class="n">slow</span>
+        <span class="n">ss2</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">ss1</span> <span class="o">!=</span> <span class="n">ss2</span><span class="p">:</span>
+            <span class="n">ss1</span> <span class="o">=</span> <span class="n">ss1</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">ss2</span> <span class="o">=</span> <span class="n">ss2</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">ss1</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-160-intersection-of-two-linked-lists">
+<h2>157. (LC 160) Intersection of Two Linked Lists<a class="headerlink" href="#lc-160-intersection-of-two-linked-lists" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://leetcode.com/problems/intersection-of-two-linked-lists/description/">LC 160. Intersection of Two Linked Lists</a></div>
+<div class="line">Easy</div>
+<div class="line">(Other names: Test for overlapping lists (lists are without cycle))</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Notes on task interpretation</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]:</div>
+<div class="line">(Practical usage - reducing memory footprint.)</div>
+<div class="line">Intersection - node that is common to two lists.</div>
+<div class="line">Lists overlap if they have the same tail node.</div>
+<div class="line">(Also, once the lists converge at a node,they cannot diverge at a later node.)</div>
+</div>
+<div class="line-block">
+<div class="line">O(m + n) time, space O(1)</div>
+<div class="line"><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definition for singly-linked list.</span>
+<span class="c1"># class ListNode:</span>
+<span class="c1">#     def __init__(self, x):</span>
+<span class="c1">#         self.val = x</span>
+<span class="c1">#         self.next = None</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getIntersectionNode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">headA</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">headB</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">headA</span><span class="p">,</span> <span class="n">headB</span>
+        <span class="k">while</span> <span class="n">l1</span> <span class="o">!=</span> <span class="n">l2</span><span class="p">:</span>
+            <span class="n">l1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span> <span class="k">if</span> <span class="n">l1</span> <span class="k">else</span> <span class="n">headB</span>  <span class="c1">#IMPORTANT if l1, not if l1.next</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">next</span> <span class="k">if</span> <span class="n">l2</span> <span class="k">else</span> <span class="n">headA</span>
+        <span class="k">return</span> <span class="n">l1</span>
+
+<span class="c1">### My V (LC accepted 40,50%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getIntersectionNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headA</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">headB</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+        <span class="n">p1</span><span class="o">=</span><span class="n">headA</span>
+        <span class="n">p2</span><span class="o">=</span><span class="n">headB</span>
+        <span class="k">while</span> <span class="n">p1</span> <span class="o">!=</span> <span class="n">p2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">p1</span><span class="p">:</span>      <span class="c1">#when p1=None</span>
+                <span class="n">p1</span> <span class="o">=</span> <span class="n">headB</span>  <span class="c1">#again, set p1 to headB, not p1.next</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">p2</span><span class="p">:</span>
+                <span class="n">p2</span> <span class="o">=</span> <span class="n">headA</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">p1</span><span class="o">=</span><span class="n">p1</span><span class="o">.</span><span class="n">next</span>
+                <span class="n">p2</span><span class="o">=</span><span class="n">p2</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">p1</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-two pointers</div>
+<div class="line">-increment +1</div>
+<div class="line">-achieving the len difference of lists:</div>
+<div class="line">switching to the head of the &lt;opposite&gt; list when pointer=None, i.e. reaches list end.</div>
+<div class="line"><strong>Why it does not make an infinite loop:</strong></div>
+<div class="line">Because we allow pointers to slide off the respective list to None value before</div>
+<div class="line">pointing it to the head of the opposite list. Then at some point both l1, l2 will</div>
+<div class="line">be None, i.e. the same, even if lists don’t intersect.</div>
+</div>
+<div class="line-block">
+<div class="line">We point l1, l2 to opposite heads just once.</div>
+<div class="line">After that, they are pointed to the same (their own) heads. If no intersection, they</div>
+<div class="line">will eventually run off the lists into None.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#    _-&gt;_-&gt;</span>
+<span class="c1">#             _-&gt;_-&gt;_</span>
+<span class="c1"># _-&gt;_-&gt;_-&gt;</span>
+
+<span class="c1"># 1)We set p1, p2 to the heads of the respective nodes.</span>
+<span class="c1">#    p1_-&gt;_-&gt;</span>
+<span class="c1">#             _-&gt;_-&gt;_</span>
+<span class="c1"># p2_-&gt;_-&gt;_-&gt;</span>
+
+<span class="c1"># 2)Increment each +=1, until one p reaches the end of its respective end</span>
+<span class="c1"># (p2 didn&#39;t yet reach the list end).</span>
+<span class="c1">#    _-&gt;_-&gt;</span>
+<span class="c1">#            _-&gt;p2_-&gt;p1_</span>
+<span class="c1"># _-&gt;_-&gt;_-&gt;</span>
+
+<span class="c1"># 3)Set that point to the head of the OPPOSITE list.</span>
+<span class="c1">#    _-&gt;_-&gt;</span>
+<span class="c1">#             _-&gt;_-&gt;p2_</span>
+<span class="c1"># p1_-&gt;_-&gt;_-&gt;</span>
+
+<span class="c1"># 4)When p2 reached the list end, set it to the head of the opposite list too.</span>
+<span class="c1">#    p2_-&gt;_-&gt;</span>
+<span class="c1">#             _-&gt;_-&gt;_</span>
+<span class="c1"># _-&gt;p1_-&gt;_-&gt;</span>
+
+<span class="c1"># 5)Loop goes on till node at p1 and p2 is the same</span>
+<span class="c1">#    _-&gt;_-&gt;</span>
+<span class="c1">#           p1,p2_-&gt;_-&gt;_</span>
+<span class="c1"># _-&gt;_-&gt;_-&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Alternative solution 1</strong> (uses memory O(n)):</div>
+<div class="line">1)Hash set. Add nodes in L1 to a hash set.</div>
+<div class="line">2)Iterate L2 nodes. If node in hash, you have the intersect node.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Alternative solution 2</strong></div>
+<div class="line">Similar, more verbose alternative to Solution 1 (the same efficiency and main logic as Solution 1).</div>
+<div class="line">1)Recognize that L1,L2 can have different lengths (as above, len 5, len 6).</div>
+<div class="line">2)Start p1 at the head of a shorter list. p2 at the head of the longer list.</div>
+<div class="line">3)Increment only p2 by the diff in len of the two lists.</div>
+<div class="line">4)Begin the main alg. Compare nodes at p1, p2. if not the same: +=1.</div>
+<div class="line">If the same, that’s your intersect node.</div>
+</div>
+</section>
+<section id="intersection-of-two-linked-lists-lists-may-have-cycles">
+<h2>158. Intersection of Two Linked Lists - lists may have cycles<a class="headerlink" href="#intersection-of-two-linked-lists-lists-may-have-cycles" title="Link to this heading"></a></h2>
+<p>(Other names: Test for overlapping lists (lists may have cycles))
+The same as the previous task.
+But this time one, both or non of the lists may have a cycle.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># A-&gt;B</span>
+<span class="c1">#    V</span>
+<span class="c1"># C-&gt;D-&gt;E-&gt;F</span>
+<span class="c1"># ^--------|</span>
+</pre></div>
+</div>
+<p>Both C and D are acceptable answers.</p>
+<div class="line-block">
+<div class="line"><strong>CASE ANALYSIS</strong></div>
+<div class="line">=&gt;Test each LL for cycles</div>
+<div class="line">(use 142. Linked List Cycle II, returns Node cycle start, or None if no cycle)</div>
+<div class="line">1)Neither list is cyclic -&gt;</div>
+<div class="line">Then just use solution for ‘160 LC (157 My numbering). Intersection of Two Linked Lists (lists don’t have cycles)’</div>
+<div class="line">2)One is cyclic, the other is not. Then they cannot overlap. We are done.</div>
+<div class="line">3)Both are cyclic.</div>
+<div class="line-block">
+<div class="line">Subcases:</div>
+</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1/ cycles are disjoint. No overlap.</span>
+<span class="c1"># 2/ Merge node is before the cycle start</span>
+<span class="c1"># A-&gt;B</span>
+<span class="c1">#    V</span>
+<span class="c1"># C-&gt;D-&gt;E-&gt;F</span>
+<span class="c1">#       ^--|</span>
+<span class="c1"># 3/ Merge node is in the cycle</span>
+<span class="c1"># A-&gt;B</span>
+<span class="c1">#    V</span>
+<span class="c1"># C-&gt;D-&gt;E-&gt;F</span>
+<span class="c1"># ^--------|</span>
+</pre></div>
+</div>
+<p><strong>Solution 1</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">detectCycle</span><span class="p">(</span><span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+    <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span> <span class="o">=</span> <span class="n">head</span>
+    <span class="k">while</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+        <span class="n">slow</span><span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">if</span> <span class="n">slow</span> <span class="ow">is</span> <span class="n">fast</span><span class="p">:</span>                           <span class="c1"># There is a cycle, so find cycle start</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">head</span>
+            <span class="k">while</span> <span class="n">slow</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">fast</span><span class="p">:</span>
+                <span class="n">slow</span><span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span>  <span class="c1"># both advance +1</span>
+            <span class="k">return</span> <span class="n">slow</span>                            <span class="c1"># where S and F meet</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">getIntersectionNode</span><span class="p">(</span><span class="n">headA</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">headB</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">]:</span>
+    <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">headA</span><span class="p">,</span> <span class="n">headB</span>
+    <span class="k">while</span> <span class="n">l1</span> <span class="o">!=</span> <span class="n">l2</span><span class="p">:</span>
+        <span class="n">l1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span> <span class="k">if</span> <span class="n">l1</span> <span class="k">else</span> <span class="n">headB</span>
+        <span class="n">l2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">next</span> <span class="k">if</span> <span class="n">l2</span> <span class="k">else</span> <span class="n">headA</span>
+    <span class="k">return</span> <span class="n">l1</span>
+
+<span class="k">def</span> <span class="nf">overlapping_lists</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">):</span>
+    <span class="c1"># Find cycle starts if any</span>
+    <span class="n">root1</span><span class="p">,</span> <span class="n">root2</span> <span class="o">=</span> <span class="n">detectCycle</span><span class="p">(</span><span class="n">L1</span><span class="p">),</span> <span class="n">detectCycle</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">root1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">root2</span><span class="p">:</span>  <span class="c1"># Both L1, L2 no cycle</span>
+        <span class="k">return</span> <span class="n">getIntersectionNode</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">)</span>  <span class="c1"># Note, the func assumes they do overlap</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">root1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">root2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">root1</span> <span class="ow">and</span> <span class="n">root2</span><span class="p">):</span>  <span class="c1"># Only 1 list has cycle, so no overlap</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Both have cycles</span>
+    <span class="c1"># Test if they are not disjoint</span>
+    <span class="c1"># If overlap: Starting at the cycle start of L2, you should meet the cycle start of L1.</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">root2</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="n">root1</span> <span class="ow">or</span> <span class="n">temp</span> <span class="ow">is</span> <span class="n">root2</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">root1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Disjoint cycles</span>
+
+    <span class="c1">### One L has cycle</span>
+
+    <span class="c1"># Helper func. Distance from head to intersect node, i.e. unique stem_length</span>
+    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">dis</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">b</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">dis</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">dis</span>
+
+    <span class="c1"># Overlap before cycle start</span>
+    <span class="n">stem1_length</span><span class="p">,</span> <span class="n">stem2_length</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">root1</span><span class="p">),</span> <span class="n">distance</span><span class="p">(</span><span class="n">L2</span><span class="p">,</span> <span class="n">root2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">stem1_length</span> <span class="o">&gt;</span> <span class="n">stem2_length</span><span class="p">:</span>
+        <span class="n">L2</span><span class="p">,</span> <span class="n">L1</span> <span class="o">=</span> <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span>
+        <span class="n">root1</span><span class="p">,</span> <span class="n">root2</span> <span class="o">=</span> <span class="n">root2</span><span class="p">,</span> <span class="n">root1</span>
+        <span class="c1"># List with longer unique stem, move it till both stems are the same dist from merge node **1</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">stem1_length</span> <span class="o">-</span> <span class="n">stem2_length</span><span class="p">)):</span>
+            <span class="n">L2</span> <span class="o">=</span> <span class="n">L2</span><span class="o">.</span><span class="n">next</span>
+
+        <span class="c1"># Takes care of both: 1)when overlap is before cycle (overlap=L1==L2)</span>
+        <span class="c1"># 2)And the subcase when overlap is within the cycle (overlap=root1)  **2</span>
+        <span class="k">while</span> <span class="n">L1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">L2</span> <span class="ow">and</span> <span class="n">L1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">root1</span> <span class="ow">and</span> <span class="n">L2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">root2</span><span class="p">:</span>
+            <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span> <span class="o">=</span> <span class="n">L1</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">L2</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">L1</span> <span class="k">if</span> <span class="n">L1</span> <span class="ow">is</span> <span class="n">L2</span> <span class="k">else</span> <span class="n">root1</span>
+</pre></div>
+</div>
+<p>#**1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#           L2</span>
+<span class="c1"># (L1)    A-&gt;B</span>
+<span class="c1">#            V</span>
+<span class="c1"># (L2) L1 C-&gt;D-&gt;E-&gt;F  (At E: root1, root2)</span>
+<span class="c1">#               ^--|</span>
+</pre></div>
+</div>
+<p>Pointers L2 at B and L1 at C are now the same distance from D (merge node).
+Now we just have to move them .next till L1=L2</p>
+<div class="line-block">
+<div class="line">#**2</div>
+<div class="line">Merge node is in the cycle.</div>
+<div class="line">A:root1, C:root2, if stem1_lenght &gt; stem2_length, roots swap, making A:root2</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># A-&gt;B</span>
+<span class="c1">#    V</span>
+<span class="c1"># C-&gt;D-&gt;E-&gt;F</span>
+<span class="c1"># ^--------|</span>
+</pre></div>
+</div>
+<p>Last comments [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]:
+If Ll == L2 before reaching root1, it means the overlap first occurs
+before the cycle starts; otherwise, the first overlapping node is not
+unique, we can return any node on the cycle.</p>
+</section>
+<section id="lc-143-reorder-list">
+<h2>159. (LC 143) Reorder List<a class="headerlink" href="#lc-143-reorder-list" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/reorder-list/description/">143. Reorder List</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Quick notes:</strong></div>
+<div class="line">-to find halves, iter1=head, iter2=head.next, while iter2 and iter2.next</div>
+<div class="line">-you are more likely to need</div>
+<div class="line">tmp = cur.next</div>
+<div class="line">than</div>
+<div class="line">tmp = cur</div>
+<div class="line">If you will be modifying cur later on.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Solution 1 (My rewrite V1, LC accepted: Memory beats 94%, Time 40%)</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reorderList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ListNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Do not return anything, modify head in-place. &quot;&quot;&quot;</span>
+
+        <span class="n">slow</span><span class="o">=</span><span class="n">head</span>
+        <span class="n">fast</span><span class="o">=</span><span class="n">head</span><span class="o">.</span><span class="n">next</span>
+        <span class="c1">#find 2 halves of the list</span>
+        <span class="k">while</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="n">slow</span><span class="o">=</span><span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">fast</span><span class="o">=</span><span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+
+        <span class="c1">#reverse 2nd half</span>
+        <span class="n">cur</span><span class="o">=</span><span class="n">slow</span><span class="o">.</span><span class="n">next</span> <span class="c1"># slow=B, slow.next=cur=C (start reversing at C)</span>
+        <span class="n">slow</span><span class="o">.</span><span class="n">next</span><span class="o">=</span><span class="kc">None</span> <span class="c1"># A&gt;B C&gt;D (breaking B&gt;C link, B&gt;None)</span>
+        <span class="n">prev</span><span class="o">=</span><span class="kc">None</span>
+        <span class="k">while</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="n">tmp</span><span class="o">=</span><span class="n">cur</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">next</span><span class="o">=</span><span class="n">prev</span>
+            <span class="n">prev</span><span class="o">=</span><span class="n">cur</span>
+            <span class="n">cur</span><span class="o">=</span><span class="n">tmp</span>
+
+        <span class="c1">#merge half1 and half2      #1</span>
+        <span class="n">cur1</span><span class="o">=</span><span class="n">head</span> <span class="c1">#head of half1</span>
+        <span class="n">cur2</span><span class="o">=</span><span class="n">prev</span> <span class="c1">#head of half2</span>
+        <span class="k">while</span> <span class="n">cur2</span><span class="p">:</span>
+            <span class="n">tmp1</span><span class="o">=</span><span class="n">cur1</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">tmp2</span><span class="o">=</span><span class="n">cur2</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">cur1</span><span class="o">.</span><span class="n">next</span><span class="o">=</span><span class="n">cur2</span>
+            <span class="n">cur2</span><span class="o">.</span><span class="n">next</span><span class="o">=</span><span class="n">tmp1</span>
+            <span class="n">cur1</span><span class="o">=</span><span class="n">tmp1</span>
+            <span class="n">cur2</span><span class="o">=</span><span class="n">tmp2</span>
+
+<span class="c1"># #1 Alternative merge</span>
+<span class="c1">#         iter1 = head</span>
+<span class="c1">#         iter2 = prev</span>
+<span class="c1">#         while iter2:</span>
+<span class="c1">#             nex = iter1.next</span>
+<span class="c1">#             iter1.next = iter2</span>
+<span class="c1">#             iter1 = iter2</span>
+<span class="c1">#             iter2 = nex</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Explained</strong></div>
+<div class="line"># Overview</div>
+<div class="line">Linked List</div>
+<div class="line">A&gt;B&gt;C&gt;D</div>
+<div class="line">Where half would be.</div>
+<div class="line">A B | C D  (For odd len list also: A B C | D E)</div>
+<div class="line"><br /></div>
+<div class="line">###1 Determine the half of the list. Use slow, fast pointers.</div>
+<div class="line">(Note, they begin at different positions.)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># A B C D</span>
+<span class="c1"># S F</span>
+<span class="c1">#</span>
+<span class="c1"># A B C D</span>
+<span class="c1">#   S   F</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">###2 We need to REVERSE THE 2ND HALF OF THE LIST.</div>
+<div class="line">The head of the 2nd list is at S.next</div>
+<div class="line-block">
+<div class="line">second = slow.next</div>
+</div>
+<div class="line">The actual breaking of the original list consists in pointing the last node of the</div>
+<div class="line">first half to None. I.e. S.next=None</div>
+<div class="line-block">
+<div class="line">prev = slow.next = None</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">Recall how we reverse a LL (we use exactly the same code):</div>
+<div class="line-block">
+<div class="line">prev, curr = None, head</div>
+<div class="line">while curr:</div>
+<div class="line-block">
+<div class="line">temp = curr.next</div>
+<div class="line">curr.next = prev</div>
+<div class="line">prev = curr</div>
+<div class="line">curr = temp</div>
+</div>
+<div class="line">return prev</div>
+</div>
+</div>
+<p>###3 THE MERGE:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># After reversing the 2nd half we have:</span>
+<span class="c1"># A&gt;B C&lt;D</span>
+<span class="c1">#   V V</span>
+<span class="c1"># Memorize B, C</span>
+<span class="c1"># A&gt;B C&lt;D</span>
+<span class="c1">#   V V</span>
+<span class="c1">#</span>
+<span class="c1"># Point head of L1 to head of L2.</span>
+<span class="c1"># Point head of L2 to memorized L1.next.</span>
+<span class="c1">#   V---|</span>
+<span class="c1"># A B C D</span>
+<span class="c1"># |-----^</span>
+<span class="c1">#</span>
+<span class="c1"># Move heads of L1, L2 to memorized B, C.</span>
+<span class="c1"># A&gt;D&gt;B C</span>
+<span class="c1">#     V V</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"># Merging in code</div>
+<div class="line-block">
+<div class="line">first, second = head, prev   #prev is the last node in list (head of the 2nd half)</div>
+<div class="line">while second:</div>
+<div class="line-block">
+<div class="line">tmp1, tmp2 = first.next, second.next</div>
+<div class="line">first.next = second</div>
+<div class="line">second.next = tmp1</div>
+<div class="line">first, second = tmp1, tmp2</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">first, second = head, prev</div>
+</div>
+<div class="line">Assign first and second to list heads.</div>
+<div class="line">first=A, second=D</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">while second:</div>
+</div>
+<div class="line">Loop while 2nd list has no nodes.</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">tmp1, tmp2 = first.next, second.next</div>
+</div>
+<div class="line">Put nodes after heads to temp vars.</div>
+<div class="line">tmp1=B, tmp2=C</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">first.next = second</div>
+<div class="line">second.next = tmp1</div>
+</div>
+<div class="line">Point head of 1st list to head of 2nd list.</div>
+<div class="line">Point head of L2 to memorized L1.next.</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">first, second = tmp1, tmp2</div>
+</div>
+<div class="line">Reassign heads of L1, L2.</div>
+</div>
+<p><strong>Solution 1</strong> formal</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reorderList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># find middle</span>
+        <span class="n">slow</span><span class="p">,</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">head</span><span class="p">,</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">while</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="n">slow</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+
+        <span class="c1"># reverse second half</span>
+        <span class="n">second</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span>       <span class="c1">#the starting point/node for the list 2nd half (where slow sopped + 1)</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">slow</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#break list into 2 halves (pointing to None breaks the list)</span>
+        <span class="k">while</span> <span class="n">second</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">second</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">second</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">prev</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">second</span>
+            <span class="n">second</span> <span class="o">=</span> <span class="n">tmp</span>
+
+        <span class="c1"># merge two halves</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="n">head</span><span class="p">,</span> <span class="n">prev</span>   <span class="c1">#prev is the last node in list (head of the 2nd half)</span>
+        <span class="k">while</span> <span class="n">second</span><span class="p">:</span>
+            <span class="n">tmp1</span><span class="p">,</span> <span class="n">tmp2</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">next</span><span class="p">,</span> <span class="n">second</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">first</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">second</span>
+            <span class="n">second</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">tmp1</span>
+            <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="n">tmp1</span><span class="p">,</span> <span class="n">tmp2</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-237-delete-node-in-a-linked-list">
+<h2>160. (LC 237) Delete Node in a Linked List<a class="headerlink" href="#lc-237-delete-node-in-a-linked-list" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/delete-node-in-a-linked-list/description/">237. Delete Node in a Linked List</a>
+Medium</p>
+<div class="line-block">
+<div class="line">The input node is guaranteed not to be the tail node.</div>
+<div class="line">You are given the pointer to a node to delete.</div>
+<div class="line">-What’s the trouble?</div>
+<div class="line">Deleting a node usually requires modifying its predecessor’s next pointer and</div>
+<div class="line">the only way to get to the predecessor is to traverse the list from head,</div>
+<div class="line">which requires O(n) time.</div>
+<div class="line">-The trick.</div>
+<div class="line">Delete given node’s successor. Copy next node’s data into the current node. Delete next node.</div>
+<div class="line">This takes O(1).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">deleteNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_to_delete</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type node: ListNode</span>
+<span class="sd">        :rtype: void Do not return anything, modify node in-place instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node_to_delete</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">node_to_delete</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">val</span>
+        <span class="n">node_to_delete</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node_to_delete</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+
+    <span class="c1"># OR</span>
+    <span class="c1"># def deleteNode(node):</span>
+    <span class="c1">#     node.val = node.next.val</span>
+    <span class="c1">#     node.next = node.next.next</span>
 </pre></div>
 </div>
 </section>
