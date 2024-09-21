@@ -59,6 +59,11 @@ TABLE OF CONTENTS
     Part 2 (161-172) <linked_list/ll_2>
 
 .. toctree::
+    :caption: Stack and Queue:
+
+    Part 1 (173-180) <stack_queue/sq_1>
+
+.. toctree::
     :caption: Math:
 
     Knowledge base <math/math_kb>

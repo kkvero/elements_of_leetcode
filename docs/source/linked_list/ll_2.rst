@@ -1005,14 +1005,56 @@ Medium
 `23. Merge k Sorted Lists <https://leetcode.com/problems/merge-k-sorted-lists/description/>`_
 Hard
 
-| **Clarification:**
-| lists[index] gives you the head of a linked list.
- 
+| **Clarification on task:**
+| /lists[index] gives you the head of a linked list, so head is not lists[index[0]]
+| /EACH LL is sorted, but lists are NOT sorted relative to their first value, e.g.:
+| lists = [[1],[0]]
+| So it is a must to start merging using a dummy node. 
+| lists[i].val not necessarily a smaller value than lists[i+1].val
+| 
 | **Keys:**
 | -Yes, reminiscent of a brute force. Because we merge lists in pairs. No fancies there.
 | -We use a helper function to merge 2 lists. 
 | My V:
-| -Take 2 lists from list, append merged list to lists.
+| -While len of lists > 1, pop 2 lists from list, merge with a helper, append merged list to lists.
+| -In merge function use dummy head, p1,p2 are heads of 2 lists.
+| lists = [[1,4,5],[1,3,4],[2,6]]
+| merge([1,4,5],[1,3,4])
+| lists = [[2,6],[1,1,3,4,4,5]]
+| merge([2,6], [1,1,3,4,4,5])
+| lists = [[1,1,2,3,4,4,5,6]]
+| **Optimization**
+| Is when we merge lists of about the same len. So pop lists from front, append to back.
+| It brings time from over 1000 ms to under 100 ms in Python3.
+
+ 
+::
+
+    ### My V (LC accepted 25, 75%)
+    class Solution:
+        def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+            def merge_lists(l1, l2):
+                dummy = ListNode()
+                cur = dummy
+                while l1 and l2:
+                    if l1.val <= l2.val:
+                        cur.next = l1
+                        l1 = l1.next
+                    else:
+                        cur.next = l2
+                        l2 = l2.next
+                    cur = cur.next
+                cur.next = l1 if l1 else l2
+                return dummy.next
+            
+            if len(lists) == 1:
+                return lists[0]
+            if not lists:
+                return None
+            while len(lists) > 1:
+                lists.append(merge_lists(lists.pop(0), lists.pop(0)))
+            return lists[0]
+
 | OR:
 | -Main alg: while + in range loops
 | Take lists in pairs, merge them, put into a temporary list of lists.
@@ -1075,32 +1117,85 @@ Repeat while till you are left with 1 list.
 | Account for the case when there is an odd num of lists.
 | Then it is ok to use our mergeList() func on list1 + None.
 
-::
+**C++**
 
-    ### My V (LC accepted 20, 90%)
-    class Solution:
-        def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-            def merge_lists(l1, l2):
-                dummy = ListNode()
-                cur = dummy
-                while l1 and l2:
-                    if l1.val <= l2.val:
-                        cur.next = l1
-                        l1 = l1.next
-                    else:
-                        cur.next = l2
-                        l2 = l2.next
-                    cur = cur.next
-                cur.next = l1 if l1 else l2
-                return dummy.next
-            
-            if len(lists) == 1:
-                return lists[0]
-            if not lists:
-                return None
-            while len(lists) > 1:
-                lists.append(merge_lists(lists.pop(), lists.pop()))
-            return lists[0]
+.. code-block:: cpp
+
+    //My V (LC accepted 20(40ms), 97)
+    class Solution {
+    private:
+        ListNode* merge(ListNode* l1, ListNode* l2){
+            ListNode n;
+            ListNode* dummy = &n; 
+            ListNode* cur = dummy;
+            while(l1 && l2) {
+                if(l1->val < l2->val){
+                    cur->next = l1;
+                    l1 = l1->next;
+                } else{
+                    cur->next = l2;
+                    l2 = l2->next;
+                }
+                cur = cur->next;
+            }
+            cur->next = l1 ? l1 : l2;
+            return dummy->next;
+        }
+    public:
+        ListNode* mergeKLists(vector<ListNode*>& lists) {
+            if(lists.empty())
+                return nullptr;
+            if(lists.size() == 1)
+                return lists[0];
+            while(lists.size() != 1){
+                ListNode* l1 = lists.front();
+                lists.erase(lists.begin());
+                ListNode* l2 = lists.front();
+                lists.erase(lists.begin());
+                lists.push_back(merge(l1,l2));
+            }
+            return lists[0];
+        }
+    };
+
+    //My V (LC accepted 80 (13 ms), 40)
+    //trying to optimize erasing from vector from front, i.e. try using deque 
+    class Solution {
+    private:
+        ListNode* merge(ListNode* l1, ListNode* l2){
+            ListNode n;
+            ListNode* dummy = &n; 
+            ListNode* cur = dummy;
+            while(l1 && l2) {
+                if(l1->val < l2->val){
+                    cur->next = l1;
+                    l1 = l1->next;
+                } else{
+                    cur->next = l2;
+                    l2 = l2->next;
+                }
+                cur = cur->next;
+            }
+            cur->next = l1 ? l1 : l2;
+            return dummy->next;
+        }
+    public:
+        ListNode* mergeKLists(vector<ListNode*>& lists) {
+            deque<ListNode*> listsD(lists.begin(), lists.end());
+            if(lists.empty())
+                return nullptr;
+            if(lists.size() == 1)
+                return lists[0];
+            while(listsD.size() != 1){
+                ListNode* l1 = listsD.front();
+                listsD.pop_front();
+                ListNode* l2 = listsD.front();
+                listsD.pop_front();
+                listsD.push_back(merge(l1,l2));
+            }
+            return listsD[0];
+        }
+    };
 
 172. (LC 25) Reverse Nodes in k-Group
 ----------------------------------------
