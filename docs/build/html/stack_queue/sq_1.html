@@ -88,6 +88,18 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1 (173-180)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#print-elements-of-a-linked-list">173. Print elements of a linked list</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-155-min-stack">174. (LC 155) Min Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-150-evaluate-reverse-polish-notation">175. (LC 150) Evaluate Reverse Polish Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-71-simplify-path">176. (LC 71) Simplify Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-22-generate-parentheses">177. (LC 22) Generate Parentheses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-739-daily-temperatures">178. (LC 739) Daily Temperatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-853-car-fleet">179. (LC 853) Car Fleet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c">C++</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-84-largest-rectangle-in-histogram">180. (LC 84) Largest Rectangle in Histogram</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">C++</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -180,6 +192,700 @@ Medium</p>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">minStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
+</section>
+<section id="lc-150-evaluate-reverse-polish-notation">
+<h2>175. (LC 150) Evaluate Reverse Polish Notation<a class="headerlink" href="#lc-150-evaluate-reverse-polish-notation" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/evaluate-reverse-polish-notation/description/">LC 150. Evaluate Reverse Polish Notation</a>
+Medium</p>
+<div class="line-block">
+<div class="line">RPN (Reverse Polish Notation):</div>
+<div class="line">Example 1:</div>
+<div class="line">Input: <code class="docutils literal notranslate"><span class="pre">tokens</span> <span class="pre">=</span> <span class="pre">[&quot;2&quot;,&quot;1&quot;,&quot;+&quot;,&quot;3&quot;,&quot;*&quot;]</span></code></div>
+<div class="line">Output: 9</div>
+<div class="line">Explanation: ((2 + 1) * 3) = 9</div>
+</div>
+<div class="line-block">
+<div class="line">Ex 2:</div>
+<div class="line">Input: <code class="docutils literal notranslate"><span class="pre">tokens</span> <span class="pre">=</span> <span class="pre">[&quot;4&quot;,&quot;13&quot;,&quot;5&quot;,&quot;/&quot;,&quot;+&quot;]</span></code></div>
+<div class="line">Output: 6</div>
+<div class="line">Explanation: (4 + (13 / 5)) = 6</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Recognize the simplicity of the RPN mechanism:</strong></div>
+<div class="line">No matter what form of RPN you are given, even if [num, num, num, oper, oper],</div>
+<div class="line">the procedure is the same:</div>
+<div class="line">-the partial results are added and removed in LIFO order, so use stack</div>
+<div class="line">-if cur char == num: then add to stack</div>
+<div class="line">if cur char == operator: then pop the last two nums from stack and use that operator on them,</div>
+<div class="line">add result to stack.</div>
+</div>
+<div class="line-block">
+<div class="line">Approaches:</div>
+<div class="line">The differences in implementation concern only the way you implement the operators:</div>
+<div class="line">-don’t implement, use directly +,-,*,/</div>
+<div class="line">-use hash, map using lambda</div>
+<div class="line">-use hash, map to operator module functions</div>
+<div class="line">-the last entry in stack is the result of the last expression = our answer</div>
+</div>
+<div class="admonition-recall-passing-args-to-lambda admonition">
+<p class="admonition-title">Recall: passing args to lambda</p>
+<p>a = lambda x, y: x + y
+print(a(2, 3))</p>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>] (LC accepted 95,85%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># intermidiate results</span>
+<span class="n">DELIMITER</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+<span class="n">OPERATORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;+&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+    <span class="s2">&quot;-&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span>
+    <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span>
+    <span class="s2">&quot;/&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">x</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">DELIMITER</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">OPERATORS</span><span class="p">:</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">OPERATORS</span><span class="p">[</span><span class="n">token</span><span class="p">](</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># token is a num</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+<span class="k">return</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Solution 2</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">7</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">operator</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">evalRPN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;+&quot;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+            <span class="s2">&quot;-&quot;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span>
+            <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span>
+            <span class="s2">&quot;/&quot;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">opt</span><span class="p">:</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">opt</span><span class="p">[</span><span class="n">token</span><span class="p">](</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Solution 3</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>] O(N)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">evalRPN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+                <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">*</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+                <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="n">a</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>My V</strong> (LC accepted 48,85%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">evalRPN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">operators</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;+&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span>
+                    <span class="s1">&#39;*&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">}</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">operators</span><span class="p">:</span>
+                <span class="n">val1</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">val2</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">val3</span> <span class="o">=</span> <span class="n">operators</span><span class="p">[</span><span class="n">s</span><span class="p">](</span><span class="n">val2</span><span class="p">,</span> <span class="n">val1</span><span class="p">)</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">val3</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-71-simplify-path">
+<h2>176. (LC 71) Simplify Path<a class="headerlink" href="#lc-71-simplify-path" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/simplify-path/description/">71. Simplify Path</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Key:</strong></div>
+<div class="line">-Understand the task, it is simple.</div>
+<div class="line">When given a path, it is a series of cd commands in the shell.</div>
+<div class="line">E.g. path = ‘/../abc//./def/’</div>
+<div class="line">0)We always start at the root.</div>
+<div class="line">1) cd ..  (we are at the root, so .. does nothing.)</div>
+<div class="line">2) cd abc  (we are at /abc)</div>
+<div class="line">3) ignore //, ignore .</div>
+<div class="line">4) cd def (we are at /abc/def)</div>
+<div class="line">Note: we always ignore //, and . (cd to current)</div>
+</div>
+<div class="line-block">
+<div class="line">-Why stack</div>
+<div class="line">Because of ..</div>
+<div class="line">When we encounter .. we go back one dir, so pop from stack ONCE.</div>
+</div>
+<p>Our new path IS STACK itself (stack is not a helper data structure).</p>
+<p><strong>Solution 1</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">simplifyPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+            <span class="c1">#  if i == &quot;/&quot; or i == &#39;//&#39;, it becomes &#39;&#39; (empty string)</span>
+
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="s2">&quot;..&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stack</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="c1"># skip &quot;.&quot; or an empty string</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Note when splitting on ‘/’, we get empty <code class="docutils literal notranslate"><span class="pre">''</span></code>:</div>
+<div class="line">#1</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/../ed//tr/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span>
+<span class="go">[&#39;&#39;, &#39;..&#39;, &#39;ed&#39;, &#39;&#39;, &#39;tr&#39;, &#39;&#39;]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#2</div>
+<div class="line">To stack we just add, e.g. <code class="docutils literal notranslate"><span class="pre">stack</span> <span class="pre">=</span> <span class="pre">['ed',</span> <span class="pre">'tr']</span></code></div>
+</div>
+<p><strong>My V</strong> (LC accepted 85, 37%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">simplifyPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">p</span> <span class="o">==</span> <span class="s1">&#39;..&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stack</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">p</span> <span class="o">!=</span> <span class="s1">&#39;/&#39;</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">new_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">new_path</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-22-generate-parentheses">
+<h2>177. (LC 22) Generate Parentheses<a class="headerlink" href="#lc-22-generate-parentheses" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/generate-parentheses/description/">22. Generate Parentheses</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Background on Backtracking</strong></div>
+<div class="line">[<a class="reference external" href="https://www.simplilearn.com/tutorials/data-structure-tutorial/backtracking-algorithm">View the original article</a>]</div>
+<div class="line">Backtracking is a technique for listing all possible solutions for a combinatorial algorithm problem.</div>
+</div>
+<p>Backtracking is an algorithmic technique whose goal is to use brute force to find
+all solutions to a problem. It entails gradually compiling a set of all possible solutions.
+Because a problem will have constraints, solutions that do not meet them will be removed.</p>
+<p>A backtracking algorithm uses the depth-first search method.
+If a proposed solution satisfies the constraints, it will keep looking.
+If it does not, the branch is removed, and &lt;the algorithm returns to the previous level&gt;.</p>
+<p>State-Space Tree
+A tree that represents all of the possible states of the problem, from the root as an
+initial state to the leaf as a terminal state.</p>
+<p>Intermediate checkpoints.
+If the checkpoints do not lead to a viable solution, the problem can return to the
+checkpoints and take another path to find a solution.</p>
+<p><strong>Backtracking boilerplate:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">FIND_SOLUTIONS</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">valid</span> <span class="n">solution</span><span class="p">):</span>
+        <span class="n">store</span> <span class="n">the</span> <span class="n">solution</span>
+        <span class="n">Return</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nb">all</span> <span class="n">choice</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">valid</span> <span class="n">choice</span><span class="p">):</span>
+        <span class="n">APPLY</span> <span class="p">(</span><span class="n">choice</span><span class="p">)</span>
+        <span class="n">FIND_SOLUTIONS</span> <span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="n">BACKTRACK</span> <span class="p">(</span><span class="n">remove</span> <span class="n">choice</span><span class="p">)</span>    <span class="o">&lt;===</span>
+    <span class="n">Return</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Our alg in terms of backtracking</strong></div>
+<div class="line">So after finding and appending a valid solution.</div>
+<div class="line">res = [‘((()))’]</div>
+<div class="line">We start to backtrack -&gt; stack.pop()</div>
+<div class="line">Till</div>
+<div class="line">stack = [‘(’, ‘(‘]</div>
+<div class="line">And then start to collect another valid answer.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Keys to our alg in general:</strong></div>
+<div class="line">How do you decide which ( or ) to add to response?</div>
+<div class="line">You keep track of the counts for the number of closing and opening parentheses.</div>
+<div class="line">Initially openCount=0, closeCount=0</div>
+<div class="line">You deal with 2 cases:</div>
+<div class="line">1)add ‘(’ =&gt; if openCount &lt; n</div>
+<div class="line">‘((’</div>
+<div class="line">Put an open one any time, just not more than &lt;n&gt; given times.</div>
+<div class="line">2)add ‘)’ =&gt; if openCount &gt; closedCount</div>
+<div class="line">‘(’ -&gt; ‘()’, ‘)’ -&gt; No</div>
+<div class="line">Put closing one only if there are more open parentheses than closed ones.</div>
+<div class="line">I.e. there is a pending open one yet to close.</div>
+</div>
+<p>Use variable &lt;cur&gt; where you build a current valid string</p>
+<div class="line-block">
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-two ifs, not else</div>
+<div class="line">-add closed if num of open &gt; num closed</div>
+<div class="line">-add open if num of open &lt; total num of pairs</div>
+</div>
+<p><strong>Solution 2</strong> (rewrite from C, LC accepted 30, 15%, 2nd run 70, 80)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">generateParenthesis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">def</span> <span class="nf">backtrack</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">o</span> <span class="o">==</span> <span class="n">n</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="c1"># add open par</span>
+            <span class="k">if</span> <span class="n">o</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">backtrack</span><span class="p">(</span><span class="n">cur</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="n">o</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="c1"># add closed</span>
+            <span class="k">if</span> <span class="n">o</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">backtrack</span><span class="p">(</span><span class="n">cur</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">c</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">backtrack</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p><strong>Solution 1</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">generateParenthesis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">def</span> <span class="nf">backtrack</span><span class="p">(</span><span class="n">openN</span><span class="p">,</span> <span class="n">closedN</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">openN</span> <span class="o">==</span> <span class="n">closedN</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">))</span>
+                <span class="k">return</span>
+
+            <span class="k">if</span> <span class="n">openN</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">)</span>
+                <span class="n">backtrack</span><span class="p">(</span><span class="n">openN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">closedN</span><span class="p">)</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">closedN</span> <span class="o">&lt;</span> <span class="n">openN</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">)</span>
+                <span class="n">backtrack</span><span class="p">(</span><span class="n">openN</span><span class="p">,</span> <span class="n">closedN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+        <span class="n">backtrack</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Complexity Time O((2**n) * n)</div>
+<div class="line">Because we have 2 possibilities, closed or open (, ).</div>
+</div>
+</section>
+<section id="lc-739-daily-temperatures">
+<h2>178. (LC 739) Daily Temperatures<a class="headerlink" href="#lc-739-daily-temperatures" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/daily-temperatures/description/">739. Daily Temperatures</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-Stack, mono decreasing, storing pairs [temp, index]</div>
+</div>
+<div class="line-block">
+<div class="line">Brute force would take us O(n**n).</div>
+<div class="line">Using monotonic stack: O(n) Time&amp;Space.</div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">dailyTemperatures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperatures</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">temperatures</span><span class="p">)</span>         <span class="c1">#1</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># pair: [temp, index]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">temperatures</span><span class="p">):</span>
+            <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">poppedT</span><span class="p">,</span> <span class="n">poppedInd</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">stackInd</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">stackInd</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#1</div>
+<div class="line">After iterating over all temps, if something is still in the stack, then there is</div>
+<div class="line">not a warmer day for these temps. Then the defaults of our ans 0 will be used.</div>
+</div>
+<div class="line-block">
+<div class="line">If we encounter temperature &lt;greater than temp on stack&gt;:</div>
+<div class="line">-we pop from stack and</div>
+<div class="line">-calculate response for the index on stack</div>
+<div class="line">/When no stack, put current (temp, index) to stack.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Going through the loop:</strong></div>
+<div class="line">Input: temperatures = [73,74,75,71,69,72,76,73]</div>
+<div class="line">Output: [1,1,4,2,1,1,0,0]</div>
+</div>
+<div class="line-block">
+<div class="line">1)(73,0)</div>
+<div class="line">stack=[]</div>
+<div class="line">res = [0,0,0,0,0,0,0]</div>
+</div>
+<div class="line-block">
+<div class="line">stack=[(73,0)]</div>
+<div class="line">res = [0,0,0,0,0,0,0]</div>
+</div>
+<div class="line-block">
+<div class="line">2)(74,1)</div>
+<div class="line">stack=[(73,0)]</div>
+<div class="line">res = [0,0,0,0,0,0,0]</div>
+</div>
+<div class="line-block">
+<div class="line">stack=[]</div>
+<div class="line">poppedT, pippedInd = 73, 0</div>
+<div class="line">calculate res = curInd - poppedInd = 1-0=1</div>
+<div class="line">At ind 0 = 1</div>
+<div class="line">res = [1,0,0,0,0,0,0]</div>
+</div>
+<p>stack=[(74,1)]</p>
+<div class="line-block">
+<div class="line">3)(75,2)</div>
+<div class="line">stack=[(74,1)]</div>
+<div class="line">res = [1,0,0,0,0,0,0]</div>
+</div>
+<div class="line-block">
+<div class="line">calculate res = curInd - poppedInd = 2-1=1</div>
+<div class="line">res = [1,1,0,0,0,0,0]</div>
+</div>
+<p>stack=[(75,2)]</p>
+<div class="line-block">
+<div class="line">4)(71,3)</div>
+<div class="line">stack=[(75,2)]</div>
+<div class="line">Cur val 71 NOT &gt; 75, then we just put it on stack.</div>
+<div class="line">stack=[(75,2), (71, 3)]</div>
+</div>
+<div class="line-block">
+<div class="line">5)(69,4)</div>
+<div class="line">Cur val 69 NOT &gt; 71, then we put it on stack.</div>
+<div class="line">stack=[(75,2), (71, 3), (69, 4)]</div>
+</div>
+<div class="line-block">
+<div class="line">6)(72, 5)</div>
+<div class="line">stack=[(75,2), (71, 3), (69, 4)]</div>
+<div class="line">calculate res = curInd - poppedInd = 5-4=1</div>
+<div class="line">At ind 4 = 1</div>
+<div class="line">stack=[(75,2), (71, 3)]</div>
+<div class="line">res = [1,1,0,0,1,0,0]</div>
+</div>
+<div class="line-block">
+<div class="line">still 72 &gt; 71</div>
+<div class="line">calculate res = curInd - poppedInd = 5-3=2</div>
+<div class="line">At ind 3 = 2</div>
+<div class="line">res = [1,1,0,2,1,0,0]</div>
+<div class="line">stack=[(75,2)]</div>
+</div>
+<div class="line-block">
+<div class="line">72 NOT &gt; 75, add 72 to stack</div>
+<div class="line">stack=[(75,2), (72,5)]</div>
+</div>
+<div class="line-block">
+<div class="line">7)(76,6)</div>
+<div class="line">stack=[(75,2), (72,5)]</div>
+<div class="line">calculate res = curInd - poppedInd = 6-5=1</div>
+<div class="line">At ind 5 = 1</div>
+<div class="line">stack=[(75,2)]</div>
+<div class="line">res = [1,1,0,2,1,1,0]</div>
+</div>
+<div class="line-block">
+<div class="line">still 76 &gt; 75</div>
+<div class="line">calculate res = curInd - poppedInd = 6-2=4</div>
+<div class="line">At ind 2 = 4</div>
+<div class="line">stack=[]</div>
+<div class="line">res = [1,1,4,2,1,1,0]</div>
+<div class="line">stack=[(76,6)]</div>
+</div>
+<div class="line-block">
+<div class="line">8)(73,7)</div>
+<div class="line">stack=[(76,6)]</div>
+<div class="line">73 NOT &gt; 76, so we just put it to stack</div>
+<div class="line">stack=[(76,6), (73,7)]</div>
+</div>
+</section>
+<section id="lc-853-car-fleet">
+<h2>179. (LC 853) Car Fleet<a class="headerlink" href="#lc-853-car-fleet" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/car-fleet/description/">853. Car Fleet</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>My V</strong> (LC accepted 65, 12)</div>
+<div class="line">In data:</div>
+<div class="line">position = [10, 8, 0, 5, 3]</div>
+<div class="line">speed = [2, 4, 1, 1, 3]</div>
+<div class="line">target = 12</div>
+</div>
+<div class="line-block">
+<div class="line">Make array cars = [(position, time)] -&gt; [(10,1), (8,1), (0,12), (5,7), (3,3)]</div>
+<div class="line">Sort cars on position, cars = [(0,12), (3,3), (5,7), (8,1), (10,1)]</div>
+<div class="line">Loop start with the car closest to target, (10,1).</div>
+<div class="line">Pop: time. If current time &gt; previous time, then this car won’t catch up with</div>
+<div class="line">the previous car (because current is farther from target than previous, and</div>
+<div class="line">this farther car will take more time to reach the target).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">carFleet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">speed</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">cars</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">position</span><span class="p">)):</span>
+            <span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">position</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="n">speed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">cars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">cars</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">fleet</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">prev_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">cars</span><span class="p">:</span>
+            <span class="n">p</span><span class="p">,</span><span class="n">t</span> <span class="o">=</span> <span class="n">cars</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="n">prev_time</span><span class="p">:</span>
+                <span class="n">fleet</span> <span class="o">+=</span><span class="mi">1</span>
+                <span class="n">prev_time</span> <span class="o">=</span> <span class="n">t</span>  <span class="c1">#update only if found greater time</span>
+        <span class="k">return</span> <span class="n">fleet</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution, initial</strong></div>
+<div class="line">Keys:</div>
+<div class="line">-sort input in reverse</div>
+<div class="line">-work with values in stack[-1], stack[-2]. Put only time to stack.</div>
+</div>
+<div class="line-block">
+<div class="line">Steps</div>
+<div class="line">-make pairs (position, speed)</div>
+<div class="line">-sort pairs in reverse (meaning it will sort on position. Greatest..Smallest)</div>
+<div class="line">NOTE: Greater position means the car is Closer to target ==&gt; 4 is closer than 2.</div>
+<div class="line">-loop our sorted pairs</div>
+<div class="line">-On stack we will be putting “Time to get to the target”</div>
+<div class="line">-The lookup stack[-1] and stack[-2] checks if:</div>
+<div class="line">the Further away car (stack[-1]) would get to target Faster than the closer car (stack[-2]).</div>
+<div class="line">If yes, we can join that faster car to the fleet of the slower car: stack.pop()</div>
+</div>
+<p>Solution [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">carFleet</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">speed</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">pair</span> <span class="o">=</span> <span class="p">[(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">speed</span><span class="p">)]</span>
+    <span class="n">pair</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>                                      <span class="c1">#[time1, time2..]</span>
+    <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">pair</span><span class="p">:</span>  <span class="c1"># Reverse Sorted Order</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">target</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="n">s</span><span class="p">)</span>              <span class="c1">#**</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>#** -
+Unlike many algs where we put to stack as last step, here we first put to stack,
+and work with values stack[-1], stack[-2], because otherwise we don’t check if
+to merge the last car into a fleet with previous cars.</p>
+<section id="c">
+<h3>C++<a class="headerlink" href="#c" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">My V (LC accepted 18, 5)</div>
+<div class="line">(Making a separate vector of vectors to store [[position, time]] is space costly, but helps with the clarity.)</div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">carFleet</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">speed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">cars</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">position</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">target</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">position</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">speed</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">            </span><span class="n">cars</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">position</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="w"> </span><span class="n">t</span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">sort</span><span class="p">(</span><span class="n">cars</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">cars</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">fleet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">prev_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">cars</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+<span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cars</span><span class="p">.</span><span class="n">back</span><span class="p">()[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">            </span><span class="n">cars</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">prev_time</span><span class="p">){</span>
+<span class="w">                </span><span class="o">++</span><span class="n">fleet</span><span class="p">;</span>
+<span class="w">                </span><span class="n">prev_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">fleet</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="lc-84-largest-rectangle-in-histogram">
+<h2>180. (LC 84) Largest Rectangle in Histogram<a class="headerlink" href="#lc-84-largest-rectangle-in-histogram" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/largest-rectangle-in-histogram/description/">84. Largest Rectangle in Histogram</a>
+Hard</p>
+<div class="line-block">
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-If current height is greater than previous, then previous can extend its width +1.</div>
+<div class="line">-&gt;So monotonic increasing stack.</div>
+<div class="line">-Store in stack [index, height]</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Details:</strong></div>
+<div class="line">-After popping from stack, record the cur value not with its cur index,</div>
+<div class="line">but with index of the last popped greater value.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># stk=[(1,0),(5,2),(6,3)], next v=2, after popping stk=[(1,0),(2,3)]</span>
+<span class="c1">#              ^</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Because the lesser value can start (extends) from the first greater value.</div>
+<div class="line">-After the main alg, when cleaning out values from stack, our stack is mono increasing,</div>
+<div class="line">means all items in stack can extend to the last index of heights.</div>
+<div class="line">int index = heights.size();</div>
+<div class="line">area = max(area, v * (index-ind));</div>
+</div>
+<p><strong>My V</strong> (LC accepted 35, 30%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">largestRectangleArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heights</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#[index, height]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">heights</span><span class="p">):</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">h</span><span class="p">:</span>
+                <span class="n">index</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">area</span> <span class="o">=</span> <span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">index</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">start</span><span class="p">,</span> <span class="n">h</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
+</div>
+<p><strong>My V2</strong> (LC accepted 30, 42%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">largestRectangleArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heights</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1">#[(v,i),..] mono increasing</span>
+        <span class="n">area</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">heights</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stack</span> <span class="ow">or</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+                    <span class="n">v</span><span class="p">,</span> <span class="n">ind</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                    <span class="n">area</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">area</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">ind</span><span class="p">)</span><span class="o">*</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">ind</span><span class="p">))</span>  <span class="c1">#append to stack with last popped index</span>
+
+        <span class="n">index</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">v</span><span class="p">,</span><span class="n">ind</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">area</span><span class="p">,</span> <span class="n">v</span><span class="o">*</span><span class="p">(</span><span class="n">index</span><span class="o">-</span><span class="n">ind</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">area</span>
+</pre></div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">largestRectangleArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heights</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">maxArea</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># pair: (index, height)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">heights</span><span class="p">):</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>                         <span class="c1">#**1</span>
+            <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">h</span><span class="p">:</span>
+                <span class="n">index</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">maxArea</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxArea</span><span class="p">,</span> <span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">index</span><span class="p">))</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">index</span>                 <span class="c1">#**1</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span>                   <span class="c1">#**2</span>
+            <span class="n">maxArea</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxArea</span><span class="p">,</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">maxArea</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">#**1</div>
+<div class="line">E.g.</div>
+<div class="line">heights = [5,6,2]</div>
+<div class="line">stack = [(1,5),(2,6)]</div>
+<div class="line">Looking at the height 2.</div>
+<div class="line">stack[-1][1]=5 &gt; 2. We have to pop taller rects from the stack.</div>
+<div class="line">Pop, calculate area.</div>
+<div class="line">Then we record to stack not (2,2), but (0,2).</div>
+<div class="line">0 being the ==&gt; index of the last popped rect.</div>
+<div class="line">==&gt; Because rect 2 can extend backwards all the way to index 0 here.</div>
+</div>
+<div class="line-block">
+<div class="line">Patterns:</div>
+<div class="line">- heights = [1,2]</div>
+<div class="line">Looking at 1, the next height is greater, means we can extend height=1 to the right.</div>
+<div class="line">We put (i, h) to stack</div>
+<div class="line-block">
+<div class="line">-&gt;2</div>
+</div>
+<div class="line">1  2</div>
+</div>
+<div class="line-block">
+<div class="line">- heights = [2,1]</div>
+<div class="line">Looking at 2, the next height is smaller, means we cannot extend height=2 to the right.</div>
+<div class="line">2-&gt;</div>
+<div class="line">2  1</div>
+<div class="line">Then we pop all taller rects from stack. Record area for each.</div>
+<div class="line">NOTE. The WIDTH = i of encountered shorter rect - index of popped rect</div>
+<div class="line">(See #**)</div>
+</div>
+<div class="line-block">
+<div class="line">#**2</div>
+<div class="line">If there was only an upward trend in rects, then the stack will be full.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#     3</span>
+<span class="c1">#   2 3</span>
+<span class="c1"># 1 2 3</span>
+</pre></div>
+</div>
+<p>E.g.:
+Area of rect 1 = 1 * ((len=3) - index=0) = 3</p>
+<section id="id2">
+<h3>C++<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//My V (LC accepted 65, 55%)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">largestRectangleArea</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">heights</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">stack</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">stk</span><span class="p">;</span><span class="w">  </span><span class="c1">//{{val, index},..}</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">area</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">!=</span><span class="n">heights</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heights</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">stk</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">stk</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">first</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="w">                </span><span class="n">stk</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">n</span><span class="p">,</span><span class="n">i</span><span class="p">});</span>
+<span class="w">            </span><span class="k">else</span><span class="p">{</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">ind</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="w">  </span><span class="c1">//have to declare not in while, otherwise stays in while locally</span>
+<span class="w">                </span><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">stk</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">stk</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">first</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">n</span><span class="p">){</span>
+<span class="w">                    </span><span class="n">ind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stk</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">second</span><span class="p">;</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stk</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">first</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">stk</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">                    </span><span class="n">area</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">area</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">ind</span><span class="p">));</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="n">stk</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">ind</span><span class="p">});</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heights</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">stk</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">ind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stk</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">second</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stk</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">first</span><span class="p">;</span>
+<span class="w">            </span><span class="n">stk</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="n">area</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">area</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="o">-</span><span class="n">ind</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">area</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 

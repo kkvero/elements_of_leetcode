@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stack and Queue Questions Part 2 &mdash; Elements of Leetcode 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="prev" title="Stack and Queue Questions Part 1" href="sq_1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Elements of Leetcode
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Bit Manipulation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_1.html">Part 1 (1-9)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_2.html">Part 2 (10-19)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_3.html">Part 3 (20-29)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bits/bits_4.html">Part 4 (30-36)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Array:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_1.html">Part 1 (37-45)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_2.html">Part 2 (46-55)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_3.html">Part 3 (56-65)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_4.html">Part 4 (66-75)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_5.html">Part 5 (76-85)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_6.html">Part 6 (86-95)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_7.html">Part 7 (96-105)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../array/array_extra.html">Extra (137)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Strings:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_kb.html">Knowledge base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_1.html">Part 1 (106-115)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_2.html">Part 2 (116-125)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/strings_3.html">Part 3 (126-136)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Two Pointers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../two_pointers/two_pointers.html">Part 1 (138-145)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sliding Window:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sliding_window/sw.html">Part 1 (146-151)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linked List:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linked_list/ll_1.html">Part 1 (152-160)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linked_list/ll_2.html">Part 2 (161-172)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Stack and Queue:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sq_1.html">Part 1 (173-180)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2 (181-190)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lc-456-132-pattern">181. (LC 456) 132 Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-735-asteroid-collision">182. (LC 735) Asteroid Collision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-394-decode-string">183. (LC 394) Decode String</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-895-maximum-frequency-stack">184. (LC 895) Maximum Frequency Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-901-online-stock-span">185. (LC 901) Online Stock Span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implement-queue">186. Implement queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-102-binary-tree-level-order-traversal">187. (LC 102) Binary Tree Level Order Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-622-design-circular-queue">188. (LC 622) Design Circular Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-232-implement-queue-using-stacks">189. (LC 232) Implement Queue using Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implement-a-queue-with-max-api">190. Implement a Queue with max API</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Math:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math/math_kb.html">Knowledge base</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About the Project:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About The Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements.html">Acknowledgements and References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Elements of Leetcode</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Stack and Queue Questions Part 2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/stack_queue/sq_2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stack-and-queue-questions-part-2">
+<h1>Stack and Queue Questions Part 2<a class="headerlink" href="#stack-and-queue-questions-part-2" title="Link to this heading"></a></h1>
+<section id="lc-456-132-pattern">
+<h2>181. (LC 456) 132 Pattern<a class="headerlink" href="#lc-456-132-pattern" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/132-pattern/description/">456. 132 Pattern</a>
+Medium</p>
+<p>The intuition tells that the problem could be solved either greedy remembering
+min, max, mid values or using a stack.
+The fact is, it uses both.</p>
+<div class="line-block">
+<div class="line"><strong>Logic:</strong></div>
+<div class="line">E.g.</div>
+<div class="line">nums = [3,1,4,2]</div>
+<div class="line">To the obvious logic of using a decreasing stack:</div>
+<div class="line">stack = [3], stack=[3,1], stack=[4], stack=[4,2]</div>
+<div class="line">We need to record the curMinValue:</div>
+<div class="line">stack = [[3,3]], stack=[[3,1]], stack=[[1,4]], stack=[[1,2]]</div>
+<div class="line">(more precisely: min value before current, i.e. excluding current)</div>
+<div class="line">If we know what was the min value, and the top of the stack is always the greater value,</div>
+<div class="line">then as soon as we meet value greater than min, but less than top of the stack, we got 132 pattern.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Variables:</strong></div>
+<div class="line">-stack</div>
+<div class="line">Has values in decreasing order.</div>
+<div class="line">If we meet value greater, we pop stack.</div>
+<div class="line">-greedy var for curMinValue</div>
+<div class="line">Min value we met so far in a variable AND in stack: [curValue, curMinValue]</div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">find132pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># pair [num, curLeftMin], mono-decreasing stack</span>
+        <span class="n">curMin</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">curMin</span><span class="p">])</span>
+            <span class="n">curMin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">curMin</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-735-asteroid-collision">
+<h2>182. (LC 735) Asteroid Collision<a class="headerlink" href="#lc-735-asteroid-collision" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/asteroid-collision/description/">735. Asteroid Collision</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Key:</strong></div>
+<div class="line">3 cases when no collision: [-1, -2], [1, 2] AND [-1, 5] (same direction AND opposite directions.)</div>
+<div class="line">So opposite signs don’t mean there has to be a collision.</div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">asteroidCollision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asteroids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">asteroids</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>   <span class="c1">#collision only when a is negative</span>
+                <span class="n">diff</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>     <span class="c1">#a loses, it gets destroyed</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">elif</span> <span class="n">diff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>   <span class="c1">#a wins</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>            <span class="c1">#if a==stack[-1]</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">:</span>                <span class="c1">#if a was not destroyed in prev steps, add it to stack</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stack</span>
+</pre></div>
+</div>
+<p><strong>My V</strong> (LC accepted 70, 90)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">asteroidCollision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asteroids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">stk</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">asteroids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stk</span> <span class="ow">and</span> <span class="n">stk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>     <span class="c1">#only if case [+, -] [-&gt;,&lt;-]</span>
+                <span class="k">while</span> <span class="n">stk</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">stk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1">#again check [+,-], because stk could be [-2,+1] a=-2 stop after popping +1</span>
+                    <span class="k">if</span> <span class="n">a</span> <span class="o">+</span> <span class="n">stk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">stk</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                        <span class="n">a</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">stk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="n">stk</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">stk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="n">a</span><span class="o">=</span><span class="kc">None</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">:</span>
+                <span class="n">stk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stk</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Break into cases:</div>
+<div class="line">1)Direction</div>
+<div class="line">asteroids = [-1,1]</div>
+<div class="line">&lt;– –&gt; no collision  (also -1,-1 or 1,1 no collision)</div>
+<div class="line"><br /></div>
+<div class="line">asteroids = [1,-1]</div>
+<div class="line">–&gt; &lt;–</div>
+<div class="line">COLLISION</div>
+<div class="line">So there is collision &lt;&lt;only when the next asteroid is negative&gt;&gt;, a&lt;0; and left a&gt;0.</div>
+<div class="line"><br /></div>
+<div class="line">2)Value</div>
+<div class="line">asteroids = [1,-3]</div>
+<div class="line">a is greater then the left one.</div>
+<div class="line">a wins, asteroids=[-3]   (and if more on the left with lesser value, a will destroy them)</div>
+<div class="line"><br /></div>
+<div class="line">asteroids = [3,-1]</div>
+<div class="line">a looses, left one stays.</div>
+<div class="line">asteroids = [3]</div>
+</div>
+</section>
+<section id="lc-394-decode-string">
+<h2>183. (LC 394) Decode String<a class="headerlink" href="#lc-394-decode-string" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/decode-string/description/">394. Decode String</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Keys:</strong></div>
+<div class="line">-Accounting for nested code, ‘build substring from within nested chars’.</div>
+<div class="line">E.g. s=’a11[c2[dd]]z’</div>
+<div class="line">Append to stack till you meet ‘]’.</div>
+<div class="line">stack = [‘a’, ‘1’, ‘1’ ‘[’, ‘c’, ‘2’, ‘[’, ‘d’, ‘d’]</div>
+<div class="line">When ]: start building substring from backwards till you meet ‘[‘.</div>
+<div class="line">After ‘[’ pop all digits, that’s your multiplier.</div>
+<div class="line">Substring * multiplier.</div>
+<div class="line">Append substring to stack.</div>
+<div class="line">-So you collect the answer into the stack. Because there also can be</div>
+<div class="line">s=’a2[b]z’</div>
+</div>
+<div class="line-block">
+<div class="line">+Edge case: encoding digit can have multiple digits.</div>
+<div class="line">=&gt;All the integers in s are in the range [1, 300].</div>
+</div>
+<p><strong>My V</strong> (LC accepted 93,64, same code also 20,99%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">decodeString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="s2">&quot;]&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span>  <span class="c1">#if several digits num like s=&#39;100[ab]&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">char</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">while</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span>
+                    <span class="n">char</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">char</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">char</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span> <span class="o">*</span> <span class="n">char</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>My V2</strong> (LC accepted 20, 50%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">decodeString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;]&#39;</span><span class="p">:</span>
+                <span class="n">letters</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+                    <span class="n">item</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">item</span> <span class="o">!=</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span>
+                        <span class="n">letters</span> <span class="o">=</span> <span class="n">item</span> <span class="o">+</span> <span class="n">letters</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">letters</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>  <span class="c1">#&gt;1 digits case</span>
+                    <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">decodeString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s2">&quot;]&quot;</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sub_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">while</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span>
+                    <span class="n">sub_str</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">sub_str</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+                <span class="n">multiplier</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">while</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                    <span class="n">multiplier</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">multiplier</span>
+
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">*</span> <span class="n">sub_str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-895-maximum-frequency-stack">
+<h2>184. (LC 895) Maximum Frequency Stack<a class="headerlink" href="#lc-895-maximum-frequency-stack" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/maximum-frequency-stack/description/">895. Maximum Frequency Stack</a>
+Hard</p>
+<p><strong>My V</strong> (LC accepted 60, 50%)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FreqStack</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span> <span class="o">=</span> <span class="p">{}</span>     <span class="c1">#{value: freq}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1">#{freq: [value1, value2..]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_freq</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">[</span><span class="n">val</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">[</span><span class="n">val</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_freq</span> <span class="o">+=</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">max_freq</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">[</span><span class="n">res</span><span class="p">]</span> <span class="o">-=</span><span class="mi">1</span>                 <span class="c1">#&lt;--don&#39;t forget to decrement cnt of that value</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">max_freq</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_freq</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_freq</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FreqStack</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxCnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacks</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">valCnt</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">valCnt</span>
+        <span class="k">if</span> <span class="n">valCnt</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxCnt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">maxCnt</span> <span class="o">=</span> <span class="n">valCnt</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stacks</span><span class="p">[</span><span class="n">valCnt</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacks</span><span class="p">[</span><span class="n">valCnt</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stacks</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">maxCnt</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">[</span><span class="n">res</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stacks</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">maxCnt</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">maxCnt</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Keys</strong></div>
+<div class="line">-Internal data structures</div>
+<div class="line-block">
+<div class="line">self.cnt = {}</div>
+</div>
+<div class="line">To keep track of the count for Each value. E.g.:</div>
+<div class="line">cnt = {5:3, 4:2, 3:2, 2:1}</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">self.maxCnt = 0</div>
+</div>
+<div class="line">Keep track of the max count Overall.</div>
+<div class="line">E.g. 3 here.</div>
+</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">self.stacks = {}</div>
+</div>
+<div class="line">Making groups of how many of each value currently.</div>
+<div class="line">obj.push(5)</div>
+<div class="line">self.stacks = {</div>
+<div class="line-block">
+<div class="line">1 : [5]</div>
+</div>
+<div class="line">}</div>
+</div>
+<div class="line-block">
+<div class="line">obj.push(4)</div>
+<div class="line">self.stacks = {</div>
+<div class="line-block">
+<div class="line">1 : [5,4]</div>
+</div>
+<div class="line">}</div>
+</div>
+<div class="line-block">
+<div class="line">obj.push(5)</div>
+<div class="line">self.stacks = {</div>
+<div class="line-block">
+<div class="line">1 : [5,4],</div>
+<div class="line">2 : [5]</div>
+</div>
+<div class="line">}</div>
+</div>
+<p>NOTE: each new value gets added to the end of the list of the group.
+So we can pop from a group and it will be the most recent value (relative to other
+items in the group).</p>
+<p>…After pushing all values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">stacks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span> <span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="mi">2</span> <span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+    <span class="mi">3</span> <span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">-Pushing</div>
+<div class="line">Just push from the group with the highest key.</div>
+</div>
+</section>
+<section id="lc-901-online-stock-span">
+<h2>185. (LC 901) Online Stock Span<a class="headerlink" href="#lc-901-online-stock-span" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/online-stock-span/description/">901. Online Stock Span</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Keys</strong></div>
+<div class="line">- Stack, store 2 values [price, span]</div>
+<div class="line">- With each new price pop lesser values from stack</div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">StockSpanner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># pair: (price, span)</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">span</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">price</span><span class="p">:</span>
+            <span class="n">span</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">price</span><span class="p">,</span> <span class="n">span</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">span</span>
+</pre></div>
+</div>
+<p><strong>My V</strong> (LC accepted 98, 95)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">StockSpanner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1">#[[price, span], ..]</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">span</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">price</span><span class="p">:</span>
+            <span class="n">span</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">price</span><span class="p">,</span> <span class="n">span</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">span</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Monotonic decreasing stack</div>
+<div class="line">-Compute the span for each price as you are given that price.</div>
+<div class="line">-Store as (price, span) pair in a stack.</div>
+<div class="line">-Recognize that you can compare current price with previous. If cur&gt;prev,</div>
+<div class="line">lookup the span of prev, you can ignore span number of prices after that.</div>
+<div class="line">And keep doing this cur&gt;prev check till you meet prev&gt;cur.</div>
+<div class="line">prices = [100,80,60,70,60,75,85]</div>
+<div class="line">stack = [(100,1),(80,1),(60,1),(70,2),(60,1),(75,4),(85,6)]</div>
+<div class="line">-More so, if cur&gt;prev, pop prev from stack</div>
+<div class="line">Cur price=70</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># prices = [100,80,60,70 ..]</span>
+<span class="c1">#                     ^</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">70&gt;60, pop (60,1) from stack. Before popping, set span of 70 = 1 + 2 (default + span of 60).</div>
+<div class="line">Append 70 and its span.</div>
+<div class="line">stack = [(100,1),(80,1),&gt;(60,1)&lt;,(70,2)]</div>
+</div>
+<p>We pop because having [60, 70], we will never get past the bigger value of 70.</p>
+</section>
+<section id="implement-queue">
+<h2>186. Implement queue<a class="headerlink" href="#implement-queue" title="Link to this heading"></a></h2>
+<p>Implement the basic queue API: enqueue, dequeue.</p>
+<div class="line-block">
+<div class="line"><strong>deque and popleft()</strong></div>
+<div class="line">We will use Python collections.deque</div>
+<div class="line">(doubly linked list)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="k">class</span> <span class="nc">Queue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">enqueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dequeue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="lc-102-binary-tree-level-order-traversal">
+<h2>187. (LC 102) Binary Tree Level Order Traversal<a class="headerlink" href="#lc-102-binary-tree-level-order-traversal" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/binary-tree-level-order-traversal/description/">102. Binary Tree Level Order Traversal</a>
+Medium</p>
+<p><strong>My V</strong> (LC accepted 70, 50)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">levelOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TreeNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)):</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                <span class="n">res</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">2</span></a>]</div>
+<div class="line">-List comprehensions</div>
+<div class="line">Here we empty the queue each time. To be precise, we REPLACE it with children.</div>
+<div class="line">We don’t use queue directly. We manage the task of getting the values in order by using list comprehensions.</div>
+<div class="line">(LC accepted 70,90%)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">binary_tree_depth_order</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>  <span class="c1"># tree=root</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tree</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="n">curr_depth_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">tree</span><span class="p">]</span>  <span class="c1"># initially one value, [3]</span>
+    <span class="k">while</span> <span class="n">curr_depth_nodes</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">curr</span><span class="o">.</span><span class="n">val</span> <span class="k">for</span> <span class="n">curr</span> <span class="ow">in</span> <span class="n">curr_depth_nodes</span><span class="p">]</span>
+        <span class="p">)</span>  <span class="c1"># appends from front to end of queue</span>
+        <span class="n">curr_depth_nodes</span> <span class="o">=</span> <span class="p">[</span>     <span class="c1">#REPLACE curr values with their children</span>
+            <span class="n">child</span>
+            <span class="k">for</span> <span class="n">curr</span> <span class="ow">in</span> <span class="n">curr_depth_nodes</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curr</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">curr</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">child</span>
+        <span class="p">]</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Solution 2</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">10</span></a>]</div>
+<div class="line">-collections.deque</div>
+<div class="line">(Here we don’t empty the queue each level, we classically use queue/deque:</div>
+<div class="line">leftpop() values, and append() children.)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">levelOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)):</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+                <span class="n">val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>BFS</strong></div>
+<div class="line">-We use queue ‘q’ using collections.deque</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># q = [pop, add    ]</span>
+<span class="c1">#      ^    --&gt; adding to the end</span>
+<span class="c1">#     popping from front</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">-And sublist where we collect values for one tree level.</div>
+<div class="line">-How we access children, just node.left, node.right</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Procedure</strong></div>
+<div class="line">root = [3,9,20,null,null,15,7]</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#  3</span>
+<span class="c1"># 9  20</span>
+<span class="c1">#   15 7</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Put tree root to q.</div>
+<div class="line">q=[3]</div>
+<div class="line">popleft to sublist. We define when to stop by the initial len(q). Append sublist to ans.</div>
+<div class="line">-As we pop from q, we add to q the children of current values. &lt;===</div>
+<div class="line">[9, 20]</div>
+<div class="line">sublist=[3]</div>
+</div>
+</section>
+<section id="lc-622-design-circular-queue">
+<h2>188. (LC 622) Design Circular Queue<a class="headerlink" href="#lc-622-design-circular-queue" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/design-circular-queue/description/">622. Design Circular Queue</a>
+Medium</p>
+<div class="line-block">
+<div class="line"><strong>Task understanding:</strong></div>
+<div class="line">You wouldn’t overwrite when q is full.</div>
+<div class="line">q=[1,2,3] enqueue(4) Does not overwrite 1. Return False. Wait for the dequeue() operation</div>
+<div class="line">before being able to enqueue.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Keys (array):</strong></div>
+<div class="line">-Array. One pointer front. Capacity(possible), size(actual so far).</div>
+<div class="line">We don’t remove values, just move the front pointer.</div>
+<div class="line">(Get everything else: rear, where to enQueue using front pointer, size, % capacity)</div>
+<div class="line">rear = q[(front + size-1) % capacity]</div>
+<div class="line">enqueue_index = (self.front + self.size) % self.capacity</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Ways to implement:</strong></div>
+<div class="line">- using an array</div>
+<div class="line">- using a linked list</div>
+<div class="line-block">
+<div class="line">-doubly linked</div>
+<div class="line">-singly linked</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line">Probable issue with linked list implementation.</div>
+<div class="line">We keep creating new nodes.</div>
+<div class="line">But when using array, we just overwrite the same spot at index.</div>
+</div>
+<p>ARRAY</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyCircularQueue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">front</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">k</span>
+
+    <span class="k">def</span> <span class="nf">enQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isFull</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">front</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">deQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">front</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">front</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">Front</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">()</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">front</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">Rear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">front</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">isEmpty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">isFull</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Details:</strong></div>
+<div class="line">- we initiate array of size capacity.</div>
+<div class="line">Capacity=3</div>
+<div class="line">q = [0,0,0]</div>
+<div class="line">- enQueue(1), enQueue(2), enQueue(3)</div>
+<div class="line">q = [1,2,3]</div>
+<div class="line">front stays 0.</div>
+<div class="line">- deQueue()</div>
+<div class="line">We don’t remove the actual value.</div>
+<div class="line">We move front+=1</div>
+<div class="line">Decrement size-=1</div>
+<div class="line">Return True (operation successful).</div>
+<div class="line">- enQueue(4)</div>
+<div class="line">q = [4,2,3]</div>
+</div>
+<div class="line-block">
+<div class="line">How we get the index</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">idx</span> <span class="pre">=</span> <span class="pre">(self.front</span> <span class="pre">+</span> <span class="pre">self.size)</span> <span class="pre">%</span> <span class="pre">self.capacity</span></code></div>
+</div>
+<div class="line">Basically, index always = front. It’s just that to prevent moving beyond q size</div>
+<div class="line">we perform %capacity, and move in a circle.</div>
+<div class="line">Move front+=1 each time we deQueue(). Means 1 space has been freed up.</div>
+</div>
+</section>
+<section id="lc-232-implement-queue-using-stacks">
+<h2>189. (LC 232) Implement Queue using Stacks<a class="headerlink" href="#lc-232-implement-queue-using-stacks" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://leetcode.com/problems/implement-queue-using-stacks/description/">232. Implement Queue using Stacks</a>
+Easy</p>
+<p>O(m) because each elem is pushed no more than twice.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># State</span>
+<span class="c1"># push 1,2,3</span>
+<span class="c1"># stk1  [1,2,3]</span>
+<span class="c1"># stk2  []</span>
+
+<span class="c1"># pop</span>
+<span class="c1"># stk1  []        []</span>
+<span class="c1"># stk2  [3,2,1]   [3,2]</span>
+<span class="c1"># -&gt;1</span>
+
+<span class="c1"># push 4,5</span>
+<span class="c1"># stk1  [4,5]</span>
+<span class="c1"># stk2  [3,2]</span>
+</pre></div>
+</div>
+<p><strong>Solution 1</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">7</span></a>]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyQueue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stk1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stk2</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stk1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stk2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stk2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stk1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stk2</span>
+
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stk2</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stk1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stk2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stk1</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="implement-a-queue-with-max-api">
+<h2>190. Implement a Queue with max API<a class="headerlink" href="#implement-a-queue-with-max-api" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><strong>Key:</strong></div>
+<div class="line">When max will never return an element, regardless of future updates.</div>
+<div class="line">Two deques.</div>
+</div>
+<div class="line-block">
+<div class="line">Each dequeue operation O(n).</div>
+<div class="line">A single enqueue may need several operations.</div>
+<div class="line">Amortized T complexity of n enqueues, dequeues is O(n).</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QueueWithMax</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">enqueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dequeue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>    <span class="c1">#leftpop() from maxq only if ==</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;empty queue&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">return_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;empty queue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Trace table</strong></div>
+<div class="line">(We pop always from left)</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#       enq(1) enq(2) enq(3)  deq() enq(4)</span>
+<span class="c1"># q     [1]    [1,3]  [1,3,6] [3,6] [3,6,4]</span>
+<span class="c1"># qmax  [1]    [X,3]* [X,X,6] [6]** [6]</span>
+
+<span class="c1"># * if cur value is greater, pop from qmax</span>
+<span class="c1"># ** if value we dequeue is smaller, don&#39;t touch qmax</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">My note:</div>
+<div class="line">but what if values are not unique?</div>
+<div class="line">[1,6,3,6]</div>
+<div class="line">qmax=[X,6,6] #We should append another 6.</div>
+</div>
+<p><strong>My V</strong> using 2 stacks</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Q</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack2</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">enqueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dequeue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">return_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack1</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">value</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">maxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stack2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">()</span>
+<span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">stack1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">return_max</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">dequeue</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">dequeue</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">dequeue</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">return_max</span><span class="p">())</span>
+<span class="c1"># [1, 3, 5, 2, 5]</span>
+<span class="c1"># 5 #max</span>
+<span class="c1"># 1</span>
+<span class="c1"># 3</span>
+<span class="c1"># 5</span>
+<span class="c1"># 5 #max</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sq_1.html" class="btn btn-neutral float-left" title="Stack and Queue Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Veronika Kirichenko.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

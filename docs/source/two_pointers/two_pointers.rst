@@ -374,7 +374,8 @@ Easy
                         pt = backspace(t, pt)
             return ps < 0 and pt < 0
 
-**C++**
+C++
+^^^^^^
 
 .. code-block:: cpp
 

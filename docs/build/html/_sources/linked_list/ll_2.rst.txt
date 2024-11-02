@@ -785,7 +785,9 @@ before put(3). We might need to remove from the middle, not just from one end.
 | So we don't need to do it ourselves.
 | (In C++ have to use LL + hash map.)
 
-**C++** [:ref:`14 <ref-label>`] LC accepted 65, 40.
+C++
+^^^^^^^^^^
+[:ref:`14 <ref-label>`] LC accepted 65, 40.
 
 .. code-block:: cpp
 
@@ -1117,7 +1119,8 @@ Repeat while till you are left with 1 list.
 | Account for the case when there is an odd num of lists.
 | Then it is ok to use our mergeList() func on list1 + None.
 
-**C++**
+C++
+^^^^^^^
 
 .. code-block:: cpp
 

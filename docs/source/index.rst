@@ -62,6 +62,7 @@ TABLE OF CONTENTS
     :caption: Stack and Queue:
 
     Part 1 (173-180) <stack_queue/sq_1>
+    Part 2 (181-190) <stack_queue/sq_2>
 
 .. toctree::
     :caption: Math:

@@ -20,7 +20,7 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Knowledge Base Math" href="../math/math_kb.html" />
+    <link rel="next" title="Stack and Queue Questions Part 1" href="../stack_queue/sq_1.html" />
     <link rel="prev" title="Linked Lists Questions Part 1" href="ll_1.html" /> 
 </head>
 
@@ -90,12 +90,22 @@
 <li class="toctree-l2"><a class="reference internal" href="#lc-86-partition-list">166. (LC 86) Partition List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-2-add-two-numbers">167. (LC 2) Add Two Numbers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-138-copy-list-with-random-pointer">168. (LC 138) Copy List with Random Pointer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lc-146-lru-cache">169. (LC 146) LRU Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-146-lru-cache">169. (LC 146) LRU Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c">C++</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-707-design-linked-list">170. (LC 707) Design Linked List</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lc-23-merge-k-sorted-lists">171. (LC 23) Merge k Sorted Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lc-23-merge-k-sorted-lists">171. (LC 23) Merge k Sorted Lists</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">C++</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#lc-25-reverse-nodes-in-k-group">172. (LC 25) Reverse Nodes in k-Group</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Stack and Queue:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../stack_queue/sq_1.html">Part 1 (173-180)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Math:</span></p>
 <ul>
@@ -929,7 +939,9 @@ before put(3). We might need to remove from the middle, not just from one end.</
 <div class="line">So we don’t need to do it ourselves.</div>
 <div class="line">(In C++ have to use LL + hash map.)</div>
 </div>
-<p><strong>C++</strong> [<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">14</span></a>] LC accepted 65, 40.</p>
+<section id="c">
+<h3>C++<a class="headerlink" href="#c" title="Link to this heading"></a></h3>
+<p>[<a class="reference internal" href="../acknowledgements.html#ref-label"><span class="std std-ref">14</span></a>] LC accepted 65, 40.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">LRUCache</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">_capacity</span><span class="p">;</span>
 <span class="w">        </span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_keys</span><span class="p">;</span>
@@ -997,6 +1009,7 @@ before put(3). We might need to remove from the middle, not just from one end.</
 </div>
 <p>If you can’t remember “.move_to_end()”,
 can pop(key) and then insert it back into dict.</p>
+</section>
 </section>
 <section id="lc-707-design-linked-list">
 <h2>170. (LC 707) Design Linked List<a class="headerlink" href="#lc-707-design-linked-list" title="Link to this heading"></a></h2>
@@ -1260,7 +1273,8 @@ Repeat while till you are left with 1 list.</p>
 <div class="line">Account for the case when there is an odd num of lists.</div>
 <div class="line">Then it is ok to use our mergeList() func on list1 + None.</div>
 </div>
-<p><strong>C++</strong></p>
+<section id="id2">
+<h3>C++<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//My V (LC accepted 20(40ms), 97)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
@@ -1339,6 +1353,7 @@ Repeat while till you are left with 1 list.</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="lc-25-reverse-nodes-in-k-group">
 <h2>172. (LC 25) Reverse Nodes in k-Group<a class="headerlink" href="#lc-25-reverse-nodes-in-k-group" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://leetcode.com/problems/reverse-nodes-in-k-group/description/">25. Reverse Nodes in k-Group</a>
@@ -1411,7 +1426,7 @@ CHALLENGING</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="ll_1.html" class="btn btn-neutral float-left" title="Linked Lists Questions Part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../math/math_kb.html" class="btn btn-neutral float-right" title="Knowledge Base Math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../stack_queue/sq_1.html" class="btn btn-neutral float-right" title="Stack and Queue Questions Part 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -406,7 +406,8 @@ My V (LC accepted 60, 90)::
                 fast = fast.next.next
             return slow == fast
 
-**C++**
+C++
+^^^^^^
 
 .. code-block:: cpp
 
